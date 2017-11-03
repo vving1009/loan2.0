@@ -5,6 +5,7 @@ import com.jiaye.loan.cashloan.view.ThrowableConsumer;
 import com.jiaye.loan.cashloan.view.data.auth.User;
 import com.jiaye.loan.cashloan.view.data.my.source.MyDataSource;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -29,21 +30,23 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
     @Override
     public void subscribe() {
         super.subscribe();
-        mDataSource.requestUser().subscribe(new Consumer<User>() {
+        Disposable disposable = mDataSource.requestUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
                 mView.showUserInfo(user);
             }
         }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void onClickMyCertificate() {
-        mDataSource.queryUser().subscribe(new Consumer<User>() {
+        Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
                 mView.startMyCertificateView(user);
             }
         }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 }

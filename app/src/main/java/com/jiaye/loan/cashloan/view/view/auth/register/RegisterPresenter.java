@@ -16,6 +16,7 @@ import com.jiaye.loan.cashloan.view.data.auth.register.source.RegisterDataSource
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -83,8 +84,15 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
             request.setReferralCode(mView.getReferralCode());
-            Observable.just(request)
+            Disposable disposable = Observable.just(request)
                     .compose(new NetworkTransformer<RegisterRequest, Register>(mView, "register"))
+                    .map(new Function<Register, Register>() {
+                        @Override
+                        public Register apply(Register register) throws Exception {
+                            register.setPhone(mView.getPhone());
+                            return register;
+                        }
+                    })
                     .observeOn(Schedulers.io())
                     .map(new Function<Register, Register>() {
                         @Override
@@ -100,6 +108,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                             mView.finish();
                         }
                     }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         }
     }
 }

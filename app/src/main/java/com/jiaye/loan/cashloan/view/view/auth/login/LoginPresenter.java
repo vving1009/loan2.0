@@ -6,7 +6,6 @@ import com.jiaye.loan.cashloan.BuildConfig;
 import com.jiaye.loan.cashloan.R;
 import com.jiaye.loan.cashloan.http.data.auth.login.Login;
 import com.jiaye.loan.cashloan.http.data.auth.login.LoginRequest;
-import com.jiaye.loan.cashloan.http.data.auth.register.Register;
 import com.jiaye.loan.cashloan.http.utils.NetworkTransformer;
 import com.jiaye.loan.cashloan.utils.RSAUtil;
 import com.jiaye.loan.cashloan.view.BasePresenterImpl;
@@ -15,6 +14,7 @@ import com.jiaye.loan.cashloan.view.data.auth.login.source.LoginDataSource;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -48,8 +48,15 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
             LoginRequest request = new LoginRequest();
             request.setPhone(mView.getPhone());
             request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
-            Observable.just(request)
+            Disposable disposable = Observable.just(request)
                     .compose(new NetworkTransformer<LoginRequest, Login>(mView, "login"))
+                    .map(new Function<Login, Login>() {
+                        @Override
+                        public Login apply(Login login) throws Exception {
+                            login.setPhone(mView.getPhone());
+                            return login;
+                        }
+                    })
                     .observeOn(Schedulers.io())
                     .map(new Function<Login, Login>() {
                         @Override
@@ -65,6 +72,7 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
                             mView.finish();
                         }
                     }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         }
     }
 }

@@ -32,6 +32,7 @@ public class LoginRepository implements LoginDataSource {
     public void addUser(Login login) {
         ContentValues values = new ContentValues();
         values.put("token", login.getToken());
+        values.put("phone", login.getPhone());
         mDatabase.insert("user", null, values);
     }
 }

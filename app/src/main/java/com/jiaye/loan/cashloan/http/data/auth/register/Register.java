@@ -9,4 +9,14 @@ import com.jiaye.loan.cashloan.http.base.ChildResponse;
  */
 
 public class Register extends ChildResponse {
+
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

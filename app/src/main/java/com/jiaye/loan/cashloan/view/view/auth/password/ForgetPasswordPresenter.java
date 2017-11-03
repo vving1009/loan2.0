@@ -13,6 +13,7 @@ import com.jiaye.loan.cashloan.view.ThrowableConsumer;
 import com.jiaye.loan.cashloan.view.data.BaseDataSource;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -39,7 +40,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             VerificationCodeRequest request = new VerificationCodeRequest();
             request.setPhone(mView.getPhone());
             request.setStatus("2");
-            Observable.just(request)
+            Disposable disposable = Observable.just(request)
                     .compose(new NetworkTransformer<VerificationCodeRequest, VerificationCode>(mView, "verificationCode"))
                     .subscribe(new Consumer<VerificationCode>() {
                         @Override
@@ -47,6 +48,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
                             mView.smsVerificationCodeCountDown();
                         }
                     }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         }
     }
 
@@ -60,7 +62,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             CheckForgetPasswordVerificationCodeRequest request = new CheckForgetPasswordVerificationCodeRequest();
             request.setPhone(mView.getPhone());
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
-            Observable.just(request)
+            Disposable disposable = Observable.just(request)
                     .compose(new NetworkTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>(mView, "checkForgetPasswordVerificationCode"))
                     .subscribe(new Consumer<CheckForgetPasswordVerificationCode>() {
                         @Override
@@ -68,6 +70,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
                             mView.showChangePasswordView();
                         }
                     }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         }
     }
 }

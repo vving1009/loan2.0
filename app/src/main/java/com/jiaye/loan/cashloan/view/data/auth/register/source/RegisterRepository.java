@@ -32,6 +32,7 @@ public class RegisterRepository implements RegisterDataSource {
     public void addUser(Register register) {
         ContentValues values = new ContentValues();
         values.put("token", register.getToken());
+        values.put("phone", register.getPhone());
         mDatabase.insert("user", null, values);
     }
 }
