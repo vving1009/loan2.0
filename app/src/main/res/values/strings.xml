@@ -1,3 +1,67 @@
 <resources>
-    <string name="app_name">Loan</string>
+    <string name="app_name">嘉业贷</string>
+    <string name="home">首页</string>
+    <string name="loan">现金贷</string>
+    <string name="me">我的</string>
+    <!--home-->
+    <string name="home_card_label">明 星产 品</string>
+    <string name="home_card_amount">借款金额(元)</string>
+    <string name="home_card_deadline">借款期限</string>
+    <string name="home_card_payment_method">还款方式</string>
+    <!--loan-->
+    <string name="loan_easy">简单</string>
+    <string name="loan_easy_explain">资料极简</string>
+    <string name="loan_efficient">高效</string>
+    <string name="loan_efficient_explain">0秒审批</string>
+    <string name="loan_fast">快速</string>
+    <string name="loan_fast_explain">闪电到账</string>
+    <string name="loan_loan">我要借款</string>
+    <!--me-->
+    <string name="me_certificate">我的认证</string>
+    <string name="me_tourist">游客</string>
+    <string name="me_approve">借款审批</string>
+    <string name="me_loan">放款还款</string>
+    <string name="me_history">历史借款</string>
+    <string name="me_help">帮助中心</string>
+    <string name="me_qrcode">关注公众号</string>
+    <string name="me_about">关于我们</string>
+    <string name="me_contact">联系我们</string>
+    <string name="me_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
+    <string name="me_settings">个人设置</string>
+    <string name="me_share">分享给朋友</string>
+    <!--login-->
+    <string name="login_title">登录</string>
+    <string name="input_phone">请输入手机号码</string>
+    <string name="input_password">请输入密码（6&#8211;12位）</string><!--(-,&#8211;)-->
+    <string name="send_verification_code">发送验证码</string>
+    <string name="send_count_down">%s秒后重新发送</string>
+    <string name="send_again">重新发送</string>
+    <string name="register_now">马上注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="login_login">账号登录</string>
+    <!--register-->
+    <string name="register_title">注册</string>
+    <string name="input_img_verification">请输入图片验证码</string>
+    <string name="input_sms_verification">请输入手机验证码</string>
+    <string name="input_referral">请输入推荐码（如有填写）</string>
+    <string name="read_protocol">我已阅读并同意《注册协议》</string>
+
+    <!--error-->
+    <string name="error_auth_not_log_in">未登录</string>
+    <string name="error_auth_phone">*请输入正确的手机号</string>
+    <string name="error_auth_password">*请输入正确的密码</string>
+    <string name="error_auth_img_verification">*请输入正确的验证码</string>
+    <string name="error_auth_sms_verification">*请输入正确的验证码</string>
+    <string name="error_auth_agree">请阅读并同意注册协议</string>
+    <!--error code-->
+    <string name="error_0000">成功</string>
+    <string name="error_0001">该手机号已经注册</string>
+    <string name="error_0002">该手机号尚未注册</string>
+    <string name="error_0003">密码错误</string>
+    <string name="error_0004">短信验证码发送失败</string>
+    <string name="error_0005">发送间隔太短，请稍后再试</string>
+    <string name="error_0006">验证码不正确</string>
+    <string name="error_9997">验签失败</string>
+    <string name="error_9998">数据格式不正确</string>
+    <string name="error_9999">请求异常</string>
 </resources>

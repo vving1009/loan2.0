@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription,RtlHardcoded,RelativeOverlap,SmallSp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="@string/register_title"
+        android:textColor="@color/color_black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/color_gray_light" />
+
+    <com.jiaye.loan.cashloan.widget.LoanEditText
+        android:id="@+id/edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/input_phone"
+        android:inputType="phone"
+        android:maxLength="11"
+        app:icon="@drawable/auth_ic_phone"
+        app:request_force="true" />
+
+    <com.jiaye.loan.cashloan.widget.LoanEditText
+        android:id="@+id/edit_img_verification_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="@string/input_img_verification"
+        app:enable_verification="true"
+        app:icon="@drawable/auth_ic_img"
+        app:verification_type="1" />
+
+    <com.jiaye.loan.cashloan.widget.LoanEditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="@string/input_password"
+        android:inputType="textPassword"
+        app:icon="@drawable/auth_ic_password" />
+
+    <com.jiaye.loan.cashloan.widget.LoanEditText
+        android:id="@+id/edit_sms_verification_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="@string/input_sms_verification"
+        android:inputType="number"
+        app:enable_verification="true"
+        app:icon="@drawable/auth_ic_qrcode" />
+
+    <com.jiaye.loan.cashloan.widget.LoanEditText
+        android:id="@+id/edit_referral_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="@string/input_referral"
+        app:icon="@drawable/auth_ic_referral" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp">
+
+        <TextView
+            android:id="@+id/text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_login"
+            android:textColor="@color/color_orange"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/text_forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/forget_password"
+            android:textColor="@color/color_orange"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/loan_btn"
+        android:enabled="true"
+        android:text="@string/register_now"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="4dp"
+            android:button="@drawable/loan_checkbox"
+            android:checked="true" />
+
+        <TextView
+            android:id="@+id/text_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/read_protocol"
+            android:textColor="@color/color_gray_holo"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_treasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/login_ic_treasure" />
+    </RelativeLayout>
+</LinearLayout>

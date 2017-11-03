@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoanEditText">
+        <attr name="android:inputType" />
+        <attr name="android:hint" />
+        <attr name="android:maxLength" />
+        <attr name="editHeight" format="dimension" />
+        <attr name="errorHeight" format="dimension" />
+        <attr name="icon" format="reference" />
+        <attr name="iconMarginLeft" format="dimension" />
+        <attr name="enable_verification" format="boolean" />
+        <attr name="verification_type" format="integer" />
+        <attr name="request_force" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="VerificationCodeView">
+        <attr name="codeMode" format="integer"/>
+        <attr name="codeQuantity" format="integer"/>
+        <attr name="matchCase" format="boolean"/>
+    </declare-styleable>
+</resources>
