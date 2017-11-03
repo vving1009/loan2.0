@@ -12,6 +12,9 @@ import com.jiaye.loan.cashloan.http.data.auth.password.CheckForgetPasswordVerifi
 import com.jiaye.loan.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
 import com.jiaye.loan.cashloan.http.data.auth.register.Register;
 import com.jiaye.loan.cashloan.http.data.auth.register.RegisterRequest;
+import com.jiaye.loan.cashloan.http.data.home.Product;
+import com.jiaye.loan.cashloan.http.data.home.ProductList;
+import com.jiaye.loan.cashloan.http.data.home.ProductRequest;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -54,4 +57,10 @@ public interface LoanService {
      */
     @POST("changePwd")
     Observable<Response<ChangePassword>> changePassword(@Body Request<ChangePasswordRequest> request);
+
+    /**
+     * 产品列表
+     */
+    @POST("product")
+    Observable<Response<ProductList>> productList(@Body Request<ProductRequest> request);
 }

@@ -22,7 +22,9 @@ import com.jiaye.loan.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment implements LoginContract.View {
+
+    private LoginContract.Presenter mPresenter;
 
     private LoanEditText mEditPhone;
 
@@ -56,6 +58,8 @@ public class LoginFragment extends BaseFragment {
         root.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearError();
+                mPresenter.login();
             }
         });
         return root;
@@ -64,6 +68,13 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter.subscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
     /*显示注册页面*/
@@ -78,5 +89,46 @@ public class LoginFragment extends BaseFragment {
     private void showForgetPasswordView() {
         Intent intent = new Intent(getContext(), PasswordActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void showToastById(int resId) {
+        switch (resId) {
+            case R.string.error_auth_phone:
+                mEditPhone.setError(getString(R.string.error_auth_phone));
+                break;
+            case R.string.error_auth_password:
+                mEditPassword.setError(getString(R.string.error_auth_password));
+                break;
+            default:
+                super.showToastById(resId);
+                break;
+        }
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public String getPhone() {
+        return mEditPhone.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return mEditPassword.getText().toString();
+    }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
+    }
+
+    /*清除错误信息*/
+    private void clearError() {
+        mEditPhone.setError("");
+        mEditPassword.setError("");
     }
 }

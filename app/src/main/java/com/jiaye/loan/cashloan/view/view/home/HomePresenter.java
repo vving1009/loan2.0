@@ -1,13 +1,20 @@
 package com.jiaye.loan.cashloan.view.view.home;
 
+import com.jiaye.loan.cashloan.R;
+import com.jiaye.loan.cashloan.http.data.home.Product;
+import com.jiaye.loan.cashloan.http.data.home.ProductList;
+import com.jiaye.loan.cashloan.http.data.home.ProductRequest;
+import com.jiaye.loan.cashloan.http.utils.NetworkTransformer;
 import com.jiaye.loan.cashloan.view.BasePresenterImpl;
-import com.jiaye.loan.cashloan.view.data.home.Card;
-import com.jiaye.loan.cashloan.view.data.home.source.HomeDataSource;
+import com.jiaye.loan.cashloan.view.ThrowableConsumer;
+import com.jiaye.loan.cashloan.view.data.BaseDataSource;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * HomePresenter
@@ -19,24 +26,39 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     private final HomeContract.View mView;
 
-    private final HomeDataSource mDataSource;
-
-    public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
+    public HomePresenter(HomeContract.View view, BaseDataSource dataSource) {
         super(dataSource);
         mView = view;
         mView.setPresenter(this);
-        mDataSource = dataSource;
     }
 
     @Override
     public void subscribe() {
         super.subscribe();
-        Disposable disposable = mDataSource.getCardList().subscribe(new Consumer<List<Card>>() {
-            @Override
-            public void accept(List<Card> cards) throws Exception {
-                mView.setList(cards);
-            }
-        });
+        ProductRequest request = new ProductRequest();
+        Disposable disposable = Observable.just(request)
+                .compose(new NetworkTransformer<ProductRequest, ProductList>(mView, "productList"))
+                .map(new Function<ProductList, List<Product>>() {
+                    @Override
+                    public List<Product> apply(ProductList productList) throws Exception {
+                        return productList.getProducts();
+                    }
+                })
+                .subscribe(new Consumer<List<Product>>() {
+                    @Override
+                    public void accept(List<Product> products) throws Exception {
+                        for (Product product : products) {
+                            if (product.getIsOpen().equals("0")) {
+                                product.setLabelResId(R.drawable.home_ic_label_blue);
+                                product.setColor(R.color.color_blue);
+                            } else if (product.getIsOpen().equals("1")) {
+                                product.setLabelResId(R.drawable.home_ic_label_gray);
+                                product.setColor(R.color.color_gray_dark);
+                            }
+                        }
+                        mView.setList(products);
+                    }
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }

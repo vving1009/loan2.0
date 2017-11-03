@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.jiaye.loan.cashloan.R;
 import com.jiaye.loan.cashloan.view.BaseFragment;
-import com.jiaye.loan.cashloan.view.data.home.source.HomeRepository;
 import com.jiaye.loan.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.loan.cashloan.view.view.home.HomeFragment;
 import com.jiaye.loan.cashloan.view.view.home.HomePresenter;
@@ -78,11 +77,11 @@ public class MainFragment extends BaseFragment {
         mImgMe.setSelected(false);
         HomeFragment fragment = HomeFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.layout_inside_content, fragment).commit();
-        new HomePresenter(fragment, new HomeRepository());
+        new HomePresenter(fragment, null);
     }
 
     private void startLoanView() {
-        setLoanView(1);
+        setLoanView(null);
     }
 
     private void startMeView() {
@@ -94,11 +93,11 @@ public class MainFragment extends BaseFragment {
         new MyPresenter(fragment, new MyRepository());
     }
 
-    public void setLoanView(int type) {
+    public void setLoanView(String id) {
         mImgHome.setSelected(false);
         mImgLoan.setSelected(true);
         mImgMe.setSelected(false);
-        LoanFragment fragment = LoanFragment.newInstance(type);
+        LoanFragment fragment = LoanFragment.newInstance(id);
         getFragmentManager().beginTransaction().replace(R.id.layout_inside_content, fragment).commit();
     }
 }

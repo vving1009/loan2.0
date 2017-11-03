@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.jiaye.loan.cashloan.R;
 import com.jiaye.loan.cashloan.view.BaseFragment;
+import com.jiaye.loan.cashloan.view.data.auth.login.source.LoginRepository;
 import com.jiaye.loan.cashloan.view.view.auth.login.LoginFragment;
+import com.jiaye.loan.cashloan.view.view.auth.login.LoginPresenter;
 import com.jiaye.loan.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.loan.cashloan.widget.LoanEditText;
 
@@ -187,6 +189,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         FragmentManager fragmentManager = getFragmentManager();
         LoginFragment fragment = LoginFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
+        new LoginPresenter(fragment, new LoginRepository());
     }
 
     /*显示忘记密码页面*/

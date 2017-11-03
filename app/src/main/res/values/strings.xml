@@ -5,8 +5,10 @@
     <string name="me">我的</string>
     <!--home-->
     <string name="home_card_label">明 星产 品</string>
-    <string name="home_card_amount">借款金额(元)</string>
-    <string name="home_card_deadline">借款期限</string>
+    <string name="home_card_amount_title">借款金额(元)</string>
+    <string name="home_card_amount">最高 ¥ %1$s.00</string>
+    <string name="home_card_deadline_title">借款期限</string>
+    <string name="home_card_deadline">%1$s月</string>
     <string name="home_card_payment_method">还款方式</string>
     <!--loan-->
     <string name="loan_easy">简单</string>

@@ -29,6 +29,8 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="10dp"
         android:hint="@string/input_phone"
+        android:inputType="phone"
+        android:maxLength="11"
         app:icon="@drawable/auth_ic_phone" />
 
     <com.jiaye.loan.cashloan.widget.LoanEditText
@@ -38,6 +40,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:hint="@string/input_password"
+        android:inputType="textPassword"
         app:icon="@drawable/auth_ic_password" />
 
     <RelativeLayout

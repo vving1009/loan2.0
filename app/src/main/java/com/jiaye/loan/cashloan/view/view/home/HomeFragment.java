@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.loan.cashloan.R;
+import com.jiaye.loan.cashloan.http.data.home.Product;
 import com.jiaye.loan.cashloan.view.BaseFragment;
-import com.jiaye.loan.cashloan.view.data.home.Card;
 import com.jiaye.loan.cashloan.view.view.main.MainFragment;
 
 import java.util.List;
@@ -64,7 +66,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    public void setList(List<Card> list) {
+    public void setList(List<Product> list) {
         mAdapter.setList(list);
     }
 
@@ -72,10 +74,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         private Context mContext;
 
-        private List<Card> mList;
+        private List<Product> mList;
+
+        private String formatAmount;
+
+        private String formatDeadline;
 
         public Adapter(Context context) {
             mContext = context;
+            formatAmount = mContext.getString(R.string.home_card_amount);
+            formatDeadline = mContext.getString(R.string.home_card_deadline);
         }
 
         @Override
@@ -86,10 +94,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 @Override
                 public void onClickCard(ViewHolder viewHolder) {
                     int position = viewHolder.getLayoutPosition();
-                    if (mList.get(position).isOpen()) {
+                    if (mList.get(position).getIsOpen().equals("0")) {
                         Fragment fragment = ((AppCompatActivity) mContext).getSupportFragmentManager().findFragmentById(R.id.layout_content);
                         if (fragment != null && fragment instanceof MainFragment) {
-                            ((MainFragment) fragment).setLoanView(mList.get(position).getType());
+                            ((MainFragment) fragment).setLoanView(mList.get(position).getId());
                         }
                     }
                 }
@@ -101,8 +109,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setDrawable(mList.get(position).getLabelResId());
             holder.setColor(mContext.getResources().getColor(mList.get(position).getColor()));
-            holder.setAmount(mList.get(position).getAmount());
-            holder.setDeadline(mList.get(position).getDeadline());
+            String amount = String.format(formatAmount, mList.get(position).getAmount());
+            SpannableString sp = new SpannableString(amount);
+            sp.setSpan(new AbsoluteSizeSpan(12, true), 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            sp.setSpan(new AbsoluteSizeSpan(30, true), 5, amount.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            holder.setAmount(sp);
+            holder.setDeadline(String.format(formatDeadline, mList.get(position).getDeadline()));
             holder.setPaymentMethod(mList.get(position).getPaymentMethod());
         }
 
@@ -115,7 +127,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             }
         }
 
-        public void setList(List<Card> list) {
+        public void setList(List<Product> list) {
             mList = list;
             notifyDataSetChanged();
         }

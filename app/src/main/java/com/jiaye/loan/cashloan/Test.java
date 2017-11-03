@@ -21,23 +21,6 @@ import io.reactivex.functions.Consumer;
 // TODO: 2017/11/3 测试方法,后期删除
 public class Test {
 
-    public static void register() {
-        /*注册获取验证码*/
-        RegisterRequest request = new RegisterRequest();
-        request.setPhone("13752126558");
-        request.setPassword(RSAUtil.encryptByPublicKeyToBase64("123456", BuildConfig.PUBLIC_KEY));
-        request.setSmsVerificationCode("1471");
-        request.setImgVerificationCode("z2e4");
-        Observable.just(request)
-                .compose(new NetworkTransformer<RegisterRequest, Register>("register"))
-                .subscribe(new Consumer<Register>() {
-                    @Override
-                    public void accept(Register register) throws Exception {
-
-                    }
-                }, new ThrowableConsumer());
-    }
-
     public static void login() {
         /*登录*/
         // J201711020956258921

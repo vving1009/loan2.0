@@ -18,14 +18,14 @@ import com.jiaye.loan.cashloan.view.BaseFragment;
 public class LoanFragment extends BaseFragment {
 
     /**
-     * 类型
+     * 产品编号
      *
-     * @param type 类型 1 2
+     * @param id id
      * @return LoanFragment
      */
-    public static LoanFragment newInstance(int type) {
+    public static LoanFragment newInstance(String id) {
         Bundle args = new Bundle();
-        args.putInt("type", type);
+        args.putString("id", id);
         LoanFragment fragment = new LoanFragment();
         fragment.setArguments(args);
         return fragment;
