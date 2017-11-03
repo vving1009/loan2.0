@@ -1,5 +1,6 @@
 package com.jiaye.loan.cashloan.view.view.auth.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.jiaye.loan.cashloan.R;
 import com.jiaye.loan.cashloan.view.BaseFragment;
 import com.jiaye.loan.cashloan.view.data.auth.register.source.RegisterRepository;
+import com.jiaye.loan.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.loan.cashloan.view.view.auth.register.RegisterFragment;
 import com.jiaye.loan.cashloan.view.view.auth.register.RegisterPresenter;
 import com.jiaye.loan.cashloan.widget.LoanEditText;
@@ -74,6 +76,7 @@ public class LoginFragment extends BaseFragment {
 
     /*显示忘记密码页面*/
     private void showForgetPasswordView() {
-
+        Intent intent = new Intent(getContext(), PasswordActivity.class);
+        startActivity(intent);
     }
 }

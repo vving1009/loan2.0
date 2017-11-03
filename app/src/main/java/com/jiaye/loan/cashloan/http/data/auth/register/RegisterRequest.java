@@ -73,6 +73,6 @@ public class RegisterRequest extends ChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "ZC001";
+        return "CL001";
     }
 }

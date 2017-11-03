@@ -63,8 +63,9 @@
         android:layout_marginRight="32dp"
         android:hint="@string/input_sms_verification"
         android:inputType="number"
+        android:maxLength="4"
         app:enable_verification="true"
-        app:icon="@drawable/auth_ic_qrcode" />
+        app:icon="@drawable/auth_ic_sms" />
 
     <com.jiaye.loan.cashloan.widget.LoanEditText
         android:id="@+id/edit_referral_code"
@@ -73,6 +74,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:hint="@string/input_referral"
+        android:inputType="phone"
+        android:maxLength="11"
         app:icon="@drawable/auth_ic_referral" />
 
     <RelativeLayout

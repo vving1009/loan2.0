@@ -1,5 +1,6 @@
 package com.jiaye.loan.cashloan.view.view.auth.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +14,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jiaye.loan.cashloan.R;
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterRequest;
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterVerificationCodeRequest;
 import com.jiaye.loan.cashloan.view.BaseFragment;
 import com.jiaye.loan.cashloan.view.view.auth.login.LoginFragment;
+import com.jiaye.loan.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.loan.cashloan.widget.LoanEditText;
 
 /**
@@ -71,7 +71,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         root.findViewById(R.id.text_forget_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearError();
                 showForgetPasswordView();
             }
         });
@@ -79,13 +78,14 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
             @Override
             public void onClick(View v) {
                 clearError();
-                register();
+                mPresenter.register();
             }
         });
         mEditSmsVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
             public void onClickCaptcha() {
-                verificationCode();
+                clearError();
+                mPresenter.verificationCode();
             }
         });
         textAgree.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +110,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void showToastById(int resId) {
         switch (resId) {
             case R.string.error_auth_phone:
@@ -129,10 +124,22 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
             case R.string.error_auth_sms_verification:
                 mEditSmsVerificationCode.setError(getString(R.string.error_auth_sms_verification));
                 break;
+            case R.string.error_auth_referral:
+                mEditReferralCode.setError(getString(R.string.error_auth_referral));
             default:
                 super.showToastById(resId);
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public String getPhone() {
+        return mEditPhone.getText().toString();
     }
 
     @Override
@@ -146,8 +153,23 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
+    public String getPassword() {
+        return mEditPassword.getText().toString();
+    }
+
+    @Override
+    public String getInputSmsVerificationCode() {
+        return mEditSmsVerificationCode.getText().toString();
+    }
+
+    @Override
     public void smsVerificationCodeCountDown() {
         mEditSmsVerificationCode.startCountDown();
+    }
+
+    @Override
+    public String getReferralCode() {
+        return mEditReferralCode.getText().toString();
     }
 
     @Override
@@ -169,30 +191,13 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     /*显示忘记密码页面*/
     private void showForgetPasswordView() {
-
+        Intent intent = new Intent(getContext(), PasswordActivity.class);
+        startActivity(intent);
     }
 
     /*显示注册协议页面*/
     private void showProtocolView() {
 
-    }
-
-    /*获取验证码*/
-    private void verificationCode() {
-        RegisterVerificationCodeRequest request = new RegisterVerificationCodeRequest();
-        request.setPhone(mEditPhone.getText().toString());
-        mPresenter.verificationCode(request);
-    }
-
-    /*注册*/
-    private void register() {
-        RegisterRequest request = new RegisterRequest();
-        request.setPhone(mEditPhone.getText().toString());
-        request.setImgVerificationCode(mEditImgVerificationCode.getText().toString());
-        request.setPassword(mEditPassword.getText().toString());
-        request.setSmsVerificationCode(mEditSmsVerificationCode.getText().toString());
-        request.setReferralCode(mEditReferralCode.getText().toString());
-        mPresenter.register(request);
     }
 
     /*清除错误信息*/

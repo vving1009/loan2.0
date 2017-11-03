@@ -19,9 +19,9 @@ public class ChangePasswordRequest extends ChildRequest {
     @SerializedName("tel_content")
     private String password;
 
-    /*类型*/
+    /*类型 0 用户登录的情况下 1 用户未登录的情况下 */
     @SerializedName("tel_status")
-    private String status = "0";
+    private String status;
 
     public String getPhone() {
         return phone;

@@ -1,7 +1,5 @@
 package com.jiaye.loan.cashloan.view.view.auth.register;
 
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterRequest;
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterVerificationCodeRequest;
 import com.jiaye.loan.cashloan.view.BasePresenter;
 import com.jiaye.loan.cashloan.view.BaseView;
 
@@ -16,6 +14,11 @@ public class RegisterContract {
     interface View extends BaseView<Presenter> {
 
         /**
+         * 获取手机号
+         */
+        String getPhone();
+
+        /**
          * 获取输入的图形验证码
          */
         String getInputImgVerificationCode();
@@ -26,9 +29,24 @@ public class RegisterContract {
         String getImgVerificationCode();
 
         /**
+         * 获取密码
+         */
+        String getPassword();
+
+        /**
+         * 获取输入的短信验证码
+         */
+        String getInputSmsVerificationCode();
+
+        /**
          * 短信验证码倒计时
          */
         void smsVerificationCodeCountDown();
+
+        /**
+         * 获取输入的短信验证码
+         */
+        String getReferralCode();
 
         /**
          * 用户是否同意注册协议
@@ -43,8 +61,14 @@ public class RegisterContract {
 
     interface Presenter extends BasePresenter {
 
-        void verificationCode(RegisterVerificationCodeRequest request);
+        /**
+         * 请求验证码
+         */
+        void verificationCode();
 
-        void register(RegisterRequest request);
+        /**
+         * 注册
+         */
+        void register();
     }
 }

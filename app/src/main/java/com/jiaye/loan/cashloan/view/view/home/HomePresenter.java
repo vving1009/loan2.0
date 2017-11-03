@@ -17,9 +17,9 @@ import io.reactivex.functions.Consumer;
 
 public class HomePresenter extends BasePresenterImpl implements HomeContract.Presenter {
 
-    private HomeContract.View mView;
+    private final HomeContract.View mView;
 
-    private HomeDataSource mDataSource;
+    private final HomeDataSource mDataSource;
 
     public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
         super(dataSource);

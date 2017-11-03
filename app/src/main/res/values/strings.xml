@@ -45,7 +45,13 @@
     <string name="input_sms_verification">请输入手机验证码</string>
     <string name="input_referral">请输入推荐码（如有填写）</string>
     <string name="read_protocol">我已阅读并同意《注册协议》</string>
-
+    <!--password-->
+    <string name="forget_password_title">忘记密码</string>
+    <string name="next">下一步</string>
+    <string name="change_password_title">重置密码</string>
+    <string name="input_new_password">请设置新密码（6&#8211;12位）</string><!--(-,&#8211;)-->
+    <string name="input_new_password_second">请确认新密码</string><!--(-,&#8211;)-->
+    <string name="save">保存</string>
     <!--error-->
     <string name="error_auth_not_log_in">未登录</string>
     <string name="error_auth_phone">*请输入正确的手机号</string>
@@ -53,6 +59,8 @@
     <string name="error_auth_img_verification">*请输入正确的验证码</string>
     <string name="error_auth_sms_verification">*请输入正确的验证码</string>
     <string name="error_auth_agree">请阅读并同意注册协议</string>
+    <string name="error_auth_referral">不可以将自己设为推荐人</string>
+    <string name="error_auth_password_different">*两次密码输入不一致，请重新输入</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_0001">该手机号已经注册</string>

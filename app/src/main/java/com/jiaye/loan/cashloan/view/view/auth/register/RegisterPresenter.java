@@ -2,12 +2,14 @@ package com.jiaye.loan.cashloan.view.view.auth.register;
 
 import android.text.TextUtils;
 
+import com.jiaye.loan.cashloan.BuildConfig;
 import com.jiaye.loan.cashloan.R;
+import com.jiaye.loan.cashloan.http.data.auth.VerificationCode;
+import com.jiaye.loan.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.loan.cashloan.http.data.auth.register.Register;
 import com.jiaye.loan.cashloan.http.data.auth.register.RegisterRequest;
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterVerificationCode;
-import com.jiaye.loan.cashloan.http.data.auth.register.RegisterVerificationCodeRequest;
 import com.jiaye.loan.cashloan.http.utils.NetworkTransformer;
+import com.jiaye.loan.cashloan.utils.RSAUtil;
 import com.jiaye.loan.cashloan.view.BasePresenterImpl;
 import com.jiaye.loan.cashloan.view.ThrowableConsumer;
 import com.jiaye.loan.cashloan.view.data.auth.register.source.RegisterDataSource;
@@ -38,18 +40,21 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
     }
 
     @Override
-    public void verificationCode(RegisterVerificationCodeRequest request) {
-        if (TextUtils.isEmpty(request.getPhone()) || request.getPhone().length() != 11) {/*检测手机号*/
+    public void verificationCode() {
+        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
             mView.showToastById(R.string.error_auth_img_verification);
         } else {
+            VerificationCodeRequest request = new VerificationCodeRequest();
+            request.setPhone(mView.getPhone());
+            request.setStatus("0");
             Observable.just(request)
-                    .compose(new NetworkTransformer<RegisterVerificationCodeRequest, RegisterVerificationCode>(mView, "requestRegister"))
-                    .subscribe(new Consumer<RegisterVerificationCode>() {
+                    .compose(new NetworkTransformer<VerificationCodeRequest, VerificationCode>(mView, "verificationCode"))
+                    .subscribe(new Consumer<VerificationCode>() {
                         @Override
-                        public void accept(RegisterVerificationCode registerVerificationCode) throws Exception {
+                        public void accept(VerificationCode verificationCode) throws Exception {
                             mView.smsVerificationCodeCountDown();
                         }
                     }, new ThrowableConsumer(mView));
@@ -57,21 +62,29 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
     }
 
     @Override
-    public void register(RegisterRequest request) {
-        if (TextUtils.isEmpty(request.getPhone()) || request.getPhone().length() != 11) {/*检测手机号*/
+    public void register() {
+        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
             mView.showToastById(R.string.error_auth_img_verification);
-        } else if (TextUtils.isEmpty(request.getPassword()) || !request.getPassword().matches("^[a-zA-Z0-9]{6,12}$")) {/*检测密码规则*/
+        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches("^[a-zA-Z0-9]{6,12}$")) {/*检测密码规则*/
             mView.showToastById(R.string.error_auth_password);
-        } else if (TextUtils.isEmpty(request.getSmsVerificationCode())) {/*检测是否填写验证码*/
+        } else if (TextUtils.isEmpty(mView.getInputSmsVerificationCode())) {/*检测是否填写验证码*/
             mView.showToastById(R.string.error_auth_sms_verification);
+        } else if (!TextUtils.isEmpty(mView.getReferralCode()) && mView.getPhone().equals(mView.getReferralCode())) {/*检测推荐人手机号*/
+            mView.showToastById(R.string.error_auth_referral);
         } else if (!mView.isAgree()) {/*检测是否同意注册协议*/
             mView.showToastById(R.string.error_auth_agree);
         } else {
+            RegisterRequest request = new RegisterRequest();
+            request.setPhone(mView.getPhone());
+            request.setImgVerificationCode(mView.getInputImgVerificationCode());
+            request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
+            request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
+            request.setReferralCode(mView.getReferralCode());
             Observable.just(request)
-                    .compose(new NetworkTransformer<RegisterRequest, Register>(mView, "requestRegister"))
+                    .compose(new NetworkTransformer<RegisterRequest, Register>(mView, "register"))
                     .observeOn(Schedulers.io())
                     .map(new Function<Register, Register>() {
                         @Override
