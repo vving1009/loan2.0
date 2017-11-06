@@ -138,6 +138,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_loan"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="270dp"
         android:layout_height="32dp"

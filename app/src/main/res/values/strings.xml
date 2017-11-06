@@ -2,7 +2,7 @@
     <string name="app_name">嘉业贷</string>
     <string name="home">首页</string>
     <string name="loan">现金贷</string>
-    <string name="me">我的</string>
+    <string name="my">我的</string>
     <!--home-->
     <string name="home_card_label">明 星产 品</string>
     <string name="home_card_amount_title">借款金额(元)</string>

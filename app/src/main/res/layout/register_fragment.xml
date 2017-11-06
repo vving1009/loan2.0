@@ -21,7 +21,7 @@
         android:layout_height="4dp"
         android:background="@color/color_gray_light" />
 
-    <com.jiaye.loan.cashloan.widget.LoanEditText
+    <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:icon="@drawable/auth_ic_phone"
         app:request_force="true" />
 
-    <com.jiaye.loan.cashloan.widget.LoanEditText
+    <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_img_verification_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         app:icon="@drawable/auth_ic_img"
         app:verification_type="1" />
 
-    <com.jiaye.loan.cashloan.widget.LoanEditText
+    <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         android:inputType="textPassword"
         app:icon="@drawable/auth_ic_password" />
 
-    <com.jiaye.loan.cashloan.widget.LoanEditText
+    <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_sms_verification_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         app:enable_verification="true"
         app:icon="@drawable/auth_ic_sms" />
 
-    <com.jiaye.loan.cashloan.widget.LoanEditText
+    <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_referral_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
