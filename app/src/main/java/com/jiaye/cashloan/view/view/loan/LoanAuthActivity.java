@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 
 /**
  * LoanAuthActivity
@@ -22,5 +23,6 @@ public class LoanAuthActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         LoanAuthFragment fragment = LoanAuthFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
+        new LoanAuthPresenter(fragment, new LoanAuthRepository());
     }
 }

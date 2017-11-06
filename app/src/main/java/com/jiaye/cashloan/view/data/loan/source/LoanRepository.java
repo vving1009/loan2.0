@@ -91,9 +91,4 @@ public class LoanRepository implements LoanDataSource {
             }
         });
     }
-
-    @Override
-    public Flowable<LoanAuth> requestLoanAuth(LoanAuthRequest request) {
-        return Flowable.just(request).compose(new ResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"));
-    }
 }

@@ -18,6 +18,14 @@
     <string name="loan_fast">快速</string>
     <string name="loan_fast_explain">闪电到账</string>
     <string name="loan_loan">我要借款</string>
+    <!--loan auth-->
+    <string name="loan_auth_title">申请材料</string>
+    <string name="loan_auth_card">身份认证</string>
+    <string name="loan_auth_face">活体检测</string>
+    <string name="loan_auth_person">个人资料</string>
+    <string name="loan_auth_phone">手机运营商</string>
+    <string name="loan_auth_taobao">淘宝/支付宝</string>
+    <string name="loan_auth_sesame">芝麻信用分</string>
     <!--me-->
     <string name="me_certificate">我的认证</string>
     <string name="me_tourist">游客</string>

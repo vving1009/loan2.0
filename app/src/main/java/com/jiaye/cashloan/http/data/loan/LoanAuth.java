@@ -25,19 +25,19 @@ public class LoanAuth extends ChildResponse {
 
     /*个人资料认证状态*/
     @SerializedName("userAuth_state")
-    private String dataState;
+    private String personState;
 
     /*手机运营商认证状态*/
     @SerializedName("phoneAuth_state")
     private String phoneState;
 
-    /*芝麻信用认证状态*/
-    @SerializedName("zmAuth_state")
-    private String sesameState;
-
     /*淘宝认证状态*/
     @SerializedName("taoAuth_state")
     private String taobaoState;
+
+    /*芝麻信用认证状态*/
+    @SerializedName("zmAuth_state")
+    private String sesameState;
 
     public String getProductId() {
         return productId;
@@ -63,12 +63,12 @@ public class LoanAuth extends ChildResponse {
         this.faceState = faceState;
     }
 
-    public String getDataState() {
-        return dataState;
+    public String getPersonState() {
+        return personState;
     }
 
-    public void setDataState(String dataState) {
-        this.dataState = dataState;
+    public void setPersonState(String personState) {
+        this.personState = personState;
     }
 
     public String getPhoneState() {
@@ -79,19 +79,19 @@ public class LoanAuth extends ChildResponse {
         this.phoneState = phoneState;
     }
 
-    public String getSesameState() {
-        return sesameState;
-    }
-
-    public void setSesameState(String sesameState) {
-        this.sesameState = sesameState;
-    }
-
     public String getTaobaoState() {
         return taobaoState;
     }
 
     public void setTaobaoState(String taobaoState) {
         this.taobaoState = taobaoState;
+    }
+
+    public String getSesameState() {
+        return sesameState;
+    }
+
+    public void setSesameState(String sesameState) {
+        this.sesameState = sesameState;
     }
 }

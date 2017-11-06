@@ -25,7 +25,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="44dp"
         android:drawablePadding="10dp"
-        android:drawableRight="@drawable/me_ic_angle"
+        android:drawableRight="@drawable/ic_angle_gray"
         android:text="@string/me_certificate"
         android:textColor="@color/color_black"
         android:textSize="12sp" />
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/me_ic_angle" />
+                    app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
 
             <View
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/me_ic_angle" />
+                    app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
 
             <View
@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/me_ic_angle" />
+                    app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
 
             <View
@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/me_ic_angle" />
+                    app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
 
             <View
@@ -347,7 +347,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/me_ic_angle" />
+                    app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

@@ -29,9 +29,4 @@ public interface LoanDataSource {
      * 查询用户信息
      */
     Flowable<User> queryUser();
-
-    /**
-     * 查询借款认证状态
-     */
-    Flowable<LoanAuth> requestLoanAuth(LoanAuthRequest request);
 }

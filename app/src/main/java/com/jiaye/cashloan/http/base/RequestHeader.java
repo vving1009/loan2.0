@@ -110,9 +110,8 @@ public class RequestHeader {
         RequestHeader header = new RequestHeader();
         // 登录成功后查询数据库获取令牌
         String token = null;
-        SQLiteDatabase databaseHelper = LoanApplication.getInstance().getSQLiteDatabase();
-        String sql = "SELECT token FROM user;";
-        Cursor cursor = databaseHelper.rawQuery(sql, null);
+        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+        Cursor cursor = database.rawQuery("SELECT token FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 token = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN));

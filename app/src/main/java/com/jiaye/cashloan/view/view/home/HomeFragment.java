@@ -47,13 +47,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler);
-        mAdapter = new Adapter(getContext(), new OnClickCardListener() {
+        mAdapter = new Adapter(getActivity(), new OnClickCardListener() {
             @Override
             public void onClickCard(Product product) {
                 mPresenter.selectProduct(product);
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(mAdapter);
         return root;
     }
