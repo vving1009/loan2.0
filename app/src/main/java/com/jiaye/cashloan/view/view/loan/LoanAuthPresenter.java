@@ -89,16 +89,22 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
         if (!model.isVerify() || model.isCanModify()) {
             switch (model.getName()) {
                 case R.string.loan_auth_card:
+                    mView.startLoanAuthCardView();
                     break;
                 case R.string.loan_auth_face:
+                    mView.startLoanAuthFaceView();
                     break;
                 case R.string.loan_auth_person:
+                    mView.startLoanAuthPersonView();
                     break;
                 case R.string.loan_auth_phone:
+                    mView.startLoanAuthPhoneView();
                     break;
                 case R.string.loan_auth_taobao:
+                    mView.startLoanAuthTaoBaoView();
                     break;
                 case R.string.loan_auth_sesame:
+                    mView.startLoanAuthSesameView();
                     break;
             }
         }

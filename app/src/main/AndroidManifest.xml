@@ -27,6 +27,9 @@
             android:name=".view.view.loan.LoanAuthActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.view.loan.LoanAuthFaceActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.auth.AuthActivity"
             android:screenOrientation="portrait" />
         <activity

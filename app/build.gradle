@@ -26,28 +26,30 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:recyclerview-v7:25.4.0'
-    compile 'com.android.support:design:25.4.0'
-    testCompile 'junit:junit:4.12'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:25.4.0'
+    api 'com.android.support:recyclerview-v7:25.4.0'
+    api 'com.android.support:design:25.4.0'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
-    compile 'io.reactivex.rxjava2:rxjava:2.1.4'
+    api 'io.reactivex.rxjava2:rxjava:2.1.4'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/adapter-rxjava2
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    api 'com.squareup.okhttp3:okhttp:3.9.0'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // https://github.com/orhanobut/logger
-    compile 'com.orhanobut:logger:2.1.1'
+    api 'com.orhanobut:logger:2.1.1'
+    /*module*/
+    implementation project(':tongdun')
+    /*测试相关*/
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }

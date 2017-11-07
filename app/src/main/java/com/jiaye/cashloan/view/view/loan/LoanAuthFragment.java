@@ -1,8 +1,12 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +23,9 @@ import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 
 import java.util.List;
 
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
+import static com.jiaye.cashloan.view.view.loan.LoanAuthFaceActivity.REQUEST_FACE;
+
 /**
  * LoanAuthFragment
  *
@@ -26,6 +33,10 @@ import java.util.List;
  */
 
 public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.View {
+
+    private static final int REQUEST_TAKE_PHOTO_PERMISSION = 100;
+
+    private static final int REQUEST_CARD = 101;
 
     private LoanAuthContract.Presenter mPresenter;
 
@@ -38,6 +49,32 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         return fragment;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CARD && resultCode == REQUEST_CARD) {
+
+        } else if (requestCode == REQUEST_FACE && resultCode == REQUEST_FACE) {
+            boolean isSuccess = data.getBooleanExtra("is_success", false);
+            if (isSuccess) {
+                showToastById(R.string.loan_auth_face_success);
+            } else {
+                showToastById(R.string.loan_auth_face_fail);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_TAKE_PHOTO_PERMISSION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
+                startActivity(intent);
+            } else {
+                showToast("请在应用管理中打开“相机”访问权限！");
+            }
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +83,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         mAdapter = new Adapter(getActivity(), new OnClickCardListener() {
             @Override
             public void onClickCard(LoanAuthModel model) {
-
+                mPresenter.selectLoanAuthModel(model);
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -101,7 +138,12 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void startLoanAuthFaceView() {
-
+        if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_TAKE_PHOTO_PERMISSION);
+        } else {
+            Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
+            startActivityForResult(intent, REQUEST_FACE);
+        }
     }
 
     @Override
