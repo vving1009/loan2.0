@@ -33,7 +33,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_APPROVE_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_LOAN_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_HISTORY_NUMBER + INTEGER_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_OCR_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_BIRTHDAY + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_GENDER + TEXT_TYPE + COMMA_SEP +

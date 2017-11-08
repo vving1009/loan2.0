@@ -44,7 +44,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
                         LoanAuthModel card = new LoanAuthModel();
                         card.setIcon(R.drawable.loan_auth_ic_card);
-                        card.setName(R.string.loan_auth_card);
+                        card.setName(R.string.loan_auth_ocr);
                         setLoanAuthModel(loanAuth, card, false);
 
                         LoanAuthModel face = new LoanAuthModel();
@@ -88,7 +88,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     public void selectLoanAuthModel(LoanAuthModel model) {
         if (!model.isVerify() || model.isCanModify()) {
             switch (model.getName()) {
-                case R.string.loan_auth_card:
+                case R.string.loan_auth_ocr:
                     mView.startLoanAuthCardView();
                     break;
                 case R.string.loan_auth_face:

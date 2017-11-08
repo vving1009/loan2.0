@@ -15,8 +15,12 @@ public class TongDunResponseFunction<T> implements Function<TongDunResponse<T>, 
 
     @Override
     public T apply(TongDunResponse<T> baseResponse) throws Exception {
-        if (baseResponse.isSuccess() && baseResponse.getResult() == 0) {
-            return baseResponse.getBody();
+        if (baseResponse.isSuccess()) {
+            if (baseResponse.getResult() == 0) {
+                return baseResponse.getBody();
+            } else {
+                return null;
+            }
         } else {
             throw new NetworkException(baseResponse.getReasonCode(), baseResponse.getReasonDesc());
         }

@@ -20,13 +20,15 @@
     <string name="loan_loan">我要借款</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
-    <string name="loan_auth_card">身份认证</string>
-    <string name="card_name">姓名</string>
-    <string name="card_number">身份证号</string>
-    <string name="card_validity_date">有效期限</string>
-    <string name="card_front">身份证正面扫描上传</string>
-    <string name="card_back">身份证反面扫描上传</string>
-    <string name="card_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
+    <string name="loan_auth_ocr">身份认证</string>
+    <string name="loan_auth_ocr_success">恭喜您,身份认证成功</string>
+    <string name="loan_auth_ocr_fail">认证失败,请返回重试</string>
+    <string name="ocr_name">姓名</string>
+    <string name="ocr_number">身份证号</string>
+    <string name="ocr_validity_date">有效期限</string>
+    <string name="ocr_front">身份证正面扫描上传</string>
+    <string name="ocr_back">身份证反面扫描上传</string>
+    <string name="ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="commit">提交</string>
     <string name="loan_auth_face">活体检测</string>
     <string name="loan_auth_face_success">恭喜您,活体检测成功</string>

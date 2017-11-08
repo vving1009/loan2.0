@@ -22,7 +22,7 @@ public class TongDunResponse<T> {
     @SerializedName("result")
     private int result;
 
-    @SerializedName("message")
+    @SerializedName("display")
     private T body;
 
     public boolean isSuccess() {

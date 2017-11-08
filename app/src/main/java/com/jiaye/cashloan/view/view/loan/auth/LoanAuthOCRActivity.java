@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
@@ -41,14 +43,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
- * LoanAuthCardActivity
+ * LoanAuthOCRActivity
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthCardActivity extends AppCompatActivity implements TakePhoto.TakeResultListener, InvokeListener {
+public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.TakeResultListener, InvokeListener {
 
-    public static final int REQUEST_CARD = 201;
+    public static final int REQUEST_OCR = 201;
 
     private TakePhoto takePhoto;
 
@@ -72,7 +74,7 @@ public class LoanAuthCardActivity extends AppCompatActivity implements TakePhoto
     protected void onCreate(final Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loan_auth_card_activity);
+        setContentView(R.layout.loan_auth_ocr_activity);
         mBtnCommit = (Button) findViewById(R.id.btn_commit);
         mImgFront = (ImageView) findViewById(R.id.img_card_front);
         mImgBack = (ImageView) findViewById(R.id.img_card_back);
@@ -203,17 +205,48 @@ public class LoanAuthCardActivity extends AppCompatActivity implements TakePhoto
                 .flatMap(new Function<String, Publisher<TongDunResponse<TongDunOCRFront>>>() {
                     @Override
                     public Publisher<TongDunResponse<TongDunOCRFront>> apply(String base64) throws Exception {
-                        return TongDunClient.INSTANCE.getService().ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, base64);
+                        return TongDunClient.INSTANCE.getService().ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, base64.replace("\n", ""));
                     }
                 })
                 .map(new TongDunResponseFunction<TongDunOCRFront>())
-                .flatMap(new Function<TongDunOCRFront, Publisher<TongDunResponse<TongDunOCRBack>>>() {
+                .map(new Function<TongDunOCRFront, TongDunOCRFront>() {
                     @Override
-                    public Publisher<TongDunResponse<TongDunOCRBack>> apply(TongDunOCRFront tongDunOCRFrontTongDunResponse) throws Exception {
-                        return TongDunClient.INSTANCE.getService().ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, Base64Util.fileToBase64(new File(mBack)));
+                    public TongDunOCRFront apply(TongDunOCRFront tongDunOCRFront) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("ocr_id", tongDunOCRFront.getIdNumber());
+                        values.put("ocr_name", tongDunOCRFront.getName());
+                        values.put("ocr_birthday", tongDunOCRFront.getBirthday());
+                        values.put("ocr_gender", tongDunOCRFront.getGender());
+                        values.put("ocr_nation", tongDunOCRFront.getNation());
+                        values.put("ocr_address", tongDunOCRFront.getAddress());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                        return tongDunOCRFront;
+                    }
+                })
+                .map(new Function<TongDunOCRFront, String>() {
+                    @Override
+                    public String apply(TongDunOCRFront tongDunOCRFront) throws Exception {
+                        return Base64Util.fileToBase64(new File(mBack));
+                    }
+                })
+                .flatMap(new Function<String, Publisher<TongDunResponse<TongDunOCRBack>>>() {
+                    @Override
+                    public Publisher<TongDunResponse<TongDunOCRBack>> apply(String base64) throws Exception {
+                        return TongDunClient.INSTANCE.getService().ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, base64.replace("\n", ""));
                     }
                 })
                 .map(new TongDunResponseFunction<TongDunOCRBack>())
+                .map(new Function<TongDunOCRBack, TongDunOCRBack>() {
+                    @Override
+                    public TongDunOCRBack apply(TongDunOCRBack tongDunOCRBack) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("ocr_date_begin", tongDunOCRBack.getDateBegin());
+                        values.put("ocr_date_end", tongDunOCRBack.getDateEnd());
+                        values.put("ocr_agency", tongDunOCRBack.getAgency());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                        return tongDunOCRBack;
+                    }
+                })
                 .compose(new ViewTransformer<TongDunOCRBack>())
                 .subscribe(new Consumer<TongDunOCRBack>() {
                     @Override
@@ -223,7 +256,7 @@ public class LoanAuthCardActivity extends AppCompatActivity implements TakePhoto
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Toast.makeText(LoanAuthCardActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoanAuthOCRActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -231,7 +264,7 @@ public class LoanAuthCardActivity extends AppCompatActivity implements TakePhoto
     private void result() {
         Intent intent = new Intent();
         intent.putExtra("is_success", true);
-        setResult(REQUEST_CARD, intent);
+        setResult(REQUEST_OCR, intent);
         finish();
     }
 }

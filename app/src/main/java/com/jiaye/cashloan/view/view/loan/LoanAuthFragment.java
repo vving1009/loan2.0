@@ -20,13 +20,13 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthCardActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
 
 import java.util.List;
 
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthCardActivity.REQUEST_CARD;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
 
 /**
@@ -54,8 +54,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CARD && resultCode == REQUEST_CARD) {
-
+        if (requestCode == REQUEST_OCR && resultCode == REQUEST_OCR) {
+            boolean isSuccess = data.getBooleanExtra("is_success", false);
+            if (isSuccess) {
+                showToastById(R.string.loan_auth_ocr_success);
+            } else {
+                showToastById(R.string.loan_auth_ocr_fail);
+            }
         } else if (requestCode == REQUEST_FACE && resultCode == REQUEST_FACE) {
             boolean isSuccess = data.getBooleanExtra("is_success", false);
             if (isSuccess) {
@@ -70,7 +75,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CARD_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(getActivity(), LoanAuthCardActivity.class);
+                Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
                 startActivity(intent);
             } else {
                 showToastById(R.string.error_loan_auth_camera);
@@ -146,7 +151,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CARD_PERMISSION);
         } else {
-            Intent intent = new Intent(getActivity(), LoanAuthCardActivity.class);
+            Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
             startActivityForResult(intent, REQUEST_FACE);
         }
     }

@@ -10,7 +10,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Created by boxuanjia.
+ * Base64Util
+ *
+ * @author 贾博瑄
  */
 public class Base64Util {
 

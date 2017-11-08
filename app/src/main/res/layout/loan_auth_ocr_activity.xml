@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/loan_auth_card"
+            android:text="@string/loan_auth_ocr"
             android:textColor="@color/color_black"
             android:textSize="16sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
                 android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/loan_auth_card_ic_help" />
+                app:srcCompat="@drawable/loan_auth_ocr_ic_help" />
         </FrameLayout>
     </RelativeLayout>
 
@@ -72,10 +72,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_card_ic_name"
+                    android:drawableLeft="@drawable/loan_auth_ocr_ic_name"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/card_name"
+                    android:text="@string/ocr_name"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -97,10 +97,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_card_ic_number"
+                    android:drawableLeft="@drawable/loan_auth_ocr_ic_number"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/card_number"
+                    android:text="@string/ocr_number"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -122,10 +122,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_card_ic_validity_date"
+                    android:drawableLeft="@drawable/loan_auth_ocr_ic_validity_date"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/card_validity_date"
+                    android:text="@string/ocr_validity_date"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -144,7 +144,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/loan_auth_card_ic_front" />
+                app:srcCompat="@drawable/loan_auth_ocr_ic_front" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
                 android:gravity="center"
-                android:text="@string/card_front"
+                android:text="@string/ocr_front"
                 android:textColor="@color/color_blue_dark"
                 android:textSize="12sp" />
 
@@ -162,7 +162,7 @@
                 android:layout_height="128dp"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/loan_auth_card_ic_back" />
+                app:srcCompat="@drawable/loan_auth_ocr_ic_back" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
                 android:gravity="center"
-                android:text="@string/card_back"
+                android:text="@string/ocr_back"
                 android:textColor="@color/color_blue_dark"
                 android:textSize="12sp" />
 
@@ -178,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/card_prompt"
+                android:text="@string/ocr_prompt"
                 android:textColor="@color/color_black"
                 android:textSize="10sp" />
 
@@ -192,7 +192,7 @@
                 android:layout_marginRight="36dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/loan_btn"
-                android:enabled="false"
+                android:enabled="true"
                 android:text="@string/commit"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />

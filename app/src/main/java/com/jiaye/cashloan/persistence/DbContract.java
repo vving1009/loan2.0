@@ -42,7 +42,7 @@ public class DbContract {
         public static final String COLUMN_NAME_LOAN_NUMBER = "loan_number";
         public static final String COLUMN_NAME_HISTORY_NUMBER = "history_number";
         /*OCR*/
-        public static final String COLUMN_NAME_OCR_NUMBER = "ocr_number";
+        public static final String COLUMN_NAME_OCR_ID= "ocr_id";
         public static final String COLUMN_NAME_OCR_NAME = "ocr_name";
         public static final String COLUMN_NAME_OCR_BIRTHDAY = "ocr_birthday";
         public static final String COLUMN_NAME_OCR_GENDER = "ocr_gender";
