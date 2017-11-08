@@ -37,7 +37,7 @@ import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUES
 
 public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.View {
 
-    private static final int REQUEST_CARD_PERMISSION = 101;
+    private static final int REQUEST_OCR_PERMISSION = 101;
 
     private static final int REQUEST_FACE_PERMISSION = 102;
 
@@ -73,7 +73,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CARD_PERMISSION) {
+        if (requestCode == REQUEST_OCR_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
                 startActivity(intent);
@@ -149,7 +149,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void startLoanAuthCardView() {
         if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CARD_PERMISSION);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_OCR_PERMISSION);
         } else {
             Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
             startActivityForResult(intent, REQUEST_FACE);
