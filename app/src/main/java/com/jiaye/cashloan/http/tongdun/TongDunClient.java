@@ -1,8 +1,9 @@
-package com.jiaye.cashloan.http;
+package com.jiaye.cashloan.http.tongdun;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.http.LoggingInterceptor;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -11,18 +12,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * LoanClient
+ * TongDunClient
  *
  * @author 贾博瑄
  */
 
-public enum LoanClient {
+public enum TongDunClient {
 
     INSTANCE;
 
-    private LoanService mService;
+    private TongDunService mService;
 
-    LoanClient() {
+    TongDunClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new LoggingInterceptor());
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -32,15 +33,15 @@ public enum LoanClient {
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(BuildConfig.TONGDUN_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
-        mService = retrofit.create(LoanService.class);
+        mService = retrofit.create(TongDunService.class);
     }
 
-    public LoanService getService() {
+    public TongDunService getService() {
         return mService;
     }
 }

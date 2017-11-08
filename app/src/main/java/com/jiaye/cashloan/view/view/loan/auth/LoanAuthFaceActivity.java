@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan;
+package com.jiaye.cashloan.view.view.loan.auth;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -15,7 +15,7 @@ import cn.tongdun.android.liveness.view_controller.LivenessDetectionMainActivity
 
 public class LoanAuthFaceActivity extends LivenessDetectionMainActivity {
 
-    public static final int REQUEST_FACE = 102;
+    public static final int REQUEST_FACE = 202;
 
     @Override
     public void onInitializeSucc() {

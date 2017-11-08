@@ -32,7 +32,16 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_APPROVE_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_LOAN_NUMBER + INTEGER_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_HISTORY_NUMBER + INTEGER_TYPE +
+                    DbContract.User.COLUMN_NAME_HISTORY_NUMBER + INTEGER_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_BIRTHDAY + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_GENDER + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_NATION + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_ADDRESS + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_DATE_BEGIN + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_DATE_END + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE +
                     " )";
 
     private static final String SQL_CREATE_PRODUCT =

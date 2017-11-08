@@ -16,12 +16,18 @@ android {
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
         buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
         buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
+        buildConfigField("String", "TONGDUN_URL", properties.getProperty("TONGDUN_URL"))
+        buildConfigField("String", "TONGDUN_CODE", properties.getProperty("TONGDUN_CODE"))
+        buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -46,9 +52,11 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // https://github.com/orhanobut/logger
     api 'com.orhanobut:logger:2.1.1'
-    /*module*/
+    // photo
+    api 'com.jph.takephoto:takephoto_library:4.0.3'
+    // module
     implementation project(':tongdun')
-    /*测试相关*/
+    // test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

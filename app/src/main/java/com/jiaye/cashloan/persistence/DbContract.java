@@ -22,6 +22,16 @@ public class DbContract {
      * approve_number 借贷审批次数
      * loan_number 放款还贷次数
      * history_number 历史借贷次数
+     * <p>
+     * ocr_number 身份证号码
+     * ocr_name 身份证姓名
+     * ocr_birthday 身份证生日
+     * ocr_gender 身份证性别
+     * ocr_nation 身份证民族
+     * ocr_address 身份证地址
+     * ocr_date_begin 身份证有效期起始时间
+     * ocr_date_end 身份证有效期结束时间
+     * ocr_agency 身份证签发机关
      */
     public static abstract class User implements BaseColumns {
         public static final String TABLE_NAME = "user";
@@ -31,6 +41,16 @@ public class DbContract {
         public static final String COLUMN_NAME_APPROVE_NUMBER = "approve_number";
         public static final String COLUMN_NAME_LOAN_NUMBER = "loan_number";
         public static final String COLUMN_NAME_HISTORY_NUMBER = "history_number";
+        /*OCR*/
+        public static final String COLUMN_NAME_OCR_NUMBER = "ocr_number";
+        public static final String COLUMN_NAME_OCR_NAME = "ocr_name";
+        public static final String COLUMN_NAME_OCR_BIRTHDAY = "ocr_birthday";
+        public static final String COLUMN_NAME_OCR_GENDER = "ocr_gender";
+        public static final String COLUMN_NAME_OCR_NATION = "ocr_nation";
+        public static final String COLUMN_NAME_OCR_ADDRESS = "ocr_address";
+        public static final String COLUMN_NAME_OCR_DATE_BEGIN = "ocr_date_begin";
+        public static final String COLUMN_NAME_OCR_DATE_END = "ocr_date_end";
+        public static final String COLUMN_NAME_OCR_AGENCY = "ocr_agency";
     }
 
     /**
