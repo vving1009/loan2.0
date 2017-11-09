@@ -53,7 +53,7 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
         });
         mEditSmsVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
-            public void onClickCaptcha() {
+            public void onClickVerificationCode() {
                 clearError();
                 mPresenter.verificationCode();
             }

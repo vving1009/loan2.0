@@ -213,6 +213,8 @@ public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.
                     @Override
                     public TongDunOCRFront apply(TongDunOCRFront tongDunOCRFront) throws Exception {
                         ContentValues values = new ContentValues();
+                        values.put("name", tongDunOCRFront.getName());
+
                         values.put("ocr_id", tongDunOCRFront.getIdNumber());
                         values.put("ocr_name", tongDunOCRFront.getName());
                         values.put("ocr_birthday", tongDunOCRFront.getBirthday());

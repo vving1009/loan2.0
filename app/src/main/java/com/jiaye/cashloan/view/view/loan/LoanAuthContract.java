@@ -24,7 +24,7 @@ public class LoanAuthContract {
         /**
          * 显示借款身份证认证页面
          */
-        void startLoanAuthCardView();
+        void startLoanAuthOCRView();
 
         /**
          * 显示借款活体认证页面

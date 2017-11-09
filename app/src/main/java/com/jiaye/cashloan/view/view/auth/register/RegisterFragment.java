@@ -85,7 +85,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         });
         mEditSmsVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
-            public void onClickCaptcha() {
+            public void onClickVerificationCode() {
                 clearError();
                 mPresenter.verificationCode();
             }

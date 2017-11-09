@@ -32,6 +32,7 @@ public class DbContract {
      * ocr_date_begin 身份证有效期起始时间
      * ocr_date_end 身份证有效期结束时间
      * ocr_agency 身份证签发机关
+     * gxb_token 公信宝 token
      */
     public static abstract class User implements BaseColumns {
         public static final String TABLE_NAME = "user";
@@ -51,6 +52,8 @@ public class DbContract {
         public static final String COLUMN_NAME_OCR_DATE_BEGIN = "ocr_date_begin";
         public static final String COLUMN_NAME_OCR_DATE_END = "ocr_date_end";
         public static final String COLUMN_NAME_OCR_AGENCY = "ocr_agency";
+        /*GXB*/
+        public static final String COLUMN_NAME_GXB_TOKEN = "gxb_token";
     }
 
     /**

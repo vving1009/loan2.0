@@ -3,6 +3,7 @@ package com.jiaye.cashloan.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -30,7 +31,7 @@ public class LoanEditText extends RelativeLayout {
 
     public interface OnClickVerificationCode {
 
-        void onClickCaptcha();
+        void onClickVerificationCode();
     }
 
     private OnClickVerificationCode mOnClickVerificationCode;
@@ -40,6 +41,8 @@ public class LoanEditText extends RelativeLayout {
     private TextView mTextVerification;
 
     private VerificationCodeView mImgVerification;
+
+    private ImageView mImg;
 
     private TextView mTextError;
 
@@ -90,6 +93,12 @@ public class LoanEditText extends RelativeLayout {
         }
     }
 
+    public void setCode(Bitmap bitmap) {
+        if (mImg != null) {
+            mImg.setImageBitmap(bitmap);
+        }
+    }
+
     public void startCountDown() {
         if (countDownTimer == null) {
             countDownTimer = new CountDownTimer(60 * 1000, 1) {
@@ -122,7 +131,7 @@ public class LoanEditText extends RelativeLayout {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoanEditText, defStyleAttr, 0);
         int inputType = typedArray.getInt(R.styleable.LoanEditText_android_inputType, EditorInfo.TYPE_CLASS_TEXT);
         String hint = typedArray.getString(R.styleable.LoanEditText_android_hint);
-        int maxlength = typedArray.getInt(R.styleable.LoanEditText_android_maxLength,-1);
+        int maxlength = typedArray.getInt(R.styleable.LoanEditText_android_maxLength, -1);
         int editHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_editHeight, (int) (44 * density));
         int errorHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_errorHeight, LayoutParams.WRAP_CONTENT);
         Drawable icon = typedArray.getDrawable(R.styleable.LoanEditText_icon);
@@ -150,7 +159,7 @@ public class LoanEditText extends RelativeLayout {
         mEditText.setInputType(inputType);
         mEditText.setHint(hint);
         if (maxlength >= 0) {
-            mEditText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxlength) });
+            mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxlength)});
         } else {
             mEditText.setFilters(new InputFilter[0]);
         }
@@ -180,7 +189,7 @@ public class LoanEditText extends RelativeLayout {
                         @Override
                         public void onClick(View v) {
                             if (mOnClickVerificationCode != null) {
-                                mOnClickVerificationCode.onClickCaptcha();
+                                mOnClickVerificationCode.onClickVerificationCode();
                             }
                         }
                     });
@@ -190,13 +199,29 @@ public class LoanEditText extends RelativeLayout {
                     lText.addRule(CENTER_VERTICAL);
                     mTextVerification.setLayoutParams(lText);
                     break;
-                case 1:
+                case 1:// 自生成图形验证码
                     mImgVerification = new VerificationCodeView(context);
                     editLayout.addView(mImgVerification);
                     LayoutParams lImg = new LayoutParams((int) (70 * density), (int) (30 * density));
                     lImg.addRule(ALIGN_PARENT_RIGHT);
                     lImg.addRule(CENTER_VERTICAL);
                     mImgVerification.setLayoutParams(lImg);
+                    break;
+                case 2:// 外部传入图形验证码
+                    mImg = new ImageView(context);
+                    editLayout.addView(mImg);
+                    LayoutParams lOutImg = new LayoutParams((int) (70 * density), (int) (30 * density));
+                    lOutImg.addRule(ALIGN_PARENT_RIGHT);
+                    lOutImg.addRule(CENTER_VERTICAL);
+                    mImg.setLayoutParams(lOutImg);
+                    mImg.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mOnClickVerificationCode != null) {
+                                mOnClickVerificationCode.onClickVerificationCode();
+                            }
+                        }
+                    });
                     break;
             }
         }

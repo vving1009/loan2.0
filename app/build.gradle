@@ -19,6 +19,7 @@ android {
         buildConfigField("String", "TONGDUN_URL", properties.getProperty("TONGDUN_URL"))
         buildConfigField("String", "TONGDUN_CODE", properties.getProperty("TONGDUN_CODE"))
         buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
+        buildConfigField("String", "GONGXINBAO_URL", properties.getProperty("GONGXINBAO_URL"))
         buildConfigField("String", "GONGXINBAO_APPID", properties.getProperty("GONGXINBAO_APPID"))
         buildConfigField("String", "GONGXINBAO_APPSECURITY", properties.getProperty("GONGXINBAO_APPSECURITY"))
     }

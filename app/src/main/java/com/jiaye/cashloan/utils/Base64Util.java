@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.File;
@@ -71,5 +73,16 @@ public class Base64Util {
             }
         }
         return base64;
+    }
+
+    /**
+     * Base64 转 Bitmap
+     *
+     * @param base64Data base64Data
+     * @return Bitmap
+     */
+    public static Bitmap base64ToBitmap(String base64Data) {
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

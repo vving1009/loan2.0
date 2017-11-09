@@ -22,12 +22,14 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity;
 
 import java.util.List;
 
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity.REQUEST_PHONE;
 
 /**
  * LoanAuthFragment
@@ -67,6 +69,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 showToastById(R.string.loan_auth_face_success);
             } else {
                 showToastById(R.string.loan_auth_face_fail);
+            }
+        } else if (requestCode == REQUEST_PHONE && resultCode == REQUEST_PHONE) {
+            boolean isSuccess = data.getBooleanExtra("is_success", false);
+            if (isSuccess) {
+                showToastById(R.string.loan_auth_phone_success);
+            } else {
+                showToastById(R.string.loan_auth_phone_fail);
             }
         }
     }
@@ -147,7 +156,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void startLoanAuthCardView() {
+    public void startLoanAuthOCRView() {
         if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_OCR_PERMISSION);
         } else {
@@ -173,7 +182,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void startLoanAuthPhoneView() {
-
+        Intent intent = new Intent(getActivity(), LoanAuthPhoneActivity.class);
+        startActivityForResult(intent, REQUEST_PHONE);
     }
 
     @Override

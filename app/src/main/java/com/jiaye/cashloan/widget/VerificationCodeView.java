@@ -92,7 +92,6 @@ public class VerificationCodeView extends View {
         this.matchCase = matchCase;
     }
 
-
     public String getVerificationCode() {
         if (matchCase) {
             return verificationCode.substring(0, codeQuantity);
@@ -118,6 +117,11 @@ public class VerificationCodeView extends View {
             return;
         }
         codeQuantity = quantity;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+        invalidate();
     }
 
     private void initView(Context context, AttributeSet attrs) {
