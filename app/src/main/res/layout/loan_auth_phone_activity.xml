@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_phone_ic_network"
+                    android:drawableLeft="@drawable/loan_auth_phone_ic_operator"
                     android:drawablePadding="10dp"
                     android:gravity="center"
                     android:textColor="@color/color_black"
@@ -161,6 +161,16 @@
                 android:text="@string/commit"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/loan_auth_phone_ic_bank"
+                android:text="@string/loan_auth_phone_bank"
+                android:textColor="@color/color_orange"
+                android:textSize="10sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
