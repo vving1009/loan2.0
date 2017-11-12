@@ -32,7 +32,16 @@
             android:name=".view.view.loan.auth.LoanAuthFaceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.view.loan.auth.LoanAuthPersonActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.loan.auth.LoanAuthPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.view.loan.auth.LoanAuthTaoBaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.view.loan.auth.LoanAuthSesameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.auth.AuthActivity"

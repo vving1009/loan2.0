@@ -22,14 +22,20 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPersonActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
 
 import java.util.List;
 
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPersonActivity.REQUEST_PERSON;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity.REQUEST_PHONE;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity.REQUEST_SESAME;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
 
 /**
  * LoanAuthFragment
@@ -177,7 +183,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void startLoanAuthPersonView() {
-
+        Intent intent = new Intent(getActivity(), LoanAuthPersonActivity.class);
+        startActivityForResult(intent, REQUEST_PERSON);
     }
 
     @Override
@@ -188,12 +195,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void startLoanAuthTaoBaoView() {
-
+        Intent intent = new Intent(getActivity(), LoanAuthTaoBaoActivity.class);
+        startActivityForResult(intent, REQUEST_TAOBAO);
     }
 
     @Override
     public void startLoanAuthSesameView() {
-
+        Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
+        startActivityForResult(intent, REQUEST_SESAME);
     }
 
     private static class Adapter extends RecyclerView.Adapter<ViewHolder> {

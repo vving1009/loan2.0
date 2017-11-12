@@ -41,8 +41,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_OCR_ADDRESS + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_DATE_BEGIN + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_DATE_END + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_GXB_TOKEN + TEXT_TYPE +
+                    DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE +
                     " )";
 
     private static final String SQL_CREATE_PRODUCT =

@@ -6,23 +6,23 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
+import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoOperatorsConfig;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
+import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.widget.LoanEditText;
 import com.orhanobut.logger.Logger;
@@ -40,40 +40,31 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
+
 /**
- * LoanAuthPhoneActivity
+ * LoanAuthTaoBaoNormalFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPhoneActivity extends AppCompatActivity {
-
-    public static final int REQUEST_PHONE = 204;
+public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
 
     protected CompositeDisposable mCompositeDisposable;
 
-    private String mPhone;
-
-    private String mToken;
-
-    private String mTips;
-
     private ProgressDialog mDialog;
 
-    private TextView mTextPhone;
-
-    private TextView mTextOperators;
+    private LoanEditText mEditAccount;
 
     private LoanEditText mEditPassword;
 
-    private TextView mTextForgetPassword;
+    private LoanEditText mEditSMS;
 
-    private LoanEditText mEditSmsVerificationCode;
+    private LoanEditText mEditIMG;
 
-    private LoanEditText mEditImgVerificationCode;
+    private String mToken;
 
     private boolean mIsPollingEnd;
 
@@ -83,59 +74,56 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
 
     private boolean isIMG;
 
+    public static LoanAuthTaoBaoNormalFragment newInstance() {
+        Bundle args = new Bundle();
+        LoanAuthTaoBaoNormalFragment fragment = new LoanAuthTaoBaoNormalFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mCompositeDisposable = new CompositeDisposable();
-        mDialog = new ProgressDialog(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mDialog = new ProgressDialog(getActivity());
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
-        setContentView(R.layout.loan_auth_phone_activity);
-        mTextPhone = (TextView) findViewById(R.id.text_phone);
-        mTextOperators = (TextView) findViewById(R.id.text_operators);
-        mEditPassword = (LoanEditText) findViewById(R.id.edit_password);
-        mTextForgetPassword = (TextView) findViewById(R.id.text_forget_password);
-        mEditSmsVerificationCode = (LoanEditText) findViewById(R.id.edit_sms_verification_code);
-        mEditImgVerificationCode = (LoanEditText) findViewById(R.id.edit_img_verification_code);
-        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        mTextForgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LoanAuthPhoneActivity.this, mTips, Toast.LENGTH_SHORT).show();
-            }
-        });
-        mEditSmsVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
+        View root = inflater.inflate(R.layout.loan_auth_taobao_normal_fragment, container, false);
+        mEditAccount = (LoanEditText) root.findViewById(R.id.edit_account);
+        mEditPassword = (LoanEditText) root.findViewById(R.id.edit_password);
+        mEditSMS = (LoanEditText) root.findViewById(R.id.edit_sms);
+        mEditIMG = (LoanEditText) root.findViewById(R.id.edit_img);
+        mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
             public void onClickVerificationCode() {
-                requestSMSVerification();
+                requestSMS();
             }
         });
-        mEditImgVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
+        mEditIMG.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
             public void onClickVerificationCode() {
-                requestIMGVerification();
+                requestIMG();
             }
         });
-        findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commit();
+                submit();
             }
         });
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mCompositeDisposable = new CompositeDisposable();
         request();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();
-        }
+        mCompositeDisposable.clear();
     }
 
     private void request() {
@@ -143,15 +131,15 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                 .map(new Function<String, GongXinBaoTokenRequest>() {
                     @Override
                     public GongXinBaoTokenRequest apply(String s) throws Exception {
-                        GongXinBaoTokenRequest request = new GongXinBaoTokenRequest("operator_pro");
+                        GongXinBaoTokenRequest request = new GongXinBaoTokenRequest("ecommerce");
                         String sql = "SELECT * FROM user;";
                         Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
                         if (cursor != null) {
                             if (cursor.moveToNext()) {
-                                mPhone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                                String phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
                                 String name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_NAME));
                                 String ocrID = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
-                                request.setPhone(mPhone);
+                                request.setPhone(phone);
                                 request.setName(name);
                                 request.setIdCard(ocrID);
                             }
@@ -167,20 +155,13 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                     }
                 })
                 .map(new GongXinBaoResponseFunction<GongXinBaoAuth>())
-                .map(new Function<GongXinBaoAuth, GongXinBaoAuth>() {
+                .flatMap(new Function<GongXinBaoAuth, Publisher<GongXinBaoResponse<Object>>>() {
                     @Override
-                    public GongXinBaoAuth apply(GongXinBaoAuth token) throws Exception {
+                    public Publisher<GongXinBaoResponse<Object>> apply(GongXinBaoAuth token) throws Exception {
                         mToken = token.getToken();
-                        return token;
+                        return GongXinBaoClient.INSTANCE.getService().ecommerceConfig(mToken);
                     }
                 })
-                .flatMap(new Function<GongXinBaoAuth, Publisher<GongXinBaoResponse<GongXinBaoOperatorsConfig>>>() {
-                    @Override
-                    public Publisher<GongXinBaoResponse<GongXinBaoOperatorsConfig>> apply(GongXinBaoAuth token) throws Exception {
-                        return GongXinBaoClient.INSTANCE.getService().operatorsConfig(token.getToken(), mPhone);
-                    }
-                })
-                .map(new GongXinBaoResponseFunction<GongXinBaoOperatorsConfig>())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Subscription>() {
                     @Override
@@ -190,94 +171,42 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<GongXinBaoOperatorsConfig, Boolean>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public Boolean apply(GongXinBaoOperatorsConfig operators) throws Exception {
-                        mTextPhone.setText(String.format(getString(R.string.loan_auth_phone_phone), mPhone));
-                        mTextOperators.setText(String.format(getString(R.string.loan_auth_phone_operators), operators.getOperatorType()));
-                        GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();
-                        boolean isNeedRequestImgVerificationCode = false;
-                        for (GongXinBaoOperatorsConfig.LoginForms.Fields field : fields) {
-                            switch (field.getField()) {
-                                case "password":
-                                    mEditPassword.setVisibility(View.VISIBLE);
-                                    mTextForgetPassword.setVisibility(View.VISIBLE);
-                                    break;
-                                case "code":
-                                    if (field.getFieldExtraConfig().getFieldExtraType().equals("PIC")) {
-                                        mEditImgVerificationCode.setVisibility(View.VISIBLE);
-                                        isNeedRequestImgVerificationCode = true;
-                                    }
-                                    break;
-                                case "randomPassword":
-                                    if (field.getFieldExtraConfig().getFieldExtraType().equals("SMS")) {
-                                        mEditSmsVerificationCode.setVisibility(View.VISIBLE);
-                                    }
-                                    break;
-                            }
-                        }
-                        mTips = operators.getLoginForms()[0].getPwdResetConfig().getResetTips();
-                        return isNeedRequestImgVerificationCode;
-                    }
-                })
-                .filter(new Predicate<Boolean>() {
-                    @Override
-                    public boolean test(Boolean isNeedRequestImgVerificationCode) throws Exception {
-                        return isNeedRequestImgVerificationCode;
-                    }
-                })
-                .observeOn(Schedulers.io())
-                .flatMap(new Function<Boolean, Publisher<GongXinBaoResponse<GongXinBao>>>() {
-                    @Override
-                    public Publisher<GongXinBaoResponse<GongXinBao>> apply(Boolean aBoolean) throws Exception {
-                        return GongXinBaoClient.INSTANCE.getService().refreshOperatorVerifyCode(mToken);
-                    }
-                })
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .map(new Function<GongXinBao, Bitmap>() {
-                    @Override
-                    public Bitmap apply(GongXinBao response) throws Exception {
-                        return Base64Util.base64ToBitmap(response.getExtra().getRemark());
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Bitmap>() {
-                    @Override
-                    public void accept(Bitmap bitmap) throws Exception {
+                    public void accept(Object object) throws Exception {
                         mDialog.dismiss();
-                        mEditImgVerificationCode.setCode(bitmap);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         mDialog.dismiss();
                         Logger.d(throwable.getMessage());
-                        Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         mCompositeDisposable.add(disposable);
     }
 
-    private void requestSMSVerification() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshOperatorSmsCode(mToken)
+    private void requestSMS() {
+        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshEcommerceSmsCode(mToken)
                 .compose(new ViewTransformer<GongXinBaoResponse<GongXinBao>>())
                 .subscribe(new Consumer<GongXinBaoResponse<GongXinBao>>() {
                     @Override
                     public void accept(GongXinBaoResponse<GongXinBao> response) throws Exception {
-                        mEditSmsVerificationCode.startCountDown();
+                        mEditSMS.startCountDown();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Logger.d(throwable.getMessage());
-                        Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         mCompositeDisposable.add(disposable);
     }
 
-    private void requestIMGVerification() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshOperatorVerifyCode(mToken)
+    private void requestIMG() {
+        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshEcommerceVerifyCode(mToken)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Subscription>() {
                     @Override
@@ -299,28 +228,26 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                     @Override
                     public void accept(Bitmap bitmap) throws Exception {
                         mDialog.dismiss();
-                        mEditImgVerificationCode.setCode(bitmap);
+                        mEditIMG.setCode(bitmap);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Logger.d(throwable.getMessage());
-                        Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         mCompositeDisposable.add(disposable);
     }
 
-    private void commit() {
+    private void submit() {
         if (isSecond) {
-            commitSecond();
+            submitSecond();
         } else {
             GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-            request.setUsername(mPhone);
+            request.setUsername(mEditAccount.getText().toString());
             request.setPassword(mEditPassword.getText().toString());
-            request.setCode(mEditImgVerificationCode.getText().toString());
-            request.setRandomPassword(mEditSmsVerificationCode.getText().toString());
-            Disposable disposable = GongXinBaoClient.INSTANCE.getService().operatorLogin(mToken, request)
+            Disposable disposable = GongXinBaoClient.INSTANCE.getService().ecommerceLogin(mToken, request)
                     .map(new GongXinBaoResponseFunction<GongXinBao>())
                     .subscribeOn(Schedulers.io())
                     .doOnSubscribe(new Consumer<Subscription>() {
@@ -340,16 +267,52 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
                             Logger.d(throwable.getMessage());
-                            Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
             mCompositeDisposable.add(disposable);
         }
     }
 
+    private void submitSecond() {
+        GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
+        if (isSMS) {
+            request.setCode(mEditSMS.getText().toString());
+        } else if (isIMG) {
+            request.setCode(mEditIMG.getText().toString());
+        }
+        Disposable disposable = GongXinBaoClient.INSTANCE.getService().ecommerceSecond(mToken, request)
+                .map(new GongXinBaoResponseFunction<GongXinBao>())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        mDialog.show();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<GongXinBao>() {
+                    @Override
+                    public void accept(GongXinBao response) throws Exception {
+                        isSecond = false;
+                        isSMS = false;
+                        isIMG = false;
+                        polling();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Logger.d(throwable.getMessage());
+                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        mCompositeDisposable.add(disposable);
+    }
+
     private void polling() {
         mIsPollingEnd = false;
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().getOperatorLoginStatus(mToken)
+        Disposable disposable = GongXinBaoClient.INSTANCE.getService().getEcommerceLoginStatus(mToken)
                 .map(new GongXinBaoResponseFunction<GongXinBao>())
                 .map(new Function<GongXinBao, GongXinBao>() {
                     @Override
@@ -412,39 +375,39 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                             case "LOGIN_SUCCESS":
                                 break;
                             case "LOGIN_FAILED":
-                                Toast.makeText(LoanAuthPhoneActivity.this, response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
                                 break;
                             case "REFRESH_IMAGE_SUCCESS":
                                 isSecond = true;
                                 isIMG = true;
                                 // 更新图形验证码
-                                mEditImgVerificationCode.setText("");
-                                mEditImgVerificationCode.setVisibility(View.VISIBLE);
-                                mEditImgVerificationCode.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
+                                mEditIMG.setText("");
+                                mEditIMG.setVisibility(View.VISIBLE);
+                                mEditIMG.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "REFRESH_IMAGE_FAILED":
-                                Toast.makeText(LoanAuthPhoneActivity.this, "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
                                 break;
                             case "REFRESH_SMS_SUCCESS":
-                                Toast.makeText(LoanAuthPhoneActivity.this, "短信发送成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "短信发送成功", Toast.LENGTH_SHORT).show();
                                 break;
                             case "REFRESH_SMS_FAILED":
-                                Toast.makeText(LoanAuthPhoneActivity.this, "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
                                 break;
                             case "SMS_VERIFY_NEW":
                                 isSecond = true;
                                 isSMS = true;
                                 // 输入收到的短信
-                                mEditSmsVerificationCode.setText("");
-                                mEditSmsVerificationCode.setVisibility(View.VISIBLE);
+                                mEditSMS.setText("");
+                                mEditSMS.setVisibility(View.VISIBLE);
                                 break;
                             case "IMAGE_VERIFY_NEW":
                                 isSecond = true;
                                 isIMG = true;
                                 // 更新图形验证码
-                                mEditImgVerificationCode.setText("");
-                                mEditImgVerificationCode.setVisibility(View.VISIBLE);
-                                mEditImgVerificationCode.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
+                                mEditIMG.setText("");
+                                mEditIMG.setVisibility(View.VISIBLE);
+                                mEditIMG.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "WAITING":
                                 break;
@@ -453,12 +416,12 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                                     result();
                                     // 将结果告知服务器
                                     // 记录token
-                                    // 原始数据拉取接口 https://prod.gxb.io/crawler/data/rawdata/{token}
-                                    // 数据报告拉取接口 https://prod.gxb.io/crawler/data/report/{token}
+                                    // 原始数据拉取接口 https://prod.gxb.io/ecommerce/data/rawdata/{token}
+                                    // 数据报告拉取接口 https://prod.gxb.io/ecommerce/data/report/{token}
                                 }
                                 break;
                             case "FAILED":
-                                Toast.makeText(LoanAuthPhoneActivity.this, response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -466,7 +429,7 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Logger.d(throwable.getMessage());
-                        Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }, new Action() {
                     @Override
@@ -477,46 +440,10 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
         mCompositeDisposable.add(disposable);
     }
 
-    private void commitSecond() {
-        GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-        if (isSMS) {
-            request.setCode(mEditSmsVerificationCode.getText().toString());
-        } else if (isIMG) {
-            request.setCode(mEditImgVerificationCode.getText().toString());
-        }
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().operatorSecond(mToken, request)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        mDialog.show();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GongXinBao>() {
-                    @Override
-                    public void accept(GongXinBao response) throws Exception {
-                        isSecond = false;
-                        isSMS = false;
-                        isIMG = false;
-                        polling();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Logger.d(throwable.getMessage());
-                        Toast.makeText(LoanAuthPhoneActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mCompositeDisposable.add(disposable);
-    }
-
     private void result() {
         Intent intent = new Intent();
         intent.putExtra("is_success", true);
-        setResult(REQUEST_PHONE, intent);
-        finish();
+        getActivity().setResult(REQUEST_TAOBAO, intent);
+        getActivity().finish();
     }
 }

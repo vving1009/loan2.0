@@ -3,13 +3,13 @@ package com.jiaye.cashloan.http.gongxinbao;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * GongXinBaoOperators
+ * GongXinBaoOperatorsConfig
  *
  * @author 贾博瑄
  */
 
 @SuppressWarnings("ALL")
-public class GongXinBaoOperators {
+public class GongXinBaoOperatorsConfig {
 
     /*运营商类型*/
     @SerializedName("operatorType")

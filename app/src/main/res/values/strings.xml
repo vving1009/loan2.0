@@ -44,7 +44,14 @@
     <string name="loan_auth_phone_bank">银行高级别加密 保障您的信息安全</string>
     <string name="loan_auth_phone_success">恭喜您,运营商检测成功</string>
     <string name="loan_auth_phone_fail">检测失败,请返回重试</string>
-    <string name="loan_auth_taobao">淘宝/支付宝</string>
+    <string name="loan_auth_taobao">淘宝认证</string>
+    <string name="loan_auth_taobao_normal">帐号授权</string>
+    <string name="loan_auth_taobao_normal_account">请输入淘宝账号</string>
+    <string name="loan_auth_taobao_normal_input_password">请输入密码</string>
+    <string name="loan_auth_taobao_normal_commit">立即授权</string>
+    <string name="loan_auth_taobao_input_sms_verification">请输入短信验证码</string>
+    <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
+    <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_sesame">芝麻信用分</string>
     <!--me-->
     <string name="me_certificate">我的认证</string>
