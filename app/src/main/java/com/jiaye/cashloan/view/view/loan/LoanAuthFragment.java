@@ -22,7 +22,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPersonActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
@@ -32,7 +32,7 @@ import java.util.List;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPersonActivity.REQUEST_PERSON;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity.REQUEST_INFO;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity.REQUEST_PHONE;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity.REQUEST_SESAME;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
@@ -182,9 +182,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void startLoanAuthPersonView() {
-        Intent intent = new Intent(getActivity(), LoanAuthPersonActivity.class);
-        startActivityForResult(intent, REQUEST_PERSON);
+    public void startLoanAuthInfoView() {
+        Intent intent = new Intent(getActivity(), LoanAuthInfoActivity.class);
+        startActivityForResult(intent, REQUEST_INFO);
     }
 
     @Override

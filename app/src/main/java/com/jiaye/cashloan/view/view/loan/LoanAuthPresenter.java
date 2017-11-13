@@ -54,7 +54,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
                         LoanAuthModel person = new LoanAuthModel();
                         person.setIcon(R.drawable.loan_auth_ic_person);
-                        person.setName(R.string.loan_auth_person);
+                        person.setName(R.string.loan_auth_info);
                         setLoanAuthModel(loanAuth, person, true);
 
                         LoanAuthModel phone = new LoanAuthModel();
@@ -94,8 +94,8 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                 case R.string.loan_auth_face:
                     mView.startLoanAuthFaceView();
                     break;
-                case R.string.loan_auth_person:
-                    mView.startLoanAuthPersonView();
+                case R.string.loan_auth_info:
+                    mView.startLoanAuthInfoView();
                     break;
                 case R.string.loan_auth_phone:
                     mView.startLoanAuthPhoneView();

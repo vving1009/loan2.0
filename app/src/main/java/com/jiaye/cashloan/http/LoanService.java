@@ -1,9 +1,12 @@
 package com.jiaye.cashloan.http;
 
+import com.jiaye.cashloan.http.base.ChildResponse;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
 import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
+import com.jiaye.cashloan.http.data.auth.Auth;
+import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
@@ -16,6 +19,9 @@ import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.person.Person;
+import com.jiaye.cashloan.http.data.person.PersonRequest;
+import com.jiaye.cashloan.http.data.person.SavePersonRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -48,12 +54,6 @@ public interface LoanService {
     Flowable<Response<Login>> login(@Body Request<LoginRequest> request);
 
     /**
-     * 校验忘记密码验证码
-     */
-    @POST("sendMsg/juageCodeTime")
-    Flowable<Response<CheckForgetPasswordVerificationCode>> checkForgetPasswordVerificationCode(@Body Request<CheckForgetPasswordVerificationCodeRequest> request);
-
-    /**
      * 修改密码
      */
     @POST("changePwd")
@@ -70,4 +70,29 @@ public interface LoanService {
      */
     @POST("userApprove")
     Flowable<Response<LoanAuth>> loanAuth(@Body Request<LoanAuthRequest> request);
+
+    /**
+     * 个人认证状态
+     */
+    @POST("userApprove/queryMyApprove")
+    Flowable<Response<Auth>> auth(@Body Request<AuthRequest> request);
+
+    /**
+     * 个人资料
+     */
+    @POST("personalInfo")
+    Flowable<Response<Person>> person(@Body Request<PersonRequest> request);
+
+    /**
+     * 保存个人资料
+     */
+    @POST("personalInfo/save")
+    Flowable<Response<ChildResponse>> savePerson(@Body Request<SavePersonRequest> request);
+
+    /**
+     * 校验忘记密码验证码
+     */
+    @POST("sendMsg/juageCodeTime")
+    Flowable<Response<CheckForgetPasswordVerificationCode>> checkForgetPasswordVerificationCode(@Body Request<CheckForgetPasswordVerificationCodeRequest> request);
+
 }

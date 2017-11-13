@@ -57,6 +57,8 @@ dependencies {
     api 'com.orhanobut:logger:2.1.1'
     // photo
     api 'com.jph.takephoto:takephoto_library:4.0.3'
+    // picker
+    api 'com.contrarywind:Android-PickerView:3.2.6'
     // module
     implementation project(':tongdun')
     // test

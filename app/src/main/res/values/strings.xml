@@ -23,7 +23,7 @@
     <string name="loan_auth_ocr">身份认证</string>
     <string name="loan_auth_ocr_success">恭喜您,身份认证成功</string>
     <string name="loan_auth_ocr_fail">认证失败,请返回重试</string>
-    <string name="loan_auth_ocr_name">姓名</string>
+    <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
     <string name="loan_auth_ocr_validity_date">有效期限</string>
     <string name="loan_auth_ocr_front">身份证正面扫描上传</string>
@@ -33,7 +33,21 @@
     <string name="loan_auth_face">活体检测</string>
     <string name="loan_auth_face_success">恭喜您,活体检测成功</string>
     <string name="loan_auth_face_fail">检测失败,请返回重试</string>
-    <string name="loan_auth_person">个人资料</string>
+    <string name="loan_auth_info">个人资料</string>
+    <string name="loan_auth_person_info">个人信息</string>
+    <string name="loan_auth_person_education">最高学历</string>
+    <string name="loan_auth_person_marriage">婚姻状况</string>
+    <string name="loan_auth_person_register_city">户籍所在城市</string>
+    <string name="loan_auth_person_city">现居住城市</string>
+    <string name="loan_auth_person_address">现居住地址</string>
+    <string name="loan_auth_person_email">电子邮箱</string>
+    <string name="loan_auth_contact_info">联系人信息</string>
+    <string name="loan_auth_contact_family">直系亲属</string>
+    <string name="loan_auth_contact_friend">亲属/朋友</string>
+    <string name="loan_auth_contact_phone">手机号码</string>
+
+    <string name="loan_auth_submit">已提交</string>
+    <string name="loan_auth_un_submit">未提交</string>
     <string name="loan_auth_phone">手机运营商</string>
     <string name="loan_auth_phone_phone">您的手机号：%1$s</string>
     <string name="loan_auth_phone_operators">所属运营商：%1$s</string>

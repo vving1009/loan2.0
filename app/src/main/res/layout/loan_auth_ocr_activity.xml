@@ -72,10 +72,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_ocr_ic_name"
+                    android:drawableLeft="@drawable/loan_auth_ic_name"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/loan_auth_ocr_name"
+                    android:text="@string/loan_auth_name"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
             </RelativeLayout>
