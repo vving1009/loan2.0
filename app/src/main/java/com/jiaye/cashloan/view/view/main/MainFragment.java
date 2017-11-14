@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -49,7 +50,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.main_fragment, container, false);
-        mViewPager = (NoScrollViewPager) root.findViewById(R.id.view_pager);
+        mViewPager = root.findViewById(R.id.view_pager);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
 
@@ -77,7 +78,7 @@ public class MainFragment extends BaseFragment {
                 return POSITION_NONE;
             }
         });
-        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
+        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
         setTabs(tabLayout, inflater, TAB_ICON, TAB_TEXT);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -132,11 +133,11 @@ public class MainFragment extends BaseFragment {
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] icon, int[] text) {
         for (int i = 0; i < icon.length; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.main_tab, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.main_tab, null);
             tab.setCustomView(view);
-            TextView tvTitle = (TextView) view.findViewById(R.id.text);
+            TextView tvTitle = view.findViewById(R.id.text);
             tvTitle.setText(text[i]);
-            ImageView imgTab = (ImageView) view.findViewById(R.id.img);
+            ImageView imgTab = view.findViewById(R.id.img);
             imgTab.setImageResource(icon[i]);
             tabLayout.addTab(tab);
         }

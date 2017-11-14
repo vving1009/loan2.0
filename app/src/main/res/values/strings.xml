@@ -67,19 +67,19 @@
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_sesame">芝麻信用分</string>
-    <!--me-->
-    <string name="me_certificate">我的认证</string>
-    <string name="me_tourist">游客</string>
-    <string name="me_approve">借款审批</string>
-    <string name="me_loan">放款还款</string>
-    <string name="me_history">历史借款</string>
-    <string name="me_help">帮助中心</string>
-    <string name="me_qrcode">关注公众号</string>
-    <string name="me_about">关于我们</string>
-    <string name="me_contact">联系我们</string>
-    <string name="me_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
-    <string name="me_settings">个人设置</string>
-    <string name="me_share">分享给朋友</string>
+    <!--my-->
+    <string name="my_certificate">我的认证</string>
+    <string name="my_tourist">游客</string>
+    <string name="my_approve">借款审批</string>
+    <string name="my_loan">放款还款</string>
+    <string name="my_history">历史借款</string>
+    <string name="my_help">帮助中心</string>
+    <string name="my_qrcode">关注公众号</string>
+    <string name="my_about">关于我们</string>
+    <string name="my_contact">联系我们</string>
+    <string name="my_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
+    <string name="my_settings">个人设置</string>
+    <string name="my_share">分享给朋友</string>
     <!--login-->
     <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>

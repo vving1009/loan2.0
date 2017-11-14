@@ -1,12 +1,11 @@
 package com.jiaye.cashloan.http;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
-import com.jiaye.cashloan.http.data.auth.VerificationCode;
-import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
+import com.jiaye.cashloan.http.data.auth.VerificationCode;
+import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
@@ -21,6 +20,7 @@ import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
 import com.jiaye.cashloan.http.data.person.Person;
 import com.jiaye.cashloan.http.data.person.PersonRequest;
+import com.jiaye.cashloan.http.data.person.SavePerson;
 import com.jiaye.cashloan.http.data.person.SavePersonRequest;
 
 import io.reactivex.Flowable;
@@ -87,7 +87,7 @@ public interface LoanService {
      * 保存个人资料
      */
     @POST("personalInfo/save")
-    Flowable<Response<ChildResponse>> savePerson(@Body Request<SavePersonRequest> request);
+    Flowable<Response<SavePerson>> savePerson(@Body Request<SavePersonRequest> request);
 
     /**
      * 校验忘记密码验证码

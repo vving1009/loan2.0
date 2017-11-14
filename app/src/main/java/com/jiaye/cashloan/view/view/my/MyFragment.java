@@ -136,7 +136,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startHelpView() {
-
+        Intent intent = new Intent(getContext(), OtherActivity.class);
+        intent.putExtra("view", "help");
+        startActivity(intent);
     }
 
     private void startQRCodeView() {

@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/me_ic_head" />
+        app:srcCompat="@drawable/me_ic_head_default" />
 
     <TextView
         android:id="@+id/text_my_certificate"
@@ -26,7 +26,7 @@
         android:layout_marginTop="44dp"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/ic_angle_gray"
-        android:text="@string/me_certificate"
+        android:text="@string/my_certificate"
         android:textColor="@color/color_black"
         android:textSize="12sp" />
 
@@ -37,7 +37,7 @@
         android:layout_below="@id/img_head"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="34dp"
-        android:text="@string/me_tourist"
+        android:text="@string/my_tourist"
         android:textColor="@color/color_black"
         android:textSize="12sp" />
 
@@ -63,7 +63,7 @@
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/me_ic_approve"
                 android:drawablePadding="10dp"
-                android:text="@string/me_approve"
+                android:text="@string/my_approve"
                 android:textColor="@color/color_black"
                 android:textSize="10sp" />
 
@@ -96,7 +96,7 @@
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/me_ic_loan"
                 android:drawablePadding="10dp"
-                android:text="@string/me_loan"
+                android:text="@string/my_loan"
                 android:textColor="@color/color_black"
                 android:textSize="10sp" />
 
@@ -129,7 +129,7 @@
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/me_ic_history"
                 android:drawablePadding="10dp"
-                android:text="@string/me_history"
+                android:text="@string/my_history"
                 android:textColor="@color/color_black"
                 android:textSize="10sp" />
 
@@ -171,7 +171,7 @@
                     android:drawableLeft="@drawable/me_ic_help"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_help"
+                    android:text="@string/my_help"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 
@@ -204,7 +204,7 @@
                     android:drawableLeft="@drawable/me_ic_qrcode"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_qrcode"
+                    android:text="@string/my_qrcode"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 
@@ -237,7 +237,7 @@
                     android:drawableLeft="@drawable/me_ic_about"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_about"
+                    android:text="@string/my_about"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 
@@ -270,7 +270,7 @@
                     android:drawableLeft="@drawable/me_ic_contact"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_contact"
+                    android:text="@string/my_contact"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 
@@ -281,7 +281,7 @@
                     android:textSize="12sp"
                     android:textColor="@color/color_blue"
                     android:layout_alignParentRight="true"
-                    android:text="@string/me_contact_phone"/>
+                    android:text="@string/my_contact_phone"/>
             </RelativeLayout>
 
             <View
@@ -305,7 +305,7 @@
                     android:drawableLeft="@drawable/me_ic_settings"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_settings"
+                    android:text="@string/my_settings"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 
@@ -338,7 +338,7 @@
                     android:drawableLeft="@drawable/me_ic_share"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/me_share"
+                    android:text="@string/my_share"
                     android:textColor="@color/color_black"
                     android:textSize="12sp" />
 

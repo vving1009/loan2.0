@@ -11,6 +11,9 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SavePersonRequest extends ChildRequest {
 
+    @SerializedName("tel_phone")
+    private String phone;
+
     /*最高学历*/
     @SerializedName("deu_typeid")
     private String education;
@@ -34,6 +37,14 @@ public class SavePersonRequest extends ChildRequest {
     /*电子邮箱*/
     @SerializedName("email")
     private String email;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getEducation() {
         return education;

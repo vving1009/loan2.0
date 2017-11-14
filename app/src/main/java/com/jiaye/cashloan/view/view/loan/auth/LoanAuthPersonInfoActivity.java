@@ -20,11 +20,11 @@ import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.LoanClient;
-import com.jiaye.cashloan.http.base.ChildResponse;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
 import com.jiaye.cashloan.http.data.person.Person;
 import com.jiaye.cashloan.http.data.person.PersonRequest;
+import com.jiaye.cashloan.http.data.person.SavePerson;
 import com.jiaye.cashloan.http.data.person.SavePersonRequest;
 import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseFunction;
@@ -86,6 +86,8 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
     private EditText mEditAddress;
 
     private EditText mEditEmail;
+
+    private String mPhone;
 
     private ArrayList<ArrayList<String>> mAreas2;
 
@@ -186,17 +188,16 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
             }
         }
         // 网络请求获得已经存的数据
-        String phone = "";
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
         Cursor cursor = database.rawQuery("SELECT phone FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
-                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                mPhone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
             }
             cursor.close();
         }
         PersonRequest request = new PersonRequest();
-        request.setPhone(phone);
+        request.setPhone(mPhone);
         Disposable disposable = Flowable.just(request)
                 .map(new RequestFunction<PersonRequest>())
                 .flatMap(new Function<Request<PersonRequest>, Publisher<Response<Person>>>() {
@@ -213,13 +214,13 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                         for (int i = 0; i < mEducations.size(); i++) {
                             if (mEducations.get(i).getKey().equals(person.getEducation())) {
                                 mEducations.get(i).setSelect(true);
-                                mOptionsEducation.setSelectOptions(i);
+                                mTextEducation.setText(mEducations.get(i).getValue());
                             }
                         }
                         for (int i = 0; i < mMarriages.size(); i++) {
                             if (mMarriages.get(i).getKey().equals(person.getMarriage())) {
                                 mMarriages.get(i).setSelect(true);
-                                mOptionsMarriage.setSelectOptions(i);
+                                mTextMarriage.setText(mMarriages.get(i).getValue());
                             }
                         }
                         mTextRegisterCity.setText(person.getRegisterCity());
@@ -324,6 +325,9 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        for (int i = 0; i < mEducations.size(); i++) {
+                            mEducations.get(i).setSelect(false);
+                        }
                         mEducations.get(options1).setSelect(true);
                         mTextEducation.setText(mEducations.get(options1).getPickerViewText());
                     }
@@ -357,6 +361,9 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        for (int i = 0; i < mMarriages.size(); i++) {
+                            mMarriages.get(i).setSelect(false);
+                        }
                         mMarriages.get(options1).setSelect(true);
                         mTextMarriage.setText(mMarriages.get(options1).getPickerViewText());
                     }
@@ -415,6 +422,7 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
         } else {
             // 网络请求
             SavePersonRequest request = new SavePersonRequest();
+            request.setPhone(mPhone);
             for (int i = 0; i < mEducations.size(); i++) {
                 if (mEducations.get(i).isSelect()) {
                     request.setEducation(mEducations.get(i).getKey());
@@ -431,12 +439,13 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
             request.setEmail(mEditEmail.getText().toString());
             Disposable disposable = Flowable.just(request)
                     .map(new RequestFunction<SavePersonRequest>())
-                    .flatMap(new Function<Request<SavePersonRequest>, Publisher<Response<ChildResponse>>>() {
+                    .flatMap(new Function<Request<SavePersonRequest>, Publisher<Response<SavePerson>>>() {
                         @Override
-                        public Publisher<Response<ChildResponse>> apply(Request<SavePersonRequest> request) throws Exception {
+                        public Publisher<Response<SavePerson>> apply(Request<SavePersonRequest> request) throws Exception {
                             return LoanClient.INSTANCE.getService().savePerson(request);
                         }
                     })
+                    .map(new ResponseFunction<SavePerson>())
                     .subscribeOn(Schedulers.io())
                     .doOnSubscribe(new Consumer<Subscription>() {
                         @Override
@@ -446,9 +455,9 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Response<ChildResponse>>() {
+                    .subscribe(new Consumer<SavePerson>() {
                         @Override
-                        public void accept(Response<ChildResponse> childResponseResponse) throws Exception {
+                        public void accept(SavePerson savePerson) throws Exception {
                             finish();
                         }
                     }, new Consumer<Throwable>() {
