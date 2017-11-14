@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.view.my.about.AboutFragment;
 import com.jiaye.cashloan.view.view.my.certificate.MyCertificateFragment;
 import com.jiaye.cashloan.view.view.my.help.HelpFragment;
 
@@ -37,6 +38,11 @@ public class OtherActivity extends AppCompatActivity {
                 mTextTitle.setText(R.string.my_help);
                 HelpFragment helpFragment = HelpFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, helpFragment).commit();
+                break;
+            case "about":
+                mTextTitle.setText(R.string.my_about);
+                AboutFragment aboutFragment = AboutFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, aboutFragment).commit();
                 break;
         }
     }

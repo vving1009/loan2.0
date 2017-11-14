@@ -146,7 +146,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startAboutView() {
-
+        Intent intent = new Intent(getContext(), OtherActivity.class);
+        intent.putExtra("view", "about");
+        startActivity(intent);
     }
 
     private void startContactView() {
