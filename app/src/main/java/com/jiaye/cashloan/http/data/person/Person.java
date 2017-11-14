@@ -21,7 +21,7 @@ public class Person extends ChildResponse {
 
     /*户籍所在城市*/
     @SerializedName("reg_city")
-    private String register_city;
+    private String registerCity;
 
     /*现居住城市*/
     @SerializedName("reside_city")
@@ -51,12 +51,12 @@ public class Person extends ChildResponse {
         this.marriage = marriage;
     }
 
-    public String getRegister_city() {
-        return register_city;
+    public String getRegisterCity() {
+        return registerCity;
     }
 
-    public void setRegister_city(String register_city) {
-        this.register_city = register_city;
+    public void setRegisterCity(String registerCity) {
+        this.registerCity = registerCity;
     }
 
     public String getCity() {

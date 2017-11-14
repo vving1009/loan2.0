@@ -1,20 +1,42 @@
 package com.jiaye.cashloan.view.view.loan.auth;
 
+import android.app.ProgressDialog;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.LoanClient;
+import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.Request;
+import com.jiaye.cashloan.http.base.Response;
+import com.jiaye.cashloan.http.data.person.Person;
+import com.jiaye.cashloan.http.data.person.PersonRequest;
+import com.jiaye.cashloan.http.data.person.SavePersonRequest;
+import com.jiaye.cashloan.http.utils.RequestFunction;
+import com.jiaye.cashloan.http.utils.ResponseFunction;
+import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.auth.Area;
 import com.jiaye.cashloan.view.data.auth.Education;
 import com.jiaye.cashloan.view.data.auth.Marriage;
+import com.orhanobut.logger.Logger;
+
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscription;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +46,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * LoanAuthPersonInfoActivity
  *
@@ -31,6 +62,10 @@ import java.util.List;
  */
 
 public class LoanAuthPersonInfoActivity extends AppCompatActivity {
+
+    protected CompositeDisposable mCompositeDisposable;
+
+    private ProgressDialog mDialog;
 
     private OptionsPickerView mOptionsEducation;
 
@@ -48,6 +83,10 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
 
     private TextView mTextCity;
 
+    private EditText mEditAddress;
+
+    private EditText mEditEmail;
+
     private ArrayList<ArrayList<String>> mAreas2;
 
     private ArrayList<ArrayList<ArrayList<String>>> mAreas3;
@@ -59,11 +98,17 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCompositeDisposable = new CompositeDisposable();
+        mDialog = new ProgressDialog(this);
+        mDialog.setCancelable(false);
+        mDialog.setCanceledOnTouchOutside(false);
         setContentView(R.layout.loan_auth_person_info_activity);
         mTextEducation = findViewById(R.id.text_education);
         mTextMarriage = findViewById(R.id.text_marriage);
         mTextRegisterCity = findViewById(R.id.text_register_city);
         mTextCity = findViewById(R.id.text_city);
+        mEditAddress = findViewById(R.id.edit_address);
+        mEditEmail = findViewById(R.id.edit_email);
         findViewById(R.id.layout_education).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +133,12 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 showCityPicker();
             }
         });
+        findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +146,13 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
             }
         });
         init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDialog.dismiss();
+        mCompositeDisposable.clear();
     }
 
     private void init() {
@@ -127,6 +185,55 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                     break;
             }
         }
+        // 网络请求获得已经存的数据
+        String phone = "";
+        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+        Cursor cursor = database.rawQuery("SELECT phone FROM user;", null);
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
+                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+            }
+            cursor.close();
+        }
+        PersonRequest request = new PersonRequest();
+        request.setPhone(phone);
+        Disposable disposable = Flowable.just(request)
+                .map(new RequestFunction<PersonRequest>())
+                .flatMap(new Function<Request<PersonRequest>, Publisher<Response<Person>>>() {
+                    @Override
+                    public Publisher<Response<Person>> apply(Request<PersonRequest> request) throws Exception {
+                        return LoanClient.INSTANCE.getService().person(request);
+                    }
+                })
+                .map(new ResponseFunction<Person>())
+                .compose(new ViewTransformer<Person>())
+                .subscribe(new Consumer<Person>() {
+                    @Override
+                    public void accept(Person person) throws Exception {
+                        for (int i = 0; i < mEducations.size(); i++) {
+                            if (mEducations.get(i).getKey().equals(person.getEducation())) {
+                                mEducations.get(i).setSelect(true);
+                                mOptionsEducation.setSelectOptions(i);
+                            }
+                        }
+                        for (int i = 0; i < mMarriages.size(); i++) {
+                            if (mMarriages.get(i).getKey().equals(person.getMarriage())) {
+                                mMarriages.get(i).setSelect(true);
+                                mOptionsMarriage.setSelectOptions(i);
+                            }
+                        }
+                        mTextRegisterCity.setText(person.getRegisterCity());
+                        mTextCity.setText(person.getCity());
+                        mEditAddress.setText(person.getAddress());
+                        mEditEmail.setText(person.getEmail());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Toast.makeText(LoanAuthPersonInfoActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        mCompositeDisposable.add(disposable);
     }
 
     private void transformArea(BufferedReader br, Gson gson) {
@@ -217,6 +324,7 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        mEducations.get(options1).setSelect(true);
                         mTextEducation.setText(mEducations.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
@@ -249,6 +357,7 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        mMarriages.get(options1).setSelect(true);
                         mTextMarriage.setText(mMarriages.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
@@ -288,5 +397,73 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
 
     private void showCityPicker() {
         mOptionsCity.show();
+    }
+
+    private void save() {
+        if (TextUtils.isEmpty(mTextEducation.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_education), Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mTextMarriage.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_marriage), Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mTextRegisterCity.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_register_city), Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mTextCity.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_city), Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mEditAddress.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_address), Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mEditEmail.getText().toString())) {
+            Toast.makeText(this, getString(R.string.error_loan_person_email), Toast.LENGTH_SHORT).show();
+        } else {
+            // 网络请求
+            SavePersonRequest request = new SavePersonRequest();
+            for (int i = 0; i < mEducations.size(); i++) {
+                if (mEducations.get(i).isSelect()) {
+                    request.setEducation(mEducations.get(i).getKey());
+                }
+            }
+            for (int i = 0; i < mMarriages.size(); i++) {
+                if (mMarriages.get(i).isSelect()) {
+                    request.setMarriage(mMarriages.get(i).getKey());
+                }
+            }
+            request.setRegisterCity(mTextRegisterCity.getText().toString());
+            request.setCity(mTextCity.getText().toString());
+            request.setAddress(mEditAddress.getText().toString());
+            request.setEmail(mEditEmail.getText().toString());
+            Disposable disposable = Flowable.just(request)
+                    .map(new RequestFunction<SavePersonRequest>())
+                    .flatMap(new Function<Request<SavePersonRequest>, Publisher<Response<ChildResponse>>>() {
+                        @Override
+                        public Publisher<Response<ChildResponse>> apply(Request<SavePersonRequest> request) throws Exception {
+                            return LoanClient.INSTANCE.getService().savePerson(request);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .doOnSubscribe(new Consumer<Subscription>() {
+                        @Override
+                        public void accept(Subscription subscription) throws Exception {
+                            mDialog.show();
+                        }
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Response<ChildResponse>>() {
+                        @Override
+                        public void accept(Response<ChildResponse> childResponseResponse) throws Exception {
+                            finish();
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            Logger.d(throwable.getMessage());
+                            mDialog.dismiss();
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            mDialog.dismiss();
+                        }
+                    });
+            mCompositeDisposable.add(disposable);
+        }
     }
 }
