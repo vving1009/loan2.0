@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 
 /**
@@ -26,7 +27,8 @@ public class MyCertificateFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.my_certificate_fragment, container, false);
+        return view;
     }
 
     @Override
