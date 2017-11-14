@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.view.main.MainActivity"
+            android:name=".view.view.launch.LaunchActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.view.main.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.LoanAuthActivity"
             android:screenOrientation="portrait" />
