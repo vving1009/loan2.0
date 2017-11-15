@@ -156,7 +156,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startSettingsView() {
-
+        Intent intent = new Intent(getContext(), OtherActivity.class);
+        intent.putExtra("view", "settings");
+        startActivity(intent);
     }
 
     private void startShareView() {

@@ -46,7 +46,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler);
         mAdapter = new Adapter(getActivity(), new OnClickCardListener() {
             @Override
             public void onClickCard(Product product) {
@@ -174,10 +174,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                     }
                 }
             });
-            mImgLabel = (ImageView) itemView.findViewById(R.id.img_label);
-            mTextAmount = (TextView) itemView.findViewById(R.id.text_amount);
-            mTextDeadline = (TextView) itemView.findViewById(R.id.text_deadline);
-            mTextPaymentMethod = (TextView) itemView.findViewById(R.id.text_payment_method);
+            mImgLabel = itemView.findViewById(R.id.img_label);
+            mTextAmount = itemView.findViewById(R.id.text_amount);
+            mTextDeadline = itemView.findViewById(R.id.text_deadline);
+            mTextPaymentMethod = itemView.findViewById(R.id.text_payment_method);
         }
 
         public void setListener(OnClickViewHolderListener listener) {
