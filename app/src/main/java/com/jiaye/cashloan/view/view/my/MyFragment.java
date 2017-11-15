@@ -47,10 +47,10 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.my_fragment, container, false);
-        mTextName = (TextView) root.findViewById(R.id.text_name);
-        mTextApproveNumber = (TextView) root.findViewById(R.id.text_approve_number);
-        mTextLoanNumber = (TextView) root.findViewById(R.id.text_loan_number);
-        mTextHistoryNumber = (TextView) root.findViewById(R.id.text_history_number);
+        mTextName = root.findViewById(R.id.text_name);
+        mTextApproveNumber = root.findViewById(R.id.text_approve_number);
+        mTextLoanNumber = root.findViewById(R.id.text_loan_number);
+        mTextHistoryNumber = root.findViewById(R.id.text_history_number);
         root.findViewById(R.id.text_my_certificate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,14 +129,14 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     @Override
     public void startMyCertificateView(User user) {
-        Intent intent = new Intent(getContext(), OtherActivity.class);
+        Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "certificate");
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
     private void startHelpView() {
-        Intent intent = new Intent(getContext(), OtherActivity.class);
+        Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "help");
         startActivity(intent);
     }
@@ -146,7 +146,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startAboutView() {
-        Intent intent = new Intent(getContext(), OtherActivity.class);
+        Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "about");
         startActivity(intent);
     }
@@ -156,7 +156,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startSettingsView() {
-        Intent intent = new Intent(getContext(), OtherActivity.class);
+        Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "settings");
         startActivity(intent);
     }

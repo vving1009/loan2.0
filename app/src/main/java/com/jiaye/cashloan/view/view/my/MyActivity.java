@@ -12,7 +12,13 @@ import com.jiaye.cashloan.view.view.my.certificate.MyCertificateFragment;
 import com.jiaye.cashloan.view.view.my.help.HelpFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 
-public class OtherActivity extends AppCompatActivity {
+/**
+ * MyActivity
+ *
+ * @author 贾博瑄
+ */
+
+public class MyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -59,7 +59,7 @@
             android:name=".view.view.auth.password.PasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.my.OtherActivity"
+            android:name=".view.view.my.MyActivity"
             android:screenOrientation="portrait" />
     </application>
 
