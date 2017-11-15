@@ -37,6 +37,7 @@
                 app:srcCompat="@drawable/me_ic_head_default" />
 
             <RelativeLayout
+                android:id="@+id/layout_my_certificate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/img_head"
@@ -45,7 +46,6 @@
                 android:layout_toRightOf="@id/img_head">
 
                 <TextView
-                    android:id="@+id/text_my_certificate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

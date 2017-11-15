@@ -51,7 +51,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         mTextApproveNumber = root.findViewById(R.id.text_approve_number);
         mTextLoanNumber = root.findViewById(R.id.text_loan_number);
         mTextHistoryNumber = root.findViewById(R.id.text_history_number);
-        root.findViewById(R.id.text_my_certificate).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.layout_my_certificate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.onClickMyCertificate();
