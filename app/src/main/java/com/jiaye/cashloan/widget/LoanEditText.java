@@ -132,10 +132,10 @@ public class LoanEditText extends RelativeLayout {
         int inputType = typedArray.getInt(R.styleable.LoanEditText_android_inputType, EditorInfo.TYPE_CLASS_TEXT);
         String hint = typedArray.getString(R.styleable.LoanEditText_android_hint);
         int maxlength = typedArray.getInt(R.styleable.LoanEditText_android_maxLength, -1);
-        int editHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_editHeight, (int) (44 * density));
+        int editHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_editHeight, (int) (50 * density));
         int errorHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_errorHeight, LayoutParams.WRAP_CONTENT);
         Drawable icon = typedArray.getDrawable(R.styleable.LoanEditText_icon);
-        int iconMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_iconMarginLeft, (int) (32 * density));
+        int iconMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_iconMarginLeft, (int) (25 * density));
         boolean isEnableVerification = typedArray.getBoolean(R.styleable.LoanEditText_enable_verification, false);
         int verificationType = typedArray.getInt(R.styleable.LoanEditText_verification_type, 0);
         boolean isRequestForce = typedArray.getBoolean(R.styleable.LoanEditText_request_force, false);
