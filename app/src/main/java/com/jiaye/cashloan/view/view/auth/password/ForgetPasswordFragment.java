@@ -36,8 +36,8 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.forget_password_fragment, container, false);
-        mEditPhone = (LoanEditText) root.findViewById(R.id.edit_phone);
-        mEditSmsVerificationCode = (LoanEditText) root.findViewById(R.id.edit_sms_verification_code);
+        mEditPhone = root.findViewById(R.id.edit_phone);
+        mEditSmsVerificationCode = root.findViewById(R.id.edit_sms_verification_code);
         root.findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

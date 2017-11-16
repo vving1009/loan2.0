@@ -36,8 +36,8 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.change_password_fragment, container, false);
-        mEditPassword = (LoanEditText) root.findViewById(R.id.edit_password);
-        mEditPasswordSecond = (LoanEditText) root.findViewById(R.id.edit_password_second);
+        mEditPassword = root.findViewById(R.id.edit_password);
+        mEditPasswordSecond = root.findViewById(R.id.edit_password_second);
         root.findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

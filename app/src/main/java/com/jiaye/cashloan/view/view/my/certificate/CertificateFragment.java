@@ -10,16 +10,16 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 
 /**
- * MyCertificateFragment
+ * CertificateFragment
  *
  * @author 贾博瑄
  */
 
-public class MyCertificateFragment extends BaseFragment {
+public class CertificateFragment extends BaseFragment {
 
-    public static MyCertificateFragment newInstance() {
+    public static CertificateFragment newInstance() {
         Bundle args = new Bundle();
-        MyCertificateFragment fragment = new MyCertificateFragment();
+        CertificateFragment fragment = new CertificateFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -27,7 +27,7 @@ public class MyCertificateFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_certificate_fragment, container, false);
+        View view = inflater.inflate(R.layout.certificate_fragment, container, false);
         return view;
     }
 

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.view.my.about.AboutFragment;
-import com.jiaye.cashloan.view.view.my.certificate.MyCertificateFragment;
+import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
 import com.jiaye.cashloan.view.view.my.help.HelpFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 
@@ -23,7 +23,7 @@ public class MyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.other_activity);
+        setContentView(R.layout.my_activity);
         TextView textView = findViewById(R.id.text_title);
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class MyActivity extends AppCompatActivity {
         switch (view) {
             case "certificate":
                 textView.setText(R.string.my_certificate);
-                MyCertificateFragment myCertificateFragment = MyCertificateFragment.newInstance();
+                CertificateFragment myCertificateFragment = CertificateFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, myCertificateFragment).commit();
                 break;
             case "help":
