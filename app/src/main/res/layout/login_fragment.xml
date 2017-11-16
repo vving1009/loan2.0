@@ -14,13 +14,13 @@
         android:gravity="center"
         android:text="@string/login_title"
         android:textColor="@color/color_black"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/color_gray_light" />
+        android:layout_height="2px"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_gray" />
 
     <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_phone"
@@ -31,15 +31,16 @@
         android:hint="@string/input_phone"
         android:inputType="phone"
         android:maxLength="11"
-        app:icon="@drawable/auth_ic_phone" />
+        app:icon="@drawable/auth_ic_phone"
+        app:request_force="true" />
 
     <com.jiaye.cashloan.widget.LoanEditText
-        android:layout_marginTop="-10dp"
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="-10dp"
         android:hint="@string/input_password"
         android:inputType="textPassword"
         app:icon="@drawable/auth_ic_password" />

@@ -164,7 +164,7 @@ public class LoanEditText extends RelativeLayout {
             mEditText.setFilters(new InputFilter[0]);
         }
         mEditText.setMaxLines(1);
-        mEditText.setTextSize(12);
+        mEditText.setTextSize(13);
         mEditText.setTextColor(getResources().getColor(R.color.color_black));
         mEditText.setHintTextColor(getResources().getColor(R.color.color_gray_holo));
         mEditText.setBackgroundResource(0);
@@ -184,6 +184,7 @@ public class LoanEditText extends RelativeLayout {
                     mTextVerification.setTextSize(12);
                     mTextVerification.setTextColor(getResources().getColor(R.color.color_blue_dark));
                     mTextVerification.setText(getResources().getString(R.string.send_verification_code));
+                    mTextVerification.setGravity(Gravity.CENTER);
                     mTextVerification.setBackgroundDrawable(getResources().getDrawable(R.drawable.loan_btn_verification));
                     mTextVerification.setOnClickListener(new OnClickListener() {
                         @Override

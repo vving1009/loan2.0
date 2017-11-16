@@ -10,24 +10,24 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="48dp"
         android:gravity="center"
         android:text="@string/register_title"
         android:textColor="@color/color_black"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@color/color_gray_light" />
+        android:layout_height="2px"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_gray" />
 
     <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:hint="@string/input_phone"
         android:inputType="phone"
         android:maxLength="11"
@@ -38,8 +38,9 @@
         android:id="@+id/edit_img_verification_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="-10dp"
         android:hint="@string/input_img_verification"
         app:enable_verification="true"
         app:icon="@drawable/auth_ic_img"
@@ -49,8 +50,9 @@
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="-10dp"
         android:hint="@string/input_password"
         android:inputType="textPassword"
         app:icon="@drawable/auth_ic_password" />
@@ -59,8 +61,9 @@
         android:id="@+id/edit_sms_verification_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="-10dp"
         android:hint="@string/input_sms_verification"
         android:inputType="number"
         android:maxLength="4"
@@ -71,8 +74,9 @@
         android:id="@+id/edit_referral_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="-10dp"
         android:hint="@string/input_referral"
         android:inputType="phone"
         android:maxLength="11"
@@ -81,8 +85,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp">
+        android:layout_marginTop="6dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <TextView
             android:id="@+id/text_login"
@@ -90,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login_login"
             android:textColor="@color/color_orange"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/text_forget_password"
@@ -99,28 +104,28 @@
             android:layout_alignParentRight="true"
             android:text="@string/forget_password"
             android:textColor="@color/color_orange"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_register"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginBottom="18dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/loan_btn"
         android:enabled="true"
         android:text="@string/register_now"
         android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="7dp"
         android:orientation="horizontal">
 
         <CheckBox
@@ -128,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="3dp"
             android:button="@drawable/loan_checkbox"
             android:checked="true" />
 
@@ -142,17 +147,4 @@
             android:textSize="8sp" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/img_treasure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/login_ic_treasure" />
-    </RelativeLayout>
 </LinearLayout>
