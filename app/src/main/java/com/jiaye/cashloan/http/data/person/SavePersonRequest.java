@@ -11,6 +11,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SavePersonRequest extends ChildRequest {
 
+    /*手机号*/
     @SerializedName("tel_phone")
     private String phone;
 

@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.view.my.about.AboutFragment;
+import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
+import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
+import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
+import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
+import com.jiaye.cashloan.view.view.my.certificate.taobao.TaoBaoFragment;
 import com.jiaye.cashloan.view.view.my.help.HelpFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 
@@ -36,8 +41,33 @@ public class MyActivity extends AppCompatActivity {
         switch (view) {
             case "certificate":
                 textView.setText(R.string.my_certificate);
-                CertificateFragment myCertificateFragment = CertificateFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, myCertificateFragment).commit();
+                CertificateFragment certificateFragment = CertificateFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, certificateFragment).commit();
+                break;
+            case "certificate_bank":
+                textView.setText(R.string.my_certificate_bank);
+                BankFragment bankFragment = BankFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, bankFragment).commit();
+                break;
+            case "certificate_id_card":
+                textView.setText(R.string.my_certificate_id_card);
+                IdCardFragment idCardFragment = IdCardFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, idCardFragment).commit();
+                break;
+            case "certificate_info":
+                textView.setText(R.string.my_certificate_info);
+                InfoFragment infoFragment = InfoFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, infoFragment).commit();
+                break;
+            case "certificate_operator":
+                textView.setText(R.string.my_certificate_operator);
+                OperatorFragment operatorFragment = OperatorFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, operatorFragment).commit();
+                break;
+            case "certificate_taobao":
+                textView.setText(R.string.my_certificate_taobao);
+                TaoBaoFragment taoBaoFragment = TaoBaoFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, taoBaoFragment).commit();
                 break;
             case "help":
                 textView.setText(R.string.my_help);

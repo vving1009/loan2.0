@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.jiaye.cashloan.persistence.DbHelper;
+import com.jiaye.cashloan.persistence.PreferencesHelper;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -27,6 +28,8 @@ public class LoanApplication extends Application {
 
     private SQLiteDatabase mDatabase;
 
+    private PreferencesHelper mPreferencesHelper;
+
     public static LoanApplication getInstance() {
         return mInstance;
     }
@@ -41,6 +44,7 @@ public class LoanApplication extends Application {
                 if (mActivityNumber == 0) {
                     DbHelper dbHelper = new DbHelper(getApplicationContext());
                     mDatabase = dbHelper.getWritableDatabase();
+                    mPreferencesHelper = new PreferencesHelper(getApplicationContext());
                 }
                 mActivityNumber++;
             }
@@ -88,6 +92,10 @@ public class LoanApplication extends Application {
      */
     public SQLiteDatabase getSQLiteDatabase() {
         return mDatabase;
+    }
+
+    public PreferencesHelper getPreferencesHelper() {
+        return mPreferencesHelper;
     }
 
     /*setup Logger*/
