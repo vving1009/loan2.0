@@ -24,7 +24,6 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     public LoanPresenter(LoanContract.View view, LoanDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 
@@ -43,6 +42,7 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void requestProduct() {
+        mCompositeDisposable.clear();
         Disposable disposable = mDataSource.requestProduct()
                 .compose(new ViewTransformer<Product>(mView))
                 .subscribe(new Consumer<Product>() {

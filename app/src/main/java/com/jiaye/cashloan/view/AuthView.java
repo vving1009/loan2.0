@@ -6,7 +6,7 @@ package com.jiaye.cashloan.view;
  * @author 贾博瑄
  */
 
-public interface AuthView<T> extends BaseView<T> {
+public interface AuthView extends BaseViewContract {
 
     void startAuthView();
 }

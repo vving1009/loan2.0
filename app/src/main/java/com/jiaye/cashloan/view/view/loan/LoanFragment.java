@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.home.Product;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.loan.source.LoanRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 
 /**
@@ -22,11 +23,6 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
 
     private LoanContract.Presenter mPresenter;
 
-    /**
-     * 产品编号
-     *
-     * @return LoanFragment
-     */
     public static LoanFragment newInstance() {
         Bundle args = new Bundle();
         LoanFragment fragment = new LoanFragment();
@@ -44,24 +40,15 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
                 mPresenter.loan();
             }
         });
+        mPresenter = new LoanPresenter(this, new LoanRepository());
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void setPresenter(LoanContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

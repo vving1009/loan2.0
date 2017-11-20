@@ -36,7 +36,6 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
 
     public RegisterPresenter(RegisterContract.View view, RegisterDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 

@@ -22,6 +22,6 @@ public abstract class BasePresenterImpl implements BasePresenter {
 
     @Override
     public void unsubscribe() {
-        mCompositeDisposable.clear();
+        mCompositeDisposable.dispose();
     }
 }

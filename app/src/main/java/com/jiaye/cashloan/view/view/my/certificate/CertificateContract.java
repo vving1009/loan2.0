@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.view.my.certificate;
 
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.BaseView;
+import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
  * CertificateContract
@@ -11,7 +11,7 @@ import com.jiaye.cashloan.view.BaseView;
 
 public interface CertificateContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseViewContract {
 
         /**
          * 显示银行卡信息页面

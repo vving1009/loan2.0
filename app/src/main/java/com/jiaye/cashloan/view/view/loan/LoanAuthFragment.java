@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
+import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity;
@@ -130,13 +131,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
             }
         });
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
+        return root;
     }
 
     @Override
@@ -146,14 +143,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void setPresenter(LoanAuthContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

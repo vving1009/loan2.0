@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.home.Product;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.home.source.HomeRepository;
 import com.jiaye.cashloan.view.view.main.MainFragment;
 
 import java.util.List;
@@ -55,18 +56,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(mAdapter);
+        mPresenter = new HomePresenter(this, new HomeRepository());
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void setPresenter(HomeContract.Presenter presenter) {
-        mPresenter = presenter;
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
     }
 
     @Override
@@ -78,7 +76,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void startLoanView() {
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.layout_content);
         if (fragment != null && fragment instanceof MainFragment) {
-            ((MainFragment) fragment).setLoanView();
+            ((MainFragment) fragment).showLoanView();
         }
     }
 

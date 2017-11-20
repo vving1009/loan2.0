@@ -90,11 +90,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     }
 
     @Override
-    public void setPresenter(CertificateContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void showBankView() {
         Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view","certificate_bank");

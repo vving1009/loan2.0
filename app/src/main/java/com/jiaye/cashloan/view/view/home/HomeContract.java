@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.home;
 
 import com.jiaye.cashloan.http.data.home.Product;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.BaseView;
+import com.jiaye.cashloan.view.BaseViewContract;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class HomeContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseViewContract {
 
         /**
          * 设置产品列表

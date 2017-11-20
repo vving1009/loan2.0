@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.data.auth.login.source.LoginRepository;
 import com.jiaye.cashloan.view.view.auth.login.LoginFragment;
-import com.jiaye.cashloan.view.view.auth.login.LoginPresenter;
 
 /**
  * AuthActivity
@@ -25,6 +23,5 @@ public class AuthActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         LoginFragment fragment = LoginFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
-        new LoginPresenter(fragment, new LoginRepository());
     }
 }

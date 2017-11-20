@@ -22,6 +22,5 @@ public class PasswordActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         ForgetPasswordFragment fragment = ForgetPasswordFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
-        new ForgetPasswordPresenter(fragment);
     }
 }

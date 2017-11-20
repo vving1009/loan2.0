@@ -31,7 +31,6 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 

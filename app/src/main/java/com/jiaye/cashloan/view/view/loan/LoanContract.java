@@ -12,7 +12,7 @@ import com.jiaye.cashloan.view.BasePresenter;
 
 public class LoanContract {
 
-    interface View extends AuthView<Presenter> {
+    interface View extends AuthView {
 
         /**
          * 查询产品信息

@@ -28,7 +28,6 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
 
     public ForgetPasswordPresenter(ForgetPasswordContract.View view) {
         mView = view;
-        mView.setPresenter(this);
     }
 
     @Override

@@ -51,18 +51,14 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
                 mPresenter.save();
             }
         });
+        mPresenter = new ChangePasswordPresenter(this);
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
     }
 
@@ -79,11 +75,6 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
                 super.showToastById(resId);
                 break;
         }
-    }
-
-    @Override
-    public void setPresenter(ChangePasswordContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

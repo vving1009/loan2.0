@@ -58,18 +58,14 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
                 mPresenter.verificationCode();
             }
         });
+        mPresenter = new ForgetPasswordPresenter(this);
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
     }
 
@@ -86,11 +82,6 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
                 super.showToastById(resId);
                 break;
         }
-    }
-
-    @Override
-    public void setPresenter(ForgetPasswordContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
@@ -113,7 +104,6 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
         FragmentManager fragmentManager = getFragmentManager();
         ChangePasswordFragment fragment = ChangePasswordFragment.newInstance(mEditPhone.getText().toString());
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
-        new ChangePasswordPresenter(fragment);
     }
 
     /*清除错误信息*/

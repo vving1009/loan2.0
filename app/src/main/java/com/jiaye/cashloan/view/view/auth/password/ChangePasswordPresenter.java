@@ -28,7 +28,6 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
 
     public ChangePasswordPresenter(ChangePasswordContract.View view) {
         mView = view;
-        mView.setPresenter(this);
     }
 
     @Override

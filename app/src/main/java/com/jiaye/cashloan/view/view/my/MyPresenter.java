@@ -22,7 +22,6 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
 
     public MyPresenter(MyContract.View view, MyDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 

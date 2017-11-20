@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 
 /**
@@ -93,24 +94,15 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 startShareView();
             }
         });
+        mPresenter = new MyPresenter(this, new MyRepository());
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void setPresenter(MyContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

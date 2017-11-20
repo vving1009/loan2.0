@@ -29,7 +29,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     public LoanAuthPresenter(LoanAuthContract.View view, LoanAuthDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 

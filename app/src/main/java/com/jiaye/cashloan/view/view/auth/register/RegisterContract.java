@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.view.auth.register;
 
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.BaseView;
+import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
  * RegisterContract
@@ -11,7 +11,7 @@ import com.jiaye.cashloan.view.BaseView;
 
 public class RegisterContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseViewContract {
 
         /**
          * 获取手机号

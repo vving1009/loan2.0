@@ -14,15 +14,9 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.home.source.HomeRepository;
-import com.jiaye.cashloan.view.data.loan.source.LoanRepository;
-import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.home.HomeFragment;
-import com.jiaye.cashloan.view.view.home.HomePresenter;
 import com.jiaye.cashloan.view.view.loan.LoanFragment;
-import com.jiaye.cashloan.view.view.loan.LoanPresenter;
 import com.jiaye.cashloan.view.view.my.MyFragment;
-import com.jiaye.cashloan.view.view.my.MyPresenter;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 /**
@@ -37,14 +31,14 @@ public class MainFragment extends BaseFragment {
 
     private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.loan, R.string.my};
 
+    private NoScrollViewPager mViewPager;
+
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
-    private NoScrollViewPager mViewPager;
 
     @Nullable
     @Override
@@ -64,7 +58,7 @@ public class MainFragment extends BaseFragment {
                     case 2:
                         return myView();
                     default:
-                        return homeView();
+                        return null;
                 }
             }
 
@@ -86,8 +80,8 @@ public class MainFragment extends BaseFragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 1) {
-                    String name = "android:switcher:" + mViewPager.getId() + ":" + "1";
-                    LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
+                    String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
+                    LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
                     fragment.requestProduct();
                 }
             }
@@ -105,29 +99,26 @@ public class MainFragment extends BaseFragment {
         return root;
     }
 
-    public void setLoanView() {
-        String name = "android:switcher:" + mViewPager.getId() + ":" + "1";
-        LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
+    /**
+     * 显示借款页面
+     */
+    public void showLoanView() {
+        String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
+        LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
         fragment.queryProduct();
         mViewPager.setCurrentItem(1, false);
     }
 
     private Fragment homeView() {
-        HomeFragment fragment = HomeFragment.newInstance();
-        new HomePresenter(fragment, new HomeRepository());
-        return fragment;
+        return HomeFragment.newInstance();
     }
 
     private Fragment loanView() {
-        LoanFragment fragment = LoanFragment.newInstance();
-        new LoanPresenter(fragment, new LoanRepository());
-        return fragment;
+        return LoanFragment.newInstance();
     }
 
     private Fragment myView() {
-        MyFragment fragment = MyFragment.newInstance();
-        new MyPresenter(fragment, new MyRepository());
-        return fragment;
+        return MyFragment.newInstance();
     }
 
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] icon, int[] text) {

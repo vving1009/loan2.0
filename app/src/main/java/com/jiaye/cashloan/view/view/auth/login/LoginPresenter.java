@@ -34,7 +34,6 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
 
     public LoginPresenter(LoginContract.View view, LoginDataSource dataSource) {
         mView = view;
-        mView.setPresenter(this);
         mDataSource = dataSource;
     }
 

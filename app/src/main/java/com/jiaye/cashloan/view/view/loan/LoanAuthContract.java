@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.BaseView;
+import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LoanAuthContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseViewContract {
 
         /**
          * 设置借款认证列表

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.auth.login.source.LoginRepository;
+import com.jiaye.cashloan.view.data.auth.register.source.RegisterRepository;
 import com.jiaye.cashloan.view.view.auth.login.LoginFragment;
 import com.jiaye.cashloan.view.view.auth.login.LoginPresenter;
 import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
@@ -96,18 +97,14 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                 showProtocolView();
             }
         });
+        mPresenter = new RegisterPresenter(this, new RegisterRepository());
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.subscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.unsubscribe();
     }
 
@@ -132,11 +129,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                 super.showToastById(resId);
                 break;
         }
-    }
-
-    @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

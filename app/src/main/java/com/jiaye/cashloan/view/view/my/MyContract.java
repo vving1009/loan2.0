@@ -12,7 +12,7 @@ import com.jiaye.cashloan.view.data.auth.User;
 
 public class MyContract {
 
-    interface View extends AuthView<Presenter> {
+    interface View extends AuthView {
 
         /**
          * 显示用户信息
