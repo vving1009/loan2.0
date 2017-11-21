@@ -17,27 +17,20 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ViewTransformer<Upstream> implements FlowableTransformer<Upstream, Upstream> {
 
-    private BaseViewContract mContract;
-
-    public ViewTransformer() {
-    }
-
-    public ViewTransformer(BaseViewContract contract) {
-        mContract = contract;
-    }
-
     @Override
     public Publisher<Upstream> apply(Flowable<Upstream> upstream) {
         return upstream.subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Subscription>() {
                     @Override
                     public void accept(Subscription subscription) throws Exception {
-                        if (mContract != null) {
-                            mContract.showProgressDialog();
-                        }
+                        ViewTransformer.this.accept();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public void accept() {
+
     }
 }

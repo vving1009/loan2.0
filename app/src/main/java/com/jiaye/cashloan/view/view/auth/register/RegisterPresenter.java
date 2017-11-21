@@ -52,7 +52,12 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             request.setStatus("0");
             Flowable.just(request)
                     .compose(new ResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
-                    .compose(new ViewTransformer<VerificationCode>(mView))
+                    .compose(new ViewTransformer<VerificationCode>() {
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .subscribe(new Consumer<VerificationCode>() {
                         @Override
                         public void accept(VerificationCode verificationCode) throws Exception {
@@ -86,7 +91,12 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             request.setReferralCode(mView.getReferralCode());
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<RegisterRequest, Register>("register"))
-                    .compose(new ViewTransformer<Register>(mView))
+                    .compose(new ViewTransformer<Register>(){
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .map(new Function<Register, Register>() {
                         @Override
                         public Register apply(Register register) throws Exception {

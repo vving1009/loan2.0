@@ -49,7 +49,12 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
             request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<LoginRequest, Login>("login"))
-                    .compose(new ViewTransformer<Login>(mView))
+                    .compose(new ViewTransformer<Login>(){
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .map(new Function<Login, Login>() {
                         @Override
                         public Login apply(Login login) throws Exception {

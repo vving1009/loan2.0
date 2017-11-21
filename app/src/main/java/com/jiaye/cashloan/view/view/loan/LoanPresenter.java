@@ -29,8 +29,15 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void queryProduct() {
+        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
+        mCompositeDisposable.clear();
         Disposable disposable = mDataSource.queryProduct()
-                .compose(new ViewTransformer<Product>(mView))
+                .compose(new ViewTransformer<Product>() {
+                    @Override
+                    public void accept() {
+                        mView.cleanProduct();
+                    }
+                })
                 .subscribe(new Consumer<Product>() {
                     @Override
                     public void accept(Product product) throws Exception {
@@ -42,9 +49,15 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void requestProduct() {
+        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
         mCompositeDisposable.clear();
         Disposable disposable = mDataSource.requestProduct()
-                .compose(new ViewTransformer<Product>(mView))
+                .compose(new ViewTransformer<Product>() {
+                    @Override
+                    public void accept() {
+                        mView.cleanProduct();
+                    }
+                })
                 .subscribe(new Consumer<Product>() {
                     @Override
                     public void accept(Product product) throws Exception {
@@ -56,6 +69,8 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void loan() {
+        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
+        mCompositeDisposable.clear();
         Disposable disposable = mDataSource
                 .queryUser()
                 .subscribe(new Consumer<User>() {

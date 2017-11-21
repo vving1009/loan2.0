@@ -24,7 +24,7 @@ public class HomeContract {
         /**
          * 显示借款页面
          */
-        void startLoanView();
+        void showLoanView();
     }
 
     interface Presenter extends BasePresenter {

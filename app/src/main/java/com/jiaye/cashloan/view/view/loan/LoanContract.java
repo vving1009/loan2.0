@@ -25,6 +25,11 @@ public class LoanContract {
         void requestProduct();
 
         /**
+         * 清空产品信息
+         */
+        void cleanProduct();
+
+        /**
          * 设置产品信息
          */
         void setProduct(Product product);

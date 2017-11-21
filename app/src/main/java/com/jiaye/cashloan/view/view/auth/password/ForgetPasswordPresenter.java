@@ -40,7 +40,12 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             request.setStatus("2");
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
-                    .compose(new ViewTransformer<VerificationCode>(mView))
+                    .compose(new ViewTransformer<VerificationCode>() {
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .subscribe(new Consumer<VerificationCode>() {
                         @Override
                         public void accept(VerificationCode verificationCode) throws Exception {
@@ -63,7 +68,12 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>("checkForgetPasswordVerificationCode"))
-                    .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>(mView))
+                    .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>(){
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .subscribe(new Consumer<CheckForgetPasswordVerificationCode>() {
                         @Override
                         public void accept(CheckForgetPasswordVerificationCode checkForgetPasswordVerificationCode) throws Exception {

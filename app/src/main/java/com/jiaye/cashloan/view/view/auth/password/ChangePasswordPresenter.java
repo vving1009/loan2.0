@@ -43,7 +43,12 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
             request.setStatus("1");
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<ChangePasswordRequest, ChangePassword>("changePassword"))
-                    .compose(new ViewTransformer<ChangePassword>(mView))
+                    .compose(new ViewTransformer<ChangePassword>(){
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .subscribe(new Consumer<ChangePassword>() {
                         @Override
                         public void accept(ChangePassword changePassword) throws Exception {

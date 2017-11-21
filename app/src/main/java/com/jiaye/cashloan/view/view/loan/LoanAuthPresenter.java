@@ -35,7 +35,12 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     @Override
     public void requestLoanAuth() {
         mDataSource.requestLoanAuth()
-                .compose(new ViewTransformer<LoanAuth>(mView))
+                .compose(new ViewTransformer<LoanAuth>(){
+                    @Override
+                    public void accept() {
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(new Consumer<LoanAuth>() {
                     @Override
                     public void accept(LoanAuth loanAuth) throws Exception {

@@ -73,7 +73,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    public void startLoanView() {
+    public void showLoanView() {
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.layout_content);
         if (fragment != null && fragment instanceof MainFragment) {
             ((MainFragment) fragment).showLoanView();

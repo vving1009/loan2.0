@@ -40,7 +40,12 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
         ProductRequest request = new ProductRequest();
         Disposable disposable = Flowable.just(request)
                 .compose(new ResponseTransformer<ProductRequest, ProductList>("productList"))
-                .compose(new ViewTransformer<ProductList>(mView))
+                .compose(new ViewTransformer<ProductList>() {
+                    @Override
+                    public void accept() {
+                        mView.showProgressDialog();
+                    }
+                })
                 .map(new Function<ProductList, List<Product>>() {
                     @Override
                     public List<Product> apply(ProductList productList) throws Exception {
@@ -69,11 +74,16 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     public void selectProduct(Product product) {
         if (product.getIsOpen().equals("1")) {
             Disposable disposable = mDataSource.addProduct(product)
-                    .compose(new ViewTransformer<Product>(mView))
+                    .compose(new ViewTransformer<Product>() {
+                        @Override
+                        public void accept() {
+                            mView.showProgressDialog();
+                        }
+                    })
                     .subscribe(new Consumer<Product>() {
                         @Override
                         public void accept(Product product) throws Exception {
-                            mView.startLoanView();
+                            mView.showLoanView();
                         }
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);

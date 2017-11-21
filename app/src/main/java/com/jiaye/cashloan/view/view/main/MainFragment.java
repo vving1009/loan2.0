@@ -33,6 +33,9 @@ public class MainFragment extends BaseFragment {
 
     private NoScrollViewPager mViewPager;
 
+    /*是否为选中的产品*/
+    private boolean mIsSelect;
+
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
         MainFragment fragment = new MainFragment();
@@ -52,11 +55,11 @@ public class MainFragment extends BaseFragment {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return homeView();
+                        return HomeFragment.newInstance();
                     case 1:
-                        return loanView();
+                        return LoanFragment.newInstance();
                     case 2:
-                        return myView();
+                        return MyFragment.newInstance();
                     default:
                         return null;
                 }
@@ -82,7 +85,12 @@ public class MainFragment extends BaseFragment {
                 if (tab.getPosition() == 1) {
                     String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
                     LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
-                    fragment.requestProduct();
+                    if (mIsSelect) {
+                        mIsSelect = false;
+                        fragment.queryProduct();
+                    } else {
+                        fragment.requestProduct();
+                    }
                 }
             }
 
@@ -103,22 +111,8 @@ public class MainFragment extends BaseFragment {
      * 显示借款页面
      */
     public void showLoanView() {
-        String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
-        LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
-        fragment.queryProduct();
+        mIsSelect = true;
         mViewPager.setCurrentItem(1, false);
-    }
-
-    private Fragment homeView() {
-        return HomeFragment.newInstance();
-    }
-
-    private Fragment loanView() {
-        return LoanFragment.newInstance();
-    }
-
-    private Fragment myView() {
-        return MyFragment.newInstance();
     }
 
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] icon, int[] text) {
