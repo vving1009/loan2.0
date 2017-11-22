@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,15 +21,9 @@ import com.jiaye.cashloan.http.tongdun.TongDunResponse;
 import com.jiaye.cashloan.http.tongdun.TongDunResponseFunction;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
+import com.jph.takephoto.app.TakePhotoAppCompatActivity;
 import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.orhanobut.logger.Logger;
 
 import org.reactivestreams.Publisher;
@@ -48,13 +41,9 @@ import io.reactivex.functions.Function;
  * @author 贾博瑄
  */
 
-public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.TakeResultListener, InvokeListener {
+public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity {
 
     public static final int REQUEST_OCR = 201;
-
-    private TakePhoto takePhoto;
-
-    private InvokeParam invokeParam;
 
     private ImageView mImgFront;
 
@@ -72,12 +61,11 @@ public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_ocr_activity);
-        mBtnCommit = (Button) findViewById(R.id.btn_commit);
-        mImgFront = (ImageView) findViewById(R.id.img_card_front);
-        mImgBack = (ImageView) findViewById(R.id.img_card_back);
+        mBtnCommit = findViewById(R.id.btn_commit);
+        mImgFront = findViewById(R.id.img_card_front);
+        mImgBack = findViewById(R.id.img_card_back);
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,25 +125,6 @@ public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        getTakePhoto().onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
-    }
-
-    @Override
     public void takeSuccess(TResult result) {
         Logger.d(result.getImage().getCompressPath());
         BitmapDrawable drawable = new BitmapDrawable(getResources(), result.getImage().getCompressPath());
@@ -172,32 +141,6 @@ public class LoanAuthOCRActivity extends AppCompatActivity implements TakePhoto.
         if (!TextUtils.isEmpty(mFront) && !TextUtils.isEmpty(mBack)) {
             mBtnCommit.setEnabled(true);
         }
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-        Logger.d(msg);
-    }
-
-    @Override
-    public void takeCancel() {
-        Logger.d(getResources().getString(com.jph.takephoto.R.string.msg_operation_canceled));
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
-    }
-
-    private TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
     }
 
     private void commit() {
