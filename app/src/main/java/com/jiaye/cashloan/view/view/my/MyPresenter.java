@@ -42,7 +42,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
-                mView.startMyCertificateView(user);
+                mView.showMyCertificateView(user);
             }
         }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

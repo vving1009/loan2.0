@@ -22,11 +22,11 @@ public class MyContract {
         void showUserInfo(User user);
 
         /**
-         * 开启我的认证页面
+         * 显示我的认证页面
          *
          * @param user 用户信息
          */
-        void startMyCertificateView(User user);
+        void showMyCertificateView(User user);
     }
 
     interface Presenter extends BasePresenter {

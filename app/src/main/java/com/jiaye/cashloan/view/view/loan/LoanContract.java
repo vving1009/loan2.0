@@ -37,7 +37,7 @@ public class LoanContract {
         /**
          * 显示借款认证页面
          */
-        void startLoanAuthView();
+        void showLoanAuthView();
     }
 
     interface Presenter extends BasePresenter {

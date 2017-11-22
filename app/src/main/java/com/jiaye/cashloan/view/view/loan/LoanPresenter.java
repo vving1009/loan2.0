@@ -76,7 +76,7 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
                 .subscribe(new Consumer<User>() {
                     @Override
                     public void accept(User user) throws Exception {
-                        mView.startLoanAuthView();
+                        mView.showLoanAuthView();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

@@ -84,7 +84,7 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
     }
 
     @Override
-    public void startLoanAuthView() {
+    public void showLoanAuthView() {
         Intent intent = new Intent(getActivity(), LoanAuthActivity.class);
         getActivity().startActivity(intent);
     }

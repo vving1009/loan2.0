@@ -96,15 +96,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 }
             }
             if (grant) {
-                Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
-                startActivity(intent);
+                showLoanAuthOCRGranted();
             } else {
-                showToastById(R.string.error_loan_auth_camera);
+                showToastById(R.string.error_loan_auth_camera_and_write);
             }
         } else if (requestCode == REQUEST_FACE_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
-                startActivity(intent);
+                showLoanAuthFaceGranted();
             } else {
                 showToastById(R.string.error_loan_auth_camera);
             }
@@ -154,7 +152,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void startLoanAuthOCRView() {
+    public void showLoanAuthOCRView() {
         boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
         boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
         if (requestCamera && requestWrite) {
@@ -164,43 +162,51 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         } else if (requestWrite) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_OCR_PERMISSION);
         } else {
-            Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
-            startActivityForResult(intent, REQUEST_FACE);
+            showLoanAuthOCRGranted();
         }
     }
 
     @Override
-    public void startLoanAuthFaceView() {
+    public void showLoanAuthFaceView() {
         if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_FACE_PERMISSION);
         } else {
-            Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
-            startActivityForResult(intent, REQUEST_FACE);
+            showLoanAuthFaceGranted();
         }
     }
 
     @Override
-    public void startLoanAuthInfoView() {
+    public void showLoanAuthInfoView() {
         Intent intent = new Intent(getActivity(), LoanAuthInfoActivity.class);
         startActivityForResult(intent, REQUEST_INFO);
     }
 
     @Override
-    public void startLoanAuthPhoneView() {
+    public void showLoanAuthPhoneView() {
         Intent intent = new Intent(getActivity(), LoanAuthPhoneActivity.class);
         startActivityForResult(intent, REQUEST_PHONE);
     }
 
     @Override
-    public void startLoanAuthTaoBaoView() {
+    public void showLoanAuthTaoBaoView() {
         Intent intent = new Intent(getActivity(), LoanAuthTaoBaoActivity.class);
         startActivityForResult(intent, REQUEST_TAOBAO);
     }
 
     @Override
-    public void startLoanAuthSesameView() {
+    public void showLoanAuthSesameView() {
         Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
         startActivityForResult(intent, REQUEST_SESAME);
+    }
+
+    private void showLoanAuthOCRGranted() {
+        Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
+        startActivityForResult(intent, REQUEST_OCR);
+    }
+
+    private void showLoanAuthFaceGranted() {
+        Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
+        startActivityForResult(intent, REQUEST_FACE);
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

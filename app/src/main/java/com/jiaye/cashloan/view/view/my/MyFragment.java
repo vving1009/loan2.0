@@ -120,7 +120,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
-    public void startMyCertificateView(User user) {
+    public void showMyCertificateView(User user) {
         Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "certificate");
         intent.putExtra("user", user);

@@ -24,32 +24,32 @@ public class LoanAuthContract {
         /**
          * 显示借款身份证认证页面
          */
-        void startLoanAuthOCRView();
+        void showLoanAuthOCRView();
 
         /**
          * 显示借款活体认证页面
          */
-        void startLoanAuthFaceView();
+        void showLoanAuthFaceView();
 
         /**
          * 显示借款个人资料认证页面
          */
-        void startLoanAuthInfoView();
+        void showLoanAuthInfoView();
 
         /**
          * 显示借款手机认证页面
          */
-        void startLoanAuthPhoneView();
+        void showLoanAuthPhoneView();
 
         /**
          * 显示借款淘宝认证页面
          */
-        void startLoanAuthTaoBaoView();
+        void showLoanAuthTaoBaoView();
 
         /**
          * 显示借款芝麻信用认证页面
          */
-        void startLoanAuthSesameView();
+        void showLoanAuthSesameView();
     }
 
     interface Presenter extends BasePresenter {
