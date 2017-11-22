@@ -108,7 +108,7 @@
     <string name="input_img_verification">请输入图片验证码</string>
     <string name="input_sms_verification">请输入手机验证码</string>
     <string name="input_referral">请输入推荐码（如有填写）</string>
-    <string name="read_protocol">我已阅读并同意《注册协议》</string>
+    <string name="read_protocol">我已阅读并同意《授权委托书》</string>
     <!--password-->
     <string name="forget_password_title">忘记密码</string>
     <string name="next">下一步</string>

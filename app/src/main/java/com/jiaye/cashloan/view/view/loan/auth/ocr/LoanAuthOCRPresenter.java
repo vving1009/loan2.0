@@ -126,7 +126,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
                         return tongDunOCRBack;
                     }
                 })
-                // 网络请求
+                // TODO: 2017/11/22 查询数据库生成Request请求网络[服务器尚未提供接口]
                 .compose(new ViewTransformer<TongDunOCRBack>())
                 .subscribe(new Consumer<TongDunOCRBack>() {
                     @Override

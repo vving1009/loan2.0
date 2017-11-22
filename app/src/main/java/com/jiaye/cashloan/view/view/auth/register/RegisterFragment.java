@@ -63,7 +63,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         mCheckBox = (CheckBox) root.findViewById(R.id.checkbox);
         TextView textAgree = (TextView) root.findViewById(R.id.text_agree);
         SpannableString string = new SpannableString(getString(R.string.read_protocol));
-        string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_orange)), 7, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_orange)), 7, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textAgree.setText(string);
         root.findViewById(R.id.text_login).setOnClickListener(new View.OnClickListener() {
             @Override
