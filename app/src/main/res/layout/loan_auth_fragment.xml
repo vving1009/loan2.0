@@ -57,7 +57,7 @@
             android:enabled="false"
             android:text="@string/next"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
