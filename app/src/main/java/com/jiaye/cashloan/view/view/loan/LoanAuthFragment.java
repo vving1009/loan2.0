@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -21,9 +20,9 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity;
+import com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
@@ -31,9 +30,9 @@ import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
 import java.util.List;
 
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity.REQUEST_INFO;
+import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthOCRActivity.REQUEST_OCR;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity.REQUEST_PHONE;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity.REQUEST_SESAME;
 import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
@@ -90,7 +89,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_OCR_PERMISSION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            boolean grant = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    grant = false;
+                }
+            }
+            if (grant) {
                 Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
                 startActivity(intent);
             } else {
@@ -110,13 +115,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.loan_auth_fragment, container, false);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler);
-        mAdapter = new Adapter(getActivity(), new OnClickCardListener() {
-            @Override
-            public void onClickCard(LoanAuthModel model) {
-                mPresenter.selectLoanAuthModel(model);
-            }
-        });
+        RecyclerView recyclerView = root.findViewById(R.id.recycler);
+        mAdapter = new Adapter();
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(mAdapter);
         root.findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
@@ -155,8 +155,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void startLoanAuthOCRView() {
-        if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+        boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+        if (requestCamera && requestWrite) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_OCR_PERMISSION);
+        } else if (requestCamera) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_OCR_PERMISSION);
+        } else if (requestWrite) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_OCR_PERMISSION);
         } else {
             Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
             startActivityForResult(intent, REQUEST_FACE);
@@ -197,27 +203,18 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         startActivityForResult(intent, REQUEST_SESAME);
     }
 
-    private static class Adapter extends RecyclerView.Adapter<ViewHolder> {
-
-        private Context mContext;
-
-        private OnClickCardListener mListener;
+    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<LoanAuthModel> mList;
 
-        public Adapter(Context context, OnClickCardListener listener) {
-            mContext = context;
-            mListener = listener;
-        }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.loan_auth_item, parent, false);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.loan_auth_item, parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
                 @Override
                 public void onClickViewHolder(ViewHolder viewHolder) {
-                    mListener.onClickCard(mList.get(viewHolder.getLayoutPosition()));
+                    mPresenter.selectLoanAuthModel(mList.get(viewHolder.getLayoutPosition()));
                 }
             });
             return viewHolder;
@@ -225,12 +222,12 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.setIcon(mContext.getResources().getDrawable(mList.get(position).getIcon()));
-            holder.setIconBackground(mContext.getResources().getDrawable(mList.get(position).getIcBackground()));
-            holder.setName(mContext.getResources().getText(mList.get(position).getName()).toString());
-            holder.setColor(mContext.getResources().getColor(mList.get(position).getColor()));
-            holder.setState(mContext.getResources().getDrawable(mList.get(position).getIcState()));
-            holder.setBackground(mContext.getResources().getDrawable(mList.get(position).getBackground()));
+            holder.setIcon(getResources().getDrawable(mList.get(position).getIcon()));
+            holder.setIconBackground(getResources().getDrawable(mList.get(position).getIcBackground()));
+            holder.setName(getResources().getText(mList.get(position).getName()).toString());
+            holder.setColor(getResources().getColor(mList.get(position).getColor()));
+            holder.setState(getResources().getDrawable(mList.get(position).getIcState()));
+            holder.setBackground(getResources().getDrawable(mList.get(position).getBackground()));
         }
 
         @Override
@@ -246,11 +243,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             mList = list;
             notifyDataSetChanged();
         }
-    }
-
-    private interface OnClickCardListener {
-
-        void onClickCard(LoanAuthModel model);
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
@@ -272,7 +264,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mLayout = (LinearLayout) itemView.findViewById(R.id.layout_card);
+            mLayout = itemView.findViewById(R.id.layout_card);
             mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -281,9 +273,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                     }
                 }
             });
-            mImgName = (ImageView) itemView.findViewById(R.id.img_name);
-            mText = (TextView) itemView.findViewById(R.id.text);
-            mImgState = (ImageView) itemView.findViewById(R.id.img_state);
+            mImgName = itemView.findViewById(R.id.img_name);
+            mText = itemView.findViewById(R.id.text);
+            mImgState = itemView.findViewById(R.id.img_state);
         }
 
         public void setListener(ViewHolder.OnClickViewHolderListener listener) {

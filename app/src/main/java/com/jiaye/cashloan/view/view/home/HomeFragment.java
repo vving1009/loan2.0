@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.home;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,12 +47,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recycler);
-        mAdapter = new Adapter(getActivity(), new OnClickCardListener() {
-            @Override
-            public void onClickCard(Product product) {
-                mPresenter.selectProduct(product);
-            }
-        });
+        mAdapter = new Adapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(mAdapter);
         mPresenter = new HomePresenter(this, new HomeRepository());
@@ -80,11 +74,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         }
     }
 
-    private static class Adapter extends RecyclerView.Adapter<ViewHolder> {
-
-        private Context mContext;
-
-        private OnClickCardListener mListener;
+    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<Product> mList;
 
@@ -92,21 +82,19 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         private String formatDeadline;
 
-        public Adapter(Context context, OnClickCardListener listener) {
-            mContext = context;
-            mListener = listener;
-            formatAmount = mContext.getString(R.string.home_card_amount);
-            formatDeadline = mContext.getString(R.string.home_card_deadline);
+        public Adapter() {
+            formatAmount = getString(R.string.home_card_amount);
+            formatDeadline = getString(R.string.home_card_deadline);
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.home_item, parent, false);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_item, parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
                 @Override
                 public void onClickViewHolder(ViewHolder viewHolder) {
-                    mListener.onClickCard(mList.get(viewHolder.getLayoutPosition()));
+                    mPresenter.selectProduct(mList.get(viewHolder.getLayoutPosition()));
                 }
             });
             return viewHolder;
@@ -115,7 +103,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setDrawable(mList.get(position).getLabelResId());
-            holder.setColor(mContext.getResources().getColor(mList.get(position).getColor()));
+            holder.setColor(getResources().getColor(mList.get(position).getColor()));
             String amount = String.format(formatAmount, mList.get(position).getAmount());
             SpannableString sp = new SpannableString(amount);
             sp.setSpan(new AbsoluteSizeSpan(12, true), 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -138,11 +126,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             mList = list;
             notifyDataSetChanged();
         }
-    }
-
-    private interface OnClickCardListener {
-
-        void onClickCard(Product product);
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
