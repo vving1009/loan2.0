@@ -7,10 +7,10 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
     defaultConfig {
-        applicationId "com.jiaye.loancash"
+        applicationId "com.jiaye.cashloan"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 3
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
@@ -33,9 +33,9 @@ android {
     signingConfigs {
         debug {
             keyAlias 'loan'
-            keyPassword 'com.jiaye.loancash'
+            keyPassword 'com.jiaye.cashloan'
             storeFile file('../key')
-            storePassword 'com.jiaye.loancash'
+            storePassword 'com.jiaye.cashloan'
         }
     }
     packagingOptions {
@@ -72,8 +72,4 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:3.2.6'
     // module
     implementation project(':tongdun')
-    // test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }

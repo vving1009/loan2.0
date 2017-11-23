@@ -116,7 +116,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         layout.findViewById(R.id.text_moments).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wx(SendMessageToWX.Req.WXSceneSession);
+                wx(SendMessageToWX.Req.WXSceneTimeline);
             }
         });
         layout.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
