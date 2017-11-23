@@ -94,6 +94,8 @@
     <string name="my_settings">个人设置</string>
     <string name="my_share">分享给朋友</string>
     <string name="my_wechat">微信好友</string>
+    <string name="my_wechat_title">年轻人的互联网钱包</string>
+    <string name="my_wechat_description">随时随地想借就借</string>
     <string name="my_moments">朋友圈</string>
     <string name="my_cancel">取消</string>
     <!--login-->

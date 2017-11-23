@@ -27,6 +27,11 @@ public class MyContract {
          * @param user 用户信息
          */
         void showMyCertificateView(User user);
+
+        /**
+         * 显示分享页面
+         */
+        void showShareView();
     }
 
     interface Presenter extends BasePresenter {
@@ -35,5 +40,20 @@ public class MyContract {
          * 点击我的认证
          */
         void onClickMyCertificate();
+
+        /**
+         * 分享
+         */
+        void share();
+
+        /**
+         * 分享到微信
+         */
+        void shareWeChat();
+
+        /**
+         * 分享到朋友圈
+         */
+        void shareMoments();
     }
 }

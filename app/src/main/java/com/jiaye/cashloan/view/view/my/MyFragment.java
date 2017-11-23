@@ -1,8 +1,6 @@
 package com.jiaye.cashloan.view.view.my;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -11,17 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.auth.User;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * MyFragment
@@ -48,11 +40,6 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         MyFragment fragment = new MyFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Nullable
@@ -102,7 +89,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         root.findViewById(R.id.layout_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startShareView();
+                mPresenter.share();
             }
         });
         mDialog = new BottomSheetDialog(getActivity());
@@ -110,13 +97,15 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         layout.findViewById(R.id.text_wechat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wx(SendMessageToWX.Req.WXSceneSession);
+                mDialog.dismiss();
+                mPresenter.shareWeChat();
             }
         });
         layout.findViewById(R.id.text_moments).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wx(SendMessageToWX.Req.WXSceneTimeline);
+                mDialog.dismiss();
+                mPresenter.shareMoments();
             }
         });
         layout.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
@@ -160,6 +149,11 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         startActivity(intent);
     }
 
+    @Override
+    public void showShareView() {
+        mDialog.show();
+    }
+
     private void startHelpView() {
         Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "help");
@@ -184,48 +178,5 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         Intent intent = new Intent(getContext(), MyActivity.class);
         intent.putExtra("view", "settings");
         startActivity(intent);
-    }
-
-    private void startShareView() {
-        mDialog.show();
-    }
-
-    private void wx(int type) {
-        WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "https://ssl.jiayecaifu.com:8022/JYCashLoanMServ/register/shareWeixin?referral_code=13752126558";
-        WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
-        msg.description = "WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
-        bmp.recycle();
-        msg.thumbData = bmpToByteArray(thumbBmp, true);
-
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("webpage");
-        req.message = msg;
-        req.scene = type;
-        LoanApplication.getInstance().getIWXAPI().sendReq(req);
-    }
-
-    private String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
-    }
-
-    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
-        if (needRecycle) {
-            bmp.recycle();
-        }
-
-        byte[] result = output.toByteArray();
-        try {
-            output.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
     }
 }
