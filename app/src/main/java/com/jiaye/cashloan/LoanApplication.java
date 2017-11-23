@@ -11,6 +11,8 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * LoanApplication
@@ -29,6 +31,8 @@ public class LoanApplication extends Application {
     private SQLiteDatabase mDatabase;
 
     private PreferencesHelper mPreferencesHelper;
+
+    private IWXAPI mIWXAPI;
 
     public static LoanApplication getInstance() {
         return mInstance;
@@ -83,6 +87,7 @@ public class LoanApplication extends Application {
             }
         });
         setupLogger();
+        setupWeChat();
     }
 
     /**
@@ -94,13 +99,33 @@ public class LoanApplication extends Application {
         return mDatabase;
     }
 
+    /**
+     * 获取偏好设置实例
+     *
+     * @return PreferencesHelper
+     */
     public PreferencesHelper getPreferencesHelper() {
         return mPreferencesHelper;
+    }
+
+    /**
+     * 获取微信实例
+     *
+     * @return IWXAPI
+     */
+    public IWXAPI getIWXAPI() {
+        return mIWXAPI;
     }
 
     /*setup Logger*/
     private void setupLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder().tag(TAG).build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    }
+
+    /*setup WeChat*/
+    private void setupWeChat() {
+        mIWXAPI = WXAPIFactory.createWXAPI(this, BuildConfig.WECHAT_APPID, true);
+        mIWXAPI.registerApp(BuildConfig.WECHAT_APPID);
     }
 }

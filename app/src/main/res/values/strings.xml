@@ -93,6 +93,9 @@
     <string name="my_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
     <string name="my_settings">个人设置</string>
     <string name="my_share">分享给朋友</string>
+    <string name="my_wechat">微信好友</string>
+    <string name="my_moments">朋友圈</string>
+    <string name="my_cancel">取消</string>
     <!--login-->
     <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>
