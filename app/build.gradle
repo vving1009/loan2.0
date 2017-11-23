@@ -7,7 +7,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
     defaultConfig {
-        applicationId "com.jiaye.cashloan"
+        applicationId "com.jiaye.loancash"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 3

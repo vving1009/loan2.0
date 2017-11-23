@@ -192,7 +192,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     private void wx(int type) {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.qq.com";
+        webpage.webpageUrl = "https://ssl.jiayecaifu.com:8022/JYCashLoanMServ/register/shareWeixin?referral_code=13752126558";
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
         msg.description = "WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
@@ -205,8 +205,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         req.transaction = buildTransaction("webpage");
         req.message = msg;
         req.scene = type;
-        //LoanApplication.getInstance().getIWXAPI().sendReq(req);
-        LoanApplication.getInstance().getIWXAPI().openWXApp();
+        LoanApplication.getInstance().getIWXAPI().sendReq(req);
     }
 
     private String buildTransaction(final String type) {

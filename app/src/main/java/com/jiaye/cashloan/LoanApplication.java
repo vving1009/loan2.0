@@ -126,6 +126,5 @@ public class LoanApplication extends Application {
     /*setup WeChat*/
     private void setupWeChat() {
         mIWXAPI = WXAPIFactory.createWXAPI(this, BuildConfig.WECHAT_APPID, true);
-        mIWXAPI.registerApp(BuildConfig.WECHAT_APPID);
     }
 }
