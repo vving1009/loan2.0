@@ -14,6 +14,7 @@ import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificatio
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.register.Register;
 import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
+import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
 import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
@@ -24,6 +25,7 @@ import com.jiaye.cashloan.http.data.person.SavePerson;
 import com.jiaye.cashloan.http.data.person.SavePersonRequest;
 
 import io.reactivex.Flowable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -34,6 +36,12 @@ import retrofit2.http.POST;
  */
 
 public interface LoanService {
+
+    /**
+     * 获取通用字典
+     */
+    @POST("dictEntry")
+    Flowable<ResponseBody> dictCommon(@Body DictionaryRequest request);
 
     /**
      * 验证码

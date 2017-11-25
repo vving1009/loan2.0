@@ -1,9 +1,11 @@
 package com.jiaye.cashloan.view.view.launch;
 
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ThrowableConsumer;
+import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.launch.LaunchDataSource;
 
-import java.util.concurrent.TimeUnit;
+import java.io.File;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
@@ -29,17 +31,22 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
     @Override
     public void subscribe() {
         super.subscribe();
-        Disposable disposable = Flowable.timer(2, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Long>() {
+        Flowable<File> area = mDataSource.download("dict_cd", "area.json");
+        Flowable<File> education = mDataSource.download("dict_edu", "education.json");
+        Flowable<File> marriage = mDataSource.download("dict_mar", "marriage.json");
+        Flowable<File> relation = mDataSource.download("dict_rel", "relation.json");
+        Disposable disposable = Flowable.merge(area, education, marriage, relation)
+                .compose(new ViewTransformer<File>())
+                .subscribe(new Consumer<File>() {
                     @Override
-                    public void accept(Long countDown) throws Exception {
+                    public void accept(File file) throws Exception {
                         if (mDataSource.isNeedGuide()) {
                             mView.showGuideView();
                         } else {
                             mView.showMainView();
                         }
                     }
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }
