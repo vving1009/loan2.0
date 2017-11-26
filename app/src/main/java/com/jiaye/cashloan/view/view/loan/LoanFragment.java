@@ -7,9 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.home.Product;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.source.LoanRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
@@ -24,6 +25,12 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
 
     private LoanContract.Presenter mPresenter;
 
+    private TextView mTextTitle;
+
+    private TextView mTextAmount;
+
+    private TextView mTextDeadline;
+
     private Button mBtnLoan;
 
     public static LoanFragment newInstance() {
@@ -37,6 +44,9 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.loan_fragment, container, false);
+        mTextTitle = root.findViewById(R.id.text_title);
+        mTextAmount = root.findViewById(R.id.text_amount);
+        mTextDeadline = root.findViewById(R.id.text_deadline);
         mBtnLoan = root.findViewById(R.id.btn_loan);
         mBtnLoan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +83,17 @@ public class LoanFragment extends BaseFragment implements LoanContract.View {
 
     @Override
     public void cleanProduct() {
-        // TODO: 2017/11/6 隐藏金额
+        mTextTitle.setText("");
+        mTextAmount.setText("");
+        mTextDeadline.setText("");
         mBtnLoan.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void setProduct(Product product) {
-        // TODO: 2017/11/6 显示金额
+    public void setDefaultProduct(DefaultProduct defaultProduct) {
+        mTextTitle.setText(defaultProduct.getName());
+        mTextAmount.setText(defaultProduct.getAmount());
+        mTextDeadline.setText(String.format(getString(R.string.loan_deadline_title), defaultProduct.getDeadline()));
         mBtnLoan.setVisibility(View.VISIBLE);
     }
 

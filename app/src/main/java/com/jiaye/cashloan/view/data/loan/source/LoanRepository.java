@@ -1,11 +1,14 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.home.Product;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
+import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
+import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.data.auth.User;
@@ -23,40 +26,39 @@ import io.reactivex.functions.Predicate;
 public class LoanRepository implements LoanDataSource {
 
     @Override
-    public Flowable<Product> queryProduct() {
-        return Flowable.just("select * from product").map(new Function<String, Product>() {
+    public Flowable<DefaultProduct> queryProduct() {
+        return Flowable.just("select * from product").map(new Function<String, DefaultProduct>() {
             @Override
-            public Product apply(String sql) throws Exception {
-                Product product = null;
-                Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
-                if (cursor != null) {
-                    if (cursor.moveToNext()) {
-                        String productId = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_PRODUCT_ID));
-                        int amount = cursor.getInt(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_AMOUNT));
-                        int deadline = cursor.getInt(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_DEADLINE));
-                        String paymentMethod = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_PAYMENT_METHOD));
-                        product = new Product();
-                        product.setId(productId);
-                        product.setAmount(amount);
-                        product.setDeadline(deadline);
-                        product.setPaymentMethod(paymentMethod);
-                    }
-                    cursor.close();
-                }
-                return product;
+            public DefaultProduct apply(String sql) throws Exception {
+                return queryProduct(sql);
             }
-        }).filter(new Predicate<Product>() {
+        }).filter(new Predicate<DefaultProduct>() {
             @Override
-            public boolean test(Product product) throws Exception {
+            public boolean test(DefaultProduct product) throws Exception {
                 return product != null;
             }
         });
     }
 
     @Override
-    public Flowable<Product> requestProduct() {
-        // TODO: 2017/11/6 服务器请求,并保存产品信息
-        return Flowable.empty();
+    public Flowable<DefaultProduct> queryDefaultProduct() {
+        return Flowable.just("select * from product where is_default = 1").map(new Function<String, DefaultProduct>() {
+            @Override
+            public DefaultProduct apply(String sql) throws Exception {
+                return queryProduct(sql);
+            }
+        }).filter(new Predicate<DefaultProduct>() {
+            @Override
+            public boolean test(DefaultProduct product) throws Exception {
+                return product.getId() != null;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<DefaultProduct> requestProduct() {
+        return Flowable.just(new DefaultProductRequest())
+                .compose(new ResponseTransformer<DefaultProductRequest, DefaultProduct>("defaultProduct"));
     }
 
     @Override
@@ -87,5 +89,25 @@ public class LoanRepository implements LoanDataSource {
                 }
             }
         });
+    }
+
+    @Nullable
+    private DefaultProduct queryProduct(String sql) {
+        DefaultProduct product = new DefaultProduct();
+        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_PRODUCT_ID));
+                String name = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_PRODUCT_NAME));
+                String amount = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_AMOUNT));
+                String deadline = cursor.getString(cursor.getColumnIndex(DbContract.Product.COLUMN_NAME_DEADLINE));
+                product.setId(id);
+                product.setName(name);
+                product.setAmount(amount + ".00");
+                product.setDeadline(deadline);
+            }
+            cursor.close();
+        }
+        return product;
     }
 }

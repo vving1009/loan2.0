@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
-import com.jiaye.cashloan.http.data.home.Product;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.AuthView;
 import com.jiaye.cashloan.view.BasePresenter;
 
@@ -30,9 +30,9 @@ public class LoanContract {
         void cleanProduct();
 
         /**
-         * 设置产品信息
+         * 设置默认产品信息
          */
-        void setProduct(Product product);
+        void setDefaultProduct(DefaultProduct defaultProduct);
 
         /**
          * 显示借款认证页面

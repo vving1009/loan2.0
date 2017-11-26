@@ -17,6 +17,8 @@ import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
 import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductRequest;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
+import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
 import com.jiaye.cashloan.http.data.person.Person;
@@ -72,6 +74,12 @@ public interface LoanService {
      */
     @POST("product")
     Flowable<Response<ProductList>> productList(@Body Request<ProductRequest> request);
+
+    /**
+     * 默认产品
+     */
+    @POST("defaultPro")
+    Flowable<Response<DefaultProduct>> defaultProduct(@Body Request<DefaultProductRequest> request);
 
     /**
      * 产品认证状态

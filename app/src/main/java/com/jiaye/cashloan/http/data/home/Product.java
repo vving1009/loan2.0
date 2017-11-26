@@ -14,6 +14,10 @@ public class Product {
     @SerializedName("jpd_id")
     private String id;
 
+    /*产品名称*/
+    @SerializedName("jpd_name")
+    private String name;
+
     /*借款金额*/
     @SerializedName("jpd_limitmoney")
     private int amount;
@@ -42,6 +46,14 @@ public class Product {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getAmount() {

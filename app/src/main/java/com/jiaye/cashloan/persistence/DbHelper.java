@@ -48,9 +48,11 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + DbContract.Product.TABLE_NAME + " (" +
                     DbContract.Product._ID + INTEGER_TYPE + " PRIMARY KEY," +
                     DbContract.Product.COLUMN_NAME_PRODUCT_ID + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_AMOUNT + INTEGER_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_DEADLINE + INTEGER_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_PAYMENT_METHOD + TEXT_TYPE +
+                    DbContract.Product.COLUMN_NAME_PRODUCT_NAME + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Product.COLUMN_NAME_AMOUNT + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Product.COLUMN_NAME_DEADLINE + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Product.COLUMN_NAME_PAYMENT_METHOD + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Product.COLUMN_NAME_IS_DEFAULT + INTEGER_TYPE +
                     " )";
 
     public DbHelper(Context context) {

@@ -26,15 +26,55 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/loan"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:layout_width="252dp"
+                android:layout_height="219dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/loan_ic_option" />
+                android:background="@drawable/loan_ic_option">
+
+                <TextView
+                    android:id="@+id/text_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="36dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/text_deadline"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    app:srcCompat="@drawable/ic_loan_line" />
+
+                <TextView
+                    android:id="@+id/text_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/img_line"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="18dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/text_amount"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/home_card_amount_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -1,12 +1,13 @@
 package com.jiaye.cashloan.view.view.loan;
 
-import com.jiaye.cashloan.http.data.home.Product;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.auth.User;
 import com.jiaye.cashloan.view.data.loan.source.LoanDataSource;
 
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -29,19 +30,17 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void queryProduct() {
-        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
-        mCompositeDisposable.clear();
         Disposable disposable = mDataSource.queryProduct()
-                .compose(new ViewTransformer<Product>() {
+                .compose(new ViewTransformer<DefaultProduct>() {
                     @Override
                     public void accept() {
                         mView.cleanProduct();
                     }
                 })
-                .subscribe(new Consumer<Product>() {
+                .subscribe(new Consumer<DefaultProduct>() {
                     @Override
-                    public void accept(Product product) throws Exception {
-                        mView.setProduct(product);
+                    public void accept(DefaultProduct product) throws Exception {
+                        mView.setDefaultProduct(product);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
@@ -49,19 +48,13 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void requestProduct() {
-        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
-        mCompositeDisposable.clear();
-        Disposable disposable = mDataSource.requestProduct()
-                .compose(new ViewTransformer<Product>() {
+        Disposable disposable = Flowable.concat(mDataSource.queryDefaultProduct(), mDataSource.requestProduct())
+                .compose(new ViewTransformer<DefaultProduct>())
+                .first(new DefaultProduct())
+                .subscribe(new Consumer<DefaultProduct>() {
                     @Override
-                    public void accept() {
-                        mView.cleanProduct();
-                    }
-                })
-                .subscribe(new Consumer<Product>() {
-                    @Override
-                    public void accept(Product product) throws Exception {
-                        mView.setProduct(product);
+                    public void accept(DefaultProduct defaultProduct) throws Exception {
+                        mView.setDefaultProduct(defaultProduct);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
@@ -69,8 +62,6 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
 
     @Override
     public void loan() {
-        // 因为LoanFragment退出应用前不会销毁,所以要手动的clear CompositeDisposable
-        mCompositeDisposable.clear();
         Disposable disposable = mDataSource
                 .queryUser()
                 .subscribe(new Consumer<User>() {

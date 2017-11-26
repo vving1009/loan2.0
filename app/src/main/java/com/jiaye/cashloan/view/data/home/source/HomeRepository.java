@@ -23,10 +23,12 @@ public class HomeRepository implements HomeDataSource {
             public Product apply(Product product) throws Exception {
                 ContentValues values = new ContentValues();
                 values.put("product_id", product.getId());
+                values.put("product_name", product.getName());
                 values.put("amount", product.getAmount());
                 values.put("deadline", product.getDeadline());
                 values.put("payment_method", product.getPaymentMethod());
-                LoanApplication.getInstance().getSQLiteDatabase().delete("product", null, null);
+                values.put("is_default", 0);
+                LoanApplication.getInstance().getSQLiteDatabase().delete("product", "is_default = ?", new String[]{"1"});
                 LoanApplication.getInstance().getSQLiteDatabase().insert("product", null, values);
                 return product;
             }

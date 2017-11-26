@@ -37,9 +37,10 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
         Flowable<File> relation = mDataSource.download("dict_rel", "relation.json");
         Disposable disposable = Flowable.merge(area, education, marriage, relation)
                 .compose(new ViewTransformer<File>())
-                .subscribe(new Consumer<File>() {
+                .count()
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void accept(File file) throws Exception {
+                    public void accept(Long number) throws Exception {
                         if (mDataSource.isNeedGuide()) {
                             mView.showGuideView();
                         } else {
