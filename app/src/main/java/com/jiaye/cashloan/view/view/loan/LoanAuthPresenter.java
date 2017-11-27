@@ -35,7 +35,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     @Override
     public void requestLoanAuth() {
         mDataSource.requestLoanAuth()
-                .compose(new ViewTransformer<LoanAuth>(){
+                .compose(new ViewTransformer<LoanAuth>() {
                     @Override
                     public void accept() {
                         mView.showProgressDialog();
@@ -49,32 +49,32 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         LoanAuthModel card = new LoanAuthModel();
                         card.setIcon(R.drawable.loan_auth_ic_card);
                         card.setName(R.string.loan_auth_ocr);
-                        setLoanAuthModel(loanAuth, card, false);
+                        setLoanAuthModel(loanAuth.getCardState(), card, false);
 
                         LoanAuthModel face = new LoanAuthModel();
                         face.setIcon(R.drawable.loan_auth_ic_face);
                         face.setName(R.string.loan_auth_face);
-                        setLoanAuthModel(loanAuth, face, false);
+                        setLoanAuthModel(loanAuth.getFaceState(), face, false);
 
                         LoanAuthModel person = new LoanAuthModel();
                         person.setIcon(R.drawable.loan_auth_ic_person);
                         person.setName(R.string.loan_auth_info);
-                        setLoanAuthModel(loanAuth, person, true);
+                        setLoanAuthModel(loanAuth.getPersonState(), person, true);
 
                         LoanAuthModel phone = new LoanAuthModel();
                         phone.setIcon(R.drawable.loan_auth_ic_phone);
                         phone.setName(R.string.loan_auth_phone);
-                        setLoanAuthModel(loanAuth, phone, false);
+                        setLoanAuthModel(loanAuth.getPhoneState(), phone, false);
 
                         LoanAuthModel taobao = new LoanAuthModel();
                         taobao.setIcon(R.drawable.loan_auth_ic_taobao);
                         taobao.setName(R.string.loan_auth_taobao);
-                        setLoanAuthModel(loanAuth, taobao, false);
+                        setLoanAuthModel(loanAuth.getTaobaoState(), taobao, false);
 
                         LoanAuthModel sesame = new LoanAuthModel();
                         sesame.setIcon(R.drawable.loan_auth_ic_sesame);
                         sesame.setName(R.string.loan_auth_sesame);
-                        setLoanAuthModel(loanAuth, sesame, false);
+                        setLoanAuthModel(loanAuth.getSesameState(), sesame, false);
 
                         list.add(card);
                         list.add(face);
@@ -115,15 +115,15 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
         }
     }
 
-    private void setLoanAuthModel(LoanAuth loanAuth, LoanAuthModel model, boolean canModify) {
-        if (TextUtils.isEmpty(loanAuth.getCardState()) || loanAuth.getCardState().equals("0")) {
+    private void setLoanAuthModel(String state, LoanAuthModel model, boolean canModify) {
+        if (TextUtils.isEmpty(state) || state.equals("0")) {
             model.setIcState(R.drawable.ic_angle_blue);
             model.setIcBackground(R.drawable.loan_auth_ic_bg_gray);
             model.setColor(R.color.color_gray);
             model.setBackground(R.drawable.loan_auth_bg_gray);
             model.setVerify(false);
             model.setCanModify(true);
-        } else if (loanAuth.getCardState().equals("1")) {
+        } else if (state.equals("1")) {
             if (canModify) {
                 model.setIcState(R.drawable.ic_angle_blue);
             } else {
