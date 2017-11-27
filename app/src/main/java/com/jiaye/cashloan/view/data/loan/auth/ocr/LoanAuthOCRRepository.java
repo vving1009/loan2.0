@@ -131,66 +131,6 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
         }).compose(new ResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
     }
 
-    // TODO: 2017/11/27 mock数据
-    @Override
-    public Flowable<LoanIDCardAuth> loanIDCardAuth(String front, String back) {
-        mBase64Front = front;
-        mBase64Back = back;
-        return Flowable.zip(uploadFront(), uploadBack(), new BiFunction<LoanUploadPicture, LoanUploadPicture, LoanIDCardAuthRequest>() {
-            @Override
-            public LoanIDCardAuthRequest apply(LoanUploadPicture loanUploadPicture, LoanUploadPicture loanUploadPicture2) throws Exception {
-                String ocrName = "";
-                String ocrId = "";
-                String ocrBirthday = "";
-                String ocrGender = "";
-                String ocrNation = "";
-                String ocrAddress = "";
-                String ocrDateBegin = "";
-                String ocrDateEnd = "";
-                String ocrAgency = "";
-                SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-                Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
-                if (cursor != null) {
-                    if (cursor.moveToNext()) {
-                        ocrName = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
-                        ocrId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
-                        ocrBirthday = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_BIRTHDAY));
-                        ocrGender = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_GENDER));
-                        ocrNation = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NATION));
-                        ocrAddress = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ADDRESS));
-                        ocrDateBegin = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_DATE_BEGIN));
-                        ocrDateEnd = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_DATE_END));
-                        ocrAgency = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_AGENCY));
-                    }
-                    cursor.close();
-                }
-                LoanIDCardAuthRequest request = new LoanIDCardAuthRequest();
-                request.setName(ocrName);
-                request.setId(ocrId);
-                request.setValidDate(ocrDateBegin + "-" + ocrDateEnd);
-                request.setPicFront(mPicFront);
-                request.setPicBack(mPicBack);
-
-                TongDunOCRFront front = new TongDunOCRFront();
-                front.setIdNumber(ocrId);
-                front.setName(ocrName);
-                front.setBirthday(ocrBirthday);
-                front.setGender(ocrGender);
-                front.setNation(ocrNation);
-                front.setAddress(ocrAddress);
-
-                TongDunOCRBack back = new TongDunOCRBack();
-                back.setDateBegin(ocrDateBegin);
-                back.setDateEnd(ocrDateEnd);
-                back.setAgency(ocrAgency);
-
-                request.setDataFront(new Gson().toJson(front));
-                request.setDataBack(new Gson().toJson(back));
-                return request;
-            }
-        }).compose(new ResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
-    }
-
     // 上传正面照片,并保存正面照片id
     private Flowable<LoanUploadPicture> uploadFront() {
         return Flowable.just(mBase64Front)

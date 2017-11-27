@@ -2,17 +2,24 @@ package com.jiaye.cashloan.view.view.loan.auth.ocr;
 
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
+import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
+import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.auth.ocr.LoanAuthOCRDataSource;
 
+import org.reactivestreams.Publisher;
+
 import java.io.File;
 
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * LoanAuthOCRPresenter
@@ -72,24 +79,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
 
     @Override
     public void commit() {
-        // 临时测试
-        Disposable disposable =
-                mDataSource.loanIDCardAuth(Base64Util.fileToBase64(new File(mFront)).replace("\n", ""), Base64Util.fileToBase64(new File(mBack)).replace("\n", ""))
-                        .compose(new ViewTransformer<LoanIDCardAuth>() {
-                            @Override
-                            public void accept() {
-                                mView.showProgressDialog();
-                            }
-                        })
-                        .subscribe(new Consumer<LoanIDCardAuth>() {
-                            @Override
-                            public void accept(LoanIDCardAuth loanIDCardAuth) throws Exception {
-                                mView.dismissProgressDialog();
-                                mView.result();
-                            }
-                        }, new ThrowableConsumer(mView));
-
-        /*Disposable disposable = Flowable.just(Base64Util.fileToBase64(new File(mFront)))
+        Disposable disposable = Flowable.just(Base64Util.fileToBase64(new File(mFront)))
                 .map(new Function<String, String>() {
                     @Override
                     public String apply(String base64) throws Exception {
@@ -132,7 +122,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
                         mView.dismissProgressDialog();
                         mView.result();
                     }
-                }, new ThrowableConsumer(mView));*/
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }

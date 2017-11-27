@@ -28,9 +28,4 @@ public interface LoanAuthOCRDataSource {
      * 身份证认证
      */
     Flowable<LoanIDCardAuth> loanIDCardAuth();
-
-    /**
-     * 身份证认证
-     */
-    Flowable<LoanIDCardAuth> loanIDCardAuth(String front, String back);
 }
