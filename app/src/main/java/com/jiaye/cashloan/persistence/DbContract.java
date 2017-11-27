@@ -22,6 +22,7 @@ public class DbContract {
      * approve_number   借贷审批次数
      * loan_number      放款还贷次数
      * history_number   历史借贷次数
+     * loan_id          借款编号
      * <p>
      * ocr_number       身份证号码
      * ocr_name         身份证姓名
@@ -41,6 +42,7 @@ public class DbContract {
         public static final String COLUMN_NAME_APPROVE_NUMBER = "approve_number";
         public static final String COLUMN_NAME_LOAN_NUMBER = "loan_number";
         public static final String COLUMN_NAME_HISTORY_NUMBER = "history_number";
+        public static final String COLUMN_NAME_LOAN_ID = "loan_id";
         /*OCR*/
         public static final String COLUMN_NAME_OCR_ID = "ocr_id";
         public static final String COLUMN_NAME_OCR_NAME = "ocr_name";

@@ -50,6 +50,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
                         @Override
                         public void accept(VerificationCode verificationCode) throws Exception {
                             mView.smsVerificationCodeCountDown();
+                            mView.dismissProgressDialog();
                         }
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
@@ -77,6 +78,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
                     .subscribe(new Consumer<CheckForgetPasswordVerificationCode>() {
                         @Override
                         public void accept(CheckForgetPasswordVerificationCode checkForgetPasswordVerificationCode) throws Exception {
+                            mView.dismissProgressDialog();
                             mView.showChangePasswordView();
                         }
                     }, new ThrowableConsumer(mView));

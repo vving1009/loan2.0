@@ -52,6 +52,7 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
                     .subscribe(new Consumer<ChangePassword>() {
                         @Override
                         public void accept(ChangePassword changePassword) throws Exception {
+                            mView.dismissProgressDialog();
                             mView.finish();
                         }
                     }, new ThrowableConsumer(mView));

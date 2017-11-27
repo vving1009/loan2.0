@@ -13,7 +13,7 @@ import io.reactivex.Flowable;
 public interface LoanAuthDataSource {
 
     /**
-     * 请求借款认证信息
+     * 请求借款认证信息并保存
      */
     Flowable<LoanAuth> requestLoanAuth();
 }

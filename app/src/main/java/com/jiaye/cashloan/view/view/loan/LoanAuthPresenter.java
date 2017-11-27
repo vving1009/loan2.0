@@ -84,6 +84,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         list.add(sesame);
 
                         mView.setList(list);
+                        mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));
     }

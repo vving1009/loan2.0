@@ -46,6 +46,7 @@ public class ThrowableConsumer implements Consumer<Throwable> {
             Logger.e(t.getMessage());
             mContract.showToast(t.getMessage());
         }
+        mContract.dismissProgressDialog();
     }
 
     private static class BaseViewContractSample implements BaseViewContract {
@@ -62,6 +63,11 @@ public class ThrowableConsumer implements Consumer<Throwable> {
 
         @Override
         public void showProgressDialog() {
+
+        }
+
+        @Override
+        public void dismissProgressDialog() {
 
         }
     }

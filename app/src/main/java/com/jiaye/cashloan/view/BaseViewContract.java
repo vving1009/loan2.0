@@ -13,4 +13,7 @@ public interface BaseViewContract {
     void showToastById(int resId);
 
     void showProgressDialog();
+
+    void dismissProgressDialog();
+
 }

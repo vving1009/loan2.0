@@ -11,9 +11,9 @@ import com.jiaye.cashloan.http.base.ChildResponse;
 
 public class LoanAuth extends ChildResponse {
 
-    /*产品编号*/
+    /*借款编号*/
     @SerializedName("jla_id")
-    private String productId;
+    private String loanId;
 
     /*身份证认证状态*/
     @SerializedName("cardAuth_state")
@@ -39,12 +39,12 @@ public class LoanAuth extends ChildResponse {
     @SerializedName("zmAuth_state")
     private String sesameState;
 
-    public String getProductId() {
-        return productId;
+    public String getLoanId() {
+        return loanId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     public String getCardState() {

@@ -62,6 +62,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                         @Override
                         public void accept(VerificationCode verificationCode) throws Exception {
                             mView.smsVerificationCodeCountDown();
+                            mView.dismissProgressDialog();
                         }
                     }, new ThrowableConsumer(mView));
         }
@@ -116,6 +117,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                     .subscribe(new Consumer<Register>() {
                         @Override
                         public void accept(Register register) throws Exception {
+                            mView.dismissProgressDialog();
                             mView.finish();
                         }
                     }, new ThrowableConsumer(mView));

@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -65,8 +66,14 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                             }
                         }
                         mView.setList(products);
+                        mView.dismissProgressDialog();
                     }
-                }, new ThrowableConsumer(mView));
+                }, new ThrowableConsumer(mView), new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                });
         mCompositeDisposable.add(disposable);
     }
 
@@ -83,6 +90,7 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                     .subscribe(new Consumer<Product>() {
                         @Override
                         public void accept(Product product) throws Exception {
+                            mView.dismissProgressDialog();
                             mView.showLoanView();
                         }
                     }, new ThrowableConsumer(mView));

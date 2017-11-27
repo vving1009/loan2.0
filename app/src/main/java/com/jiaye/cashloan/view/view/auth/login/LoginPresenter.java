@@ -74,6 +74,7 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
                     .subscribe(new Consumer<Login>() {
                         @Override
                         public void accept(Login login) throws Exception {
+                            mView.dismissProgressDialog();
                             mView.finish();
                         }
                     }, new ThrowableConsumer(mView));

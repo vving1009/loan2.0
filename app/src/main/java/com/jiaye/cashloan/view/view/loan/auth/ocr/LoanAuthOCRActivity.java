@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth.ocr;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -7,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.data.loan.auth.ocr.LoanAuthOCRRepository;
 import com.jph.takephoto.app.TakePhotoAppCompatActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.TResult;
@@ -26,6 +29,8 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
     public static final int REQUEST_OCR = 201;
 
     private LoanAuthOCRContract.Presenter mPresenter;
+
+    private ProgressDialog mDialog;
 
     private ImageView mImgFront;
 
@@ -64,7 +69,7 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
                 mPresenter.commit();
             }
         });
-        mPresenter = new LoanAuthOCRPresenter(this);
+        mPresenter = new LoanAuthOCRPresenter(this, new LoanAuthOCRRepository());
         mPresenter.subscribe();
     }
 
@@ -81,17 +86,29 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
 
     @Override
     public void showToast(String string) {
-
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToastById(int resId) {
-
+        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showProgressDialog() {
+        if (mDialog == null) {
+            mDialog = new ProgressDialog(this);
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
+        }
+        mDialog.show();
+    }
 
+    @Override
+    public void dismissProgressDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
     }
 
     @Override
