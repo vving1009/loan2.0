@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import android.app.ProgressDialog;
 import android.database.Cursor;

@@ -40,13 +40,13 @@
             android:name=".view.view.loan.auth.face.LoanAuthFaceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthInfoActivity"
+            android:name=".view.view.loan.auth.info.LoanAuthInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthPersonInfoActivity"
+            android:name=".view.view.loan.auth.info.LoanAuthPersonInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthContactInfoActivity"
+            android:name=".view.view.loan.auth.info.LoanAuthContactInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.auth.LoanAuthPhoneActivity"

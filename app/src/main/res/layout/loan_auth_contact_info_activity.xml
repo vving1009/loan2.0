@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="48dp">
 
         <FrameLayout
             android:id="@+id/img_back"
@@ -31,7 +31,7 @@
             android:layout_centerInParent="true"
             android:text="@string/loan_auth_contact_info"
             android:textColor="@color/color_black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
@@ -46,7 +46,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="45dp"
             android:background="@color/color_blue"
             android:gravity="center|left"
             android:paddingLeft="14dp"
@@ -57,9 +57,9 @@
         <RelativeLayout
             android:id="@+id/layout_family_name"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:id="@+id/text_family_name"
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_name"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/edit_family_name"
@@ -85,22 +85,22 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:inputType=""
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
             android:id="@+id/layout_family"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_contact_family"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/text_family"
@@ -123,22 +123,22 @@
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_angle_gray"
                 android:textColor="@color/color_black_light"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
             android:id="@+id/layout_family_phone"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:id="@+id/text_family_phone"
@@ -150,7 +150,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_contact_phone"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/edit_family_phone"
@@ -164,19 +164,19 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:inputType="phone"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="45dp"
             android:background="@color/color_blue"
             android:gravity="center|left"
             android:paddingLeft="14dp"
@@ -187,9 +187,9 @@
         <RelativeLayout
             android:id="@+id/layout_friend_name"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:id="@+id/text_friend_name"
@@ -201,7 +201,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_name"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/edit_friend_name"
@@ -215,22 +215,22 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:inputType=""
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
             android:id="@+id/layout_friend"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -241,7 +241,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_contact_friend"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/text_friend"
@@ -253,22 +253,22 @@
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_angle_gray"
                 android:textColor="@color/color_black_light"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
             android:id="@+id/layout_friend_phone"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <TextView
                 android:id="@+id/text_friend_phone"
@@ -280,7 +280,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_contact_phone"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/edit_friend_phone"
@@ -294,29 +294,28 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:inputType="phone"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/color_gray_dark" />
 
         <Button
             android:id="@+id/btn_save"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/loan_btn"
             android:enabled="true"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

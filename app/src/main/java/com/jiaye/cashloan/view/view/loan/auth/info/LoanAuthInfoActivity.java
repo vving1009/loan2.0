@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,12 +51,12 @@ public class LoanAuthInfoActivity extends AppCompatActivity {
     }
 
     private void startPersonView() {
-        Intent intent = new Intent(this,LoanAuthPersonInfoActivity.class);
+        Intent intent = new Intent(this, LoanAuthPersonInfoActivity.class);
         startActivity(intent);
     }
 
     private void startContactView() {
-        Intent intent = new Intent(this,LoanAuthContactInfoActivity.class);
+        Intent intent = new Intent(this, LoanAuthContactInfoActivity.class);
         startActivity(intent);
     }
 

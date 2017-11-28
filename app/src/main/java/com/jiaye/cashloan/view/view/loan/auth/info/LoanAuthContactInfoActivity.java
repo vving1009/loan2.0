@@ -1,6 +1,5 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.info;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +11,12 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.data.auth.Education;
 import com.jiaye.cashloan.view.data.auth.Relation;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -69,27 +68,20 @@ public class LoanAuthContactInfoActivity extends AppCompatActivity {
     }
 
     private void init() {
-        // TODO: 2017/11/13 因为服务器返回的结构体有问题,暂时使用本地资源.
-        AssetManager assetManager = getAssets();
-        File dir = getExternalFilesDir("dictionary");
-        if (dir != null && !dir.exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            dir.mkdir();
-        }
-        String fileNames[] = new String[0];
-        try {
-            fileNames = assetManager.list("dictionary");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (String fileName : fileNames) {
-            InputStream input = getClass().getClassLoader().getResourceAsStream("assets/dictionary/" + fileName);
-            BufferedReader br = new BufferedReader(new InputStreamReader(input));
-            Gson gson = new Gson();
-            switch (fileName) {
-                case "relation.json":
-                    transformRelation(br, gson);
-                    break;
+        File dir = getFilesDir();
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            try {
+                InputStream input = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(input));
+                Gson gson = new Gson();
+                switch (file.getName()) {
+                    case "relation.json":
+                        transformRelation(br, gson);
+                        break;
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }

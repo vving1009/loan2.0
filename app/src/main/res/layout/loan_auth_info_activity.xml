@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="48dp">
 
         <FrameLayout
             android:id="@+id/img_back"
@@ -56,14 +56,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/layout_person_info"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_person_info"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,22 +86,18 @@
                 android:drawableRight="@drawable/ic_angle_gray"
                 android:text="@string/loan_auth_un_submit"
                 android:textColor="@color/color_black_light"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
             android:id="@+id/layout_contact_info"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +108,7 @@
                 android:gravity="center"
                 android:text="@string/loan_auth_contact_info"
                 android:textColor="@color/color_black"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,29 +120,26 @@
                 android:drawableRight="@drawable/ic_angle_gray"
                 android:text="@string/loan_auth_un_submit"
                 android:textColor="@color/color_black_light"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:background="@color/color_gray_dark" />
-
-        <Button
-            android:id="@+id/btn_next"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/loan_btn"
-            android:enabled="false"
-            android:text="@string/next"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_next"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/loan_btn"
+        android:enabled="false"
+        android:text="@string/next"
+        android:textColor="@android:color/white"
+        android:textSize="13sp" />
 </LinearLayout>
