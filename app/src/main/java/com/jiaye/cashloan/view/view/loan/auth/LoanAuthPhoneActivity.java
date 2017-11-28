@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,12 +13,12 @@ import android.widget.Toast;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
+import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoOperatorsConfig;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
@@ -50,8 +49,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class LoanAuthPhoneActivity extends AppCompatActivity {
-
-    public static final int REQUEST_PHONE = 204;
 
     protected CompositeDisposable mCompositeDisposable;
 
@@ -514,9 +511,6 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
     }
 
     private void result() {
-        Intent intent = new Intent();
-        intent.putExtra("is_success", true);
-        setResult(REQUEST_PHONE, intent);
         finish();
     }
 }

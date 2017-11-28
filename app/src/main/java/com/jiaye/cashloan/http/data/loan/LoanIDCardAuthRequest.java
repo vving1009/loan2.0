@@ -21,10 +21,10 @@ public class LoanIDCardAuthRequest extends ChildRequest {
     private String validDate;
 
     @SerializedName("pic_zid")
-    private String picFront;
+    private String picFrontId;
 
     @SerializedName("pic_fid")
-    private String picBack;
+    private String picBackId;
 
     @SerializedName("da_zmresult")
     private String dataFront;
@@ -34,7 +34,7 @@ public class LoanIDCardAuthRequest extends ChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL010";
+        return "CL020";
     }
 
     public String getName() {
@@ -61,20 +61,20 @@ public class LoanIDCardAuthRequest extends ChildRequest {
         this.validDate = validDate;
     }
 
-    public String getPicFront() {
-        return picFront;
+    public String getPicFrontId() {
+        return picFrontId;
     }
 
-    public void setPicFront(String picFront) {
-        this.picFront = picFront;
+    public void setPicFrontId(String picFrontId) {
+        this.picFrontId = picFrontId;
     }
 
-    public String getPicBack() {
-        return picBack;
+    public String getPicBackId() {
+        return picBackId;
     }
 
-    public void setPicBack(String picBack) {
-        this.picBack = picBack;
+    public void setPicBackId(String picBackId) {
+        this.picBackId = picBackId;
     }
 
     public String getDataFront() {

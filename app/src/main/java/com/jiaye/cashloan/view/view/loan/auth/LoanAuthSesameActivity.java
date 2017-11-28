@@ -10,6 +10,4 @@ import android.support.v7.app.AppCompatActivity;
 
 public class LoanAuthSesameActivity extends AppCompatActivity {
 
-    public static final int REQUEST_SESAME = 205;
-
 }

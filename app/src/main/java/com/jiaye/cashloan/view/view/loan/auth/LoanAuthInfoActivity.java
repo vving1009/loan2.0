@@ -17,8 +17,6 @@ import com.jiaye.cashloan.R;
 
 public class LoanAuthInfoActivity extends AppCompatActivity {
 
-    public static final int REQUEST_INFO = 203;
-
     private Button mBtnNext;
 
     @Override

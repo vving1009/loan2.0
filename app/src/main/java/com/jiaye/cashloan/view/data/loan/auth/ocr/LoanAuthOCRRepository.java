@@ -122,8 +122,8 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                 request.setName(ocrName);
                 request.setId(ocrId);
                 request.setValidDate(ocrDateBegin + "-" + ocrDateEnd);
-                request.setPicFront(mPicFront);
-                request.setPicBack(mPicBack);
+                request.setPicFrontId(mPicFront);
+                request.setPicBackId(mPicBack);
                 request.setDataFront(mDataFront);
                 request.setDataBack(mDataBack);
                 return request;

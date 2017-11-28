@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,7 +40,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
 
 /**
  * LoanAuthTaoBaoQRFragment
@@ -289,9 +287,6 @@ public class LoanAuthTaoBaoQRFragment extends BaseFragment {
     }
 
     private void result() {
-        Intent intent = new Intent();
-        intent.putExtra("is_success", true);
-        getActivity().setResult(REQUEST_TAOBAO, intent);
         getActivity().finish();
     }
 }

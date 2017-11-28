@@ -20,22 +20,16 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity;
-import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
+import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
+import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 
 import java.util.List;
 
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthFaceActivity.REQUEST_FACE;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthInfoActivity.REQUEST_INFO;
-import static com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity.REQUEST_OCR;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthPhoneActivity.REQUEST_PHONE;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity.REQUEST_SESAME;
-import static com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity.REQUEST_TAOBAO;
 
 /**
  * LoanAuthFragment
@@ -58,32 +52,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         LoanAuthFragment fragment = new LoanAuthFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_OCR && resultCode == REQUEST_OCR) {
-            boolean isSuccess = data.getBooleanExtra("is_success", false);
-            if (isSuccess) {
-                showToastById(R.string.loan_auth_ocr_success);
-            } else {
-                showToastById(R.string.loan_auth_ocr_fail);
-            }
-        } else if (requestCode == REQUEST_FACE && resultCode == REQUEST_FACE) {
-            boolean isSuccess = data.getBooleanExtra("is_success", false);
-            if (isSuccess) {
-                showToastById(R.string.loan_auth_face_success);
-            } else {
-                showToastById(R.string.loan_auth_face_fail);
-            }
-        } else if (requestCode == REQUEST_PHONE && resultCode == REQUEST_PHONE) {
-            boolean isSuccess = data.getBooleanExtra("is_success", false);
-            if (isSuccess) {
-                showToastById(R.string.loan_auth_phone_success);
-            } else {
-                showToastById(R.string.loan_auth_phone_fail);
-            }
-        }
     }
 
     @Override
@@ -178,35 +146,35 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void showLoanAuthInfoView() {
         Intent intent = new Intent(getActivity(), LoanAuthInfoActivity.class);
-        startActivityForResult(intent, REQUEST_INFO);
+        startActivity(intent);
     }
 
     @Override
     public void showLoanAuthPhoneView() {
         Intent intent = new Intent(getActivity(), LoanAuthPhoneActivity.class);
-        startActivityForResult(intent, REQUEST_PHONE);
+        startActivity(intent);
     }
 
     @Override
     public void showLoanAuthTaoBaoView() {
         Intent intent = new Intent(getActivity(), LoanAuthTaoBaoActivity.class);
-        startActivityForResult(intent, REQUEST_TAOBAO);
+        startActivity(intent);
     }
 
     @Override
     public void showLoanAuthSesameView() {
         Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
-        startActivityForResult(intent, REQUEST_SESAME);
+        startActivity(intent);
     }
 
     private void showLoanAuthOCRGranted() {
         Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
-        startActivityForResult(intent, REQUEST_OCR);
+        startActivity(intent);
     }
 
     private void showLoanAuthFaceGranted() {
         Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
-        startActivityForResult(intent, REQUEST_FACE);
+        startActivity(intent);
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

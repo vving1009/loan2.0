@@ -22,8 +22,6 @@ import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 public class LoanAuthTaoBaoActivity extends AppCompatActivity {
 
-    public static final int REQUEST_TAOBAO = 205;
-
     private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_taobao_normal, R.string.loan_auth_taobao_qr};
 
     private NoScrollViewPager mViewPager;

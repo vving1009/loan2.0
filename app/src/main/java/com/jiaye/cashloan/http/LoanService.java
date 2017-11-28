@@ -21,6 +21,8 @@ import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
+import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
@@ -86,7 +88,7 @@ public interface LoanService {
     Flowable<Response<DefaultProduct>> defaultProduct(@Body Request<DefaultProductRequest> request);
 
     /**
-     * 产品认证状态
+     * 借款认证状态
      */
     @POST("userApprove")
     Flowable<Response<LoanAuth>> loanAuth(@Body Request<LoanAuthRequest> request);
@@ -98,10 +100,16 @@ public interface LoanService {
     Flowable<Response<LoanUploadPicture>> uploadPicture(@Body Request<LoanUploadPictureRequest> request);
 
     /**
-     * 产品身份证认证
+     * 借款身份证认证
      */
     @POST("cardAuth")
     Flowable<Response<LoanIDCardAuth>> loanIDCardAuth(@Body Request<LoanIDCardAuthRequest> request);
+
+    /**
+     * 借款活体检测认证
+     */
+    @POST("bioAssay")
+    Flowable<Response<LoanFaceAuth>> loanFaceAuth(@Body Request<LoanFaceAuthRequest> request);
 
     /**
      * 个人认证状态

@@ -22,8 +22,6 @@
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_ocr">身份认证</string>
-    <string name="loan_auth_ocr_success">恭喜您,身份认证成功</string>
-    <string name="loan_auth_ocr_fail">认证失败,请返回重试</string>
     <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
     <string name="loan_auth_ocr_validity_date">有效期限</string>
@@ -32,8 +30,7 @@
     <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="commit">提交</string>
     <string name="loan_auth_face">活体检测</string>
-    <string name="loan_auth_face_success">恭喜您,活体检测成功</string>
-    <string name="loan_auth_face_fail">检测失败,请返回重试</string>
+    <string name="loan_auth_face_fail">活体检测失败</string>
     <string name="loan_auth_info">个人资料</string>
     <string name="loan_auth_person_info">个人信息</string>
     <string name="loan_auth_person_education">最高学历</string>
@@ -56,8 +53,7 @@
     <string name="loan_auth_phone_input_sms_verification">请输入短信验证码</string>
     <string name="loan_auth_phone_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_phone_bank">银行高级别加密 保障您的信息安全</string>
-    <string name="loan_auth_phone_success">恭喜您,运营商检测成功</string>
-    <string name="loan_auth_phone_fail">检测失败,请返回重试</string>
+    <string name="loan_auth_phone_fail">手机检测失败</string>
     <string name="loan_auth_taobao">淘宝认证</string>
     <string name="loan_auth_taobao_normal">帐号授权</string>
     <string name="loan_auth_taobao_normal_account">请输入淘宝账号</string>

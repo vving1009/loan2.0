@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth.ocr;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,8 +24,6 @@ import java.io.File;
  */
 
 public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements LoanAuthOCRContract.View {
-
-    public static final int REQUEST_OCR = 201;
 
     private LoanAuthOCRContract.Presenter mPresenter;
 
@@ -158,9 +155,6 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
 
     @Override
     public void result() {
-        Intent intent = new Intent();
-        intent.putExtra("is_success", true);
-        setResult(REQUEST_OCR, intent);
         finish();
     }
 }
