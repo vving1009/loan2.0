@@ -17,6 +17,9 @@ public class LoanFaceAuthRequest extends ChildRequest {
     @SerializedName("isPass")
     private boolean isPass;
 
+    @SerializedName("similarity")
+    private float similarity;
+
     @Override
     protected String getBusiness() {
         return "CL021";
@@ -36,5 +39,13 @@ public class LoanFaceAuthRequest extends ChildRequest {
 
     public void setPass(boolean pass) {
         isPass = pass;
+    }
+
+    public float getSimilarity() {
+        return similarity;
+    }
+
+    public void setSimilarity(float similarity) {
+        this.similarity = similarity;
     }
 }

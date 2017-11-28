@@ -34,6 +34,8 @@ import io.reactivex.functions.Function;
 
 public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
 
+    private float mSimilarity;
+
     @Override
     public Flowable<LoanFaceAuth> upload(byte[] data) {
         return Flowable.just(data)
@@ -77,6 +79,7 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                     @Override
                     public String apply(TongDunFace tongDunFace) throws Exception {
                         if (tongDunFace.isPass()) {
+                            mSimilarity = tongDunFace.getSimilarity();
                             return tongDunFace.getBase64();
                         }
                         throw new LocalException(R.string.error_loan_auth_face);
@@ -95,6 +98,7 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                         LoanFaceAuthRequest request = new LoanFaceAuthRequest();
                         request.setPicId(loanUploadPicture.getPicId());
                         request.setPass(true);
+                        request.setSimilarity(mSimilarity);
                         return request;
                     }
                 })
