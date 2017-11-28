@@ -63,7 +63,7 @@ public class MyRepository implements MyDataSource {
                 Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
                 if (cursor != null) {
                     if (cursor.moveToNext()) {
-                        name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_NAME));
+                        name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                         phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
                     }
                     cursor.close();

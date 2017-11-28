@@ -56,24 +56,23 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_OCR_PERMISSION) {
-            boolean grant = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    grant = false;
-                }
+        boolean grant = true;
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                grant = false;
             }
-            if (grant) {
-                showLoanAuthOCRGranted();
-            } else {
-                showToastById(R.string.error_loan_auth_camera_and_write);
+        }
+        if (grant) {
+            switch (requestCode) {
+                case REQUEST_OCR_PERMISSION:
+                    showLoanAuthOCRGranted();
+                    break;
+                case REQUEST_FACE_PERMISSION:
+                    showLoanAuthFaceGranted();
+                    break;
             }
-        } else if (requestCode == REQUEST_FACE_PERMISSION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showLoanAuthFaceGranted();
-            } else {
-                showToastById(R.string.error_loan_auth_camera);
-            }
+        } else {
+            showToastById(R.string.error_loan_auth_camera_and_write);
         }
     }
 
@@ -121,24 +120,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthOCRView() {
-        boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
-        boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
-        if (requestCamera && requestWrite) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_OCR_PERMISSION);
-        } else if (requestCamera) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_OCR_PERMISSION);
-        } else if (requestWrite) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_OCR_PERMISSION);
-        } else {
+        if (hasPermission(REQUEST_OCR_PERMISSION)) {
             showLoanAuthOCRGranted();
         }
     }
 
     @Override
     public void showLoanAuthFaceView() {
-        if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_FACE_PERMISSION);
-        } else {
+        if (hasPermission(REQUEST_FACE_PERMISSION)) {
             showLoanAuthFaceGranted();
         }
     }
@@ -165,6 +154,22 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     public void showLoanAuthSesameView() {
         Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
         startActivity(intent);
+    }
+
+    private boolean hasPermission(int requestCode) {
+        boolean hasPermission = false;
+        boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+        boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+        if (requestCamera && requestWrite) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+        } else if (requestCamera) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, requestCode);
+        } else if (requestWrite) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+        } else {
+            hasPermission = true;
+        }
+        return hasPermission;
     }
 
     private void showLoanAuthOCRGranted() {

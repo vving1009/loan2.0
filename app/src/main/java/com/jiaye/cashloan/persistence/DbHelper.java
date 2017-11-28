@@ -28,7 +28,6 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + DbContract.User.TABLE_NAME + " (" +
                     DbContract.User._ID + INTEGER_TYPE + " PRIMARY KEY," +
                     DbContract.User.COLUMN_NAME_TOKEN + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_APPROVE_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_LOAN_NUMBER + INTEGER_TYPE + COMMA_SEP +

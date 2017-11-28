@@ -46,6 +46,21 @@ public class Base64Util {
     }
 
     /**
+     * 编码
+     *
+     * @param bytes bytes
+     * @param flags flags
+     * @return String
+     */
+    public static String encode(byte[] bytes, int flags) {
+        try {
+            return new String(Base64.encode(bytes, flags), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    /**
      * 文件转Base64
      *
      * @param file file

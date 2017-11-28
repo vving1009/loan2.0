@@ -52,6 +52,8 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                     public LoanAuth apply(LoanAuth loanAuth) throws Exception {
                         ContentValues values = new ContentValues();
                         values.put("loan_id", loanAuth.getLoanId());
+                        values.put("ocr_name", loanAuth.getOcrName());
+                        values.put("ocr_id", loanAuth.getOcrID());
                         LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
                         return loanAuth;
                     }

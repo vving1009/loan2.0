@@ -2,15 +2,26 @@ package com.jiaye.cashloan.view.data.loan.auth.face;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Base64;
 
+import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.tongdun.TongDunClient;
+import com.jiaye.cashloan.http.tongdun.TongDunFace;
+import com.jiaye.cashloan.http.tongdun.TongDunFaceRequest;
+import com.jiaye.cashloan.http.tongdun.TongDunResponse;
+import com.jiaye.cashloan.http.tongdun.TongDunResponseFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
+import com.jiaye.cashloan.view.LocalException;
+
+import org.reactivestreams.Publisher;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -29,14 +40,52 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                 .map(new Function<byte[], String>() {
                     @Override
                     public String apply(byte[] bytes) throws Exception {
-                        return Base64Util.encode(bytes).replace("\n", "");
+                        return Base64Util.encode(bytes, Base64.NO_WRAP);
+                    }
+                })
+                .map(new Function<String, TongDunFaceRequest>() {
+                    @Override
+                    public TongDunFaceRequest apply(String base64) throws Exception {
+                        String name = "";
+                        String id = "";
+                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+                        Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
+                                id = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
+                            }
+                            cursor.close();
+                        }
+
+                        TongDunFaceRequest request = new TongDunFaceRequest();
+                        request.setName(name);
+                        request.setId(id);
+                        request.setBase64(base64);
+                        request.setType("1");
+                        return request;
+                    }
+                })
+                .flatMap(new Function<TongDunFaceRequest, Publisher<TongDunResponse<TongDunFace>>>() {
+                    @Override
+                    public Publisher<TongDunResponse<TongDunFace>> apply(TongDunFaceRequest request) throws Exception {
+                        return TongDunClient.INSTANCE.getService().face(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, request.getName(), request.getId(), request.getBase64(), request.getType());
+                    }
+                })
+                .map(new TongDunResponseFunction<TongDunFace>())
+                .map(new Function<TongDunFace, String>() {
+                    @Override
+                    public String apply(TongDunFace tongDunFace) throws Exception {
+                        if (tongDunFace.isPass()) {
+                            return tongDunFace.getBase64();
+                        }
+                        throw new LocalException(R.string.error_loan_auth_face);
                     }
                 })
                 .map(new Function<String, LoanUploadPictureRequest>() {
                     @Override
                     public LoanUploadPictureRequest apply(String base64) throws Exception {
-                        LoanUploadPictureRequest request = getLoanUploadPictureRequest("02", "03", base64, "face.jpg");
-                        return request;
+                        return getLoanUploadPictureRequest("02", "03", base64, "face.jpg");
                     }
                 })
                 .compose(new ResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))

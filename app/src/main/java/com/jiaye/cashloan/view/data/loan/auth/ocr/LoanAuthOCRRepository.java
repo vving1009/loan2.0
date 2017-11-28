@@ -17,6 +17,9 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.tongdun.TongDunResponse;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.utils.Base64Util;
+
+import java.io.File;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.BiFunction;
@@ -43,10 +46,10 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
     private String mDataBack;
 
     @Override
-    public Flowable<TongDunOCRFront> ocrFront(String code, String key, String base64) {
-        mBase64Front = base64;
+    public Flowable<TongDunOCRFront> ocrFront(String path) {
+        mBase64Front = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
-                .ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, base64)
+                .ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Front)
                 .map(new Function<TongDunResponse<TongDunOCRFront>, TongDunOCRFront>() {
                     @Override
                     public TongDunOCRFront apply(TongDunResponse<TongDunOCRFront> tongDunResponse) throws Exception {
@@ -73,10 +76,10 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
     }
 
     @Override
-    public Flowable<TongDunOCRBack> ocrBack(String code, String key, String base64) {
-        mBase64Back = base64;
+    public Flowable<TongDunOCRBack> ocrBack(String path) {
+        mBase64Back = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
-                .ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, base64)
+                .ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Back)
                 .map(new Function<TongDunResponse<TongDunOCRBack>, TongDunOCRBack>() {
                     @Override
                     public TongDunOCRBack apply(TongDunResponse<TongDunOCRBack> tongDunResponse) throws Exception {

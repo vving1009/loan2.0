@@ -134,7 +134,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                         if (cursor != null) {
                             if (cursor.moveToNext()) {
                                 String phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                                String name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_NAME));
+                                String name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                                 String ocrID = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
                                 request.setPhone(phone);
                                 request.setName(name);

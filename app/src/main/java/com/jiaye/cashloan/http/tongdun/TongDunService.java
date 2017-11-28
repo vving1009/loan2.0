@@ -1,8 +1,10 @@
 package com.jiaye.cashloan.http.tongdun;
 
 import io.reactivex.Flowable;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -27,4 +29,11 @@ public interface TongDunService {
     @POST("ocr/v1")
     @FormUrlEncoded
     Flowable<TongDunResponse<TongDunOCRBack>> ocrBack(@Query("partner_code") String code, @Query("partner_key") String key, @Field("image") String imageBase64);
+
+    /**
+     * face
+     */
+    @POST("realimage/v1")
+    @FormUrlEncoded
+    Flowable<TongDunResponse<TongDunFace>> face(@Query("partner_code") String code, @Query("partner_key") String key, @Field("name") String name, @Field("id_number") String id, @Field("image") String base64, @Field("type") String type);
 }

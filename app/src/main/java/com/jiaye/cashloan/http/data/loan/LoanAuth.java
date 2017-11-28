@@ -39,6 +39,14 @@ public class LoanAuth extends ChildResponse {
     @SerializedName("zmAuth_state")
     private String sesameState;
 
+    /*身份证姓名*/
+    @SerializedName("jcb_name")
+    private String ocrName;
+
+    /*身份证姓名*/
+    @SerializedName("jcb_identifyid")
+    private String ocrID;
+
     public String getLoanId() {
         return loanId;
     }
@@ -93,5 +101,21 @@ public class LoanAuth extends ChildResponse {
 
     public void setSesameState(String sesameState) {
         this.sesameState = sesameState;
+    }
+
+    public String getOcrName() {
+        return ocrName;
+    }
+
+    public void setOcrName(String ocrName) {
+        this.ocrName = ocrName;
+    }
+
+    public String getOcrID() {
+        return ocrID;
+    }
+
+    public void setOcrID(String ocrID) {
+        this.ocrID = ocrID;
     }
 }
