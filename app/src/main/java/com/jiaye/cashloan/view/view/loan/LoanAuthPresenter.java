@@ -27,6 +27,9 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     private final LoanAuthDataSource mDataSource;
 
+    /*身份证是否已经认证*/
+    private boolean mIsCardVerify;
+
     public LoanAuthPresenter(LoanAuthContract.View view, LoanAuthDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -50,6 +53,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         card.setIcon(R.drawable.loan_auth_ic_card);
                         card.setName(R.string.loan_auth_ocr);
                         setLoanAuthModel(loanAuth.getCardState(), card, false);
+                        mIsCardVerify = card.isVerify();
 
                         LoanAuthModel face = new LoanAuthModel();
                         face.setIcon(R.drawable.loan_auth_ic_face);
@@ -91,6 +95,11 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     @Override
     public void selectLoanAuthModel(LoanAuthModel model) {
+        /*身份证未认证时选择其他认证*/
+        if (!mIsCardVerify && model.getName() != R.string.loan_auth_ocr) {
+            mView.showToastById(R.string.error_loan_auth_card_first);
+            return;
+        }
         if (!model.isVerify() || model.isCanModify()) {
             switch (model.getName()) {
                 case R.string.loan_auth_ocr:
