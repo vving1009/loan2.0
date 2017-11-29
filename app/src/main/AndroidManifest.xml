@@ -49,7 +49,7 @@
             android:name=".view.view.loan.auth.info.LoanAuthContactInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthPhoneActivity"
+            android:name=".view.view.loan.auth.phone.LoanAuthPhoneActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.auth.LoanAuthTaoBaoActivity"

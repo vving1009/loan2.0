@@ -267,6 +267,6 @@
             android:enabled="true"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

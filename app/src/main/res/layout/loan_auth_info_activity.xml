@@ -143,5 +143,5 @@
         android:enabled="false"
         android:text="@string/next"
         android:textColor="@android:color/white"
-        android:textSize="13sp" />
+        android:textSize="14sp" />
 </LinearLayout>
