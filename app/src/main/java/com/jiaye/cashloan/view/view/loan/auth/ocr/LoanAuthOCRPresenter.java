@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.ocr.LoanAuthOCRDataSource;
+import com.jiaye.cashloan.view.data.loan.auth.source.ocr.LoanAuthOCRDataSource;
 
 import org.reactivestreams.Publisher;
 

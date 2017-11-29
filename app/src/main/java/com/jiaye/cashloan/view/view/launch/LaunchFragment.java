@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.launch.LaunchRepository;
+import com.jiaye.cashloan.view.data.launch.source.LaunchRepository;
 import com.jiaye.cashloan.view.view.guide.GuideActivity;
 import com.jiaye.cashloan.view.view.main.MainActivity;
 

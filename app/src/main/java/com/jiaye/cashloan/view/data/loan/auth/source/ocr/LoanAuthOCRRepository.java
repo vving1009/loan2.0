@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.ocr;
+package com.jiaye.cashloan.view.data.loan.auth.source.ocr;
 
 import android.content.ContentValues;
 import android.database.Cursor;

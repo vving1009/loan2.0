@@ -3,7 +3,7 @@ package com.jiaye.cashloan.view.view.launch;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.launch.LaunchDataSource;
+import com.jiaye.cashloan.view.data.launch.source.LaunchDataSource;
 
 import java.io.File;
 

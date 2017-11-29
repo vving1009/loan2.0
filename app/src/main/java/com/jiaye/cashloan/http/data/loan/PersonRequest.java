@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.person;
+package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.ChildRequest;

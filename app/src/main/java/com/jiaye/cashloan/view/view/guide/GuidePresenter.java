@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.view.guide;
 
 import com.jiaye.cashloan.view.BasePresenterImpl;
-import com.jiaye.cashloan.view.data.guide.GuideDataSource;
+import com.jiaye.cashloan.view.data.guide.source.GuideDataSource;
 
 /**
  * GuidePresenter

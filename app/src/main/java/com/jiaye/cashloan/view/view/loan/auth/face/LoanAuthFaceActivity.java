@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.data.loan.auth.face.LoanAuthFaceRepository;
+import com.jiaye.cashloan.view.data.loan.auth.source.face.LoanAuthFaceRepository;
 import com.oliveapp.face.livenessdetectorsdk.livenessdetector.datatype.LivenessDetectionFrames;
 
 import cn.tongdun.android.liveness.view_controller.LivenessDetectionMainActivity;
@@ -26,6 +26,12 @@ public class LoanAuthFaceActivity extends LivenessDetectionMainActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new LoanAuthFacePresenter(this, new LoanAuthFaceRepository());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
     @Override

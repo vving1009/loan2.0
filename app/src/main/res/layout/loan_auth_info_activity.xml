@@ -77,6 +77,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/text_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -111,6 +112,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/text_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

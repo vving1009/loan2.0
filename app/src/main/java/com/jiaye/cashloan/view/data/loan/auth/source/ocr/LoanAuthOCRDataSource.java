@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.ocr;
+package com.jiaye.cashloan.view.data.loan.auth.source.ocr;
 
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;

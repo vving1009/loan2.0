@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.base.ErrorCode;
 import com.jiaye.cashloan.http.base.NetworkException;
 import com.orhanobut.logger.Logger;
 
@@ -41,7 +42,9 @@ public class ThrowableConsumer implements Consumer<Throwable> {
                     break;
             }
         } else if (t instanceof NetworkException) {
-            mContract.showToast(((NetworkException) t).getErrorMessage());
+            if (!((NetworkException) t).getErrorCode().equals(ErrorCode.EMPTY.getCode())) {
+                mContract.showToast(((NetworkException) t).getErrorMessage());
+            }
         } else {
             Logger.e(t.getMessage());
             mContract.showToast(t.getMessage());

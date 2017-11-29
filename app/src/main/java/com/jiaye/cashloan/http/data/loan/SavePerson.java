@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.person;
+package com.jiaye.cashloan.http.data.loan;
 
 import com.jiaye.cashloan.http.base.ChildResponse;
 

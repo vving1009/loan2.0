@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.guide;
+package com.jiaye.cashloan.view.data.guide.source;
 
 /**
  * GuideDataSource

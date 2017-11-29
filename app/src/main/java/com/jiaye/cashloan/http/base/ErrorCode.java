@@ -24,11 +24,14 @@ public enum ErrorCode {
 
     FAILURE_0006("0006", R.string.error_0006),
 
+    EMPTY("9990", R.string.error_9990),
+
     FAILURE_9997("9997", R.string.error_9997),
 
     FAILURE_9998("9998", R.string.error_9998),
 
     FAILURE_9999("9999", R.string.error_9999);
+
 
     private String code;
 

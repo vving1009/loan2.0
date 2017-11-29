@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.data.loan.auth.ocr.LoanAuthOCRRepository;
+import com.jiaye.cashloan.view.data.loan.auth.source.ocr.LoanAuthOCRRepository;
 import com.jph.takephoto.app.TakePhotoAppCompatActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.TResult;

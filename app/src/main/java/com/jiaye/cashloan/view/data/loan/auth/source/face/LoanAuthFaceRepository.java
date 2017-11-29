@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.face;
+package com.jiaye.cashloan.view.data.loan.auth.source.face;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

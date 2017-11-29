@@ -17,6 +17,8 @@ public class Relation implements IPickerViewData {
     @SerializedName("value")
     private String value;
 
+    private boolean isSelect;
+
     public String getKey() {
         return key;
     }
@@ -31,6 +33,14 @@ public class Relation implements IPickerViewData {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
     @Override

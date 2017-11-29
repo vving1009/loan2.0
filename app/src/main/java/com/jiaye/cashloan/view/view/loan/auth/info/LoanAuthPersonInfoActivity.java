@@ -1,59 +1,22 @@
 package com.jiaye.cashloan.view.view.loan.auth.info;
 
-import android.app.ProgressDialog;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.LoanClient;
-import com.jiaye.cashloan.http.base.Request;
-import com.jiaye.cashloan.http.base.Response;
-import com.jiaye.cashloan.http.data.person.Person;
-import com.jiaye.cashloan.http.data.person.PersonRequest;
-import com.jiaye.cashloan.http.data.person.SavePerson;
-import com.jiaye.cashloan.http.data.person.SavePersonRequest;
-import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseFunction;
-import com.jiaye.cashloan.persistence.DbContract;
-import com.jiaye.cashloan.view.ViewTransformer;
+import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.auth.Area;
 import com.jiaye.cashloan.view.data.auth.Education;
 import com.jiaye.cashloan.view.data.auth.Marriage;
-import com.orhanobut.logger.Logger;
+import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoRepository;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscription;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * LoanAuthPersonInfoActivity
@@ -61,11 +24,9 @@ import io.reactivex.schedulers.Schedulers;
  * @author 贾博瑄
  */
 
-public class LoanAuthPersonInfoActivity extends AppCompatActivity {
+public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuthPersonInfoContract.View {
 
-    protected CompositeDisposable mCompositeDisposable;
-
-    private ProgressDialog mDialog;
+    private LoanAuthPersonInfoContract.Presenter mPresenter;
 
     private OptionsPickerView mOptionsEducation;
 
@@ -87,23 +48,9 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
 
     private EditText mEditEmail;
 
-    private String mPhone;
-
-    private ArrayList<ArrayList<String>> mAreas2;
-
-    private ArrayList<ArrayList<ArrayList<String>>> mAreas3;
-
-    private ArrayList<Education> mEducations;
-
-    private ArrayList<Marriage> mMarriages;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCompositeDisposable = new CompositeDisposable();
-        mDialog = new ProgressDialog(this);
-        mDialog.setCancelable(false);
-        mDialog.setCanceledOnTouchOutside(false);
         setContentView(R.layout.loan_auth_person_info_activity);
         mTextEducation = findViewById(R.id.text_education);
         mTextMarriage = findViewById(R.id.text_marriage);
@@ -138,7 +85,7 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
+                mPresenter.submit();
             }
         });
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
@@ -147,118 +94,83 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        init();
+        mPresenter = new LoanAuthPersonInfoPresenter(this, new LoanAuthPersonInfoRepository());
+        mPresenter.subscribe();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDialog.dismiss();
-        mCompositeDisposable.clear();
+        mPresenter.unsubscribe();
     }
 
-    private void init() {
-        File dir = getFilesDir();
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "area.json":
-                        transformArea(br, gson);
-                        break;
-                    case "education.json":
-                        transformEducation(br, gson);
-                        break;
-                    case "marriage.json":
-                        transformMarriage(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        // 网络请求获得已经存的数据
-        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-        Cursor cursor = database.rawQuery("SELECT phone FROM user;", null);
-        if (cursor != null) {
-            if (cursor.moveToNext()) {
-                mPhone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-            }
-            cursor.close();
-        }
-        PersonRequest request = new PersonRequest();
-        request.setPhone(mPhone);
-        Disposable disposable = Flowable.just(request)
-                .map(new RequestFunction<PersonRequest>())
-                .flatMap(new Function<Request<PersonRequest>, Publisher<Response<Person>>>() {
-                    @Override
-                    public Publisher<Response<Person>> apply(Request<PersonRequest> request) throws Exception {
-                        return LoanClient.INSTANCE.getService().person(request);
-                    }
-                })
-                .map(new ResponseFunction<Person>())
-                .compose(new ViewTransformer<Person>())
-                .subscribe(new Consumer<Person>() {
-                    @Override
-                    public void accept(Person person) throws Exception {
-                        for (int i = 0; i < mEducations.size(); i++) {
-                            if (mEducations.get(i).getKey().equals(person.getEducation())) {
-                                mEducations.get(i).setSelect(true);
-                                mTextEducation.setText(mEducations.get(i).getValue());
-                            }
-                        }
-                        for (int i = 0; i < mMarriages.size(); i++) {
-                            if (mMarriages.get(i).getKey().equals(person.getMarriage())) {
-                                mMarriages.get(i).setSelect(true);
-                                mTextMarriage.setText(mMarriages.get(i).getValue());
-                            }
-                        }
-                        mTextRegisterCity.setText(person.getRegisterCity());
-                        mTextCity.setText(person.getCity());
-                        mEditAddress.setText(person.getAddress());
-                        mEditEmail.setText(person.getEmail());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Toast.makeText(LoanAuthPersonInfoActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mCompositeDisposable.add(disposable);
+    @Override
+    public void setEducation(String education) {
+        mTextEducation.setText(education);
     }
 
-    private void transformArea(BufferedReader br, Gson gson) {
-        ArrayList<Area> areas = gson.fromJson(br, new TypeToken<List<Area>>() {
-        }.getType());
-        mAreas2 = new ArrayList<>();
-        mAreas3 = new ArrayList<>();
-        for (int i = 0; i < areas.size(); i++) {//遍历省份
-            ArrayList<String> cities = new ArrayList<>();//该省的城市列表（第二级）
-            ArrayList<ArrayList<String>> provinces = new ArrayList<>();//该省的所有地区列表（第三极）
-            for (int c = 0; c < areas.get(i).getCity().size(); c++) {//遍历该省份的所有城市
-                String CityName = areas.get(i).getCity().get(c).getName();
-                cities.add(CityName);//添加城市
-                ArrayList<String> strings = new ArrayList<>();//该城市的所有地区列表
-                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                if (areas.get(i).getCity().get(c).getAreas() == null || areas.get(i).getCity().get(c).getAreas().size() == 0) {
-                    strings.add("");
-                } else {
-                    strings.addAll(areas.get(i).getCity().get(c).getAreas());
-                }
-                provinces.add(strings);//添加该省所有地区数据
-            }
-            mAreas2.add(cities);
-            mAreas3.add(provinces);
-        }
+    @Override
+    public void setMarriage(String marriage) {
+        mTextMarriage.setText(marriage);
+    }
 
+    @Override
+    public void setRegisterCity(String registerCity) {
+        mTextRegisterCity.setText(registerCity);
+    }
+
+    @Override
+    public void setCity(String city) {
+        mTextCity.setText(city);
+    }
+
+    @Override
+    public void setAddress(String address) {
+        mEditAddress.setText(address);
+    }
+
+    @Override
+    public void setEmail(String email) {
+        mEditEmail.setText(email);
+    }
+
+    @Override
+    public String getEducation() {
+        return mTextEducation.getText().toString();
+    }
+
+    @Override
+    public String getMarriage() {
+        return mTextMarriage.getText().toString();
+    }
+
+    @Override
+    public String getRegisterCity() {
+        return mTextRegisterCity.getText().toString();
+    }
+
+    @Override
+    public String getCity() {
+        return mTextCity.getText().toString();
+    }
+
+    @Override
+    public String getAddress() {
+        return mEditAddress.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return mEditEmail.getText().toString();
+    }
+
+    @Override
+    public void initArea(ArrayList<Area> areas, final ArrayList<ArrayList<String>> areas2, final ArrayList<ArrayList<ArrayList<String>>> areas3) {
         mOptionsRegisterCity =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextRegisterCity.setText(mAreas2.get(options1).get(options2));
+                        mTextRegisterCity.setText(areas2.get(options1).get(options2));
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -280,13 +192,13 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsRegisterCity.setPicker(areas, mAreas2);
+        mOptionsRegisterCity.setPicker(areas, areas2);
 
         mOptionsCity =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextCity.setText(mAreas3.get(options1).get(options2).get(options3));
+                        mTextCity.setText(areas3.get(options1).get(options2).get(options3));
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -308,21 +220,20 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsCity.setPicker(areas, mAreas2, mAreas3);
+        mOptionsCity.setPicker(areas, areas2, areas3);
     }
 
-    private void transformEducation(BufferedReader br, Gson gson) {
-        mEducations = gson.fromJson(br, new TypeToken<List<Education>>() {
-        }.getType());
+    @Override
+    public void initEducation(final ArrayList<Education> educations) {
         mOptionsEducation =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        for (int i = 0; i < mEducations.size(); i++) {
-                            mEducations.get(i).setSelect(false);
+                        for (int i = 0; i < educations.size(); i++) {
+                            educations.get(i).setSelect(false);
                         }
-                        mEducations.get(options1).setSelect(true);
-                        mTextEducation.setText(mEducations.get(options1).getPickerViewText());
+                        educations.get(options1).setSelect(true);
+                        mTextEducation.setText(educations.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -344,21 +255,20 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsEducation.setPicker(mEducations);
+        mOptionsEducation.setPicker(educations);
     }
 
-    private void transformMarriage(BufferedReader br, Gson gson) {
-        mMarriages = gson.fromJson(br, new TypeToken<List<Marriage>>() {
-        }.getType());
+    @Override
+    public void initMarriage(final ArrayList<Marriage> marriages) {
         mOptionsMarriage =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        for (int i = 0; i < mMarriages.size(); i++) {
-                            mMarriages.get(i).setSelect(false);
+                        for (int i = 0; i < marriages.size(); i++) {
+                            marriages.get(i).setSelect(false);
                         }
-                        mMarriages.get(options1).setSelect(true);
-                        mTextMarriage.setText(mMarriages.get(options1).getPickerViewText());
+                        marriages.get(options1).setSelect(true);
+                        mTextMarriage.setText(marriages.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -380,7 +290,12 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsMarriage.setPicker(mMarriages);
+        mOptionsMarriage.setPicker(marriages);
+    }
+
+    @Override
+    public void result() {
+        finish();
     }
 
     private void showEducationPicker() {
@@ -397,75 +312,5 @@ public class LoanAuthPersonInfoActivity extends AppCompatActivity {
 
     private void showCityPicker() {
         mOptionsCity.show();
-    }
-
-    private void save() {
-        if (TextUtils.isEmpty(mTextEducation.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_education), Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mTextMarriage.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_marriage), Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mTextRegisterCity.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_register_city), Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mTextCity.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_city), Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mEditAddress.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_address), Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mEditEmail.getText().toString())) {
-            Toast.makeText(this, getString(R.string.error_loan_person_email), Toast.LENGTH_SHORT).show();
-        } else {
-            // 网络请求
-            SavePersonRequest request = new SavePersonRequest();
-            request.setPhone(mPhone);
-            for (int i = 0; i < mEducations.size(); i++) {
-                if (mEducations.get(i).isSelect()) {
-                    request.setEducation(mEducations.get(i).getKey());
-                }
-            }
-            for (int i = 0; i < mMarriages.size(); i++) {
-                if (mMarriages.get(i).isSelect()) {
-                    request.setMarriage(mMarriages.get(i).getKey());
-                }
-            }
-            request.setRegisterCity(mTextRegisterCity.getText().toString());
-            request.setCity(mTextCity.getText().toString());
-            request.setAddress(mEditAddress.getText().toString());
-            request.setEmail(mEditEmail.getText().toString());
-            Disposable disposable = Flowable.just(request)
-                    .map(new RequestFunction<SavePersonRequest>())
-                    .flatMap(new Function<Request<SavePersonRequest>, Publisher<Response<SavePerson>>>() {
-                        @Override
-                        public Publisher<Response<SavePerson>> apply(Request<SavePersonRequest> request) throws Exception {
-                            return LoanClient.INSTANCE.getService().savePerson(request);
-                        }
-                    })
-                    .map(new ResponseFunction<SavePerson>())
-                    .subscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Consumer<Subscription>() {
-                        @Override
-                        public void accept(Subscription subscription) throws Exception {
-                            mDialog.show();
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<SavePerson>() {
-                        @Override
-                        public void accept(SavePerson savePerson) throws Exception {
-                            finish();
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            Logger.d(throwable.getMessage());
-                            mDialog.dismiss();
-                        }
-                    }, new Action() {
-                        @Override
-                        public void run() throws Exception {
-                            mDialog.dismiss();
-                        }
-                    });
-            mCompositeDisposable.add(disposable);
-        }
     }
 }

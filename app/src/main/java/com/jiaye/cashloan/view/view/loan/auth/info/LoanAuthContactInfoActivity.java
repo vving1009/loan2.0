@@ -2,25 +2,17 @@ package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.auth.Relation;
+import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoRepository;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * LoanAuthContactInfoActivity
@@ -28,24 +20,36 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class LoanAuthContactInfoActivity extends AppCompatActivity {
+public class LoanAuthContactInfoActivity extends BaseActivity implements LoanAuthContactInfoContract.View {
+
+    private LoanAuthContactInfoContract.Presenter mPresenter;
 
     private OptionsPickerView mOptionsFamily;
 
     private OptionsPickerView mOptionsFriend;
 
+    private TextView mEditFamilyName;
+
     private TextView mTextFamily;
+
+    private TextView mEditFamilyPhone;
+
+    private TextView mEditFriendName;
 
     private TextView mTextFriend;
 
-    private ArrayList<Relation> mRelations;
+    private TextView mEditFriendPhone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_contact_info_activity);
+        mEditFamilyName = findViewById(R.id.edit_family_name);
         mTextFamily = findViewById(R.id.text_family);
+        mEditFamilyPhone = findViewById(R.id.edit_family_phone);
+        mEditFriendName = findViewById(R.id.edit_friend_name);
         mTextFriend = findViewById(R.id.text_friend);
+        mEditFriendPhone = findViewById(R.id.edit_friend_phone);
         findViewById(R.id.layout_family).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,42 +62,99 @@ public class LoanAuthContactInfoActivity extends AppCompatActivity {
                 showFriendPicker();
             }
         });
+        findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.submit();
+            }
+        });
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        init();
+        mPresenter = new LoanAuthContactInfoPresenter(this, new LoanAuthContactInfoRepository());
+        mPresenter.subscribe();
     }
 
-    private void init() {
-        File dir = getFilesDir();
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "relation.json":
-                        transformRelation(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
-    private void transformRelation(BufferedReader br, Gson gson) {
-        mRelations = gson.fromJson(br, new TypeToken<List<Relation>>() {
-        }.getType());
+    @Override
+    public void setFamilyName(String text) {
+        mEditFamilyName.setText(text);
+    }
+
+    @Override
+    public void setFamily(String text) {
+        mTextFamily.setText(text);
+    }
+
+    @Override
+    public void setFamilyPhone(String text) {
+        mEditFamilyPhone.setText(text);
+    }
+
+    @Override
+    public void setFriendName(String text) {
+        mEditFriendName.setText(text);
+    }
+
+    @Override
+    public void setFriend(String text) {
+        mTextFriend.setText(text);
+    }
+
+    @Override
+    public void setFriendPhone(String text) {
+        mEditFriendPhone.setText(text);
+    }
+
+    @Override
+    public String getFamilyName() {
+        return mEditFamilyName.getText().toString();
+    }
+
+    @Override
+    public String getFamily() {
+        return mTextFamily.getText().toString();
+    }
+
+    @Override
+    public String getFamilyPhone() {
+        return mEditFamilyPhone.getText().toString();
+    }
+
+    @Override
+    public String getFriendName() {
+        return mEditFriendName.getText().toString();
+    }
+
+    @Override
+    public String getFriend() {
+        return mTextFriend.getText().toString();
+    }
+
+    @Override
+    public String getFriendPhone() {
+        return mEditFriendPhone.getText().toString();
+    }
+
+    @Override
+    public void initFamily(final ArrayList<Relation> relations) {
         mOptionsFamily =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextFamily.setText(mRelations.get(options1).getPickerViewText());
+                        for (int i = 0; i < relations.size(); i++) {
+                            relations.get(i).setSelect(false);
+                        }
+                        relations.get(options1).setSelect(true);
+                        mTextFamily.setText(relations.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -115,13 +176,20 @@ public class LoanAuthContactInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsFamily.setPicker(mRelations);
+        mOptionsFamily.setPicker(relations);
+    }
 
+    @Override
+    public void initFriend(final ArrayList<Relation> relations) {
         mOptionsFriend =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextFriend.setText(mRelations.get(options1).getPickerViewText());
+                        for (int i = 0; i < relations.size(); i++) {
+                            relations.get(i).setSelect(false);
+                        }
+                        relations.get(options1).setSelect(true);
+                        mTextFriend.setText(relations.get(options1).getPickerViewText());
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -143,7 +211,12 @@ public class LoanAuthContactInfoActivity extends AppCompatActivity {
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsFriend.setPicker(mRelations);
+        mOptionsFriend.setPicker(relations);
+    }
+
+    @Override
+    public void result() {
+        finish();
     }
 
     private void showFamilyPicker() {

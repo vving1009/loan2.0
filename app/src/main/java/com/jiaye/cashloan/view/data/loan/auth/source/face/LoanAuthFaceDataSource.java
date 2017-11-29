@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.face;
+package com.jiaye.cashloan.view.data.loan.auth.source.face;
 
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 
