@@ -52,10 +52,10 @@
             android:name=".view.view.loan.auth.phone.LoanAuthPhoneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthTaoBaoActivity"
+            android:name=".view.view.loan.auth.taobao.LoanAuthTaoBaoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.LoanAuthSesameActivity"
+            android:name=".view.view.loan.auth.sesame.LoanAuthSesameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.auth.AuthActivity"

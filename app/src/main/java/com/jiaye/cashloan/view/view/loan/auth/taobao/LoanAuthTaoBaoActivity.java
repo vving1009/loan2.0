@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.taobao;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.view.loan.LoanFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 /**

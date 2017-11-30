@@ -1,13 +1,15 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.taobao;
 
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.LoanApplication;
@@ -17,18 +19,15 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
 import com.jiaye.cashloan.persistence.DbContract;
-import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.widget.LoanEditText;
 import com.orhanobut.logger.Logger;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -41,39 +40,30 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+
 /**
- * LoanAuthTaoBaoNormalFragment
+ * LoanAuthTaoBaoQRFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
+public class LoanAuthTaoBaoQRFragment extends BaseFragment {
 
     protected CompositeDisposable mCompositeDisposable;
 
     private ProgressDialog mDialog;
 
-    private LoanEditText mEditAccount;
-
-    private LoanEditText mEditPassword;
-
-    private LoanEditText mEditSMS;
-
-    private LoanEditText mEditIMG;
+    private ImageView mImgQRCode;
 
     private String mToken;
 
     private boolean mIsPollingEnd;
 
-    private boolean isSecond;
+    private Bitmap mBitmap;
 
-    private boolean isSMS;
-
-    private boolean isIMG;
-
-    public static LoanAuthTaoBaoNormalFragment newInstance() {
+    public static LoanAuthTaoBaoQRFragment newInstance() {
         Bundle args = new Bundle();
-        LoanAuthTaoBaoNormalFragment fragment = new LoanAuthTaoBaoNormalFragment();
+        LoanAuthTaoBaoQRFragment fragment = new LoanAuthTaoBaoQRFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,29 +74,8 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
         mDialog = new ProgressDialog(getActivity());
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
-        View root = inflater.inflate(R.layout.loan_auth_taobao_normal_fragment, container, false);
-        mEditAccount = (LoanEditText) root.findViewById(R.id.edit_account);
-        mEditPassword = (LoanEditText) root.findViewById(R.id.edit_password);
-        mEditSMS = (LoanEditText) root.findViewById(R.id.edit_sms);
-        mEditIMG = (LoanEditText) root.findViewById(R.id.edit_img);
-        mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                requestSMS();
-            }
-        });
-        mEditIMG.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                requestIMG();
-            }
-        });
-        root.findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submit();
-            }
-        });
+        View root = inflater.inflate(R.layout.loan_auth_taobao_qrcode_fragment, container, false);
+        mImgQRCode = (ImageView) root.findViewById(R.id.img_qrcode);
         return root;
     }
 
@@ -114,7 +83,6 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCompositeDisposable = new CompositeDisposable();
-        request();
     }
 
     @Override
@@ -123,7 +91,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
         mCompositeDisposable.clear();
     }
 
-    private void request() {
+    public void request() {
         Disposable disposable = Flowable.just("")
                 .map(new Function<String, GongXinBaoTokenRequest>() {
                     @Override
@@ -159,65 +127,26 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                         return GongXinBaoClient.INSTANCE.getService().ecommerceConfig(mToken);
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Subscription>() {
+                .flatMap(new Function<GongXinBaoResponse<Object>, Publisher<GongXinBaoResponse<GongXinBao>>>() {
                     @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        mDialog.show();
+                    public Publisher<GongXinBaoResponse<GongXinBao>> apply(GongXinBaoResponse<Object> object) throws Exception {
+                        return GongXinBaoClient.INSTANCE.getService().refreshEcommerceQRCode(mToken);
                     }
                 })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object object) throws Exception {
-                        mDialog.dismiss();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        mDialog.dismiss();
-                        Logger.d(throwable.getMessage());
-                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mCompositeDisposable.add(disposable);
-    }
-
-    private void requestSMS() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshEcommerceSmsCode(mToken)
-                .compose(new ViewTransformer<GongXinBaoResponse<GongXinBao>>())
-                .subscribe(new Consumer<GongXinBaoResponse<GongXinBao>>() {
-                    @Override
-                    public void accept(GongXinBaoResponse<GongXinBao> response) throws Exception {
-                        mEditSMS.startCountDown();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Logger.d(throwable.getMessage());
-                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mCompositeDisposable.add(disposable);
-    }
-
-    private void requestIMG() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshEcommerceVerifyCode(mToken)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        mDialog.show();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
                 .map(new GongXinBaoResponseFunction<GongXinBao>())
                 .map(new Function<GongXinBao, Bitmap>() {
                     @Override
-                    public Bitmap apply(GongXinBao response) throws Exception {
-                        return Base64Util.base64ToBitmap(response.getExtra().getRemark());
+                    public Bitmap apply(GongXinBao gongXinBao) throws Exception {
+                        URL url = new URL(gongXinBao.getExtra().getQrCode().getHttpQRCode());
+                        mBitmap = BitmapFactory.decodeStream(url.openStream());
+                        return mBitmap;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        mDialog.show();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -225,81 +154,13 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                     @Override
                     public void accept(Bitmap bitmap) throws Exception {
                         mDialog.dismiss();
-                        mEditIMG.setCode(bitmap);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Logger.d(throwable.getMessage());
-                        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mCompositeDisposable.add(disposable);
-    }
-
-    private void submit() {
-        if (isSecond) {
-            submitSecond();
-        } else {
-            GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-            request.setUsername(mEditAccount.getText().toString());
-            request.setPassword(mEditPassword.getText().toString());
-            Disposable disposable = GongXinBaoClient.INSTANCE.getService().ecommerceLogin(mToken, request)
-                    .map(new GongXinBaoResponseFunction<GongXinBao>())
-                    .subscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Consumer<Subscription>() {
-                        @Override
-                        public void accept(Subscription subscription) throws Exception {
-                            mDialog.show();
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<GongXinBao>() {
-                        @Override
-                        public void accept(GongXinBao response) throws Exception {
-                            polling();
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            Logger.d(throwable.getMessage());
-                            Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            mCompositeDisposable.add(disposable);
-        }
-    }
-
-    private void submitSecond() {
-        GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-        if (isSMS) {
-            request.setCode(mEditSMS.getText().toString());
-        } else if (isIMG) {
-            request.setCode(mEditIMG.getText().toString());
-        }
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().ecommerceSecond(mToken, request)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        mDialog.show();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GongXinBao>() {
-                    @Override
-                    public void accept(GongXinBao response) throws Exception {
-                        isSecond = false;
-                        isSMS = false;
-                        isIMG = false;
+                        mImgQRCode.setImageBitmap(bitmap);
                         polling();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        mDialog.dismiss();
                         Logger.d(throwable.getMessage());
                         Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -351,6 +212,8 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                                 mIsPollingEnd = true;
                                 break;
                         }
+                        URL url = new URL(response.getExtra().getQrCode().getHttpQRCode());
+                        mBitmap = BitmapFactory.decodeStream(url.openStream());
                         return response;
                     }
                 })
@@ -368,6 +231,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                     public void accept(GongXinBao response) throws Exception {
                         switch (response.getPhaseStatus()) {
                             case "LOGIN_WAITING":
+                                mDialog.show();
                                 break;
                             case "LOGIN_SUCCESS":
                                 break;
@@ -375,12 +239,6 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                                 Toast.makeText(getActivity(), response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
                                 break;
                             case "REFRESH_IMAGE_SUCCESS":
-                                isSecond = true;
-                                isIMG = true;
-                                // 更新图形验证码
-                                mEditIMG.setText("");
-                                mEditIMG.setVisibility(View.VISIBLE);
-                                mEditIMG.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "REFRESH_IMAGE_FAILED":
                                 Toast.makeText(getActivity(), "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
@@ -392,19 +250,8 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                                 Toast.makeText(getActivity(), "系统繁忙，刷新重试", Toast.LENGTH_SHORT).show();
                                 break;
                             case "SMS_VERIFY_NEW":
-                                isSecond = true;
-                                isSMS = true;
-                                // 输入收到的短信
-                                mEditSMS.setText("");
-                                mEditSMS.setVisibility(View.VISIBLE);
                                 break;
                             case "IMAGE_VERIFY_NEW":
-                                isSecond = true;
-                                isIMG = true;
-                                // 更新图形验证码
-                                mEditIMG.setText("");
-                                mEditIMG.setVisibility(View.VISIBLE);
-                                mEditIMG.setCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "WAITING":
                                 break;
@@ -421,6 +268,8 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
                                 Toast.makeText(getActivity(), response.getExtra().getRemark(), Toast.LENGTH_SHORT).show();
                                 break;
                         }
+                        // 刷新QRCode
+                        mImgQRCode.setImageBitmap(mBitmap);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

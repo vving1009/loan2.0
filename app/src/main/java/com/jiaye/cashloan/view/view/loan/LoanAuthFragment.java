@@ -22,8 +22,8 @@ import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthSesameActivity;
-import com.jiaye.cashloan.view.view.loan.auth.LoanAuthTaoBaoActivity;
+import com.jiaye.cashloan.view.view.loan.auth.sesame.LoanAuthSesameActivity;
+import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth;
+package com.jiaye.cashloan.view.view.loan.auth.sesame;
 
 import android.support.v7.app.AppCompatActivity;
 

@@ -88,12 +88,12 @@ public class LoanAuthPhoneActivity extends AppCompatActivity {
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
         setContentView(R.layout.loan_auth_phone_activity);
-        mTextPhone = (TextView) findViewById(R.id.text_phone);
-        mTextOperators = (TextView) findViewById(R.id.text_operators);
-        mEditPassword = (LoanEditText) findViewById(R.id.edit_password);
-        mTextForgetPassword = (TextView) findViewById(R.id.text_forget_password);
-        mEditSmsVerificationCode = (LoanEditText) findViewById(R.id.edit_sms_verification_code);
-        mEditImgVerificationCode = (LoanEditText) findViewById(R.id.edit_img_verification_code);
+        mTextPhone = findViewById(R.id.text_phone);
+        mTextOperators = findViewById(R.id.text_operators);
+        mEditPassword = findViewById(R.id.edit_password);
+        mTextForgetPassword = findViewById(R.id.text_forget_password);
+        mEditSmsVerificationCode = findViewById(R.id.edit_sms_verification_code);
+        mEditImgVerificationCode = findViewById(R.id.edit_img_verification_code);
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
