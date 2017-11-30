@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
+import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
@@ -72,7 +73,7 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
                 mPresenter.submit();
             }
         });
-        mPresenter = new LoanAuthPhonePresenter(this);
+        mPresenter = new LoanAuthPhonePresenter(this, new LoanAuthPhoneRepository());
         mPresenter.subscribe();
     }
 

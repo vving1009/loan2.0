@@ -37,6 +37,8 @@ import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
+import com.jiaye.cashloan.http.data.loan.SavePhone;
+import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -152,6 +154,12 @@ public interface LoanService {
      */
     @POST("linkman")
     Flowable<Response<SaveContact>> saveContact(@Body Request<SaveContactRequest> request);
+
+    /**
+     * 保存手机信息
+     */
+    @POST("phoneOperator")
+    Flowable<Response<SavePhone>> savePhone(@Body Request<SavePhoneRequest> request);
 
     /**
      * 校验忘记密码验证码

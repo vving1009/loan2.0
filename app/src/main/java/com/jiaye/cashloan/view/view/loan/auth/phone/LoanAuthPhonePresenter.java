@@ -1,35 +1,25 @@
 package com.jiaye.cashloan.view.view.loan.auth.phone;
 
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoOperatorsConfig;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
-import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
-import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
+import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneDataSource;
 
 import org.reactivestreams.Publisher;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -45,74 +35,26 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
 
     private final LoanAuthPhoneContract.View mView;
 
-    private String mPhone;
-
-    private String mToken;
+    private final LoanAuthPhoneDataSource mDataSource;
 
     private String mTips;
 
-    private boolean mIsPollingEnd;
-
     private boolean isSecond;
 
-    private boolean isSMS;
-
-    private boolean isIMG;
-
-    public LoanAuthPhonePresenter(LoanAuthPhoneContract.View view) {
+    public LoanAuthPhonePresenter(LoanAuthPhoneContract.View view, LoanAuthPhoneDataSource dataSource) {
         mView = view;
+        mDataSource = dataSource;
     }
 
     @Override
     public void subscribe() {
         super.subscribe();
-        Disposable disposable = Flowable.just("")
-                .map(new Function<String, GongXinBaoTokenRequest>() {
-                    @Override
-                    public GongXinBaoTokenRequest apply(String s) throws Exception {
-                        GongXinBaoTokenRequest request = new GongXinBaoTokenRequest("operator_pro");
-                        String sql = "SELECT * FROM user;";
-                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
-                        if (cursor != null) {
-                            if (cursor.moveToNext()) {
-                                mPhone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                                String name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
-                                String ocrID = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
-                                request.setPhone(mPhone);
-                                request.setName(name);
-                                request.setIdCard(ocrID);
-                            }
-                            cursor.close();
-                        }
-                        return request;
-                    }
-                })
-                .flatMap(new Function<GongXinBaoTokenRequest, Publisher<GongXinBaoResponse<GongXinBaoAuth>>>() {
-                    @Override
-                    public Publisher<GongXinBaoResponse<GongXinBaoAuth>> apply(GongXinBaoTokenRequest request) throws Exception {
-                        return GongXinBaoClient.INSTANCE.getService().auth(request);
-                    }
-                })
-                .map(new GongXinBaoResponseFunction<GongXinBaoAuth>())
-                .map(new Function<GongXinBaoAuth, GongXinBaoAuth>() {
-                    @Override
-                    public GongXinBaoAuth apply(GongXinBaoAuth token) throws Exception {
-                        mToken = token.getToken();
-                        return token;
-                    }
-                })
-                .flatMap(new Function<GongXinBaoAuth, Publisher<GongXinBaoResponse<GongXinBaoOperatorsConfig>>>() {
-                    @Override
-                    public Publisher<GongXinBaoResponse<GongXinBaoOperatorsConfig>> apply(GongXinBaoAuth token) throws Exception {
-                        return GongXinBaoClient.INSTANCE.getService().operatorsConfig(token.getToken(), mPhone);
-                    }
-                })
-                .map(new GongXinBaoResponseFunction<GongXinBaoOperatorsConfig>())
+        Disposable disposable = mDataSource.requestGongXinBaoOperatorsConfig()
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<GongXinBaoOperatorsConfig, Boolean>() {
                     @Override
                     public Boolean apply(GongXinBaoOperatorsConfig operators) throws Exception {
-                        mView.setPhone(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_phone), mPhone));
+                        mView.setPhone(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_phone), mDataSource.getPhone()));
                         mView.setOperators(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_operators), operators.getOperatorType()));
                         GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();
                         boolean isNeedRequestImgVerificationCode = false;
@@ -146,17 +88,10 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                     }
                 })
                 .observeOn(Schedulers.io())
-                .flatMap(new Function<Boolean, Publisher<GongXinBaoResponse<GongXinBao>>>() {
+                .flatMap(new Function<Boolean, Publisher<Bitmap>>() {
                     @Override
-                    public Publisher<GongXinBaoResponse<GongXinBao>> apply(Boolean aBoolean) throws Exception {
-                        return GongXinBaoClient.INSTANCE.getService().refreshOperatorVerifyCode(mToken);
-                    }
-                })
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .map(new Function<GongXinBao, Bitmap>() {
-                    @Override
-                    public Bitmap apply(GongXinBao response) throws Exception {
-                        return Base64Util.base64ToBitmap(response.getExtra().getRemark());
+                    public Publisher<Bitmap> apply(Boolean aBoolean) throws Exception {
+                        return mDataSource.requestImgVerificationCode();
                     }
                 })
                 .compose(new ViewTransformer<Bitmap>() {
@@ -183,8 +118,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
 
     @Override
     public void requestSMSVerification() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshOperatorSmsCode(mToken)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
+        Disposable disposable = mDataSource.requestSmsVerificationCode()
                 .compose(new ViewTransformer<GongXinBao>() {
                     @Override
                     public void accept() {
@@ -204,14 +138,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
 
     @Override
     public void requestIMGVerification() {
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().refreshOperatorVerifyCode(mToken)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .map(new Function<GongXinBao, Bitmap>() {
-                    @Override
-                    public Bitmap apply(GongXinBao response) throws Exception {
-                        return Base64Util.base64ToBitmap(response.getExtra().getRemark());
-                    }
-                })
+        Disposable disposable = mDataSource.requestImgVerificationCode()
                 .compose(new ViewTransformer<Bitmap>() {
                     @Override
                     public void accept() {
@@ -239,15 +166,24 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
             mView.showToastById(R.string.error_loan_phone_img);
         } else {
             if (isSecond) {
-                commitSecond();
+                Disposable disposable = mDataSource.requestSubmitSecond(mView.getImgVerificationCode(), mView.getSmsVerificationCode())
+                        .compose(new ViewTransformer<GongXinBao>() {
+                            @Override
+                            public void accept() {
+                                super.accept();
+                                mView.showProgressDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<GongXinBao>() {
+                            @Override
+                            public void accept(GongXinBao response) throws Exception {
+                                isSecond = false;
+                                polling();
+                            }
+                        }, new ThrowableConsumer(mView));
+                mCompositeDisposable.add(disposable);
             } else {
-                GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-                request.setUsername(mPhone);
-                request.setPassword(mView.getPassword());
-                request.setCode(mView.getImgVerificationCode());
-                request.setRandomPassword(mView.getSmsVerificationCode());
-                Disposable disposable = GongXinBaoClient.INSTANCE.getService().operatorLogin(mToken, request)
-                        .map(new GongXinBaoResponseFunction<GongXinBao>())
+                Disposable disposable = mDataSource.requestSubmit(mView.getPassword(), mView.getImgVerificationCode(), mView.getSmsVerificationCode())
                         .compose(new ViewTransformer<GongXinBao>() {
                             @Override
                             public void accept() {
@@ -267,61 +203,8 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
     }
 
     private void polling() {
-        mIsPollingEnd = false;
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().getOperatorLoginStatus(mToken)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .map(new Function<GongXinBao, GongXinBao>() {
-                    @Override
-                    public GongXinBao apply(GongXinBao response) throws Exception {
-                        switch (response.getPhaseStatus()) {
-                            case "LOGIN_WAITING":
-                                break;
-                            case "LOGIN_SUCCESS":
-                                break;
-                            case "LOGIN_FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_IMAGE_SUCCESS":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_IMAGE_FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_SMS_SUCCESS":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_SMS_FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                            case "SMS_VERIFY_NEW":
-                                mIsPollingEnd = true;
-                                break;
-                            case "IMAGE_VERIFY_NEW":
-                                mIsPollingEnd = true;
-                                break;
-                            case "WAITING":
-                                break;
-                            case "SUCCESS":
-                                if (response.getStage().equals("FINISHED")) {
-                                    mIsPollingEnd = true;
-                                }
-                                break;
-                            case "FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                        }
-                        return response;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .delay(1, TimeUnit.SECONDS)
-                .repeatUntil(new BooleanSupplier() {
-                    @Override
-                    public boolean getAsBoolean() throws Exception {
-                        return mIsPollingEnd;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
+        Disposable disposable = mDataSource.requestOperatorLoginStatus()
+                .compose(new ViewTransformer<GongXinBao>())
                 .subscribe(new Consumer<GongXinBao>() {
                     @Override
                     public void accept(GongXinBao response) throws Exception {
@@ -335,7 +218,6 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                 break;
                             case "REFRESH_IMAGE_SUCCESS":
                                 isSecond = true;
-                                isIMG = true;
                                 // 更新图形验证码
                                 mView.cleanImgVerificationCodeText();
                                 mView.setImgVerificationCodeVisibility(View.VISIBLE);
@@ -352,14 +234,12 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                 break;
                             case "SMS_VERIFY_NEW":
                                 isSecond = true;
-                                isSMS = true;
                                 // 输入收到的短信
                                 mView.cleanSmsVerificationCodeText();
                                 mView.setSmsVerificationCodeVisibility(View.VISIBLE);
                                 break;
                             case "IMAGE_VERIFY_NEW":
                                 isSecond = true;
-                                isIMG = true;
                                 // 更新图形验证码
                                 mView.cleanImgVerificationCodeText();
                                 mView.setImgVerificationCodeVisibility(View.VISIBLE);
@@ -369,11 +249,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                 break;
                             case "SUCCESS":
                                 if (response.getStage().equals("FINISHED")) {
-                                    mView.result();
-                                    // TODO: 2017/11/30 将结果告知服务器
-                                    // 记录token
-                                    // 原始数据拉取接口 https://prod.gxb.io/crawler/data/rawdata/{token}
-                                    // 数据报告拉取接口 https://prod.gxb.io/crawler/data/report/{token}
+                                    savePhone(response.getToken());
                                 }
                                 break;
                             case "FAILED":
@@ -390,29 +266,20 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
         mCompositeDisposable.add(disposable);
     }
 
-    private void commitSecond() {
-        GongXinBaoSubmitRequest request = new GongXinBaoSubmitRequest();
-        if (isSMS) {
-            request.setCode(mView.getSmsVerificationCode());
-        } else if (isIMG) {
-            request.setCode(mView.getImgVerificationCode());
-        }
-        Disposable disposable = GongXinBaoClient.INSTANCE.getService().operatorSecond(mToken, request)
-                .map(new GongXinBaoResponseFunction<GongXinBao>())
-                .compose(new ViewTransformer<GongXinBao>() {
+    private void savePhone(String token) {
+        Disposable disposable = mDataSource.requestSavePhone(token)
+                .compose(new ViewTransformer<SavePhone>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<GongXinBao>() {
+                .subscribe(new Consumer<SavePhone>() {
                     @Override
-                    public void accept(GongXinBao response) throws Exception {
-                        isSecond = false;
-                        isSMS = false;
-                        isIMG = false;
-                        polling();
+                    public void accept(SavePhone savePhone) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.result();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
