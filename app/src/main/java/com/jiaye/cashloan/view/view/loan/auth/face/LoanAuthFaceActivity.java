@@ -49,7 +49,7 @@ public class LoanAuthFaceActivity extends LivenessDetectionMainActivity implemen
     @Override
     public void onLivenessSuccess(LivenessDetectionFrames livenessDetectionFrames) {
         super.onLivenessSuccess(livenessDetectionFrames);
-        mPresenter.commit(livenessDetectionFrames.verificationPackage);
+        mPresenter.submit(livenessDetectionFrames.verificationPackage);
     }
 
     @Override

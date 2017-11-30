@@ -44,6 +44,10 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
 
     private ArrayList<Relation> mRelationFriend;
 
+    private String mFamilyId;
+
+    private String mFriendId;
+
     public LoanAuthContactInfoPresenter(LoanAuthContactInfoContract.View view, LoanAuthContactInfoDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -101,6 +105,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                                         mView.setFamily(mRelationFamily.get(j).getValue());
                                     }
                                 }
+                                mFamilyId = contact.getData()[i].getId();
                                 mView.setFamilyName(contact.getData()[i].getName());
                                 mView.setFamilyPhone(contact.getData()[i].getPhone());
                             } else if (i == 1) {
@@ -110,6 +115,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                                         mView.setFriend(mRelationFriend.get(j).getValue());
                                     }
                                 }
+                                mFriendId = contact.getData()[i].getId();
                                 mView.setFriendName(contact.getData()[i].getName());
                                 mView.setFriendPhone(contact.getData()[i].getPhone());
                             }
@@ -138,6 +144,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
             SaveContactRequest request = new SaveContactRequest();
             ContactData[] data = new ContactData[2];
             data[0] = new ContactData();
+            data[0].setId(mFamilyId);
             data[0].setName(mView.getFamilyName());
             data[0].setPhone(mView.getFamilyPhone());
             for (int i = 0; i < mRelationFamily.size(); i++) {
@@ -147,6 +154,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                 }
             }
             data[1] = new ContactData();
+            data[1].setId(mFriendId);
             data[1].setName(mView.getFriendName());
             data[1].setPhone(mView.getFriendPhone());
             for (int i = 0; i < mRelationFriend.size(); i++) {

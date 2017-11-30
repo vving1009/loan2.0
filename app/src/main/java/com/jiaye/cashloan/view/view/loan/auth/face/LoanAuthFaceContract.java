@@ -18,6 +18,6 @@ public interface LoanAuthFaceContract {
 
     interface Presenter extends BasePresenter {
 
-        void commit(byte[] verification);
+        void submit(byte[] verification);
     }
 }

@@ -34,6 +34,6 @@ public interface LoanAuthOCRContract {
 
         void savePath(String path);
 
-        void commit();
+        void submit();
     }
 }

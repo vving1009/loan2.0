@@ -63,7 +63,7 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
         mBtnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.commit();
+                mPresenter.submit();
             }
         });
         mPresenter = new LoanAuthOCRPresenter(this, new LoanAuthOCRRepository());

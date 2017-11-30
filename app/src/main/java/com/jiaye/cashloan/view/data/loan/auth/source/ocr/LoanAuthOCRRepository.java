@@ -14,7 +14,7 @@ import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
-import com.jiaye.cashloan.http.tongdun.TongDunResponse;
+import com.jiaye.cashloan.http.tongdun.TongDunResponseFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
@@ -50,19 +50,13 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
         mBase64Front = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Front)
-                .map(new Function<TongDunResponse<TongDunOCRFront>, TongDunOCRFront>() {
-                    @Override
-                    public TongDunOCRFront apply(TongDunResponse<TongDunOCRFront> tongDunResponse) throws Exception {
-                        return tongDunResponse.getBody();
-                    }
-                })
+                .map(new TongDunResponseFunction<TongDunOCRFront>())
                 .map(new Function<TongDunOCRFront, TongDunOCRFront>() {
                     @Override
                     public TongDunOCRFront apply(TongDunOCRFront tongDunOCRFront) throws Exception {
                         Gson gson = new Gson();
                         mDataFront = gson.toJson(tongDunOCRFront);
                         ContentValues values = new ContentValues();
-                        values.put("name", tongDunOCRFront.getName());
                         values.put("ocr_id", tongDunOCRFront.getIdNumber());
                         values.put("ocr_name", tongDunOCRFront.getName());
                         values.put("ocr_birthday", tongDunOCRFront.getBirthday());
@@ -80,12 +74,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
         mBase64Back = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Back)
-                .map(new Function<TongDunResponse<TongDunOCRBack>, TongDunOCRBack>() {
-                    @Override
-                    public TongDunOCRBack apply(TongDunResponse<TongDunOCRBack> tongDunResponse) throws Exception {
-                        return tongDunResponse.getBody();
-                    }
-                })
+                .map(new TongDunResponseFunction<TongDunOCRBack>())
                 .map(new Function<TongDunOCRBack, TongDunOCRBack>() {
                     @Override
                     public TongDunOCRBack apply(TongDunOCRBack tongDunOCRBack) throws Exception {

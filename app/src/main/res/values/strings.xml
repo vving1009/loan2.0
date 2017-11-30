@@ -142,6 +142,9 @@
     <string name="error_loan_contact_friend_name">请输入亲属/朋友姓名</string>
     <string name="error_loan_contact_friend">请选择亲属/朋友关系</string>
     <string name="error_loan_contact_friend_phone">请输入亲属/朋友手机号码</string>
+    <string name="error_loan_phone_password">请输入服务密码</string>
+    <string name="error_loan_phone_sms">请输入短信验证码</string>
+    <string name="error_loan_phone_img">请输入图片验证码</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_0001">该手机号已经注册</string>

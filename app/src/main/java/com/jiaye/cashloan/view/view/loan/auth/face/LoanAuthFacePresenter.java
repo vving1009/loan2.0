@@ -27,7 +27,7 @@ public class LoanAuthFacePresenter extends BasePresenterImpl implements LoanAuth
     }
 
     @Override
-    public void commit(byte[] verification) {
+    public void submit(byte[] verification) {
         Disposable disposable = mDataSource.upload(verification)
                 .compose(new ViewTransformer<LoanFaceAuth>(){
                     @Override

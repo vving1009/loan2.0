@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ContactData {
 
+    @SerializedName("link_id")
+    private String id;
+
     @SerializedName("link_name")
     public String name;
 
@@ -21,6 +24,14 @@ public class ContactData {
 
     @SerializedName("relation")
     public String relation;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -73,7 +73,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
     }
 
     @Override
-    public void commit() {
+    public void submit() {
         Disposable disposable = mDataSource.ocrFront(mFront)
                 .flatMap(new Function<TongDunOCRFront, Publisher<TongDunOCRBack>>() {
                     @Override
