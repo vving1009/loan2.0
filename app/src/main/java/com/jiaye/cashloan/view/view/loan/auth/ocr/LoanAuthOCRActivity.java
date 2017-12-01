@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.data.loan.auth.source.ocr.LoanAuthOCRRepository;
+import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jph.takephoto.app.TakePhotoAppCompatActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.TResult;
@@ -46,6 +47,12 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        findViewById(R.id.img_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoanAuthHelpActivity.show(LoanAuthOCRActivity.this, R.string.loan_auth_ocr, "cardAuth/identityAuth");
             }
         });
         mImgFront.setOnClickListener(new View.OnClickListener() {

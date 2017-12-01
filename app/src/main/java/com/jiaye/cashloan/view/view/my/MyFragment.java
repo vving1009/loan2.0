@@ -14,6 +14,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.auth.User;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 
 /**
  * MyFragment
@@ -137,13 +138,13 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     @Override
     public void startAuthView() {
-        Intent intent = new Intent(getContext(), AuthActivity.class);
+        Intent intent = new Intent(getActivity(), AuthActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void showMyCertificateView(User user) {
-        Intent intent = new Intent(getContext(), MyActivity.class);
+        Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view", "certificate");
         intent.putExtra("user", user);
         startActivity(intent);
@@ -155,9 +156,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startHelpView() {
-        Intent intent = new Intent(getContext(), MyActivity.class);
-        intent.putExtra("view", "help");
-        startActivity(intent);
+        LoanAuthHelpActivity.show(getActivity(), R.string.my_help, "mine/helpCenter");
     }
 
     private void startQRCodeView() {
@@ -165,7 +164,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startAboutView() {
-        Intent intent = new Intent(getContext(), MyActivity.class);
+        Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view", "about");
         startActivity(intent);
     }
@@ -175,7 +174,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startSettingsView() {
-        Intent intent = new Intent(getContext(), MyActivity.class);
+        Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view", "settings");
         startActivity(intent);
     }

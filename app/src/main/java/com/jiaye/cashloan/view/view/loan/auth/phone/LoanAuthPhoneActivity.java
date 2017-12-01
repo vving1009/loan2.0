@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneRepository;
+import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
@@ -47,6 +48,12 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        findViewById(R.id.img_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoanAuthHelpActivity.show(LoanAuthPhoneActivity.this, R.string.loan_auth_phone, "phoneOperator/operator");
             }
         });
         mTextForgetPassword.setOnClickListener(new View.OnClickListener() {

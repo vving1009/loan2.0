@@ -29,7 +29,7 @@ public class LoanAuthTaoBaoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_taobao_activity);
-        mViewPager = (NoScrollViewPager) findViewById(R.id.view_pager);
+        mViewPager = findViewById(R.id.view_pager);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -55,7 +55,7 @@ public class LoanAuthTaoBaoActivity extends AppCompatActivity {
                 return POSITION_NONE;
             }
         });
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         setTabs(tabLayout, getLayoutInflater(), TAB_TEXT);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -100,7 +100,7 @@ public class LoanAuthTaoBaoActivity extends AppCompatActivity {
             TabLayout.Tab tab = tabLayout.newTab();
             View view = inflater.inflate(R.layout.loan_auth_taobao_tab, null);
             tab.setCustomView(view);
-            TextView tvTitle = (TextView) view.findViewById(R.id.text);
+            TextView tvTitle = view.findViewById(R.id.text);
             tvTitle.setText(aText);
             tabLayout.addTab(tab);
         }

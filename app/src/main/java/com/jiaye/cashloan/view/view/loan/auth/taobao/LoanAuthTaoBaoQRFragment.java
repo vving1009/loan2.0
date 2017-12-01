@@ -75,7 +75,7 @@ public class LoanAuthTaoBaoQRFragment extends BaseFragment {
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
         View root = inflater.inflate(R.layout.loan_auth_taobao_qrcode_fragment, container, false);
-        mImgQRCode = (ImageView) root.findViewById(R.id.img_qrcode);
+        mImgQRCode = root.findViewById(R.id.img_qrcode);
         return root;
     }
 

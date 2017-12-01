@@ -14,7 +14,6 @@ import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
 import com.jiaye.cashloan.view.view.my.certificate.taobao.TaoBaoFragment;
-import com.jiaye.cashloan.view.view.my.help.HelpFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 
 /**
@@ -68,11 +67,6 @@ public class MyActivity extends AppCompatActivity {
                 textView.setText(R.string.my_certificate_taobao);
                 TaoBaoFragment taoBaoFragment = TaoBaoFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, taoBaoFragment).commit();
-                break;
-            case "help":
-                textView.setText(R.string.my_help);
-                HelpFragment helpFragment = HelpFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, helpFragment).commit();
                 break;
             case "about":
                 textView.setText(R.string.my_about);

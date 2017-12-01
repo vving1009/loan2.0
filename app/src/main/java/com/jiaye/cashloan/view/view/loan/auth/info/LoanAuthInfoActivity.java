@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthInfoRepository;
+import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 
 /**
  * LoanAuthInfoActivity
@@ -50,6 +51,12 @@ public class LoanAuthInfoActivity extends BaseActivity implements LoanAuthInfoCo
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        findViewById(R.id.img_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoanAuthHelpActivity.show(LoanAuthInfoActivity.this, R.string.loan_auth_info, "personalInfo/personalData");
             }
         });
         mBtnNext.setOnClickListener(new View.OnClickListener() {

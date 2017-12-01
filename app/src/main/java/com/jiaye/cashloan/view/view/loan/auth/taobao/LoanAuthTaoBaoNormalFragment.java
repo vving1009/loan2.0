@@ -85,10 +85,10 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment {
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
         View root = inflater.inflate(R.layout.loan_auth_taobao_normal_fragment, container, false);
-        mEditAccount = (LoanEditText) root.findViewById(R.id.edit_account);
-        mEditPassword = (LoanEditText) root.findViewById(R.id.edit_password);
-        mEditSMS = (LoanEditText) root.findViewById(R.id.edit_sms);
-        mEditIMG = (LoanEditText) root.findViewById(R.id.edit_img);
+        mEditAccount = root.findViewById(R.id.edit_account);
+        mEditPassword = root.findViewById(R.id.edit_password);
+        mEditSMS = root.findViewById(R.id.edit_sms);
+        mEditIMG = root.findViewById(R.id.edit_img);
         mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
             @Override
             public void onClickVerificationCode() {

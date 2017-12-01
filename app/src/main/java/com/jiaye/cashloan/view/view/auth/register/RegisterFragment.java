@@ -20,6 +20,7 @@ import com.jiaye.cashloan.view.data.auth.register.source.RegisterRepository;
 import com.jiaye.cashloan.view.view.auth.login.LoginFragment;
 import com.jiaye.cashloan.view.view.auth.login.LoginPresenter;
 import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
+import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
@@ -55,13 +56,13 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.register_fragment, container, false);
-        mEditPhone = (LoanEditText) root.findViewById(R.id.edit_phone);
-        mEditImgVerificationCode = (LoanEditText) root.findViewById(R.id.edit_img_verification_code);
-        mEditPassword = (LoanEditText) root.findViewById(R.id.edit_password);
-        mEditSmsVerificationCode = (LoanEditText) root.findViewById(R.id.edit_sms_verification_code);
-        mEditReferralCode = (LoanEditText) root.findViewById(R.id.edit_referral_code);
-        mCheckBox = (CheckBox) root.findViewById(R.id.checkbox);
-        TextView textAgree = (TextView) root.findViewById(R.id.text_agree);
+        mEditPhone = root.findViewById(R.id.edit_phone);
+        mEditImgVerificationCode = root.findViewById(R.id.edit_img_verification_code);
+        mEditPassword = root.findViewById(R.id.edit_password);
+        mEditSmsVerificationCode = root.findViewById(R.id.edit_sms_verification_code);
+        mEditReferralCode = root.findViewById(R.id.edit_referral_code);
+        mCheckBox = root.findViewById(R.id.checkbox);
+        TextView textAgree = root.findViewById(R.id.text_agree);
         SpannableString string = new SpannableString(getString(R.string.read_protocol));
         string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_orange)), 7, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textAgree.setText(string);
@@ -192,7 +193,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     /*显示注册协议页面*/
     private void showProtocolView() {
-
+        LoanAuthHelpActivity.show(getActivity(), R.string.protocol, "register/registerAgreement");
     }
 
     /*清除错误信息*/
