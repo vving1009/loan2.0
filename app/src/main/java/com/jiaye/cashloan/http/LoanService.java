@@ -40,6 +40,8 @@ import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
 import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
+import com.jiaye.cashloan.http.data.loan.Sesame;
+import com.jiaye.cashloan.http.data.loan.SesameRequest;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -167,6 +169,12 @@ public interface LoanService {
      */
     @POST("taobao")
     Flowable<Response<SaveTaoBaoRequest>> saveTaoBao(@Body Request<SaveTaoBaoRequest> request);
+
+    /**
+     * 芝麻信用分
+     */
+    @POST("zmfQuery")
+    Flowable<Response<Sesame>> sesame(@Body Request<SesameRequest> request);
 
     /**
      * 校验忘记密码验证码

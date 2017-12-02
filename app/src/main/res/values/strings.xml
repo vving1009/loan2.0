@@ -63,6 +63,7 @@
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_sesame">芝麻信用分</string>
+    <string name="loan_auth_sesame_normal_commit">同意授权</string>
     <!--my-->
     <string name="my_certificate">我的认证</string>
     <string name="my_certificate_basics">基本信息</string>
