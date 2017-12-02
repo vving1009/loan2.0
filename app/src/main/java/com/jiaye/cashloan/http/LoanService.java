@@ -39,6 +39,7 @@ import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
 import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
+import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -160,6 +161,12 @@ public interface LoanService {
      */
     @POST("phoneOperator")
     Flowable<Response<SavePhone>> savePhone(@Body Request<SavePhoneRequest> request);
+
+    /**
+     * 保存淘宝信息
+     */
+    @POST("taobao")
+    Flowable<Response<SaveTaoBaoRequest>> saveTaoBao(@Body Request<SaveTaoBaoRequest> request);
 
     /**
      * 校验忘记密码验证码
