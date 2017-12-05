@@ -71,6 +71,7 @@ public class LoanConfirmPresenter extends BasePresenterImpl implements LoanConfi
                 .subscribe(new Consumer<LoanConfirm>() {
                     @Override
                     public void accept(LoanConfirm loanConfirm) throws Exception {
+                        mView.showLoanProgressView();
                         mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));

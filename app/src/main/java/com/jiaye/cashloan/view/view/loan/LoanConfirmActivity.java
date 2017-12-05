@@ -103,4 +103,11 @@ public class LoanConfirmActivity extends BaseActivity implements LoanConfirmCont
     public void setAmount(String text) {
         mTextAmount.setText(text);
     }
+
+    @Override
+    public void showLoanProgressView() {
+        Intent intent = new Intent(this, LoanProgressActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

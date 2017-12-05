@@ -64,6 +64,9 @@
             android:name=".view.view.loan.LoanDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.view.loan.LoanProgressActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.help.LoanAuthHelpActivity"
             android:screenOrientation="portrait" />
         <activity

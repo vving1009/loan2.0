@@ -192,7 +192,7 @@ public interface LoanService {
     /**
      * 借款确认
      */
-    @POST("updateSatus")
+    @POST("loanConfirm/updateSatus")
     Flowable<Response<LoanConfirm>> loanConfirm(@Body Request<LoanConfirmRequest> request);
 
     /**
