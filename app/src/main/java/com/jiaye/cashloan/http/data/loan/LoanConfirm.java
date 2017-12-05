@@ -3,10 +3,11 @@ package com.jiaye.cashloan.http.data.loan;
 import com.jiaye.cashloan.http.base.ChildResponse;
 
 /**
- * SaveTaoBao
+ * LoanConfirm
  *
  * @author 贾博瑄
  */
 
-public class SaveTaoBao extends ChildResponse{
+public class LoanConfirm extends ChildResponse {
+
 }

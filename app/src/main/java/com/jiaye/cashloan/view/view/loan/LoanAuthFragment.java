@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     private LoanAuthContract.Presenter mPresenter;
 
     private Adapter mAdapter;
+
+    private Button btnNext;
 
     public static LoanAuthFragment newInstance() {
         Bundle args = new Bundle();
@@ -90,10 +93,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 getActivity().onBackPressed();
             }
         });
-        root.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
+        btnNext = root.findViewById(R.id.btn_next);
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), LoanConfirmActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
             }
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
@@ -116,6 +122,11 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void setList(List<LoanAuthModel> list) {
         mAdapter.setList(list);
+    }
+
+    @Override
+    public void setNextEnable() {
+        btnNext.setEnabled(true);
     }
 
     @Override

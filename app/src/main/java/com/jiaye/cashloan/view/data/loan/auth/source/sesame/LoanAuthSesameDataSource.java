@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.data.loan.auth.source.sesame;
 
-import com.jiaye.cashloan.http.data.loan.Sesame;
+import com.jiaye.cashloan.http.base.Request;
+import com.jiaye.cashloan.http.data.loan.SesameRequest;
 
 import io.reactivex.Flowable;
 
@@ -12,5 +13,5 @@ import io.reactivex.Flowable;
 
 public interface LoanAuthSesameDataSource {
 
-    Flowable<Sesame> sesame();
+    Flowable<Request<SesameRequest>> sesame();
 }

@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -27,7 +28,7 @@ public class LoanRepository implements LoanDataSource {
 
     @Override
     public Flowable<DefaultProduct> queryProduct() {
-        return Flowable.just("select * from product").map(new Function<String, DefaultProduct>() {
+        return Flowable.just("select * from product where is_default = 0").map(new Function<String, DefaultProduct>() {
             @Override
             public DefaultProduct apply(String sql) throws Exception {
                 return queryProduct(sql);
@@ -58,7 +59,22 @@ public class LoanRepository implements LoanDataSource {
     @Override
     public Flowable<DefaultProduct> requestProduct() {
         return Flowable.just(new DefaultProductRequest())
-                .compose(new ResponseTransformer<DefaultProductRequest, DefaultProduct>("defaultProduct"));
+                .compose(new ResponseTransformer<DefaultProductRequest, DefaultProduct>("defaultProduct"))
+                .map(new Function<DefaultProduct, DefaultProduct>() {
+                    @Override
+                    public DefaultProduct apply(DefaultProduct defaultProduct) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("product_id", defaultProduct.getId());
+                        values.put("product_name", defaultProduct.getName());
+                        String amount = defaultProduct.getAmount();
+                        values.put("amount", amount.substring(0, amount.indexOf(".")));
+                        values.put("deadline", defaultProduct.getDeadline());
+                        values.put("is_default", 1);
+                        LoanApplication.getInstance().getSQLiteDatabase().delete("product", null, null);
+                        LoanApplication.getInstance().getSQLiteDatabase().insert("product", null, values);
+                        return defaultProduct;
+                    }
+                });
     }
 
     @Override

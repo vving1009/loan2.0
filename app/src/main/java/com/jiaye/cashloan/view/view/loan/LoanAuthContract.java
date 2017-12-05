@@ -22,6 +22,11 @@ public class LoanAuthContract {
         void setList(List<LoanAuthModel> list);
 
         /**
+         * 设置下一步可用
+         */
+        void setNextEnable();
+
+        /**
          * 显示借款身份证认证页面
          */
         void showLoanAuthOCRView();

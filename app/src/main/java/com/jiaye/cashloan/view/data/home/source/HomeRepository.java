@@ -28,7 +28,7 @@ public class HomeRepository implements HomeDataSource {
                 values.put("deadline", product.getDeadline());
                 values.put("payment_method", product.getPaymentMethod());
                 values.put("is_default", 0);
-                LoanApplication.getInstance().getSQLiteDatabase().delete("product", "is_default = ?", new String[]{"1"});
+                LoanApplication.getInstance().getSQLiteDatabase().delete("product", null, null);
                 LoanApplication.getInstance().getSQLiteDatabase().insert("product", null, values);
                 return product;
             }

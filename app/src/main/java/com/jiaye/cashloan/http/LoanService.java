@@ -23,6 +23,12 @@ import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanConfirm;
+import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
+import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
+import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
+import com.jiaye.cashloan.http.data.loan.LoanDetails;
+import com.jiaye.cashloan.http.data.loan.LoanDetailsRequest;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
@@ -39,6 +45,7 @@ import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
 import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
+import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.Sesame;
 import com.jiaye.cashloan.http.data.loan.SesameRequest;
@@ -168,13 +175,31 @@ public interface LoanService {
      * 保存淘宝信息
      */
     @POST("taobao")
-    Flowable<Response<SaveTaoBaoRequest>> saveTaoBao(@Body Request<SaveTaoBaoRequest> request);
+    Flowable<Response<SaveTaoBao>> saveTaoBao(@Body Request<SaveTaoBaoRequest> request);
 
     /**
      * 芝麻信用分
      */
     @POST("zmfQuery")
     Flowable<Response<Sesame>> sesame(@Body Request<SesameRequest> request);
+
+    /**
+     * 借款确认信息
+     */
+    @POST("loanConfirm")
+    Flowable<Response<LoanConfirmInfo>> loanConfirmInfo(@Body Request<LoanConfirmInfoRequest> request);
+
+    /**
+     * 借款确认
+     */
+    @POST("updateSatus")
+    Flowable<Response<LoanConfirm>> loanConfirm(@Body Request<LoanConfirmRequest> request);
+
+    /**
+     * 借款详情
+     */
+    @POST("mine/loanDetail")
+    Flowable<Response<LoanDetails>> loanDetails(@Body Request<LoanDetailsRequest> request);
 
     /**
      * 校验忘记密码验证码

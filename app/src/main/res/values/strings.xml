@@ -63,7 +63,18 @@
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_sesame">芝麻信用分</string>
-    <string name="loan_auth_sesame_normal_commit">同意授权</string>
+    <string name="loan_confirm_title">借款确认</string>
+    <string name="loan_confirm_loan">借款金额</string>
+    <string name="loan_confirm_service">服务费</string>
+    <string name="loan_confirm_consult">咨询费</string>
+    <string name="loan_confirm_interest">利息</string>
+    <string name="loan_confirm_deadline">借款期限</string>
+    <string name="loan_confirm_payment_method">还款方式</string>
+    <string name="loan_confirm_amount">还款金额</string>
+    <string name="loan_confirm_unit">元</string>
+    <string name="loan_confirm_day">天</string>
+    <string name="loan_approve_title">借款审批</string>
+
     <!--my-->
     <string name="my_certificate">我的认证</string>
     <string name="my_certificate_basics">基本信息</string>

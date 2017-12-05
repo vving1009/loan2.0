@@ -1,6 +1,9 @@
 package com.jiaye.cashloan.view.view.loan.auth.sesame;
 
-import com.jiaye.cashloan.http.data.loan.Sesame;
+import com.google.gson.Gson;
+import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.http.base.Request;
+import com.jiaye.cashloan.http.data.loan.SesameRequest;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -27,20 +30,14 @@ public class LoanAuthSesamePresenter extends BasePresenterImpl implements LoanAu
     }
 
     @Override
-    public void request() {
+    public void subscribe() {
+        super.subscribe();
         Disposable disposable = mDataSource.sesame()
-                .compose(new ViewTransformer<Sesame>(){
+                .compose(new ViewTransformer<Request<SesameRequest>>())
+                .subscribe(new Consumer<Request<SesameRequest>>() {
                     @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(new Consumer<Sesame>() {
-                    @Override
-                    public void accept(Sesame sesame) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.result();
+                    public void accept(Request<SesameRequest> request) throws Exception {
+                        mView.postUrl(BuildConfig.BASE_URL + "zmfQuery", new Gson().toJson(request).getBytes());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
