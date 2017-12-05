@@ -35,6 +35,8 @@ import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanProgress;
+import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -200,6 +202,12 @@ public interface LoanService {
      */
     @POST("mine/loanDetail")
     Flowable<Response<LoanDetails>> loanDetails(@Body Request<LoanDetailsRequest> request);
+
+    /**
+     * 借款进度
+     */
+    @POST("loanProgress")
+    Flowable<Response<LoanProgress>> loanProgress(@Body Request<LoanProgressRequest> request);
 
     /**
      * 校验忘记密码验证码

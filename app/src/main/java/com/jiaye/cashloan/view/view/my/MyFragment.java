@@ -15,6 +15,7 @@ import com.jiaye.cashloan.view.data.auth.User;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
+import com.jiaye.cashloan.view.view.loan.LoanDetailsActivity;
 
 /**
  * MyFragment
@@ -55,6 +56,12 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             @Override
             public void onClick(View v) {
                 mPresenter.onClickMyCertificate();
+            }
+        });
+        root.findViewById(R.id.layout_approve).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.approve();
             }
         });
         root.findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
@@ -147,6 +154,13 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view", "certificate");
         intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showApproveView() {
+        Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
+        intent.putExtra("title", getString(R.string.loan_approve_title));
         startActivity(intent);
     }
 

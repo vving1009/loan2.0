@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
@@ -63,14 +65,27 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         mAdapter.setList(list);
     }
 
+    private void showLoanProgressView(String loanId) {
+        Intent intent = new Intent(this, LoanProgressActivity.class);
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<LoanDetails> mList;
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
             View view = LayoutInflater.from(LoanDetailsActivity.this).inflate(R.layout.loan_details_item, parent, false);
-            return new ViewHolder(view);
+            ViewHolder viewHolder = new ViewHolder(view);
+            viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
+                @Override
+                public void onClickViewHolder(ViewHolder viewHolder) {
+                    showLoanProgressView(mList.get(viewHolder.getLayoutPosition()).getLoanId());
+                }
+            });
+            return viewHolder;
         }
 
         @Override
@@ -103,6 +118,13 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private interface OnClickViewHolderListener {
+
+            void onClickViewHolder(ViewHolder viewHolder);
+        }
+
+        private OnClickViewHolderListener mListener;
+
         private TextView mTextTitle;
 
         private TextView mTextDate;
@@ -123,6 +145,15 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         public ViewHolder(View itemView) {
             super(itemView);
+            LinearLayout layout = itemView.findViewById(R.id.layout);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onClickViewHolder(ViewHolder.this);
+                    }
+                }
+            });
             mTextTitle = itemView.findViewById(R.id.text_title);
             mTextDate = itemView.findViewById(R.id.text_date);
             mTextLoan = itemView.findViewById(R.id.text_loan);
@@ -132,6 +163,10 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextCurrentAmount = itemView.findViewById(R.id.text_current_amount);
             mTextDeadline = itemView.findViewById(R.id.text_deadline);
             mTextStatus = itemView.findViewById(R.id.text_status);
+        }
+
+        public void setListener(OnClickViewHolderListener listener) {
+            mListener = listener;
         }
 
         public void setTitle(String text) {

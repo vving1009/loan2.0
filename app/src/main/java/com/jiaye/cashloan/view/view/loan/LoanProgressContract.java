@@ -15,5 +15,7 @@ public interface LoanProgressContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestLoanProgress(String loanId);
     }
 }

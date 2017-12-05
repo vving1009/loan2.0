@@ -2,7 +2,6 @@ package com.jiaye.cashloan.view.view.loan;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -61,17 +60,17 @@ public class LoanConfirmPresenter extends BasePresenterImpl implements LoanConfi
     @Override
     public void confirm() {
         Disposable disposable = mDataSource.requestLoanConfirm()
-                .compose(new ViewTransformer<LoanConfirm>() {
+                .compose(new ViewTransformer<String>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<LoanConfirm>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(LoanConfirm loanConfirm) throws Exception {
-                        mView.showLoanProgressView();
+                    public void accept(String loanId) throws Exception {
+                        mView.showLoanProgressView(loanId);
                         mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));

@@ -30,7 +30,7 @@ public class LoanConfirmRepository implements LoanConfirmDataSource {
     }
 
     @Override
-    public Flowable<LoanConfirm> requestLoanConfirm() {
+    public Flowable<String> requestLoanConfirm() {
         return Flowable.just("SELECT loan_id FROM user;")
                 .map(new Function<String, LoanConfirmRequest>() {
                     @Override
@@ -49,6 +49,21 @@ public class LoanConfirmRepository implements LoanConfirmDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"));
+                .compose(new ResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"))
+                .map(new Function<LoanConfirm, String>() {
+                    @Override
+                    public String apply(LoanConfirm loanConfirm) throws Exception {
+                        String loanId = "";
+                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+                        Cursor cursor = database.rawQuery("SELECT loan_id FROM user;", null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+                            }
+                            cursor.close();
+                        }
+                        return loanId;
+                    }
+                });
     }
 }

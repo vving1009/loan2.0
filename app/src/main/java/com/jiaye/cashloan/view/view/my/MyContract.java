@@ -29,6 +29,11 @@ public class MyContract {
         void showMyCertificateView(User user);
 
         /**
+         * 显示借款审批页面
+         */
+        void showApproveView();
+
+        /**
          * 显示分享页面
          */
         void showShareView();
@@ -40,6 +45,11 @@ public class MyContract {
          * 点击我的认证
          */
         void onClickMyCertificate();
+
+        /**
+         * 审批
+         */
+        void approve();
 
         /**
          * 分享

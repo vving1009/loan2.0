@@ -105,8 +105,9 @@ public class LoanConfirmActivity extends BaseActivity implements LoanConfirmCont
     }
 
     @Override
-    public void showLoanProgressView() {
+    public void showLoanProgressView(String loanId) {
         Intent intent = new Intent(this, LoanProgressActivity.class);
+        intent.putExtra("loanId", loanId);
         startActivity(intent);
         finish();
     }

@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
-import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 
 import io.reactivex.Flowable;
@@ -15,5 +14,5 @@ public interface LoanConfirmDataSource {
 
     Flowable<LoanConfirmInfo> requestLoanConfirmInfo();
 
-    Flowable<LoanConfirm> requestLoanConfirm();
+    Flowable<String> requestLoanConfirm();
 }

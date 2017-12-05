@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
+import com.jiaye.cashloan.view.data.loan.source.LoanProgressRepository;
 
 /**
  * LoanProgressActivity
@@ -20,8 +21,9 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_progress_activity);
-        mPresenter = new LoanProgressPresenter(this);
+        mPresenter = new LoanProgressPresenter(this, new LoanProgressRepository());
         mPresenter.subscribe();
+        mPresenter.requestLoanProgress(getIntent().getExtras().getString("loanId"));
     }
 
     @Override

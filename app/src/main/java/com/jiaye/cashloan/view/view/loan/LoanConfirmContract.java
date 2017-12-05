@@ -27,7 +27,7 @@ public interface LoanConfirmContract {
 
         void setAmount(String text);
 
-        void showLoanProgressView();
+        void showLoanProgressView(String loanId);
     }
 
     interface Presenter extends BasePresenter {
