@@ -103,7 +103,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         root.findViewById(R.id.layout_settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startSettingsView();
+                mPresenter.settings();
             }
         });
         root.findViewById(R.id.layout_share).setOnClickListener(new View.OnClickListener() {
@@ -199,6 +199,13 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
+    public void showSettingsView() {
+        Intent intent = new Intent(getActivity(), MyActivity.class);
+        intent.putExtra("view", "settings");
+        startActivity(intent);
+    }
+
+    @Override
     public void showShareView() {
         mDialog.show();
     }
@@ -219,11 +226,5 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     private void startContactView() {
 
-    }
-
-    private void startSettingsView() {
-        Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view", "settings");
-        startActivity(intent);
     }
 }

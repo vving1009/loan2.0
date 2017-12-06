@@ -25,8 +25,9 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
 
     private LoanEditText mEditSmsVerificationCode;
 
-    public static ForgetPasswordFragment newInstance() {
+    public static ForgetPasswordFragment newInstance(int type) {
         Bundle args = new Bundle();
+        args.putInt("type", type);
         ForgetPasswordFragment fragment = new ForgetPasswordFragment();
         fragment.setArguments(args);
         return fragment;
@@ -60,6 +61,7 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
         });
         mPresenter = new ForgetPasswordPresenter(this);
         mPresenter.subscribe();
+        mPresenter.setType(getArguments().getInt("type"));
         return root;
     }
 
@@ -102,7 +104,7 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
     @Override
     public void showChangePasswordView() {
         FragmentManager fragmentManager = getFragmentManager();
-        ChangePasswordFragment fragment = ChangePasswordFragment.newInstance(mEditPhone.getText().toString());
+        ChangePasswordFragment fragment = ChangePasswordFragment.newInstance(getArguments().getInt("type"), mEditPhone.getText().toString());
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
     }
 

@@ -19,8 +19,10 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_activity);
+        /*0 忘记密码 1 修改密码*/
+        int type = getIntent().getExtras().getInt("type", 0);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ForgetPasswordFragment fragment = ForgetPasswordFragment.newInstance();
+        ForgetPasswordFragment fragment = ForgetPasswordFragment.newInstance(type);
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
     }
 }

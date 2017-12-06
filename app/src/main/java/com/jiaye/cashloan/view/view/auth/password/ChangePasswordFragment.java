@@ -24,8 +24,9 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
     private LoanEditText mEditPasswordSecond;
 
-    public static ChangePasswordFragment newInstance(String phone) {
+    public static ChangePasswordFragment newInstance(int type, String phone) {
         Bundle args = new Bundle();
+        args.putInt("type", type);
         args.putString("phone", phone);
         ChangePasswordFragment fragment = new ChangePasswordFragment();
         fragment.setArguments(args);
@@ -53,6 +54,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
         });
         mPresenter = new ChangePasswordPresenter(this);
         mPresenter.subscribe();
+        mPresenter.setType(getArguments().getInt("type"));
         return root;
     }
 

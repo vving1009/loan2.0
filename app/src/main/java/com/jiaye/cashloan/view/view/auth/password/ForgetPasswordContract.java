@@ -36,6 +36,8 @@ public class ForgetPasswordContract {
 
     interface Presenter extends BasePresenter {
 
+        void setType(int type);
+
         void verificationCode();
 
         void next();

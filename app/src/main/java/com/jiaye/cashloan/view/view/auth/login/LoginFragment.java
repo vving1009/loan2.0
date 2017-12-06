@@ -82,6 +82,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     /*显示忘记密码页面*/
     private void showForgetPasswordView() {
         Intent intent = new Intent(getContext(), PasswordActivity.class);
+        intent.putExtra("type",0);
         startActivity(intent);
     }
 

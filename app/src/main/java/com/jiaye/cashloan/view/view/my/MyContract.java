@@ -44,6 +44,11 @@ public class MyContract {
         void showHistoryView();
 
         /**
+         * 显示设置页面
+         */
+        void showSettingsView();
+
+        /**
          * 显示分享页面
          */
         void showShareView();
@@ -75,6 +80,11 @@ public class MyContract {
          * 历史借款
          */
         void history();
+
+        /**
+         * 设置
+         */
+        void settings();
 
         /**
          * 分享

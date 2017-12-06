@@ -36,6 +36,8 @@ public class ChangePasswordContract {
 
     interface Presenter extends BasePresenter {
 
+        void setType(int type);
+
         void save();
     }
 }

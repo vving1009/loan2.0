@@ -26,8 +26,16 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
 
     private ChangePasswordContract.View mView;
 
+    /*0 忘记密码 1 修改密码*/
+    private int mType;
+
     public ChangePasswordPresenter(ChangePasswordContract.View view) {
         mView = view;
+    }
+
+    @Override
+    public void setType(int type) {
+        mType = type;
     }
 
     @Override
@@ -40,10 +48,17 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
             ChangePasswordRequest request = new ChangePasswordRequest();
             request.setPhone(mView.getPhone());
             request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
-            request.setStatus("1");
+            switch (mType) {
+                case 0:
+                    request.setStatus("1");
+                    break;
+                case 1:
+                    request.setStatus("0");
+                    break;
+            }
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<ChangePasswordRequest, ChangePassword>("changePassword"))
-                    .compose(new ViewTransformer<ChangePassword>(){
+                    .compose(new ViewTransformer<ChangePassword>() {
                         @Override
                         public void accept() {
                             mView.showProgressDialog();

@@ -131,6 +131,17 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
     }
 
     @Override
+    public void settings() {
+        Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Exception {
+                mView.showSettingsView();
+            }
+        }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
     public void share() {
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override

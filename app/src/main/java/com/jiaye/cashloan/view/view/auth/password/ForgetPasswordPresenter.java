@@ -26,8 +26,16 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
 
     private final ForgetPasswordContract.View mView;
 
+    /*0 忘记密码 1 修改密码*/
+    private int mType;
+
     public ForgetPasswordPresenter(ForgetPasswordContract.View view) {
         mView = view;
+    }
+
+    @Override
+    public void setType(int type) {
+        mType = type;
     }
 
     @Override
@@ -37,7 +45,14 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
         } else {
             VerificationCodeRequest request = new VerificationCodeRequest();
             request.setPhone(mView.getPhone());
-            request.setStatus("2");
+            switch (mType) {
+                case 0:
+                    request.setStatus("2");
+                    break;
+                case 1:
+                    request.setStatus("1");
+                    break;
+            }
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
                     .compose(new ViewTransformer<VerificationCode>() {
