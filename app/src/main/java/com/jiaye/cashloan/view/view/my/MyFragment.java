@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.auth.User;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
@@ -62,6 +62,18 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             @Override
             public void onClick(View v) {
                 mPresenter.approve();
+            }
+        });
+        root.findViewById(R.id.layout_progress).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.progress();
+            }
+        });
+        root.findViewById(R.id.layout_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.history();
             }
         });
         root.findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
@@ -129,6 +141,12 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.requestUser();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mDialog.dismiss();
@@ -139,8 +157,8 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     public void showUserInfo(User user) {
         mTextName.setText(user.getShowName());
         mTextApproveNumber.setText(user.getApproveNumber());
-        mTextLoanNumber.setText(user.getApproveNumber());
-        mTextHistoryNumber.setText(user.getApproveNumber());
+        mTextLoanNumber.setText(user.getProgressNumber());
+        mTextHistoryNumber.setText(user.getHistoryNumber());
     }
 
     @Override
@@ -158,9 +176,25 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
-    public void showApproveView() {
+    public void showApproveView(String loanId) {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
-        intent.putExtra("title", getString(R.string.loan_approve_title));
+        intent.putExtra("title", getString(R.string.loan_details_approve_title));
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showProgressView(String loanId) {
+        Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
+        intent.putExtra("title", getString(R.string.loan_details_progress_title));
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showHistoryView() {
+        Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
+        intent.putExtra("title", getString(R.string.loan_details_history_title));
         startActivity(intent);
     }
 

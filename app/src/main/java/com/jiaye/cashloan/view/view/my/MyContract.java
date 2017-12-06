@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.my;
 
 import com.jiaye.cashloan.view.AuthView;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.http.data.my.User;
 
 /**
  * MyContract
@@ -31,7 +31,17 @@ public class MyContract {
         /**
          * 显示借款审批页面
          */
-        void showApproveView();
+        void showApproveView(String loanId);
+
+        /**
+         * 显示放款还款页面
+         */
+        void showProgressView(String loanId);
+
+        /**
+         * 显示历史借款页面
+         */
+        void showHistoryView();
 
         /**
          * 显示分享页面
@@ -42,14 +52,29 @@ public class MyContract {
     interface Presenter extends BasePresenter {
 
         /**
+         * 请求用户信息
+         */
+        void requestUser();
+
+        /**
          * 点击我的认证
          */
         void onClickMyCertificate();
 
         /**
-         * 审批
+         * 借款审批
          */
         void approve();
+
+        /**
+         * 放款还款
+         */
+        void progress();
+
+        /**
+         * 历史借款
+         */
+        void history();
 
         /**
          * 分享

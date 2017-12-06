@@ -10,9 +10,9 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.data.auth.Area;
-import com.jiaye.cashloan.view.data.auth.Education;
-import com.jiaye.cashloan.view.data.auth.Marriage;
+import com.jiaye.cashloan.http.data.dictionary.Area;
+import com.jiaye.cashloan.http.data.dictionary.Education;
+import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoRepository;
 
 import java.util.ArrayList;

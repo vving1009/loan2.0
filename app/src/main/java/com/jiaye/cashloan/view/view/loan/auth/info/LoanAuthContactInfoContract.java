@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
-import com.jiaye.cashloan.view.data.auth.Relation;
+import com.jiaye.cashloan.http.data.dictionary.Relation;
 
 import java.util.ArrayList;
 

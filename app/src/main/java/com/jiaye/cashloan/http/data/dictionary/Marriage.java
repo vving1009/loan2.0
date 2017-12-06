@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.view.data.auth;
+package com.jiaye.cashloan.http.data.dictionary;
 
 import com.bigkoo.pickerview.model.IPickerViewData;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Education
+ * Marriage
  *
  * @author 贾博瑄
  */
 
-public class Education implements IPickerViewData {
+public class Marriage implements IPickerViewData {
 
     @SerializedName("key")
     private String key;

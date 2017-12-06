@@ -49,8 +49,12 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         });
         mPresenter = new LoanDetailsPresenter(this, new LoanDetailsRepository());
         mPresenter.subscribe();
-        if (title.equals(getString(R.string.loan_approve_title))) {
-            mPresenter.requestDetails();
+        if (title.equals(getString(R.string.loan_details_approve_title))) {
+            mPresenter.requestDetails(getIntent().getExtras().getString("loanId"));
+        } else if (title.equals(getString(R.string.loan_details_progress_title))) {
+            mPresenter.requestDetails(getIntent().getExtras().getString("loanId"));
+        } else if (title.equals(getString(R.string.loan_details_history_title))) {
+
         }
     }
 

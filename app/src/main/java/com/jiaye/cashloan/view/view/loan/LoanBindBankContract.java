@@ -1,28 +1,31 @@
 package com.jiaye.cashloan.view.view.loan;
 
-import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
-import java.util.List;
-
 /**
- * LoanProgressContract
+ * LoanBindBankContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanProgressContract {
+public interface LoanBindBankContract {
 
     interface View extends BaseViewContract {
 
-        void setList(List<LoanProgress.Data> list);
+        void setName(String text);
+
+        String getPhone();
+
+        String getBank();
+
+        String getNumber();
+
+        void result();
     }
 
     interface Presenter extends BasePresenter {
 
-        void setLoanId(String loanId);
-
-        void requestLoanProgress();
+        void submit();
     }
 }

@@ -12,9 +12,9 @@ import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.auth.Area;
-import com.jiaye.cashloan.view.data.auth.Education;
-import com.jiaye.cashloan.view.data.auth.Marriage;
+import com.jiaye.cashloan.http.data.dictionary.Area;
+import com.jiaye.cashloan.http.data.dictionary.Education;
+import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoDataSource;
 
 import java.io.BufferedReader;

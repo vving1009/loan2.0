@@ -21,6 +21,6 @@ public interface LoanDetailsContract {
 
     interface Presenter extends BasePresenter {
 
-        void requestDetails();
+        void requestDetails(String id);
     }
 }

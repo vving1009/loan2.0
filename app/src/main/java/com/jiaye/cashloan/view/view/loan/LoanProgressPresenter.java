@@ -21,14 +21,21 @@ public class LoanProgressPresenter extends BasePresenterImpl implements LoanProg
 
     private final LoanProgressDataSource mDataSource;
 
+    private String mLoanId;
+
     public LoanProgressPresenter(LoanProgressContract.View view, LoanProgressDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
-    public void requestLoanProgress(String loanId) {
-        Disposable disposable = mDataSource.requestLoanProgress(loanId)
+    public void setLoanId(String loanId) {
+        mLoanId = loanId;
+    }
+
+    @Override
+    public void requestLoanProgress() {
+        Disposable disposable = mDataSource.requestLoanProgress(mLoanId)
                 .compose(new ViewTransformer<LoanProgress>() {
                     @Override
                     public void accept() {

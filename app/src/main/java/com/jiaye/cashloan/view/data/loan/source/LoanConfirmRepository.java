@@ -11,6 +11,8 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
+import org.reactivestreams.Publisher;
+
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
@@ -50,12 +52,23 @@ public class LoanConfirmRepository implements LoanConfirmDataSource {
                     }
                 })
                 .compose(new ResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"))
-                .map(new Function<LoanConfirm, String>() {
+                .flatMap(new Function<LoanConfirm, Publisher<String>>() {
                     @Override
-                    public String apply(LoanConfirm loanConfirm) throws Exception {
+                    public Publisher<String> apply(LoanConfirm loanConfirm) throws Exception {
+                        return queryLoanId();
+                    }
+                });
+    }
+
+    @Override
+    public Flowable<String> queryLoanId() {
+        return Flowable.just("SELECT loan_id FROM user;")
+                .map(new Function<String, String>() {
+                    @Override
+                    public String apply(String sql) throws Exception {
                         String loanId = "";
                         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-                        Cursor cursor = database.rawQuery("SELECT loan_id FROM user;", null);
+                        Cursor cursor = database.rawQuery(sql, null);
                         if (cursor != null) {
                             if (cursor.moveToNext()) {
                                 loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));

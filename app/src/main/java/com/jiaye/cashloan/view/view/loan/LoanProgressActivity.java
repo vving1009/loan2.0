@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,7 +54,13 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
         });
         mPresenter = new LoanProgressPresenter(this, new LoanProgressRepository());
         mPresenter.subscribe();
-        mPresenter.requestLoanProgress(getIntent().getExtras().getString("loanId"));
+        mPresenter.setLoanId(getIntent().getExtras().getString("loanId"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.requestLoanProgress();
     }
 
     @Override
@@ -67,6 +74,10 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
         mAdapter.setList(list);
     }
 
+    private void showBindBankView() {
+        Intent intent = new Intent(this, LoanBindBankActivity.class);
+        startActivity(intent);
+    }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -80,21 +91,9 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                 @Override
                 public void onClickViewHolder(ViewHolder viewHolder) {
                     switch (mList.get(viewHolder.getLayoutPosition()).getStatus()) {
-                        case "01":
-                            break;
-                        case "02":
-                            break;
-                        case "03":
-                            break;
-                        case "04":
-                            break;
-                        case "05":
-                            break;
-                        case "06":
-                            break;
                         case "07":
-                            break;
                         case "08":
+                            showBindBankView();
                             break;
                         case "09":
                             break;

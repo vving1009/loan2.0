@@ -12,7 +12,7 @@ import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
-import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.http.data.my.User;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;

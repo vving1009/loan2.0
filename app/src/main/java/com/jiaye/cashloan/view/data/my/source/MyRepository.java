@@ -1,15 +1,20 @@
 package com.jiaye.cashloan.view.data.my.source;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.User;
+import com.jiaye.cashloan.http.data.my.UserRequest;
+import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
-import com.jiaye.cashloan.view.data.auth.User;
 
-import io.reactivex.Observable;
+import org.reactivestreams.Publisher;
+
+import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
 /**
@@ -21,61 +26,101 @@ import io.reactivex.functions.Function;
 public class MyRepository implements MyDataSource {
 
     @Override
-    public Observable<User> requestUser() {
-        // TODO: 2017/10/30 请求服务器返回数据,暂时采用本地模拟数据.
-        User user = new User();
-        user.setName("贾博瑄");
-        user.setPhone("13752126558");
-        user.setApproveNumber("0");
-        user.setLoanNumber("0");
-        user.setHistoryNumber("0");
-        if (TextUtils.isEmpty(user.getName()) && TextUtils.isEmpty(user.getPhone())) {/*姓名和手机号码均为空*/
-            user.setShowName("游客");
-        } else if (TextUtils.isEmpty(user.getName())) {/*姓名为空手机号不为空*/
-            String phone = user.getPhone();
-            String start = phone.substring(0, 3);
-            String end = phone.substring(7, 11);
-            user.setShowName(start + "****" + end);
-        } else {/*姓名不为空*/
-            String name = user.getName();
-            int l = name.length();
-            if (l == 1) {
-                user.setShowName(name);
-            } else {
-                StringBuilder s = new StringBuilder();
-                for (int i = 0; i < l - 1; i++) {
-                    s.append("*");
-                }
-                user.setShowName(s + name.substring(s.length()));
-            }
-        }
-        return Observable.just(user);
+    public Flowable<User> requestUser() {
+        return Flowable.just("SELECT token FROM user;")
+                .flatMap(new Function<String, Publisher<User>>() {
+                    @Override
+                    public Publisher<User> apply(String sql) throws Exception {
+                        String token = "";
+                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                token = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN));
+                            }
+                            cursor.close();
+                        }
+                        if (TextUtils.isEmpty(token)) {
+                            return emptyUser();
+                        } else {
+                            return remoteUser();
+                        }
+                    }
+                });
     }
 
     @Override
-    public Observable<User> queryUser() {
+    public Flowable<User> queryUser() {
         String sql = "SELECT * FROM user;";
-        return Observable.just(sql).map(new Function<String, User>() {
+        return Flowable.just(sql).map(new Function<String, User>() {
             @Override
             public User apply(String sql) throws Exception {
-                String name = "";
                 String phone = "";
+                String approveNumber = "";
+                String progressNumber = "";
+                String historyNumber = "";
+                String loanApproveId = "";
+                String loanProgressId = "";
+                String name = "";
                 Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
                 if (cursor != null) {
                     if (cursor.moveToNext()) {
-                        name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                         phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                        approveNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_APPROVE_NUMBER));
+                        progressNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PROGRESS_NUMBER));
+                        historyNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_HISTORY_NUMBER));
+                        loanApproveId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_APPROVE_ID));
+                        loanProgressId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_PROGRESS_ID));
+                        name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                     }
                     cursor.close();
                 }
-                if (TextUtils.isEmpty(name) && TextUtils.isEmpty(phone)) {
+                if (TextUtils.isEmpty(phone)) {
                     throw new LocalException(R.string.error_auth_not_log_in);
                 }
                 User user = new User();
                 user.setName(name);
                 user.setPhone(phone);
+                user.setApproveNumber(approveNumber);
+                user.setProgressNumber(progressNumber);
+                user.setHistoryNumber(historyNumber);
+                user.setLoanApproveId(loanApproveId);
+                user.setLoanProgressId(loanProgressId);
                 return user;
             }
         });
+    }
+
+    private Flowable<User> emptyUser() {
+        return Flowable.just(new User());
+    }
+
+    private Flowable<User> remoteUser() {
+        return Flowable.just(new UserRequest())
+                .compose(new ResponseTransformer<UserRequest, User>("user"))
+                .map(new Function<User, User>() {
+                    @Override
+                    public User apply(User user) throws Exception {
+                                            /*更新数据库*/
+                        ContentValues values = new ContentValues();
+                        values.put("approve_number", user.getApproveNumber());
+                        values.put("progress_number", user.getProgressNumber());
+                        values.put("history_number", user.getHistoryNumber());
+                        values.put("loan_approve_id", user.getLoanApproveId());
+                        values.put("loan_progress_id", user.getLoanProgressId());
+                        values.put("ocr_name",user.getName());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                                            /*查询手机号*/
+                        String phone = "";
+                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user;", null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                            }
+                            cursor.close();
+                        }
+                        user.setPhone(phone);
+                        return user;
+                    }
+                });
     }
 }

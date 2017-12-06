@@ -12,5 +12,5 @@ import io.reactivex.Flowable;
 
 public interface LoanDetailsDataSource {
 
-    Flowable<LoanDetails> requestLoanDetails();
+    Flowable<LoanDetails> requestLoanDetails(String id);
 }

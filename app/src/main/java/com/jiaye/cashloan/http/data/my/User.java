@@ -1,7 +1,10 @@
-package com.jiaye.cashloan.view.data.auth;
+package com.jiaye.cashloan.http.data.my;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.http.base.ChildResponse;
 
 /**
  * User
@@ -9,25 +12,29 @@ import android.os.Parcelable;
  * @author 贾博瑄
  */
 
-public class User implements Parcelable {
-
-    /*令牌*/
-    private String token;
+public class User extends ChildResponse implements Parcelable {
 
     /*姓名*/
+    @SerializedName("jcb_name")
     private String name;
 
-    /*手机号*/
-    private String phone;
-
     /*借贷审批次数*/
+    @SerializedName("loan_approval")
     private String approveNumber;
 
     /*放款还贷次数*/
-    private String loanNumber;
+    @SerializedName("loan_repayment")
+    private String progressNumber;
 
     /*历史借贷次数*/
+    @SerializedName("loan_history")
     private String historyNumber;
+
+    @SerializedName("approval_jlaid")
+    private String loanApproveId;
+
+    @SerializedName("repayment_jlaid")
+    private String loanProgressId;
 
     /*前台实际显示的姓名信息
     1.没有姓名及手机号时,显示 "游客".
@@ -35,13 +42,8 @@ public class User implements Parcelable {
     3.有姓名时显示 "*名"*/
     private String showName;
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+    /*手机号*/
+    private String phone;
 
     public String getName() {
         return name;
@@ -49,14 +51,6 @@ public class User implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getApproveNumber() {
@@ -67,12 +61,12 @@ public class User implements Parcelable {
         this.approveNumber = approveNumber;
     }
 
-    public String getLoanNumber() {
-        return loanNumber;
+    public String getProgressNumber() {
+        return progressNumber;
     }
 
-    public void setLoanNumber(String loanNumber) {
-        this.loanNumber = loanNumber;
+    public void setProgressNumber(String progressNumber) {
+        this.progressNumber = progressNumber;
     }
 
     public String getHistoryNumber() {
@@ -83,12 +77,36 @@ public class User implements Parcelable {
         this.historyNumber = historyNumber;
     }
 
+    public String getLoanApproveId() {
+        return loanApproveId;
+    }
+
+    public void setLoanApproveId(String loanApproveId) {
+        this.loanApproveId = loanApproveId;
+    }
+
+    public String getLoanProgressId() {
+        return loanProgressId;
+    }
+
+    public void setLoanProgressId(String loanProgressId) {
+        this.loanProgressId = loanProgressId;
+    }
+
     public String getShowName() {
         return showName;
     }
 
     public void setShowName(String showName) {
         this.showName = showName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -98,24 +116,34 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.token);
         dest.writeString(this.name);
-        dest.writeString(this.phone);
         dest.writeString(this.approveNumber);
-        dest.writeString(this.loanNumber);
+        dest.writeString(this.progressNumber);
         dest.writeString(this.historyNumber);
+        dest.writeString(this.loanApproveId);
+        dest.writeString(this.loanProgressId);
+        dest.writeString(this.showName);
+        dest.writeString(this.phone);
+        dest.writeString(getSerialnumber());
+        dest.writeString(getToken());
+        dest.writeString(getDeviceId());
     }
 
     public User() {
     }
 
     protected User(Parcel in) {
-        this.token = in.readString();
         this.name = in.readString();
-        this.phone = in.readString();
         this.approveNumber = in.readString();
-        this.loanNumber = in.readString();
+        this.progressNumber = in.readString();
         this.historyNumber = in.readString();
+        this.loanApproveId = in.readString();
+        this.loanProgressId = in.readString();
+        this.showName = in.readString();
+        this.phone = in.readString();
+        setSerialnumber(in.readString());
+        setToken(in.readString());
+        setDeviceId(in.readString());
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

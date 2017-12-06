@@ -9,7 +9,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.data.auth.Relation;
+import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoRepository;
 
 import java.util.ArrayList;

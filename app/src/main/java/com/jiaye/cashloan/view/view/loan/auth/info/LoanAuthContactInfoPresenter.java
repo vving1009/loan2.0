@@ -13,7 +13,7 @@ import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.auth.Relation;
+import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoDataSource;
 
 import java.io.BufferedReader;

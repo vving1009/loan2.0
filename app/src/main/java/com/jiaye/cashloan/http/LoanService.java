@@ -39,6 +39,8 @@ import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.data.loan.LoanBindBank;
+import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
@@ -51,6 +53,8 @@ import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.Sesame;
 import com.jiaye.cashloan.http.data.loan.SesameRequest;
+import com.jiaye.cashloan.http.data.my.User;
+import com.jiaye.cashloan.http.data.my.UserRequest;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -94,6 +98,12 @@ public interface LoanService {
      */
     @POST("changePwd")
     Flowable<Response<ChangePassword>> changePassword(@Body Request<ChangePasswordRequest> request);
+
+    /**
+     * 我的
+     */
+    @POST("mine")
+    Flowable<Response<User>> user(@Body Request<UserRequest> request);
 
     /**
      * 产品列表
@@ -208,6 +218,12 @@ public interface LoanService {
      */
     @POST("loanProgress")
     Flowable<Response<LoanProgress>> loanProgress(@Body Request<LoanProgressRequest> request);
+
+    /**
+     * 绑定银行卡
+     */
+    @POST("bindBankCard")
+    Flowable<Response<LoanBindBank>> loanBindBank(@Body Request<LoanBindBankRequest> request);
 
     /**
      * 校验忘记密码验证码

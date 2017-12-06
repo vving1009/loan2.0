@@ -15,4 +15,6 @@ public interface LoanConfirmDataSource {
     Flowable<LoanConfirmInfo> requestLoanConfirmInfo();
 
     Flowable<String> requestLoanConfirm();
+
+    Flowable<String> queryLoanId();
 }

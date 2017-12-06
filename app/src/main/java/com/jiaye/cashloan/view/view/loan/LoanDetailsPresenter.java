@@ -30,8 +30,8 @@ public class LoanDetailsPresenter extends BasePresenterImpl implements LoanDetai
     }
 
     @Override
-    public void requestDetails() {
-        Disposable disposable = mDataSource.requestLoanDetails()
+    public void requestDetails(String id) {
+        Disposable disposable = mDataSource.requestLoanDetails(id)
                 .compose(new ViewTransformer<LoanDetails>() {
                     @Override
                     public void accept() {

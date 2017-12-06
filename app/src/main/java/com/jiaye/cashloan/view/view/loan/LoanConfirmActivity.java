@@ -48,9 +48,7 @@ public class LoanConfirmActivity extends BaseActivity implements LoanConfirmCont
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoanConfirmActivity.this, LoanDetailsActivity.class);
-                intent.putExtra("title", getString(R.string.loan_approve_title));
-                startActivity(intent);
+                mPresenter.details();
             }
         });
         findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
@@ -102,6 +100,14 @@ public class LoanConfirmActivity extends BaseActivity implements LoanConfirmCont
     @Override
     public void setAmount(String text) {
         mTextAmount.setText(text);
+    }
+
+    @Override
+    public void showLoanDetailsView(String loanId) {
+        Intent intent = new Intent(LoanConfirmActivity.this, LoanDetailsActivity.class);
+        intent.putExtra("title", getString(R.string.loan_details_approve_title));
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
     }
 
     @Override

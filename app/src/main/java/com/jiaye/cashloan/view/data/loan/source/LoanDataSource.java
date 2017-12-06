@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
-import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.http.data.my.User;
 
 import io.reactivex.Flowable;
 

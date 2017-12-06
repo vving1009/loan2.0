@@ -4,7 +4,7 @@ import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.data.loan.source.LoanDataSource;
 
 import io.reactivex.Flowable;

@@ -58,6 +58,19 @@ public class LoanConfirmPresenter extends BasePresenterImpl implements LoanConfi
     }
 
     @Override
+    public void details() {
+        Disposable disposable = mDataSource.queryLoanId()
+                .compose(new ViewTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String loanId) throws Exception {
+                        mView.showLoanDetailsView(loanId);
+                    }
+                },new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
     public void confirm() {
         Disposable disposable = mDataSource.requestLoanConfirm()
                 .compose(new ViewTransformer<String>() {

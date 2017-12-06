@@ -1,7 +1,8 @@
 package com.jiaye.cashloan.view.data.my.source;
 
-import com.jiaye.cashloan.view.data.auth.User;
+import com.jiaye.cashloan.http.data.my.User;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 
@@ -13,16 +14,7 @@ import io.reactivex.Observable;
 
 public interface MyDataSource {
 
-    /**
-     * 请求用户信息
-     * @return 用户信息
-     */
-    Observable<User> requestUser();
+    Flowable<User> requestUser();
 
-    /**
-     * 查询用户信息
-     *
-     * @return 用户信息
-     */
-    Observable<User> queryUser();
+    Flowable<User> queryUser();
 }

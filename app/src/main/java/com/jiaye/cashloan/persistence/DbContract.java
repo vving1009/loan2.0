@@ -18,9 +18,13 @@ public class DbContract {
      * <p>
      * token            令牌
      * phone            手机号
+     * <p>
      * approve_number   借贷审批次数
-     * loan_number      放款还贷次数
+     * progress_number  放款还贷次数
      * history_number   历史借贷次数
+     * loan_approve_id  正在审批的借款编号
+     * loan_progress_id 正在借款还款的借款编号
+     * <p>
      * loan_id          借款编号
      * <p>
      * ocr_number       身份证号码
@@ -35,11 +39,16 @@ public class DbContract {
      */
     public static abstract class User implements BaseColumns {
         public static final String TABLE_NAME = "user";
+        /*登录或注册成功后存入数据库*/
         public static final String COLUMN_NAME_TOKEN = "token";
         public static final String COLUMN_NAME_PHONE = "phone";
+        /*查询我的信息后存入数据库*/
         public static final String COLUMN_NAME_APPROVE_NUMBER = "approve_number";
-        public static final String COLUMN_NAME_LOAN_NUMBER = "loan_number";
+        public static final String COLUMN_NAME_PROGRESS_NUMBER = "progress_number";
         public static final String COLUMN_NAME_HISTORY_NUMBER = "history_number";
+        public static final String COLUMN_NAME_LOAN_APPROVE_ID = "loan_approve_id";
+        public static final String COLUMN_NAME_LOAN_PROGRESS_ID = "loan_progress_id";
+        /*开始借款后存入数据库*/
         public static final String COLUMN_NAME_LOAN_ID = "loan_id";
         /*OCR*/
         public static final String COLUMN_NAME_OCR_ID = "ocr_id";

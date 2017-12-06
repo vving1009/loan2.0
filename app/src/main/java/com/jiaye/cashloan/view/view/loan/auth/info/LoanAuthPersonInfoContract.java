@@ -2,9 +2,9 @@ package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
-import com.jiaye.cashloan.view.data.auth.Area;
-import com.jiaye.cashloan.view.data.auth.Education;
-import com.jiaye.cashloan.view.data.auth.Marriage;
+import com.jiaye.cashloan.http.data.dictionary.Area;
+import com.jiaye.cashloan.http.data.dictionary.Education;
+import com.jiaye.cashloan.http.data.dictionary.Marriage;
 
 import java.util.ArrayList;
 

@@ -27,10 +27,14 @@ public interface LoanConfirmContract {
 
         void setAmount(String text);
 
+        void showLoanDetailsView(String loanId);
+
         void showLoanProgressView(String loanId);
     }
 
     interface Presenter extends BasePresenter {
+
+        void details();
 
         void confirm();
     }
