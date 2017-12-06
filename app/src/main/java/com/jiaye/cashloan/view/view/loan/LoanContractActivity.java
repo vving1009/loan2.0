@@ -1,30 +1,35 @@
-package com.jiaye.cashloan.view.view.loan.auth.sesame;
+package com.jiaye.cashloan.view.view.loan;
 
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.LoanJavascriptInterface;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.data.loan.auth.source.sesame.LoanAuthSesameRepository;
+import com.jiaye.cashloan.http.LoanJavascriptInterface;
+import com.jiaye.cashloan.view.data.loan.source.LoanContractRepository;
 
 /**
- * LoanAuthSesameActivity
+ * LoanContractActivity
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthSesameActivity extends BaseActivity implements LoanAuthSesameContract.View {
+public class LoanContractActivity extends BaseActivity implements LoanContractContract.View {
 
-    private LoanAuthSesameContract.Presenter mPresenter;
+    private LoanContractContract.Presenter mPresenter;
 
     private WebView mWebView;
 
@@ -32,7 +37,9 @@ public class LoanAuthSesameActivity extends BaseActivity implements LoanAuthSesa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loan_auth_sesame_activity);
+        boolean contract = getIntent().getExtras().getBoolean("contract");
+        String loanId = getIntent().getExtras().getString("loanId");
+        setContentView(R.layout.loan_contract_activity);
         mWebView = findViewById(R.id.web_view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
@@ -58,8 +65,25 @@ public class LoanAuthSesameActivity extends BaseActivity implements LoanAuthSesa
                 handler.proceed();
             }
         });
-        mPresenter = new LoanAuthSesamePresenter(this, new LoanAuthSesameRepository());
+        if (!contract) {
+            findViewById(R.id.btn_commit).setVisibility(View.GONE);
+            findViewById(R.id.text_phone).setVisibility(View.GONE);
+        } else {
+            TextView textPhone = findViewById(R.id.text_phone);
+            SpannableString string = new SpannableString(textPhone.getText());
+            string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)), 9, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textPhone.setText(string);
+            findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.requestContract();
+                }
+            });
+        }
+        mPresenter = new LoanContractPresenter(this, new LoanContractRepository());
         mPresenter.subscribe();
+        mPresenter.setLoanId(loanId);
+        mPresenter.showContract();
     }
 
     @Override
@@ -71,5 +95,10 @@ public class LoanAuthSesameActivity extends BaseActivity implements LoanAuthSesa
     @Override
     public void postUrl(String url, byte[] postData) {
         mWebView.postUrl(url, postData);
+    }
+
+    @Override
+    public void result() {
+        finish();
     }
 }

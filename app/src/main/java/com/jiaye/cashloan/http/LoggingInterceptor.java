@@ -27,5 +27,4 @@ public class LoggingInterceptor implements HttpLoggingInterceptor.Logger {
             Logger.d(message);
         }
     }
-
 }

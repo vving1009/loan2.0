@@ -87,6 +87,9 @@
     <string name="loan_progress_step">借款使用此步骤</string>
     <string name="loan_progress_progress">我的借款进度</string>
     <string name="loan_progress_phone">如有疑问请联系客服400-8780-777</string>
+    <string name="loan_contract">借款合同</string>
+    <string name="loan_contract_agree">我已阅读并同意</string>
+
     <string name="loan_bank_title">银行卡</string>
     <string name="loan_bank_person">持卡人</string>
     <string name="loan_bank_phone">预留手机号</string>

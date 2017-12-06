@@ -70,6 +70,9 @@
             android:name=".view.view.loan.LoanBindBankActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.view.loan.LoanContractActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.help.LoanAuthHelpActivity"
             android:screenOrientation="portrait" />
         <activity

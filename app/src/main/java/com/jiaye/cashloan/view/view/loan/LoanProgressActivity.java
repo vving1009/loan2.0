@@ -79,6 +79,13 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
         startActivity(intent);
     }
 
+    private void showContractView(boolean contract) {
+        Intent intent = new Intent(this, LoanContractActivity.class);
+        intent.putExtra("contract", contract);
+        intent.putExtra("loanId", getIntent().getExtras().getString("loanId"));
+        startActivity(intent);
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<LoanProgress.Data> mList;
@@ -95,11 +102,11 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                         case "08":
                             showBindBankView();
                             break;
-                        case "09":
-                            break;
                         case "10":
+                            showContractView(true);
                             break;
                         case "11":
+                            showContractView(false);
                             break;
                         case "12":
                             break;

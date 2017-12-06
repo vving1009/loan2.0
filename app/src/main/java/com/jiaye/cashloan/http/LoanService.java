@@ -19,6 +19,8 @@ import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
+import com.jiaye.cashloan.http.data.loan.Contract;
+import com.jiaye.cashloan.http.data.loan.ContractRequest;
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
@@ -53,6 +55,8 @@ import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.Sesame;
 import com.jiaye.cashloan.http.data.loan.SesameRequest;
+import com.jiaye.cashloan.http.data.loan.WatchContract;
+import com.jiaye.cashloan.http.data.loan.WatchContractRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 
@@ -224,6 +228,18 @@ public interface LoanService {
      */
     @POST("bindBankCard")
     Flowable<Response<LoanBindBank>> loanBindBank(@Body Request<LoanBindBankRequest> request);
+
+    /**
+     * 查看合同
+     */
+    @POST("compact/cashLoan")
+    Flowable<Response<WatchContract>> watchContract(@Body Request<WatchContractRequest> request);
+
+    /**
+     * 签订合同
+     */
+    @POST("compact/confirmCompact")
+    Flowable<Response<Contract>> contract(@Body Request<ContractRequest> request);
 
     /**
      * 校验忘记密码验证码

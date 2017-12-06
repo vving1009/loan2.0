@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.sesame;
+package com.jiaye.cashloan.http;
 
 import android.app.Activity;
 import android.webkit.JavascriptInterface;

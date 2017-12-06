@@ -83,8 +83,8 @@ public class LoanConfirmPresenter extends BasePresenterImpl implements LoanConfi
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String loanId) throws Exception {
-                        mView.showLoanProgressView(loanId);
                         mView.dismissProgressDialog();
+                        mView.showLoanProgressView(loanId);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
