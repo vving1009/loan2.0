@@ -190,6 +190,14 @@
     <string name="error_0004">短信验证码发送失败</string>
     <string name="error_0005">发送间隔太短，请稍后再试</string>
     <string name="error_0006">验证码不正确</string>
+    <string name="error_0007">不存在有效的借款信息</string>
+    <string name="error_0008">绑定银行卡失败</string>
+    <string name="error_0009">客户基本信息不存在</string>
+    <string name="error_0010">已绑定银行卡</string>
+    <string name="error_0011">身份认证信息不存在</string>
+    <string name="error_0012">手机运营商认证信息不存在</string>
+    <string name="error_2001">暂时不能操作，您存在未结束的借款</string>
+    <string name="error_2002">暂时不能操作，您未进行借款</string>
     <string name="error_9990">没有效记录</string>
     <string name="error_9997">验签失败</string>
     <string name="error_9998">数据格式不正确</string>

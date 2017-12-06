@@ -55,6 +55,8 @@ public class LoanAuthContract {
          * 显示借款芝麻信用认证页面
          */
         void showLoanAuthSesameView();
+
+        void result();
     }
 
     interface Presenter extends BasePresenter {

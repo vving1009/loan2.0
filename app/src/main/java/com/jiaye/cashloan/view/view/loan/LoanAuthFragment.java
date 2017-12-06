@@ -167,6 +167,11 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         startActivity(intent);
     }
 
+    @Override
+    public void result() {
+        getActivity().finish();
+    }
+
     private boolean hasPermission(int requestCode) {
         boolean hasPermission = false;
         boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;

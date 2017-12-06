@@ -3,6 +3,8 @@ package com.jiaye.cashloan.view.view.loan;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.base.ErrorCode;
+import com.jiaye.cashloan.http.base.NetworkException;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -99,7 +101,17 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         }
                         mView.dismissProgressDialog();
                     }
-                }, new ThrowableConsumer(mView));
+                }, new ThrowableConsumer(mView){
+                    @Override
+                    public void accept(Throwable t) throws Exception {
+                        super.accept(t);
+                        if (t instanceof NetworkException) {
+                            if (((NetworkException) t).getErrorCode().equals(ErrorCode.FAILURE_2001.getCode())) {
+                                mView.result();
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
