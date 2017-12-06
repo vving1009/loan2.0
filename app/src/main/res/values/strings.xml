@@ -129,6 +129,7 @@
     <string name="my_contact">联系我们</string>
     <string name="my_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
     <string name="my_settings">个人设置</string>
+    <string name="my_settings_gesture">手势密码</string>
     <string name="my_share">分享给朋友</string>
     <string name="my_wechat">微信好友</string>
     <string name="my_wechat_title">年轻人的互联网钱包</string>

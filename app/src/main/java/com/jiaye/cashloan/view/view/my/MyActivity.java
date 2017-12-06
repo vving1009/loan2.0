@@ -15,6 +15,7 @@ import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
 import com.jiaye.cashloan.view.view.my.certificate.taobao.TaoBaoFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
+import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
 
 /**
  * MyActivity
@@ -77,6 +78,11 @@ public class MyActivity extends AppCompatActivity {
                 textView.setText(R.string.my_settings);
                 SettingsFragment settingsFragment = SettingsFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, settingsFragment).commit();
+                break;
+            case "gesture":
+                textView.setText(R.string.my_settings_gesture);
+                GestureFragment gestureFragment = GestureFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, gestureFragment).commit();
                 break;
         }
     }

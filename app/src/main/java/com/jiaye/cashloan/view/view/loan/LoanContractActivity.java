@@ -40,6 +40,12 @@ public class LoanContractActivity extends BaseActivity implements LoanContractCo
         boolean contract = getIntent().getExtras().getBoolean("contract");
         String loanId = getIntent().getExtras().getString("loanId");
         setContentView(R.layout.loan_contract_activity);
+        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         mWebView = findViewById(R.id.web_view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);

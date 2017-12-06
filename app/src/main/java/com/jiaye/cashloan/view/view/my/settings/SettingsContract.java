@@ -13,10 +13,18 @@ public interface SettingsContract {
 
     interface View extends BaseViewContract {
 
+        void setSwitch(boolean check);
+
+        void showGestureView();
+
         void result();
     }
 
     interface Presenter extends BasePresenter {
+
+        void getGestureStatus();
+
+        void removeGesturePassword();
 
         void exit();
     }
