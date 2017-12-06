@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.my.settings.source.SettingsRepository;
 
 /**
  * SettingsFragment
@@ -15,7 +16,9 @@ import com.jiaye.cashloan.view.BaseFragment;
  * @author 贾博瑄
  */
 
-public class SettingsFragment extends BaseFragment {
+public class SettingsFragment extends BaseFragment implements SettingsContract.View {
+
+    private SettingsContract.Presenter mPresenter;
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
@@ -28,11 +31,25 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.settings_fragment, container, false);
+        root.findViewById(R.id.layout_exit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.exit();
+            }
+        });
+        mPresenter = new SettingsPresenter(this, new SettingsRepository());
+        mPresenter.subscribe();
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void result() {
+        getActivity().finish();
     }
 }
