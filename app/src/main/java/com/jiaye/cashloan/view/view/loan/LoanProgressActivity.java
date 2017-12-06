@@ -168,12 +168,12 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                 case "07":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
                     holder.mTextStatus.setVisibility(View.VISIBLE);
-                    holder.mTextStatus.setText("绑定");
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_bind));
                     break;
                 case "08":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
                     holder.mTextStatus.setVisibility(View.VISIBLE);
-                    holder.mTextStatus.setText("绑定");
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_bind));
                     break;
                 case "09":
                     holder.mImgStatus.setVisibility(View.VISIBLE);
@@ -183,12 +183,12 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                 case "10":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
                     holder.mTextStatus.setVisibility(View.VISIBLE);
-                    holder.mTextStatus.setText("签约");
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_contract));
                     break;
                 case "11":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
                     holder.mTextStatus.setVisibility(View.VISIBLE);
-                    holder.mTextStatus.setText("查看");
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_watch));
                     break;
                 case "12":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
@@ -202,7 +202,7 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                 case "14":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
                     holder.mTextStatus.setVisibility(View.VISIBLE);
-                    holder.mTextStatus.setText("还款");
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_repayment));
                     break;
                 case "15":
                     holder.mImgStatus.setVisibility(View.INVISIBLE);
