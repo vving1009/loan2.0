@@ -6,6 +6,7 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.source.LoanProgressDataSource;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -27,13 +28,21 @@ public class LoanProgressPresenter extends BasePresenterImpl implements LoanProg
 
     @Override
     public void requestLoanProgress(String loanId) {
-        mDataSource.requestLoanProgress(loanId)
-                .compose(new ViewTransformer<LoanProgress>())
+        Disposable disposable = mDataSource.requestLoanProgress(loanId)
+                .compose(new ViewTransformer<LoanProgress>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(new Consumer<LoanProgress>() {
                     @Override
                     public void accept(LoanProgress loanProgress) throws Exception {
-
+                        mView.setList(loanProgress.getList());
+                        mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 }

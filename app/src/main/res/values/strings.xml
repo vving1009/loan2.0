@@ -81,6 +81,10 @@
     <string name="loan_details_current_amount">本期还款金额</string>
     <string name="loan_details_deadline">还款日期</string>
     <string name="loan_details_status">审批状态</string>
+    <string name="loan_progress_title">借款进度</string>
+    <string name="loan_progress_step">借款使用此步骤</string>
+    <string name="loan_progress_progress">我的借款进度</string>
+    <string name="loan_progress_phone">如有疑问请联系客服400-8780-777</string>
     <!--my-->
     <string name="my_certificate">我的认证</string>
     <string name="my_certificate_basics">基本信息</string>
