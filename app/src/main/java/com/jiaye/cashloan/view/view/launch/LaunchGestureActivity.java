@@ -64,6 +64,7 @@ public class LaunchGestureActivity extends BaseActivity {
     }
 
     private void cleanData() {
+        showToast("错误次数超出限制,请重新登录.");
         mGesture.removePassword();
         LoanApplication.getInstance().getSQLiteDatabase().delete("user", null, null);
         LoanApplication.getInstance().getSQLiteDatabase().delete("product", null, null);
