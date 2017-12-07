@@ -57,6 +57,8 @@ import com.jiaye.cashloan.http.data.loan.Sesame;
 import com.jiaye.cashloan.http.data.loan.SesameRequest;
 import com.jiaye.cashloan.http.data.loan.WatchContract;
 import com.jiaye.cashloan.http.data.loan.WatchContractRequest;
+import com.jiaye.cashloan.http.data.my.Bank;
+import com.jiaye.cashloan.http.data.my.BankRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 
@@ -228,6 +230,12 @@ public interface LoanService {
      */
     @POST("bindBankCard")
     Flowable<Response<LoanBindBank>> loanBindBank(@Body Request<LoanBindBankRequest> request);
+
+    /**
+     * 银行卡
+     */
+    @POST("bindBankCard/displayCardInfo")
+    Flowable<Response<Bank>> bank(@Body Request<BankRequest> request);
 
     /**
      * 查看合同

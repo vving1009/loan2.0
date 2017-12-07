@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.my.certificate.source.CertificateRepository;
 import com.jiaye.cashloan.view.view.my.MyActivity;
 
 /**
@@ -21,6 +22,8 @@ import com.jiaye.cashloan.view.view.my.MyActivity;
 public class CertificateFragment extends BaseFragment implements CertificateContract.View {
 
     private CertificateContract.Presenter mPresenter;
+
+    private TextView mTextPhone;
 
     private TextView mTextBank;
 
@@ -45,6 +48,7 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.certificate_fragment, container, false);
+        mTextPhone = view.findViewById(R.id.text_phone);
         mTextBank = view.findViewById(R.id.text_bank);
         mTextIdCard = view.findViewById(R.id.text_id_card);
         mTextInfo = view.findViewById(R.id.text_info);
@@ -54,73 +58,98 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
         view.findViewById(R.id.layout_bank).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBankView();
+                mPresenter.bank();
             }
         });
         view.findViewById(R.id.layout_id_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showIdCardView();
+                mPresenter.ocr();
             }
         });
         view.findViewById(R.id.layout_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInfoView();
+                mPresenter.info();
             }
         });
         view.findViewById(R.id.layout_operator).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOperatorView();
+                mPresenter.phone();
             }
         });
-        view.findViewById(R.id.layout_taobao).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTaoBaoView();
-            }
-        });
+        mPresenter = new CertificatePresenter(this, new CertificateRepository());
+        mPresenter.subscribe();
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void setPhone(String text) {
+        mTextPhone.setText(text);
+    }
+
+    @Override
+    public void setBankStatus(String text) {
+        mTextBank.setText(text);
+    }
+
+    @Override
+    public void setOCRStatus(String text) {
+        mTextIdCard.setText(text);
+    }
+
+    @Override
+    public void setInfoStatus(String text) {
+        mTextInfo.setText(text);
+    }
+
+    @Override
+    public void setPhoneStatus(String text) {
+        mTextOperator.setText(text);
+    }
+
+    @Override
+    public void setTaoBaoStatus(String text) {
+        mTextTaoBao.setText(text);
+    }
+
+    @Override
+    public void setSesameStatus(String text) {
+        mTextSesame.setText(text);
     }
 
     @Override
     public void showBankView() {
         Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view","certificate_bank");
+        intent.putExtra("view", "certificate_bank");
         getActivity().startActivity(intent);
     }
 
     @Override
     public void showIdCardView() {
         Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view","certificate_id_card");
+        intent.putExtra("view", "certificate_id_card");
         getActivity().startActivity(intent);
     }
 
     @Override
     public void showInfoView() {
         Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view","certificate_info");
+        intent.putExtra("view", "certificate_info");
         getActivity().startActivity(intent);
     }
 
     @Override
     public void showOperatorView() {
         Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view","certificate_operator");
-        getActivity().startActivity(intent);
-    }
-
-    @Override
-    public void showTaoBaoView() {
-        Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view","certificate_taobao");
+        intent.putExtra("view", "certificate_operator");
         getActivity().startActivity(intent);
     }
 }

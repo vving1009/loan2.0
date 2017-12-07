@@ -15,6 +15,10 @@ public class Auth extends ChildResponse {
     @SerializedName("jla_id")
     private String productId;
 
+    /* 银行卡认证状态*/
+    @SerializedName("bindBank_state")
+    private String bankState;
+
     /*身份证认证状态*/
     @SerializedName("cardAuth_state")
     private String cardState;
@@ -38,6 +42,30 @@ public class Auth extends ChildResponse {
     /*芝麻信用认证状态*/
     @SerializedName("zmAuth_state")
     private String sesameState;
+
+    /*芝麻信用分*/
+    @SerializedName("zm_score")
+    private String sesame;
+
+    /*身份证姓名*/
+    @SerializedName("jcb_name")
+    private String ocrName;
+
+    /*身份证姓名*/
+    @SerializedName("jcb_identifyid")
+    private String ocrID;
+
+    /*手机号*/
+    @SerializedName("jcb_phone")
+    private String phone;
+
+    public String getBankState() {
+        return bankState;
+    }
+
+    public void setBankState(String bankState) {
+        this.bankState = bankState;
+    }
 
     public String getProductId() {
         return productId;
@@ -93,5 +121,37 @@ public class Auth extends ChildResponse {
 
     public void setSesameState(String sesameState) {
         this.sesameState = sesameState;
+    }
+
+    public String getSesame() {
+        return sesame;
+    }
+
+    public void setSesame(String sesame) {
+        this.sesame = sesame;
+    }
+
+    public String getOcrName() {
+        return ocrName;
+    }
+
+    public void setOcrName(String ocrName) {
+        this.ocrName = ocrName;
+    }
+
+    public String getOcrID() {
+        return ocrID;
+    }
+
+    public void setOcrID(String ocrID) {
+        this.ocrID = ocrID;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

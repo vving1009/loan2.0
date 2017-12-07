@@ -110,17 +110,19 @@ public class RequestHeader {
         RequestHeader header = new RequestHeader();
         // 登录成功后查询数据库获取令牌
         String token = null;
+        String phone = null;
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-        Cursor cursor = database.rawQuery("SELECT token FROM user;", null);
+        Cursor cursor = database.rawQuery("SELECT token, phone FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 token = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN));
+                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
             }
             cursor.close();
         }
         header.setToken(token);
         // 部分手机可以获取手机号(不再获取,成功率太低.)
-        header.setPhone(null);
+        header.setPhone(phone);
         // 获取手机型号
         header.setModel(Build.MODEL);
         // 获取手机当前网络类型

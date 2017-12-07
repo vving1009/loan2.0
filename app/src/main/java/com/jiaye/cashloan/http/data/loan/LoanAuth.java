@@ -47,6 +47,10 @@ public class LoanAuth extends ChildResponse {
     @SerializedName("jcb_identifyid")
     private String ocrID;
 
+    /*手机号*/
+    @SerializedName("jcb_phone")
+    private String phone;
+
     public String getLoanId() {
         return loanId;
     }
@@ -117,5 +121,13 @@ public class LoanAuth extends ChildResponse {
 
     public void setOcrID(String ocrID) {
         this.ocrID = ocrID;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

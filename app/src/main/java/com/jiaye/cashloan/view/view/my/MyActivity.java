@@ -13,7 +13,6 @@ import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
 import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
-import com.jiaye.cashloan.view.view.my.certificate.taobao.TaoBaoFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
 
@@ -63,11 +62,6 @@ public class MyActivity extends BaseActivity {
                 textView.setText(R.string.my_certificate_operator);
                 OperatorFragment operatorFragment = OperatorFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, operatorFragment).commit();
-                break;
-            case "certificate_taobao":
-                textView.setText(R.string.my_certificate_taobao);
-                TaoBaoFragment taoBaoFragment = TaoBaoFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, taoBaoFragment).commit();
                 break;
             case "about":
                 textView.setText(R.string.my_about);

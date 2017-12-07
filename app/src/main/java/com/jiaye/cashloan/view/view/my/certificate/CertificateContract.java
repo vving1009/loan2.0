@@ -14,6 +14,41 @@ public interface CertificateContract {
     interface View extends BaseViewContract {
 
         /**
+         * 设置手机号
+         */
+        void setPhone(String text);
+
+        /**
+         * 设置银行卡状态
+         */
+        void setBankStatus(String text);
+
+        /**
+         * 设置身份证状态
+         */
+        void setOCRStatus(String text);
+
+        /**
+         * 设置信息状态
+         */
+        void setInfoStatus(String text);
+
+        /**
+         * 设置手机运营商状态
+         */
+        void setPhoneStatus(String text);
+
+        /**
+         * 设置淘宝状态
+         */
+        void setTaoBaoStatus(String text);
+
+        /**
+         * 设置芝麻信用状态
+         */
+        void setSesameStatus(String text);
+
+        /**
          * 显示银行卡信息页面
          */
         void showBankView();
@@ -32,14 +67,16 @@ public interface CertificateContract {
          * 显示运营商信息页面
          */
         void showOperatorView();
-
-        /**
-         * 显示淘宝信息页面
-         */
-        void showTaoBaoView();
     }
 
     interface Presenter extends BasePresenter {
 
+        void bank();
+
+        void ocr();
+
+        void info();
+
+        void phone();
     }
 }
