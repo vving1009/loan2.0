@@ -87,7 +87,13 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
                         return mDataSource.loanIDCardAuth();
                     }
                 })
-                .compose(new ViewTransformer<LoanIDCardAuth>())
+                .compose(new ViewTransformer<LoanIDCardAuth>(){
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(new Consumer<LoanIDCardAuth>() {
                     @Override
                     public void accept(LoanIDCardAuth loanIDCardAuth) throws Exception {
