@@ -89,15 +89,6 @@ public class LoanRepository implements LoanDataSource {
                         return new CheckLoanRequest();
                     }
                 }).compose(new ResponseTransformer<CheckLoanRequest, CheckLoan>("checkLoan"))
-                .map(new Function<CheckLoan, CheckLoan>() {
-                    @Override
-                    public CheckLoan apply(CheckLoan checkLoan) throws Exception {
-                        if (checkLoan.getCheck().equals("1")) {
-                            return checkLoan;
-                        }
-                        throw new LocalException(R.string.error_loan);
-                    }
-                })
                 .map(new Function<CheckLoan, LoanAuthRequest>() {
                     @Override
                     public LoanAuthRequest apply(CheckLoan s) throws Exception {
