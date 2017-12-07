@@ -30,7 +30,11 @@ public enum LoanClient {
                 .build();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
-        Gson gson = gsonBuilder.create();
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(String.class, new StringNullAdapter())
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
