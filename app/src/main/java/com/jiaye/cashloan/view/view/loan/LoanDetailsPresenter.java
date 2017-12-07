@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import com.jiaye.cashloan.http.data.loan.LoanDetails;
+import com.jiaye.cashloan.http.data.loan.LoanHistory;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -45,6 +46,26 @@ public class LoanDetailsPresenter extends BasePresenterImpl implements LoanDetai
                         List<LoanDetails> list = new ArrayList<>();
                         list.add(loanDetails);
                         mView.setList(list);
+                        mView.dismissProgressDialog();
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void requestHistory() {
+        Disposable disposable = mDataSource.requestLoanHistory()
+                .compose(new ViewTransformer<LoanHistory>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<LoanHistory>() {
+                    @Override
+                    public void accept(LoanHistory loanHistory) throws Exception {
+                        mView.setList(loanHistory.getList());
                         mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));

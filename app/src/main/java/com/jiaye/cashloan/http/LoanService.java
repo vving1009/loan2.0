@@ -35,6 +35,8 @@ import com.jiaye.cashloan.http.data.loan.LoanDetails;
 import com.jiaye.cashloan.http.data.loan.LoanDetailsRequest;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanHistory;
+import com.jiaye.cashloan.http.data.loan.LoanHistoryRequest;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
@@ -242,6 +244,12 @@ public interface LoanService {
      */
     @POST("mine/loanDetail")
     Flowable<Response<LoanDetails>> loanDetails(@Body Request<LoanDetailsRequest> request);
+
+    /**
+     * 借款历史
+     */
+    @POST("lendApply")
+    Flowable<Response<LoanHistory>> loanHistory(@Body Request<LoanHistoryRequest> request);
 
     /**
      * 借款进度
