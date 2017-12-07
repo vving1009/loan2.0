@@ -17,6 +17,8 @@ import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
 import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductRequest;
+import com.jiaye.cashloan.http.data.loan.CheckLoan;
+import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.Contract;
@@ -126,6 +128,12 @@ public interface LoanService {
      */
     @POST("defaultPro")
     Flowable<Response<DefaultProduct>> defaultProduct(@Body Request<DefaultProductRequest> request);
+
+    /**
+     * 是否可以借款
+     */
+    @POST("userApprove/ifAgainLend")
+    Flowable<Response<CheckLoan>> checkLoan(@Body Request<CheckLoanRequest> request);
 
     /**
      * 借款认证状态

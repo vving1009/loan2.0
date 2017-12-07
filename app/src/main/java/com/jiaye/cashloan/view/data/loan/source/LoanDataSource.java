@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
+import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.my.User;
 
 import io.reactivex.Flowable;
@@ -29,7 +30,7 @@ public interface LoanDataSource {
     Flowable<DefaultProduct> requestProduct();
 
     /**
-     * 查询用户信息
+     * 请求检查是否可以借款
      */
-    Flowable<User> queryUser();
+    Flowable<LoanAuth> requestCheck();
 }

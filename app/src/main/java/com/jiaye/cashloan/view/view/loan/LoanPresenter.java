@@ -1,10 +1,10 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
+import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.data.loan.source.LoanDataSource;
 
 import io.reactivex.Flowable;
@@ -63,10 +63,11 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
     @Override
     public void loan() {
         Disposable disposable = mDataSource
-                .queryUser()
-                .subscribe(new Consumer<User>() {
+                .requestCheck()
+                .compose(new ViewTransformer<LoanAuth>())
+                .subscribe(new Consumer<LoanAuth>() {
                     @Override
-                    public void accept(User user) throws Exception {
+                    public void accept(LoanAuth loanAuth) throws Exception {
                         mView.showLoanAuthView();
                     }
                 }, new ThrowableConsumer(mView));
