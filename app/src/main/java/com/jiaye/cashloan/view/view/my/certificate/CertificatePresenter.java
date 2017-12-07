@@ -48,7 +48,7 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                         } else if (auth.getBankState().equals("0")) {
                             mView.setBankStatus("未绑定");
                         } else if (auth.getBankState().equals("2")) {
-                            mView.setBankStatus("绑定失败");
+                            mView.setBankStatus("认证失败");
                         }
                         // 身份认证
                         if (auth.getCardState().equals("1")) {
@@ -63,6 +63,8 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                             mView.setInfoStatus("已完善");
                         } else if (auth.getPersonState().equals("0")) {
                             mView.setInfoStatus("未完善");
+                        } else if (auth.getPersonState().equals("2")) {
+                            mView.setInfoStatus("认证失败");
                         }
                         // 手机运营商
                         if (auth.getPhoneState().equals("1")) {

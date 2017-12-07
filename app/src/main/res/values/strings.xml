@@ -174,6 +174,7 @@
     <string name="error_loan">暂时不能借款</string>
     <string name="error_loan_auth_camera_and_write">请在应用管理中打开“相机及读写”访问权限！</string>
     <string name="error_loan_auth_card_first">请先进行身份认证</string>
+    <string name="error_loan_auth_card_failure">认证失败</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>
     <string name="error_loan_person_education">请选择最高学历</string>
     <string name="error_loan_person_marriage">请选择婚姻状况</string>

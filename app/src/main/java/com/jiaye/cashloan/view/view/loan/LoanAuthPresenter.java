@@ -104,6 +104,11 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     @Override
     public void selectLoanAuthModel(LoanAuthModel model) {
+        /*认证失败*/
+        if (model.isFailure()) {
+            mView.showToastById(R.string.error_loan_auth_card_failure);
+            return;
+        }
         /*身份证未认证时选择其他认证*/
         if (!mIsCardVerify && model.getName() != R.string.loan_auth_ocr) {
             mView.showToastById(R.string.error_loan_auth_card_first);
@@ -152,6 +157,13 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
             model.setBackground(R.drawable.loan_auth_bg_blue);
             model.setVerify(true);
             model.setCanModify(canModify);
+        } else if (state.equals("2")) {
+            model.setIcState(R.drawable.ic_angle_blue);
+            model.setIcBackground(R.drawable.loan_auth_ic_bg_gray);
+            model.setColor(R.color.color_gray);
+            model.setBackground(R.drawable.loan_auth_bg_gray);
+            model.setVerify(false);
+            model.setCanModify(true);
         }
     }
 }

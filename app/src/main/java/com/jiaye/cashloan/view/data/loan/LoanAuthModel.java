@@ -32,6 +32,9 @@ public class LoanAuthModel {
     /*可以修改*/
     private boolean canModify;
 
+    /*认证失败*/
+    private boolean isFailure;
+
     public int getName() {
         return name;
     }
@@ -94,5 +97,13 @@ public class LoanAuthModel {
 
     public void setCanModify(boolean canModify) {
         this.canModify = canModify;
+    }
+
+    public boolean isFailure() {
+        return isFailure;
+    }
+
+    public void setFailure(boolean failure) {
+        isFailure = failure;
     }
 }
