@@ -22,6 +22,11 @@ public interface LaunchContract {
          * 显示主页面
          */
         void showMainView();
+
+        /**
+         * 显示手势识别页面
+         */
+        void showGestureView();
     }
 
     interface Presenter extends BasePresenter {

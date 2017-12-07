@@ -58,4 +58,11 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
         getActivity().startActivity(intent);
         getActivity().finish();
     }
+
+    @Override
+    public void showGestureView() {
+        Intent intent = new Intent(getActivity(), LaunchGestureActivity.class);
+        getActivity().startActivity(intent);
+        getActivity().finish();
+    }
 }

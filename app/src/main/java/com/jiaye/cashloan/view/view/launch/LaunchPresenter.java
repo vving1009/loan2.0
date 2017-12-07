@@ -1,9 +1,11 @@
 package com.jiaye.cashloan.view.view.launch;
 
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.launch.source.LaunchDataSource;
+import com.syd.oden.gesturelock.view.GesturePreference;
 
 import java.io.File;
 
@@ -23,9 +25,12 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
 
     private final LaunchDataSource mDataSource;
 
+    private GesturePreference mPreference;
+
     public LaunchPresenter(LaunchContract.View view, LaunchDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
+        mPreference = new GesturePreference(LoanApplication.getInstance(), -1);
     }
 
     @Override
@@ -44,7 +49,11 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
                         if (mDataSource.isNeedGuide()) {
                             mView.showGuideView();
                         } else {
-                            mView.showMainView();
+                            if (mPreference.ReadStringPreference().equals("null")) {
+                                mView.showMainView();
+                            } else {
+                                mView.showGestureView();
+                            }
                         }
                     }
                 }, new ThrowableConsumer(mView));
