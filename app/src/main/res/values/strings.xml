@@ -211,6 +211,12 @@
     <string name="error_2001">暂时不能操作，您存在未结束的借款</string>
     <string name="error_2002">暂时不能操作，您未进行借款</string>
     <string name="error_9990">没有效记录</string>
+    <string name="error_9991">根据三方结果返回相应的错误信息</string>
+    <string name="error_9992">尚未接收到返回接口</string>
+    <string name="error_9993">活体认证次数已达上线</string>
+    <string name="error_9994">您已在另一台设备上登录</string>
+    <string name="error_9995">用户授权失败</string>
+    <string name="error_9996">芝麻信用分查询失败</string>
     <string name="error_9997">验签失败</string>
     <string name="error_9998">数据格式不正确</string>
     <string name="error_9999">请求异常</string>

@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view;
 
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.ErrorCode;
 import com.jiaye.cashloan.http.base.NetworkException;
@@ -43,7 +44,11 @@ public class ThrowableConsumer implements Consumer<Throwable> {
             }
         } else if (t instanceof NetworkException) {
             if (!((NetworkException) t).getErrorCode().equals(ErrorCode.EMPTY.getCode())) {
-                mContract.showToast(((NetworkException) t).getErrorMessage());
+                if (((NetworkException) t).getErrorCode().equals(ErrorCode.TOKEN_OVERDUE.getCode())) {
+                    LoanApplication.getInstance().reLogin();
+                } else {
+                    mContract.showToast(((NetworkException) t).getErrorMessage());
+                }
             }
         } else {
             Logger.e(t.getMessage());
