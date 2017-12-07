@@ -47,12 +47,16 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                             mView.setBankStatus("已绑定");
                         } else if (auth.getBankState().equals("0")) {
                             mView.setBankStatus("未绑定");
+                        } else if (auth.getBankState().equals("2")) {
+                            mView.setBankStatus("绑定失败");
                         }
                         // 身份认证
                         if (auth.getCardState().equals("1")) {
                             mView.setOCRStatus("已认证");
                         } else if (auth.getCardState().equals("0")) {
                             mView.setOCRStatus("未认证");
+                        } else if (auth.getCardState().equals("2")) {
+                            mView.setOCRStatus("认证失败");
                         }
                         // 个人资料
                         if (auth.getPersonState().equals("1")) {
@@ -65,17 +69,21 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                             mView.setPhoneStatus("已认证");
                         } else if (auth.getPhoneState().equals("0")) {
                             mView.setPhoneStatus("未认证");
+                        } else if (auth.getPhoneState().equals("2")) {
+                            mView.setPhoneStatus("认证失败");
                         }
                         // 淘宝认证
                         if (auth.getTaobaoState().equals("1")) {
                             mView.setTaoBaoStatus("已认证");
                         } else if (auth.getTaobaoState().equals("0")) {
                             mView.setTaoBaoStatus("未认证");
+                        } else if (auth.getTaobaoState().equals("2")) {
+                            mView.setTaoBaoStatus("认证失败");
                         }
                         // 芝麻信用
                         if (auth.getSesameState().equals("1")) {
                             mView.setSesameStatus(auth.getSesame());
-                        } else if (auth.getSesameState().equals("2")) {
+                        } else if (auth.getSesameState().equals("0")) {
                             mView.setSesameStatus("未认证");
                         }
                     }
