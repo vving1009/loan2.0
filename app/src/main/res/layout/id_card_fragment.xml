@@ -2,112 +2,117 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@color/color_gray_light" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/loan_auth_ic_name"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:text="@string/loan_auth_name"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
 
-        <TextView
-            android:id="@+id/text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/loan_auth_ic_name"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/loan_auth_name"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/loan_auth_ocr_ic_number"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:text="@string/loan_auth_ocr_number"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
 
-        <TextView
-            android:id="@+id/text_id_card"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/loan_auth_ocr_ic_number"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/loan_auth_ocr_number"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
+            <TextView
+                android:id="@+id/text_id_card"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/loan_auth_ocr_ic_validity_date"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:text="@string/loan_auth_ocr_validity_date"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
 
-        <TextView
-            android:id="@+id/text_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/loan_auth_ocr_ic_validity_date"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/loan_auth_ocr_validity_date"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
+    </LinearLayout>
 </LinearLayout>

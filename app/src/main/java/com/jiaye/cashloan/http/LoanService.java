@@ -61,6 +61,8 @@ import com.jiaye.cashloan.http.data.my.Bank;
 import com.jiaye.cashloan.http.data.my.BankRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
+import com.jiaye.cashloan.http.data.my.Phone;
+import com.jiaye.cashloan.http.data.my.PhoneRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 
@@ -196,6 +198,12 @@ public interface LoanService {
      */
     @POST("phoneOperator")
     Flowable<Response<SavePhone>> savePhone(@Body Request<SavePhoneRequest> request);
+
+    /**
+     * 手机信息
+     */
+    @POST("phoneOperator/queryOperatorInfo")
+    Flowable<Response<Phone>> phone(@Body Request<PhoneRequest> request);
 
     /**
      * 保存淘宝信息
