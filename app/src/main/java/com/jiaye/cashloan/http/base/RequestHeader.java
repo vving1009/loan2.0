@@ -109,8 +109,8 @@ public class RequestHeader {
     public static RequestHeader create() {
         RequestHeader header = new RequestHeader();
         // 登录成功后查询数据库获取令牌
-        String token = null;
-        String phone = null;
+        String token = "";
+        String phone = "";
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
         Cursor cursor = database.rawQuery("SELECT token, phone FROM user;", null);
         if (cursor != null) {
@@ -121,7 +121,7 @@ public class RequestHeader {
             cursor.close();
         }
         header.setToken(token);
-        // 部分手机可以获取手机号(不再获取,成功率太低.)
+        // 获取手机号(登录成功后从数据库获取)
         header.setPhone(phone);
         // 获取手机型号
         header.setModel(Build.MODEL);

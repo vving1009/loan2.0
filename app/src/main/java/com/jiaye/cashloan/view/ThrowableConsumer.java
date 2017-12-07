@@ -44,10 +44,9 @@ public class ThrowableConsumer implements Consumer<Throwable> {
             }
         } else if (t instanceof NetworkException) {
             if (!((NetworkException) t).getErrorCode().equals(ErrorCode.EMPTY.getCode())) {
+                mContract.showToast(((NetworkException) t).getErrorMessage());
                 if (((NetworkException) t).getErrorCode().equals(ErrorCode.TOKEN_OVERDUE.getCode())) {
                     LoanApplication.getInstance().reLogin();
-                } else {
-                    mContract.showToast(((NetworkException) t).getErrorMessage());
                 }
             }
         } else {
