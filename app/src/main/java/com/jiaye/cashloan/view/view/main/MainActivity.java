@@ -2,11 +2,11 @@ package com.jiaye.cashloan.view.view.main;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

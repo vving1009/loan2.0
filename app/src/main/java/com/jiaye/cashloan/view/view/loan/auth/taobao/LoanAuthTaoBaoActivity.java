@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 /**
@@ -19,7 +19,7 @@ import com.jiaye.cashloan.widget.NoScrollViewPager;
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoActivity extends AppCompatActivity {
+public class LoanAuthTaoBaoActivity extends BaseActivity {
 
     private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_taobao_normal, R.string.loan_auth_taobao_qr};
 

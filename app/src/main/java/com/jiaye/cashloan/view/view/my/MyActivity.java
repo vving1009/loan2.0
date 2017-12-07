@@ -2,11 +2,11 @@ package com.jiaye.cashloan.view.view.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.view.my.about.AboutFragment;
 import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
@@ -23,7 +23,7 @@ import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
  * @author 贾博瑄
  */
 
-public class MyActivity extends AppCompatActivity {
+public class MyActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

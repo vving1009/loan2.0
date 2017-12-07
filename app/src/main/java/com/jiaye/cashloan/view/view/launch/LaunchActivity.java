@@ -3,9 +3,9 @@ package com.jiaye.cashloan.view.view.launch;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseActivity;
 
 /**
  * LaunchActivity
@@ -13,7 +13,7 @@ import com.jiaye.cashloan.R;
  * @author 贾博瑄
  */
 
-public class LaunchActivity extends AppCompatActivity {
+public class LaunchActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
