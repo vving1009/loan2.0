@@ -59,6 +59,8 @@ import com.jiaye.cashloan.http.data.loan.WatchContract;
 import com.jiaye.cashloan.http.data.loan.WatchContractRequest;
 import com.jiaye.cashloan.http.data.my.Bank;
 import com.jiaye.cashloan.http.data.my.BankRequest;
+import com.jiaye.cashloan.http.data.my.IDCardAuth;
+import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 
@@ -140,6 +142,12 @@ public interface LoanService {
      */
     @POST("cardAuth")
     Flowable<Response<LoanIDCardAuth>> loanIDCardAuth(@Body Request<LoanIDCardAuthRequest> request);
+
+    /**
+     * 身份证认证
+     */
+    @POST("cardAuth/queryIdentityInfo")
+    Flowable<Response<IDCardAuth>> idCardAuth(@Body Request<IDCardAuthRequest> request);
 
     /**
      * 借款活体检测认证
