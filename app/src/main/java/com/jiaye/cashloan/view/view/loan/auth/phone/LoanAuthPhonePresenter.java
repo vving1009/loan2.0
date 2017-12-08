@@ -54,6 +54,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                 .map(new Function<GongXinBaoOperatorsConfig, Boolean>() {
                     @Override
                     public Boolean apply(GongXinBaoOperatorsConfig operators) throws Exception {
+                        mView.dismissProgressDialog();
                         mView.setPhone(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_phone), mDataSource.getPhone()));
                         mView.setOperators(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_operators), operators.getOperatorType()));
                         GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();

@@ -112,12 +112,12 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
 
     @Override
     public void setImgVerificationCodeVisibility(int visibility) {
-        mEditSmsVerificationCode.setVisibility(visibility);
+        mEditImgVerificationCode.setVisibility(visibility);
     }
 
     @Override
     public void setSmsVerificationCodeVisibility(int visibility) {
-        mEditImgVerificationCode.setVisibility(visibility);
+        mEditSmsVerificationCode.setVisibility(visibility);
     }
 
     @Override
