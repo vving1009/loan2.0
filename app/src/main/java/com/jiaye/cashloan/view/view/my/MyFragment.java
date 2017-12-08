@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.User;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
@@ -36,6 +37,8 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     private TextView mTextHistoryNumber;
 
     private BottomSheetDialog mDialog;
+
+    private BaseDialog mQRCodeDialog;
 
     public static MyFragment newInstance() {
         Bundle args = new Bundle();
@@ -135,6 +138,15 @@ public class MyFragment extends BaseFragment implements MyContract.View {
             }
         });
         mDialog.setContentView(layout);
+        mQRCodeDialog = new BaseDialog(getActivity());
+        View qrCode = LayoutInflater.from(getActivity()).inflate(R.layout.qrcode_dialog_layout,null);
+        qrCode.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mQRCodeDialog.dismiss();
+            }
+        });
+        mQRCodeDialog.setContentView(qrCode);
         mPresenter = new MyPresenter(this, new MyRepository());
         mPresenter.subscribe();
         return root;
@@ -215,7 +227,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startQRCodeView() {
-
+        mQRCodeDialog.show();
     }
 
     private void startAboutView() {
