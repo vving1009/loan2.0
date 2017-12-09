@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan.auth.info;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -165,12 +166,13 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
     }
 
     @Override
-    public void initArea(ArrayList<Area> areas, final ArrayList<ArrayList<String>> areas2, final ArrayList<ArrayList<ArrayList<String>>> areas3) {
+    public void initArea(final ArrayList<Area> areas, final ArrayList<ArrayList<String>> areas2, final ArrayList<ArrayList<ArrayList<String>>> areas3) {
         mOptionsRegisterCity =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextRegisterCity.setText(areas2.get(options1).get(options2));
+                        mTextRegisterCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2));
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -196,9 +198,10 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
 
         mOptionsCity =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextCity.setText(areas3.get(options1).get(options2).get(options3));
+                        mTextCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3));
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
