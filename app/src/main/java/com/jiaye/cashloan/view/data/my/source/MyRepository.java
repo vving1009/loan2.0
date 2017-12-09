@@ -6,6 +6,8 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.auth.Auth;
+import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
@@ -46,6 +48,39 @@ public class MyRepository implements MyDataSource {
                         }
                     }
                 });
+    }
+
+    @Override
+    public Flowable<Auth> requestAuth() {
+        return queryUser().flatMap(new Function<User, Publisher<Auth>>() {
+            @Override
+            public Publisher<Auth> apply(User user) throws Exception {
+                return Flowable.just("SELECT phone FROM user;")
+                        .map(new Function<String, AuthRequest>() {
+                            @Override
+                            public AuthRequest apply(String sql) throws Exception {
+                                String phone = "";
+                                Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
+                                if (cursor != null) {
+                                    if (cursor.moveToNext()) {
+                                        phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                                    }
+                                    cursor.close();
+                                }
+                                AuthRequest request = new AuthRequest();
+                                request.setPhone(phone);
+                                return request;
+                            }
+                        })
+                        .compose(new ResponseTransformer<AuthRequest, Auth>("auth"))
+                        .map(new Function<Auth, Auth>() {
+                            @Override
+                            public Auth apply(Auth auth) throws Exception {
+                                return auth;
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -107,7 +142,7 @@ public class MyRepository implements MyDataSource {
                         values.put("history_number", user.getHistoryNumber());
                         values.put("loan_approve_id", user.getLoanApproveId());
                         values.put("loan_progress_id", user.getLoanProgressId());
-                        values.put("ocr_name",user.getName());
+                        values.put("ocr_name", user.getName());
                         LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
                                             /*查询手机号*/
                         String phone = "";

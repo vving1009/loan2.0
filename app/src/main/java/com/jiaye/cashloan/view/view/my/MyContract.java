@@ -1,8 +1,8 @@
 package com.jiaye.cashloan.view.view.my;
 
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.AuthView;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.http.data.my.User;
 
 /**
  * MyContract
@@ -23,10 +23,8 @@ public class MyContract {
 
         /**
          * 显示我的认证页面
-         *
-         * @param user 用户信息
          */
-        void showMyCertificateView(User user);
+        void showMyCertificateView();
 
         /**
          * 显示借款审批页面

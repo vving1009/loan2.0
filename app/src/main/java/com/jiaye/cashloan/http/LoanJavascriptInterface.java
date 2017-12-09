@@ -24,4 +24,12 @@ public class LoanJavascriptInterface {
     public void close() {
         mActivity.finish();
     }
+
+    /**
+     * 保存登录信息
+     */
+    @JavascriptInterface
+    public void close(String json) {
+        mActivity.finish();
+    }
 }

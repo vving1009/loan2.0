@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -82,12 +83,21 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
 
     @Override
     public void onClickMyCertificate() {
-        Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Exception {
-                mView.showMyCertificateView(user);
-            }
-        }, new ThrowableConsumer(mView));
+        Disposable disposable = mDataSource.requestAuth()
+                .compose(new ViewTransformer<Auth>(){
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<Auth>() {
+                    @Override
+                    public void accept(Auth auth) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showMyCertificateView();
+                    }
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
