@@ -80,6 +80,11 @@ public class MyContract {
         void history();
 
         /**
+         * 保存二维码
+         */
+        void save();
+
+        /**
          * 设置
          */
         void settings();

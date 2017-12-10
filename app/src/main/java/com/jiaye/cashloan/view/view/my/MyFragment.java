@@ -1,7 +1,10 @@
 package com.jiaye.cashloan.view.view.my;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
@@ -18,6 +21,8 @@ import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.view.view.loan.LoanDetailsActivity;
 
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
+
 /**
  * MyFragment
  *
@@ -25,6 +30,8 @@ import com.jiaye.cashloan.view.view.loan.LoanDetailsActivity;
  */
 
 public class MyFragment extends BaseFragment implements MyContract.View {
+
+    private static final int REQUEST_WRITE_PERMISSION = 101;
 
     private MyContract.Presenter mPresenter;
 
@@ -45,6 +52,25 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         MyFragment fragment = new MyFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean grant = true;
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                grant = false;
+            }
+        }
+        if (grant) {
+            switch (requestCode) {
+                case REQUEST_WRITE_PERMISSION:
+                    mPresenter.save();
+                    break;
+            }
+        } else {
+            showToastById(R.string.error_loan_auth_camera_and_write);
+        }
     }
 
     @Nullable
@@ -139,11 +165,20 @@ public class MyFragment extends BaseFragment implements MyContract.View {
         });
         mDialog.setContentView(layout);
         mQRCodeDialog = new BaseDialog(getActivity());
-        View qrCode = LayoutInflater.from(getActivity()).inflate(R.layout.qrcode_dialog_layout,null);
+        View qrCode = LayoutInflater.from(getActivity()).inflate(R.layout.qrcode_dialog_layout, null);
         qrCode.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQRCodeDialog.dismiss();
+            }
+        });
+        qrCode.findViewById(R.id.img_qrcdoe).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (hasPermission(REQUEST_WRITE_PERMISSION)) {
+                    mPresenter.save();
+                }
+                return true;
             }
         });
         mQRCodeDialog.setContentView(qrCode);
@@ -237,5 +272,16 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     private void startContactView() {
 
+    }
+
+    private boolean hasPermission(int requestCode) {
+        boolean hasPermission = false;
+        boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+        if (requestWrite) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+        } else {
+            hasPermission = true;
+        }
+        return hasPermission;
     }
 }

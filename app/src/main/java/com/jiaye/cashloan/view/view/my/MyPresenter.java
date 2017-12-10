@@ -1,7 +1,10 @@
 package com.jiaye.cashloan.view.view.my;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
@@ -18,10 +21,16 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 /**
  * MyPresenter
@@ -84,7 +93,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
     @Override
     public void onClickMyCertificate() {
         Disposable disposable = mDataSource.requestAuth()
-                .compose(new ViewTransformer<Auth>(){
+                .compose(new ViewTransformer<Auth>() {
                     @Override
                     public void accept() {
                         super.accept();
@@ -141,6 +150,17 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
     }
 
     @Override
+    public void save() {
+        try {
+            InputStream is = LoanApplication.getInstance().getAssets().open("QRCode.png");
+            saveImageToGallery(BitmapFactory.decodeStream(is));
+            mView.showToastById(R.string.my_qrcode_success);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void settings() {
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
@@ -190,7 +210,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
         LoanApplication.getInstance().getIWXAPI().sendReq(req);
     }
 
-    private byte[] bmpToByteArray(final Bitmap bmp) {
+    private byte[] bmpToByteArray(Bitmap bmp) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
         bmp.recycle();
@@ -201,5 +221,28 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
             e.printStackTrace();
         }
         return result;
+    }
+
+    private void saveImageToGallery(Bitmap bmp) {
+        String storePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getAbsolutePath();
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            appDir.mkdir();
+        }
+        String fileName = "QRCode.jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            //通过io流的方式来压缩保存图片
+            bmp.compress(Bitmap.CompressFormat.JPEG, 60, fos);
+            fos.flush();
+            fos.close();
+            //保存图片后发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            LoanApplication.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -25,6 +25,7 @@
             android:paddingTop="8dp">
 
             <ImageView
+                android:id="@+id/img_qrcdoe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
