@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.3"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+    }
+}
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    api 'com.soundcloud.android.crop:lib_crop:1.0.0'
+    api 'com.darsh.multipleimageselect:multipleimageselect:1.0.4'
+}

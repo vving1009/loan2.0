@@ -94,7 +94,7 @@ public class VerificationCodeView extends View {
 
     public String getVerificationCode() {
         if (matchCase) {
-            return verificationCode.substring(0, codeQuantity);
+            return verificationCode.substring(0, codeQuantity).toLowerCase();
         }
         StringBuffer strings = new StringBuffer();
         for (int i = 0; i < codeQuantity; i++) {
@@ -105,7 +105,7 @@ public class VerificationCodeView extends View {
                 strings.append(c);
             }
         }
-        return strings.toString();
+        return strings.toString().toLowerCase();
     }
 
     public void setCodeMode(int codeMode) {

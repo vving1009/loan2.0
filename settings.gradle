@@ -1,1 +1,1 @@
-include ':app', ':tongdun', ':gesturelock'
+include ':app', ':tongdun', ':gesturelock', ':takephoto'

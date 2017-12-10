@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -117,7 +118,7 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
 
     @Override
     public void pickFront(String path) {
-        File file = new File(getFilesDir(), path);
+        File file = new File(Environment.getExternalStorageDirectory(), path);
         if (!file.getParentFile().exists()) {
             //noinspection ResultOfMethodCallIgnored
             file.getParentFile().mkdirs();
@@ -131,7 +132,7 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
 
     @Override
     public void pickBack(String path) {
-        File file = new File(getFilesDir(), path);
+        File file = new File(Environment.getExternalStorageDirectory(), path);
         if (!file.getParentFile().exists()) {
             //noinspection ResultOfMethodCallIgnored
             file.getParentFile().mkdirs();

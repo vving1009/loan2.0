@@ -139,7 +139,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @Override
     public String getInputImgVerificationCode() {
-        return mEditImgVerificationCode.getText().toString();
+        return mEditImgVerificationCode.getText().toString().toLowerCase();
     }
 
     @Override
