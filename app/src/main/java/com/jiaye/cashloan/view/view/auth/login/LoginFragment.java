@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
@@ -21,13 +24,15 @@ import com.jiaye.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class LoginFragment extends BaseFragment implements LoginContract.View {
+public class LoginFragment extends BaseFragment implements LoginContract.View, TextWatcher {
 
     private LoginContract.Presenter mPresenter;
 
     private LoanEditText mEditPhone;
 
     private LoanEditText mEditPassword;
+
+    private Button mBtnLogin;
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -41,7 +46,10 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.login_fragment, container, false);
         mEditPhone = root.findViewById(R.id.edit_phone);
+        mEditPhone.addTextChangedListener(this);
         mEditPassword = root.findViewById(R.id.edit_password);
+        mEditPassword.addTextChangedListener(this);
+        mBtnLogin = root.findViewById(R.id.btn_login);
         root.findViewById(R.id.text_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +62,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
                 showForgetPasswordView();
             }
         });
-        root.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearError();
@@ -70,20 +78,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    /*显示注册页面*/
-    private void showRegisterView() {
-        FragmentManager fragmentManager = getFragmentManager();
-        RegisterFragment fragment = RegisterFragment.newInstance();
-        fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
-    }
-
-    /*显示忘记密码页面*/
-    private void showForgetPasswordView() {
-        Intent intent = new Intent(getContext(), PasswordActivity.class);
-        intent.putExtra("type",0);
-        startActivity(intent);
     }
 
     @Override
@@ -102,6 +96,26 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        mPresenter.checkInput();
+    }
+
+    @Override
+    public void setEnable(boolean enable) {
+        mBtnLogin.setEnabled(enable);
+    }
+
+    @Override
     public String getPhone() {
         return mEditPhone.getText().toString();
     }
@@ -114,6 +128,20 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    /*显示注册页面*/
+    private void showRegisterView() {
+        FragmentManager fragmentManager = getFragmentManager();
+        RegisterFragment fragment = RegisterFragment.newInstance();
+        fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
+    }
+
+    /*显示忘记密码页面*/
+    private void showForgetPasswordView() {
+        Intent intent = new Intent(getContext(), PasswordActivity.class);
+        intent.putExtra("type",0);
+        startActivity(intent);
     }
 
     /*清除错误信息*/
