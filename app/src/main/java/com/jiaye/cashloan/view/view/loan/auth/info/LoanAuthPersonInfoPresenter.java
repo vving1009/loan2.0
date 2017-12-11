@@ -9,6 +9,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -121,7 +122,7 @@ public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements Lo
             mView.showToastById(R.string.error_loan_person_city);
         } else if (TextUtils.isEmpty(mView.getAddress())) {
             mView.showToastById(R.string.error_loan_person_address);
-        } else if (TextUtils.isEmpty(mView.getEmail())) {
+        } else if (TextUtils.isEmpty(mView.getEmail()) || !mView.getEmail().matches(RegexUtil.email())) {
             mView.showToastById(R.string.error_loan_person_email);
         } else {
             SavePersonRequest request = new SavePersonRequest();

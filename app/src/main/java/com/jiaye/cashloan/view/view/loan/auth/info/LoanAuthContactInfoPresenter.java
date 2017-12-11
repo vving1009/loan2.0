@@ -10,6 +10,7 @@ import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactData;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -128,17 +129,17 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
 
     @Override
     public void submit() {
-        if (TextUtils.isEmpty(mView.getFamilyName())) {
+        if (TextUtils.isEmpty(mView.getFamilyName()) || mView.getFamilyName().length() > 5) {
             mView.showToastById(R.string.error_loan_contact_family_name);
         } else if (TextUtils.isEmpty(mView.getFamily())) {
             mView.showToastById(R.string.error_loan_contact_family);
-        } else if (TextUtils.isEmpty(mView.getFamilyPhone())) {
+        } else if (TextUtils.isEmpty(mView.getFamilyPhone()) || !mView.getFamilyPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_contact_family_phone);
-        } else if (TextUtils.isEmpty(mView.getFriendName())) {
+        } else if (TextUtils.isEmpty(mView.getFriendName()) || mView.getFriendName().length() > 5) {
             mView.showToastById(R.string.error_loan_contact_friend_name);
         } else if (TextUtils.isEmpty(mView.getFriend())) {
             mView.showToastById(R.string.error_loan_contact_friend);
-        } else if (TextUtils.isEmpty(mView.getFriendPhone())) {
+        } else if (TextUtils.isEmpty(mView.getFriendPhone()) || !mView.getFriendPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_contact_friend_phone);
         } else {
             SaveContactRequest request = new SaveContactRequest();
