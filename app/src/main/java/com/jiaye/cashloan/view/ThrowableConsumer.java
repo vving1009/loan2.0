@@ -6,7 +6,13 @@ import com.jiaye.cashloan.http.base.ErrorCode;
 import com.jiaye.cashloan.http.base.NetworkException;
 import com.orhanobut.logger.Logger;
 
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
 import io.reactivex.functions.Consumer;
+import retrofit2.HttpException;
 
 /**
  * ThrowableConsumer
@@ -31,6 +37,9 @@ public class ThrowableConsumer implements Consumer<Throwable> {
 
     @Override
     public void accept(Throwable t) throws Exception {
+        if (t.getMessage() != null) {
+            Logger.e(t.getMessage());
+        }
         if (t instanceof LocalException) {
             switch (((LocalException) t).getErrorId()) {
                 case R.string.error_auth_not_log_in:
@@ -49,9 +58,16 @@ public class ThrowableConsumer implements Consumer<Throwable> {
                     LoanApplication.getInstance().reLogin();
                 }
             }
+        } else if (t instanceof ConnectException || t instanceof UnknownHostException || t instanceof SocketException) {
+            mContract.showToastById(R.string.error_connect);
+        } else if (t instanceof HttpException) {
+            mContract.showToastById(R.string.error_http);
+        } else if (t instanceof SocketTimeoutException) {
+            mContract.showToastById(R.string.error_socket_timeout);
         } else {
-            Logger.e(t.getMessage());
-            mContract.showToast(t.getMessage());
+            if (t.getMessage() != null) {
+                mContract.showToast(t.getMessage());
+            }
         }
         mContract.dismissProgressDialog();
     }

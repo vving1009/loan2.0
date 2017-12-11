@@ -163,6 +163,9 @@
     <string name="input_new_password_second">请确认新密码</string><!--(-,&#8211;)-->
     <string name="save">保存</string>
     <!--error-->
+    <string name="error_connect">网络连接不可用</string>
+    <string name="error_http">网络请求失败</string>
+    <string name="error_socket_timeout">网络请求超时</string>
     <string name="error_auth_not_log_in">未登录</string>
     <string name="error_auth_phone">*请输入正确的手机号</string>
     <string name="error_auth_password">*请输入正确的密码</string>
