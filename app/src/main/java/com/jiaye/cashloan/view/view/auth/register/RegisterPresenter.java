@@ -9,6 +9,7 @@ import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.register.Register;
 import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.utils.PhoneUtil;
 import com.jiaye.cashloan.utils.RSAUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -56,7 +57,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
 
     @Override
     public void verificationCode() {
-        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
+        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11 || !mView.getPhone().matches(PhoneUtil.regex())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
@@ -85,7 +86,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
 
     @Override
     public void register() {
-        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
+        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11 || !mView.getPhone().matches(PhoneUtil.regex())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
@@ -107,7 +108,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             request.setReferralCode(mView.getReferralCode());
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<RegisterRequest, Register>("register"))
-                    .compose(new ViewTransformer<Register>(){
+                    .compose(new ViewTransformer<Register>() {
                         @Override
                         public void accept() {
                             mView.showProgressDialog();
