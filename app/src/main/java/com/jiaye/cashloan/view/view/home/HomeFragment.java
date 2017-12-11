@@ -80,11 +80,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         private String formatAmount;
 
-        private String formatDeadline;
-
         public Adapter() {
             formatAmount = getString(R.string.home_card_amount);
-            formatDeadline = getString(R.string.home_card_deadline);
         }
 
         @Override
@@ -109,7 +106,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             sp.setSpan(new AbsoluteSizeSpan(12, true), 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             sp.setSpan(new AbsoluteSizeSpan(30, true), 5, amount.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             holder.setAmount(sp);
-            holder.setDeadline(String.format(formatDeadline, mList.get(position).getDeadline()));
+            holder.setDeadline(mList.get(position).getDeadline());
             holder.setPaymentMethod(mList.get(position).getPaymentMethod());
         }
 

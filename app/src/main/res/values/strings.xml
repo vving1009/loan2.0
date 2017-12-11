@@ -10,7 +10,6 @@
     <string name="home_card_amount_title">借款金额(元)</string>
     <string name="home_card_amount">最高 ¥ %1$s.00</string>
     <string name="home_card_deadline_title">借款期限</string>
-    <string name="home_card_deadline">%1$s月</string>
     <string name="home_card_payment_method">还款方式</string>
     <!--loan-->
     <string name="loan_easy">简单</string>
@@ -20,7 +19,7 @@
     <string name="loan_fast">快速</string>
     <string name="loan_fast_explain">闪电到账</string>
     <string name="loan_loan">我要借款</string>
-    <string name="loan_deadline_title">借款期限：%1$s个月</string>
+    <string name="loan_deadline_title">借款期限：%1$s</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_ocr">身份认证</string>

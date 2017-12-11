@@ -24,7 +24,7 @@ public class Product {
 
     /*还款期限*/
     @SerializedName("jpd_months")
-    private int deadline;
+    private String deadline;
 
     /*还款方式*/
     @SerializedName("jpd_refundname")
@@ -64,11 +64,11 @@ public class Product {
         this.amount = amount;
     }
 
-    public int getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(int deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
