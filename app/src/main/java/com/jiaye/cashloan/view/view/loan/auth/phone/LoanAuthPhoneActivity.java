@@ -3,11 +3,13 @@ package com.jiaye.cashloan.view.view.loan.auth.phone;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneRepository;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.widget.LoanEditText;
@@ -34,6 +36,8 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
 
     private LoanEditText mEditImgVerificationCode;
 
+    private BaseDialog mForgetPasswordDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +60,18 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
                 LoanAuthHelpActivity.show(LoanAuthPhoneActivity.this, R.string.loan_auth_phone, "phoneOperator/operator");
             }
         });
+        mForgetPasswordDialog = new BaseDialog(this);
+        View dialog = LayoutInflater.from(this).inflate(R.layout.forget_password_dialog_layout, null);
+        dialog.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mForgetPasswordDialog.dismiss();
+            }
+        });
         mTextForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.forgetPassword();
+                mForgetPasswordDialog.show();
             }
         });
         mEditSmsVerificationCode.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {

@@ -50,8 +50,6 @@ public interface LoanAuthPhoneContract {
 
     interface Presenter extends BasePresenter {
 
-        void forgetPassword();
-
         void requestSMSVerification();
 
         void requestIMGVerification();

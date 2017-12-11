@@ -37,8 +37,6 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
 
     private final LoanAuthPhoneDataSource mDataSource;
 
-    private String mTips;
-
     private boolean isSecond;
 
     public LoanAuthPhonePresenter(LoanAuthPhoneContract.View view, LoanAuthPhoneDataSource dataSource) {
@@ -78,7 +76,6 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                     break;
                             }
                         }
-                        mTips = operators.getLoginForms()[0].getPwdResetConfig().getResetTips();
                         return isNeedRequestImgVerificationCode;
                     }
                 })
@@ -110,11 +107,6 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void forgetPassword() {
-        mView.showToast(mTips);
     }
 
     @Override

@@ -5,15 +5,15 @@
 
     <LinearLayout
         android:id="@+id/layout"
-        android:layout_width="234dp"
+        android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_bg"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="234dp"
-            android:layout_height="78dp"
-            android:scaleType="fitEnd"
+            android:layout_width="289dp"
+            android:layout_height="94dp"
+            android:scaleType="fitXY"
             android:src="@drawable/bg_title" />
 
         <LinearLayout
