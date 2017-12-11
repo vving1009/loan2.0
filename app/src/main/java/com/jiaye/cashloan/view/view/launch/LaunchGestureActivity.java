@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.launch;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ public class LaunchGestureActivity extends BaseActivity {
 
     private TextView mTextGesture;
 
+    private int time;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +42,14 @@ public class LaunchGestureActivity extends BaseActivity {
         mGesture = findViewById(R.id.gesture_view);
         mTextGesture = findViewById(R.id.text_gesture);
         mGesture.setGestureEventListener(new GestureEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onGestureEvent(boolean matched) {
                 if (matched) {
                     showMainView();
                 } else {
-                    mTextGesture.setText("手势密码输入错误");
+                    time++;
+                    mTextGesture.setText("密码已错误" + time + "次，5次后将退出当前账号");
                 }
             }
         });
