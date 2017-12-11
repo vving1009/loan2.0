@@ -3,6 +3,7 @@ package com.jiaye.cashloan.view.view.loan.auth.info;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.http.data.dictionary.Area;
 import com.jiaye.cashloan.http.data.dictionary.Education;
 import com.jiaye.cashloan.http.data.dictionary.Marriage;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoRepository;
 
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
 
     private EditText mEditEmail;
 
+    private BaseDialog mSaveDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,7 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
         mTextCity = findViewById(R.id.text_city);
         mEditAddress = findViewById(R.id.edit_address);
         mEditEmail = findViewById(R.id.edit_email);
+        mSaveDialog = new BaseDialog(this);
         findViewById(R.id.layout_education).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +91,7 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.submit();
+                mSaveDialog.show();
             }
         });
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
@@ -95,6 +100,22 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
                 onBackPressed();
             }
         });
+        mSaveDialog = new BaseDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.save_dialog_layout, null);
+        view.findViewById(R.id.text_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.submit();
+                mSaveDialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSaveDialog.dismiss();
+            }
+        });
+        mSaveDialog.setContentView(view);
         mPresenter = new LoanAuthPersonInfoPresenter(this, new LoanAuthPersonInfoRepository());
         mPresenter.subscribe();
     }

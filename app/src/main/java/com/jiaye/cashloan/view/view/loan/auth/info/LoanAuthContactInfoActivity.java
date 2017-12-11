@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.view.loan.auth.info;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.http.data.dictionary.Relation;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoRepository;
 
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class LoanAuthContactInfoActivity extends BaseActivity implements LoanAut
 
     private TextView mEditFriendPhone;
 
+    private BaseDialog mSaveDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,7 @@ public class LoanAuthContactInfoActivity extends BaseActivity implements LoanAut
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.submit();
+                mSaveDialog.show();
             }
         });
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
@@ -74,6 +78,22 @@ public class LoanAuthContactInfoActivity extends BaseActivity implements LoanAut
                 onBackPressed();
             }
         });
+        mSaveDialog = new BaseDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.save_dialog_layout, null);
+        view.findViewById(R.id.text_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.submit();
+                mSaveDialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSaveDialog.dismiss();
+            }
+        });
+        mSaveDialog.setContentView(view);
         mPresenter = new LoanAuthContactInfoPresenter(this, new LoanAuthContactInfoRepository());
         mPresenter.subscribe();
     }

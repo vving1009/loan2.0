@@ -60,14 +60,6 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
                 LoanAuthHelpActivity.show(LoanAuthPhoneActivity.this, R.string.loan_auth_phone, "phoneOperator/operator");
             }
         });
-        mForgetPasswordDialog = new BaseDialog(this);
-        View dialog = LayoutInflater.from(this).inflate(R.layout.forget_password_dialog_layout, null);
-        dialog.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mForgetPasswordDialog.dismiss();
-            }
-        });
         mTextForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +84,15 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
                 mPresenter.submit();
             }
         });
+        mForgetPasswordDialog = new BaseDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.forget_password_dialog_layout, null);
+        view.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mForgetPasswordDialog.dismiss();
+            }
+        });
+        mForgetPasswordDialog.setContentView(view);
         mPresenter = new LoanAuthPhonePresenter(this, new LoanAuthPhoneRepository());
         mPresenter.subscribe();
     }
