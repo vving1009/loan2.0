@@ -2,9 +2,12 @@ package com.jiaye.cashloan.view.view.auth.password;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
@@ -16,13 +19,15 @@ import com.jiaye.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class ChangePasswordFragment extends BaseFragment implements ChangePasswordContract.View {
+public class ChangePasswordFragment extends BaseFragment implements ChangePasswordContract.View, TextWatcher {
 
     private ChangePasswordContract.Presenter mPresenter;
 
     private LoanEditText mEditPassword;
 
     private LoanEditText mEditPasswordSecond;
+
+    private Button mBtnSave;
 
     public static ChangePasswordFragment newInstance(int type, String phone) {
         Bundle args = new Bundle();
@@ -38,14 +43,17 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.change_password_fragment, container, false);
         mEditPassword = root.findViewById(R.id.edit_password);
+        mEditPassword.addTextChangedListener(this);
         mEditPasswordSecond = root.findViewById(R.id.edit_password_second);
+        mEditPasswordSecond.addTextChangedListener(this);
+        mBtnSave = root.findViewById(R.id.btn_save);
         root.findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
             }
         });
-        root.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+        mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearError();
@@ -77,6 +85,26 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
                 super.showToastById(resId);
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        mPresenter.checkInput();
+    }
+
+    @Override
+    public void setEnable(boolean enable) {
+        mBtnSave.setEnabled(enable);
     }
 
     @Override

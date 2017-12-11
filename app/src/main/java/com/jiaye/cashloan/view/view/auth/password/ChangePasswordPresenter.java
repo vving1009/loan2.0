@@ -34,6 +34,17 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
     }
 
     @Override
+    public void checkInput() {
+        if (TextUtils.isEmpty(mView.getPassword())) {
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getPasswordSecond())) {
+            mView.setEnable(false);
+        } else {
+            mView.setEnable(true);
+        }
+    }
+
+    @Override
     public void setType(int type) {
         mType = type;
     }
