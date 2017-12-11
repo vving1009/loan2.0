@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -29,7 +32,7 @@ import com.jiaye.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class RegisterFragment extends BaseFragment implements RegisterContract.View {
+public class RegisterFragment extends BaseFragment implements RegisterContract.View, TextWatcher {
 
     private RegisterContract.Presenter mPresenter;
 
@@ -45,6 +48,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     private CheckBox mCheckBox;
 
+    private Button mBtnRegister;
+
     public static RegisterFragment newInstance() {
         Bundle args = new Bundle();
         RegisterFragment fragment = new RegisterFragment();
@@ -57,11 +62,16 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.register_fragment, container, false);
         mEditPhone = root.findViewById(R.id.edit_phone);
+        mEditPhone.addTextChangedListener(this);
         mEditImgVerificationCode = root.findViewById(R.id.edit_img_verification_code);
+        mEditImgVerificationCode.addTextChangedListener(this);
         mEditPassword = root.findViewById(R.id.edit_password);
+        mEditPassword.addTextChangedListener(this);
         mEditSmsVerificationCode = root.findViewById(R.id.edit_sms_verification_code);
+        mEditSmsVerificationCode.addTextChangedListener(this);
         mEditReferralCode = root.findViewById(R.id.edit_referral_code);
         mCheckBox = root.findViewById(R.id.checkbox);
+        mBtnRegister = root.findViewById(R.id.btn_register);
         TextView textAgree = root.findViewById(R.id.text_agree);
         SpannableString string = new SpannableString(getString(R.string.read_protocol));
         string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_orange)), 7, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -78,7 +88,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                 showForgetPasswordView();
             }
         });
-        root.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
+        mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearError();
@@ -130,6 +140,26 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                 super.showToastById(resId);
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        mPresenter.checkInput();
+    }
+
+    @Override
+    public void setEnable(boolean enable) {
+        mBtnRegister.setEnabled(enable);
     }
 
     @Override

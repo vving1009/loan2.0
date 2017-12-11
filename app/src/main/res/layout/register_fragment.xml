@@ -116,7 +116,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/loan_btn"
-        android:enabled="true"
+        android:enabled="false"
         android:text="@string/register_now"
         android:textColor="@android:color/white"
         android:textSize="13sp" />

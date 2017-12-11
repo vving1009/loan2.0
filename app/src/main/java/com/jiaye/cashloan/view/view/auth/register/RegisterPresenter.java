@@ -40,6 +40,21 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
     }
 
     @Override
+    public void checkInput() {
+        if (TextUtils.isEmpty(mView.getPhone())) {/*检测手机号*/
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())) {/*校验图形验证码*/
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getPassword())) {/*检测密码规则*/
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getInputSmsVerificationCode())) {/*检测是否填写验证码*/
+            mView.setEnable(false);
+        } else {
+            mView.setEnable(true);
+        }
+    }
+
+    @Override
     public void verificationCode() {
         if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
