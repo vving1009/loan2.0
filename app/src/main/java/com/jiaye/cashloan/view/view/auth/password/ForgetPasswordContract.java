@@ -14,6 +14,11 @@ public class ForgetPasswordContract {
     interface View extends BaseViewContract {
 
         /**
+         * 设置按钮状态
+         */
+        void setEnable(boolean enable);
+
+        /**
          * 获取手机号
          */
         String getPhone();
@@ -35,6 +40,8 @@ public class ForgetPasswordContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void checkInput();
 
         void setType(int type);
 

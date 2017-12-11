@@ -34,6 +34,17 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
     }
 
     @Override
+    public void checkInput() {
+        if (TextUtils.isEmpty(mView.getPhone())) {/*检测手机号*/
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getInputSmsVerificationCode())) {/*检测是否填写验证码*/
+            mView.setEnable(false);
+        } else {
+            mView.setEnable(true);
+        }
+    }
+
+    @Override
     public void setType(int type) {
         mType = type;
     }
@@ -84,7 +95,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
             Disposable disposable = Flowable.just(request)
                     .compose(new ResponseTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>("checkForgetPasswordVerificationCode"))
-                    .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>(){
+                    .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>() {
                         @Override
                         public void accept() {
                             mView.showProgressDialog();
