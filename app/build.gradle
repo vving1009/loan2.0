@@ -10,7 +10,7 @@ android {
         applicationId "com.jiaye.cashloan"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 20
+        versionCode 21
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
