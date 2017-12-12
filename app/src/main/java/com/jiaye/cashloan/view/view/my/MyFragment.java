@@ -3,6 +3,7 @@ package com.jiaye.cashloan.view.view.my;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -271,7 +272,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startContactView() {
-
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.my_contact_phone)));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private boolean hasPermission(int requestCode) {
