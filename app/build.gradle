@@ -39,9 +39,6 @@ android {
             storePassword 'com.jiaye.cashloan'
         }
     }
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
 }
 
 dependencies {
