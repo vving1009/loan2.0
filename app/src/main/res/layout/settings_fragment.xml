@@ -26,12 +26,13 @@
             android:text="手势密码"
             android:textSize="13sp" />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch_gesture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            app:theme="@style/SwitchCompat.Control" />
 
         <View
             android:layout_width="match_parent"

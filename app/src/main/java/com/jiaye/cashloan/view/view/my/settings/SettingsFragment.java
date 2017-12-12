@@ -3,11 +3,11 @@ package com.jiaye.cashloan.view.view.my.settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
@@ -25,7 +25,7 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.V
 
     private SettingsContract.Presenter mPresenter;
 
-    private Switch mSwitch;
+    private SwitchCompat mSwitch;
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
