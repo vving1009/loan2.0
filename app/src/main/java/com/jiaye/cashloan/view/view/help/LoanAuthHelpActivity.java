@@ -26,6 +26,8 @@ import com.jiaye.cashloan.view.BaseActivity;
 
 public class LoanAuthHelpActivity extends BaseActivity {
 
+    private WebView mWebView;
+
     public static void show(Context context, int titleId, String url) {
         Intent intent = new Intent(context, LoanAuthHelpActivity.class);
         intent.putExtra("titleId", titleId);
@@ -40,9 +42,9 @@ public class LoanAuthHelpActivity extends BaseActivity {
         setContentView(R.layout.loan_auth_help_activity);
         TextView textTitle = findViewById(R.id.text_title);
         textTitle.setText(getString(getIntent().getExtras().getInt("titleId")));
-        WebView webView = findViewById(R.id.web_view);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient() {
+        mWebView = findViewById(R.id.web_view);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -60,11 +62,19 @@ public class LoanAuthHelpActivity extends BaseActivity {
                 handler.proceed();
             }
         });
-        webView.loadUrl(getIntent().getExtras().getString("url"));
+        mWebView.loadUrl(getIntent().getExtras().getString("url"));
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                if (mWebView != null) {
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        onBackPressed();
+                    }
+                } else {
+                    onBackPressed();
+                }
             }
         });
     }
