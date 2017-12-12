@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Flowable;
 import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -84,6 +85,20 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
                     }
                 })
                 .map(new GongXinBaoResponseFunction<GongXinBao>())
+                .filter(new Predicate<GongXinBao>() {
+                    @Override
+                    public boolean test(GongXinBao response) throws Exception {
+                        boolean empty = true;
+                        if (response.getExtra() != null) {
+                            if (response.getExtra().getQrCode() != null) {
+                                if (response.getExtra().getQrCode().getHttpQRCode() != null) {
+                                    empty = false;
+                                }
+                            }
+                        }
+                        return !empty;
+                    }
+                })
                 .map(new Function<GongXinBao, Bitmap>() {
                     @Override
                     public Bitmap apply(GongXinBao gongXinBao) throws Exception {
@@ -110,23 +125,17 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
                             case "LOGIN_FAILED":
                                 mIsPollingEnd = true;
                                 break;
-                            case "REFRESH_IMAGE_SUCCESS":
-                                mIsPollingEnd = true;
+                            case "QR_VERIFY_CONFIRMED":
                                 break;
-                            case "REFRESH_IMAGE_FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_SMS_SUCCESS":
-                                mIsPollingEnd = true;
-                                break;
-                            case "REFRESH_SMS_FAILED":
-                                mIsPollingEnd = true;
-                                break;
-                            case "SMS_VERIFY_NEW":
-                                mIsPollingEnd = true;
-                                break;
-                            case "IMAGE_VERIFY_NEW":
-                                mIsPollingEnd = true;
+                            case "REFRESH_QR_CODE_SUCCESS":
+                                if (response.getExtra() != null) {
+                                    if (response.getExtra().getQrCode() != null) {
+                                        if (response.getExtra().getQrCode().getHttpQRCode() != null) {
+                                            URL url = new URL(response.getExtra().getQrCode().getHttpQRCode());
+                                            mBitmap = BitmapFactory.decodeStream(url.openStream());
+                                        }
+                                    }
+                                }
                                 break;
                             case "WAITING":
                                 break;
@@ -138,14 +147,6 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
                             case "FAILED":
                                 mIsPollingEnd = true;
                                 break;
-                        }
-                        if (response.getExtra() != null) {
-                            if (response.getExtra().getQrCode() != null) {
-                                if (response.getExtra().getQrCode().getHttpQRCode() != null) {
-                                    URL url = new URL(response.getExtra().getQrCode().getHttpQRCode());
-                                    mBitmap = BitmapFactory.decodeStream(url.openStream());
-                                }
-                            }
                         }
                         return response;
                     }

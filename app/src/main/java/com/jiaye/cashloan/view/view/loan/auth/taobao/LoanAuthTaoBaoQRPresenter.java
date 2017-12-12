@@ -60,27 +60,17 @@ public class LoanAuthTaoBaoQRPresenter extends BasePresenterImpl implements Loan
                     public void accept(GongXinBao response) throws Exception {
                         switch (response.getPhaseStatus()) {
                             case "LOGIN_WAITING":
-                                mView.showProgressDialog();
                                 break;
                             case "LOGIN_SUCCESS":
                                 break;
                             case "LOGIN_FAILED":
                                 mView.showToast(response.getExtra().getRemark());
                                 break;
-                            case "REFRESH_IMAGE_SUCCESS":
+                            case "QR_VERIFY_CONFIRMED":
+                                mView.showProgressDialog();
                                 break;
-                            case "REFRESH_IMAGE_FAILED":
-                                mView.showToast("系统繁忙，刷新重试");
-                                break;
-                            case "REFRESH_SMS_SUCCESS":
-                                mView.showToast("短信发送成功");
-                                break;
-                            case "REFRESH_SMS_FAILED":
-                                mView.showToast("系统繁忙，刷新重试");
-                                break;
-                            case "SMS_VERIFY_NEW":
-                                break;
-                            case "IMAGE_VERIFY_NEW":
+                            case "REFRESH_QR_CODE_SUCCESS":
+                                mView.setImg(mDataSource.getBitmap());
                                 break;
                             case "WAITING":
                                 break;
@@ -93,7 +83,6 @@ public class LoanAuthTaoBaoQRPresenter extends BasePresenterImpl implements Loan
                                 mView.showToast(response.getExtra().getRemark());
                                 break;
                         }
-                        mView.setImg(mDataSource.getBitmap());
                     }
                 }, new ThrowableConsumer(mView), new Action() {
                     @Override
