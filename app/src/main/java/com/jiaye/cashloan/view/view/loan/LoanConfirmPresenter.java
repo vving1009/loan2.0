@@ -43,12 +43,11 @@ public class LoanConfirmPresenter extends BasePresenterImpl implements LoanConfi
                     @Override
                     public void accept(LoanConfirmInfo loanConfirm) throws Exception {
                         String unit = LoanApplication.getInstance().getString(R.string.loan_confirm_unit);
-                        String day = LoanApplication.getInstance().getString(R.string.loan_confirm_day);
                         mView.setLoan(loanConfirm.getLoan() + unit);
                         mView.setService(loanConfirm.getService() + unit);
                         mView.setConsult(loanConfirm.getConsult() + unit);
                         mView.setInterest(loanConfirm.getInterest() + unit);
-                        mView.setDeadline(loanConfirm.getDeadline() + day);
+                        mView.setDeadline(loanConfirm.getDeadline());
                         mView.setPaymentMethod(loanConfirm.getPaymentMethod());
                         mView.setAmount(loanConfirm.getAmount() + unit);
                         mView.dismissProgressDialog();
