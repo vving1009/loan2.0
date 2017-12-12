@@ -42,7 +42,10 @@ public class IdCardPresenter extends BasePresenterImpl implements IdCardContract
                     public void accept(IDCardAuth idCardAuth) throws Exception {
                         mView.dismissProgressDialog();
                         mView.setName(idCardAuth.getName());
-                        mView.setNumber(idCardAuth.getNumber());
+                        String number = idCardAuth.getNumber();
+                        String start = number.substring(0, 3);
+                        String end = number.substring(14, 18);
+                        mView.setNumber(start + "***********" + end);
                         mView.setDate(idCardAuth.getDate());
                     }
                 },new ThrowableConsumer(mView));
