@@ -139,8 +139,14 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
                                 mIsPollingEnd = true;
                                 break;
                         }
-                        URL url = new URL(response.getExtra().getQrCode().getHttpQRCode());
-                        mBitmap = BitmapFactory.decodeStream(url.openStream());
+                        if (response.getExtra() != null) {
+                            if (response.getExtra().getQrCode() != null) {
+                                if (response.getExtra().getQrCode().getHttpQRCode() != null) {
+                                    URL url = new URL(response.getExtra().getQrCode().getHttpQRCode());
+                                    mBitmap = BitmapFactory.decodeStream(url.openStream());
+                                }
+                            }
+                        }
                         return response;
                     }
                 })
