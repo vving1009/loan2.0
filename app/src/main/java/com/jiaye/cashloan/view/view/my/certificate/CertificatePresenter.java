@@ -41,7 +41,10 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                     @Override
                     public void accept(Auth auth) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.setPhone(auth.getPhone());
+                        String phone = auth.getPhone();
+                        String start = phone.substring(0, 3);
+                        String end = phone.substring(7, 11);
+                        mView.setPhone(start + "****" + end);
                         // 银行卡
                         if (auth.getBankState().equals("1")) {
                             mView.setBankStatus("已绑定");
