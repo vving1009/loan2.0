@@ -59,23 +59,11 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
                     public User apply(User user) throws Exception {
                         if (TextUtils.isEmpty(user.getName()) && TextUtils.isEmpty(user.getPhone())) {/*姓名和手机号码均为空*/
                             user.setShowName("游客");
-                        } else if (TextUtils.isEmpty(user.getName())) {/*姓名为空手机号不为空*/
+                        } else {
                             String phone = user.getPhone();
                             String start = phone.substring(0, 3);
                             String end = phone.substring(7, 11);
                             user.setShowName(start + "****" + end);
-                        } else {/*姓名不为空*/
-                            String name = user.getName();
-                            int l = name.length();
-                            if (l == 1) {
-                                user.setShowName(name);
-                            } else {
-                                StringBuilder s = new StringBuilder();
-                                for (int i = 0; i < l - 1; i++) {
-                                    s.append("*");
-                                }
-                                user.setShowName(s + name.substring(s.length()));
-                            }
                         }
                         return user;
                     }
