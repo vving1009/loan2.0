@@ -41,18 +41,14 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
 
     @Override
     public void pickFront() {
-        if (TextUtils.isEmpty(mFront)) {
-            mState = 1;
-            mView.pickFront("/card/" + "front.jpg");
-        }
+        mState = 1;
+        mView.pickFront("/card/" + "front.jpg");
     }
 
     @Override
     public void pickBack() {
-        if (TextUtils.isEmpty(mBack)) {
-            mState = 2;
-            mView.pickBack("/card/" + "back.jpg");
-        }
+        mState = 2;
+        mView.pickBack("/card/" + "back.jpg");
     }
 
     @Override
