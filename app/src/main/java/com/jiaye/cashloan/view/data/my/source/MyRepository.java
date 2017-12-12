@@ -126,7 +126,11 @@ public class MyRepository implements MyDataSource {
     }
 
     private Flowable<User> emptyUser() {
-        return Flowable.just(new User());
+        User user = new User();
+        user.setApproveNumber("0");
+        user.setProgressNumber("0");
+        user.setHistoryNumber("0");
+        return Flowable.just(user);
     }
 
     private Flowable<User> remoteUser() {
