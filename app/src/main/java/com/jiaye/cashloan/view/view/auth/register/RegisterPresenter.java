@@ -95,7 +95,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             mView.showToastById(R.string.error_auth_password);
         } else if (TextUtils.isEmpty(mView.getInputSmsVerificationCode())) {/*检测是否填写验证码*/
             mView.showToastById(R.string.error_auth_sms_verification);
-        } else if (!TextUtils.isEmpty(mView.getReferralCode()) && mView.getPhone().equals(mView.getReferralCode())) {/*检测推荐人手机号*/
+        } else if (!TextUtils.isEmpty(mView.getReferralCode()) && (mView.getPhone().equals(mView.getReferralCode()) || !mView.getReferralCode().matches(RegexUtil.phone()))) {/*检测推荐人手机号*/
             mView.showToastById(R.string.error_auth_referral);
         } else if (!mView.isAgree()) {/*检测是否同意注册协议*/
             mView.showToastById(R.string.error_auth_agree);
