@@ -40,10 +40,28 @@ public class BankPresenter extends BasePresenterImpl implements BankContract.Pre
                     @Override
                     public void accept(Bank bank) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.setName(bank.getName());
-                        mView.setPhone(bank.getPhone());
+                        /*name*/
+                        String name = bank.getName();
+                        int l = name.length();
+                        if (l > 1) {
+                            StringBuilder s = new StringBuilder();
+                            for (int i = 0; i < l - 1; i++) {
+                                s.append("*");
+                            }
+                            name = s + name.substring(s.length());
+                        }
+                        mView.setName(name);
+                        /*phone*/
+                        String phone = bank.getPhone();
+                        String start = phone.substring(0, 3);
+                        String end = phone.substring(7, 11);
+                        mView.setPhone(start + "****" + end);
                         mView.setBank(bank.getBank());
-                        mView.setNumber(bank.getNumber());
+                        /*number*/
+                        String number = bank.getNumber();
+                        String startNumber = number.substring(0, 3);
+                        String endNumber = number.substring(12, 16);
+                        mView.setNumber(startNumber + "*********" + endNumber);
                     }
                 });
         mCompositeDisposable.add(disposable);

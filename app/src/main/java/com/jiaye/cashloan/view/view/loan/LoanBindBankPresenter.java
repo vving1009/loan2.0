@@ -66,7 +66,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             mView.showToastById(R.string.error_loan_bank_phone);
         } else if (TextUtils.isEmpty(mView.getBank())) {
             mView.showToastById(R.string.error_loan_bank_bank);
-        } else if (TextUtils.isEmpty(mView.getNumber())) {
+        } else if (TextUtils.isEmpty(mView.getNumber()) || mView.getNumber().length() != 16) {
             mView.showToastById(R.string.error_loan_bank_number);
         } else {
             LoanBindBankRequest request = new LoanBindBankRequest();
