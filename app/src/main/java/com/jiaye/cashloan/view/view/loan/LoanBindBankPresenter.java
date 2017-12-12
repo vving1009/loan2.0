@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -61,7 +62,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
 
     @Override
     public void submit() {
-        if (TextUtils.isEmpty(mView.getPhone())) {
+        if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_bank_phone);
         } else if (TextUtils.isEmpty(mView.getBank())) {
             mView.showToastById(R.string.error_loan_bank_bank);

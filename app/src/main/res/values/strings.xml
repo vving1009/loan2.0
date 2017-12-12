@@ -192,9 +192,9 @@
     <string name="error_loan_phone_password">请输入服务密码</string>
     <string name="error_loan_phone_sms">请输入短信验证码</string>
     <string name="error_loan_phone_img">请输入图片验证码</string>
-    <string name="error_loan_bank_phone">请输入手机号</string>
-    <string name="error_loan_bank_bank">请输入开户银行</string>
-    <string name="error_loan_bank_number">请输入银行卡号</string>
+    <string name="error_loan_bank_phone">请输入正确的手机号</string>
+    <string name="error_loan_bank_bank">请输入正确的开户银行</string>
+    <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_0001">该手机号已经注册</string>
