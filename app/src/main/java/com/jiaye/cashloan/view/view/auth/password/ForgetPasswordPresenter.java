@@ -11,6 +11,7 @@ import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
+import com.jiaye.cashloan.view.data.auth.password.source.ForgetPasswordDataSource;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
@@ -26,11 +27,14 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
 
     private final ForgetPasswordContract.View mView;
 
+    private final ForgetPasswordDataSource mDataSource;
+
     /*0 忘记密码 1 修改密码*/
     private int mType;
 
-    public ForgetPasswordPresenter(ForgetPasswordContract.View view) {
+    public ForgetPasswordPresenter(ForgetPasswordContract.View view, ForgetPasswordDataSource dataSource) {
         mView = view;
+        mDataSource = dataSource;
     }
 
     @Override
@@ -47,6 +51,17 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
     @Override
     public void setType(int type) {
         mType = type;
+        if (type == 1) {
+            Disposable disposable = mDataSource.queryPhone()
+                    .compose(new ViewTransformer<String>())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String phone) throws Exception {
+                            mView.setPhone(phone);
+                        }
+                    },new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        }
     }
 
     @Override

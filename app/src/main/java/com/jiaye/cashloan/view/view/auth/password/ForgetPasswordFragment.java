@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.auth.password.source.ForgetPasswordRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
@@ -42,6 +44,15 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.forget_password_fragment, container, false);
+        TextView textView = root.findViewById(R.id.text_title);
+        switch (getArguments().getInt("type")) {
+            case 0:
+                textView.setText(getString(R.string.forget_password_title));
+                break;
+            case 1:
+                textView.setText(getString(R.string.settings_password_title));
+                break;
+        }
         mEditPhone = root.findViewById(R.id.edit_phone);
         mEditPhone.addTextChangedListener(this);
         mEditSmsVerificationCode = root.findViewById(R.id.edit_sms_verification_code);
@@ -67,7 +78,7 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
                 mPresenter.verificationCode();
             }
         });
-        mPresenter = new ForgetPasswordPresenter(this);
+        mPresenter = new ForgetPasswordPresenter(this, new ForgetPasswordRepository());
         mPresenter.subscribe();
         mPresenter.setType(getArguments().getInt("type"));
         return root;
@@ -107,6 +118,11 @@ public class ForgetPasswordFragment extends BaseFragment implements ForgetPasswo
     @Override
     public void afterTextChanged(Editable s) {
         mPresenter.checkInput();
+    }
+
+    @Override
+    public void setPhone(String text) {
+        mEditPhone.setText(text);
     }
 
     @Override

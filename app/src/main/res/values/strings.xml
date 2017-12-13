@@ -156,6 +156,7 @@
     <string name="protocol">授权委托书</string>
     <!--password-->
     <string name="forget_password_title">忘记密码</string>
+    <string name="settings_password_title">修改密码</string>
     <string name="next">下一步</string>
     <string name="change_password_title">重置密码</string>
     <string name="input_new_password">请设置新密码（6&#8211;12位）</string><!--(-,&#8211;)-->
