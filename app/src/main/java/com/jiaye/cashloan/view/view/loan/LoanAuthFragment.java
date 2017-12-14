@@ -44,6 +44,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static final int REQUEST_FACE_PERMISSION = 102;
 
+    private static final int REQUEST_INFO_PERMISSION = 103;
+
     private LoanAuthContract.Presenter mPresenter;
 
     private Adapter mAdapter;
@@ -59,24 +61,30 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        boolean grant = true;
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                grant = false;
-            }
-        }
-        if (grant) {
-            switch (requestCode) {
-                case REQUEST_OCR_PERMISSION:
+        switch (requestCode) {
+            case REQUEST_OCR_PERMISSION:
+                if (isGrant(grantResults)) {
                     showLoanAuthOCRGranted();
-                    break;
-                case REQUEST_FACE_PERMISSION:
+                } else {
+                    showToastById(R.string.error_loan_auth_camera_and_write);
+                }
+                break;
+            case REQUEST_FACE_PERMISSION:
+                if (isGrant(grantResults)) {
                     showLoanAuthFaceGranted();
-                    break;
-            }
-        } else {
-            showToastById(R.string.error_loan_auth_camera_and_write);
+                } else {
+                    showToastById(R.string.error_loan_auth_camera_and_write);
+                }
+                break;
+            case REQUEST_INFO_PERMISSION:
+                if (isGrant(grantResults)) { // 如果用户授权,先获取通讯录并上传,再进入详细信息页面
+                    mPresenter.updateContact();
+                } else { // 如果用户不授权直接进入详细信息页面
+                    showLoanAuthInfoGranted();
+                }
+                break;
         }
+
     }
 
     @Nullable
@@ -131,20 +139,27 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthOCRView() {
-        if (hasPermission(REQUEST_OCR_PERMISSION)) {
+        if (hasCameraPermission(REQUEST_OCR_PERMISSION)) {
             showLoanAuthOCRGranted();
         }
     }
 
     @Override
     public void showLoanAuthFaceView() {
-        if (hasPermission(REQUEST_FACE_PERMISSION)) {
+        if (hasCameraPermission(REQUEST_FACE_PERMISSION)) {
             showLoanAuthFaceGranted();
         }
     }
 
     @Override
     public void showLoanAuthInfoView() {
+        if (hasContactPermission()) {
+            mPresenter.updateContact();
+        }
+    }
+
+    @Override
+    public void showLoanAuthInfoGranted() {
         Intent intent = new Intent(getActivity(), LoanAuthInfoActivity.class);
         startActivity(intent);
     }
@@ -172,7 +187,17 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         getActivity().finish();
     }
 
-    private boolean hasPermission(int requestCode) {
+    private boolean isGrant(@NonNull int[] grantResults) {
+        boolean grant = true;
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                grant = false;
+            }
+        }
+        return grant;
+    }
+
+    private boolean hasCameraPermission(int requestCode) {
         boolean hasPermission = false;
         boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
         boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
@@ -182,6 +207,17 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             requestPermissions(new String[]{Manifest.permission.CAMERA}, requestCode);
         } else if (requestWrite) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+        } else {
+            hasPermission = true;
+        }
+        return hasPermission;
+    }
+
+    private boolean hasContactPermission() {
+        boolean hasPermission = false;
+        boolean requestContact = checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED;
+        if (requestContact) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_INFO_PERMISSION);
         } else {
             hasPermission = true;
         }

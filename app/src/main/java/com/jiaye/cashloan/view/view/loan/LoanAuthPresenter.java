@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
+import com.jiaye.cashloan.http.data.loan.UploadContactResponse;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -13,6 +14,7 @@ import com.jiaye.cashloan.view.data.loan.source.LoanAuthDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -136,6 +138,32 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     break;
             }
         }
+    }
+
+    @Override
+    public void updateContact() {
+        Disposable disposable = mDataSource.uploadContact()
+                .compose(new ViewTransformer<UploadContactResponse>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<UploadContactResponse>() {
+                    @Override
+                    public void accept(UploadContactResponse uploadContactResponse) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showLoanAuthInfoGranted();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showLoanAuthInfoGranted();
+                    }
+                });
+        mCompositeDisposable.add(disposable);
     }
 
     private void setLoanAuthModel(String state, LoanAuthModel model, boolean canModify) {

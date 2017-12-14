@@ -42,6 +42,11 @@ public class LoanAuthContract {
         void showLoanAuthInfoView();
 
         /**
+         * 显示借款个人资料认证页面
+         */
+        void showLoanAuthInfoGranted();
+
+        /**
          * 显示借款手机认证页面
          */
         void showLoanAuthPhoneView();
@@ -70,5 +75,10 @@ public class LoanAuthContract {
          * 选择认证
          */
         void selectLoanAuthModel(LoanAuthModel model);
+
+        /**
+         * 上传联系人
+         */
+        void updateContact();
     }
 }
