@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.home.source.wish.source.WishRepository;
+import com.jiaye.cashloan.view.view.home.HomeFragment;
 
 /**
  * Created by guozihua on 2018/1/2.
@@ -74,17 +75,33 @@ public class WishActivity extends BaseActivity implements WishContract.View{
 
 
     private class GridAdapter extends RecyclerView.Adapter<GridViewHolder>{
+        int selectPosition = -1 ;
 
         @Override
         public GridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view  = LayoutInflater.from(getApplicationContext()).inflate(R.layout.wish_product_grid_item,parent,false);
-            GridViewHolder holder = new GridViewHolder(view);
+            final GridViewHolder holder = new GridViewHolder(view);
+            holder.setListener(new GridViewHolder.OnClickViewHolderListener() {
+                @Override
+                public void onClickViewHolder(GridViewHolder viewHolder) {
+                    selectPosition = viewHolder.getAdapterPosition() ;
+                    notifyDataSetChanged();
+                }
+            });
             return holder;
         }
 
         @Override
         public void onBindViewHolder(GridViewHolder holder, int position) {
             holder.mTextName.setText(itemName[position]);
+            if(selectPosition!=-1){
+                if(selectPosition==position){
+                    holder.mTextName.setTextColor(getResources().getColor(R.color.color_red));
+                }else{
+                    holder.mTextName.setTextColor(getResources().getColor(R.color.color_525252));
+                }
+            }
+
         }
 
         @Override
@@ -97,10 +114,32 @@ public class WishActivity extends BaseActivity implements WishContract.View{
 
         private TextView mTextName ;
         private ImageView mImgIcon ;
+
+        private interface OnClickViewHolderListener {
+
+            void onClickViewHolder(GridViewHolder viewHolder);
+        }
+
+        private OnClickViewHolderListener mListener;
+
+
         public GridViewHolder(View itemView) {
             super(itemView);
             mTextName = itemView.findViewById(R.id.tv_name);
             mImgIcon = itemView.findViewById(R.id.img_icon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        mListener.onClickViewHolder(GridViewHolder.this);
+                    }
+                }
+            });
+
+        }
+        public void setListener(GridViewHolder.OnClickViewHolderListener listener) {
+            mListener = listener;
         }
     }
 
