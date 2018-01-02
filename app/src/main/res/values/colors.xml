@@ -14,4 +14,9 @@
     <color name="color_blue_dark">#4cc1ec</color>
     <color name="color_red">#d50000</color>
     <color name="color_orange">#ff9600</color>
+
+
+    <color name="color_EDF2F7">#EDF2F7</color>
+    <color name="color_F06262">#F06262</color>
+    <color name="color_6B4D9F">#6B4D9F</color>
 </resources>

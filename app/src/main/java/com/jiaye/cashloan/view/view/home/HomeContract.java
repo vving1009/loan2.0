@@ -25,6 +25,11 @@ public class HomeContract {
          * 显示借款页面
          */
         void showLoanView();
+
+        /**
+         * 显示愿望清单界面
+         */
+        void showWishView();
     }
 
     interface Presenter extends BasePresenter {

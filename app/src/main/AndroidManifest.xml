@@ -88,5 +88,14 @@
         <activity
             android:name=".view.view.my.MyActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.view.home.wish.WishActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.view.market.MarketActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>
