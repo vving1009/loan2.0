@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.view.home;
 
+import android.widget.Toast;
+
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.home.Product;
 import com.jiaye.cashloan.http.data.home.ProductList;
@@ -79,22 +81,43 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     @Override
     public void selectProduct(Product product) {
-        if (product.getIsOpen().equals("1")) {
-            Disposable disposable = mDataSource.addProduct(product)
-                    .compose(new ViewTransformer<Product>() {
-                        @Override
-                        public void accept() {
-                            mView.showProgressDialog();
+//        if (product.getIsOpen().equals("1")) {
+//            Disposable disposable = mDataSource.addProduct(product)
+//                    .compose(new ViewTransformer<Product>() {
+//                        @Override
+//                        public void accept() {
+//                            mView.showProgressDialog();
+//                        }
+//                    })
+//                    .subscribe(new Consumer<Product>() {
+//                        @Override
+//                        public void accept(Product product) throws Exception {
+//                            mView.dismissProgressDialog();
+//                            mView.showLoanView();
+//                        }
+//                    }, new ThrowableConsumer(mView));
+//            mCompositeDisposable.add(disposable);
+//        }
+       Disposable disposable = Flowable.just(product)
+               .compose(new ViewTransformer<Product>(){
+                   @Override
+                   public void accept() {
+                      mView.showProgressDialog();
+                   }
+               })
+               .subscribe(new Consumer<Product>() {
+                   @Override
+                   public void accept(Product p) throws Exception {
+                       mView.dismissProgressDialog();
+                        if(p.getName().equals("分期消费")){
+                            mView.showWishView();
+                        }else if(p.getName().equals("借款产品")){
+
+                        }else{
+
                         }
-                    })
-                    .subscribe(new Consumer<Product>() {
-                        @Override
-                        public void accept(Product product) throws Exception {
-                            mView.dismissProgressDialog();
-                            mView.showLoanView();
-                        }
-                    }, new ThrowableConsumer(mView));
-            mCompositeDisposable.add(disposable);
-        }
+                   }
+               },new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 }
