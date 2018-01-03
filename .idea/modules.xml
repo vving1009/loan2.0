@@ -3,14 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Loan.iml" filepath="$PROJECT_DIR$/Loan.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Loan_html.iml" filepath="$PROJECT_DIR$/Loan_html.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/gesturelock/gesturelock.iml" filepath="$PROJECT_DIR$/gesturelock/gesturelock.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gesturelock/gesturelock.iml" filepath="$PROJECT_DIR$/gesturelock/gesturelock.iml" />
       <module fileurl="file://$PROJECT_DIR$/takephoto/takephoto.iml" filepath="$PROJECT_DIR$/takephoto/takephoto.iml" />
-      <module fileurl="file://$PROJECT_DIR$/takephoto/takephoto.iml" filepath="$PROJECT_DIR$/takephoto/takephoto.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tongdun/tongdun.iml" filepath="$PROJECT_DIR$/tongdun/tongdun.iml" />
       <module fileurl="file://$PROJECT_DIR$/tongdun/tongdun.iml" filepath="$PROJECT_DIR$/tongdun/tongdun.iml" />
     </modules>
   </component>
