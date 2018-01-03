@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.data.my.credit;
 
 import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.utils.DateUtil;
 import com.jiaye.cashloan.utils.RandomUtil;
 
@@ -55,7 +56,7 @@ public abstract class BaseCreditRequest {
     protected String retUrl;
 
     @SerializedName("notifyUrl")
-    protected String notifyUrl;
+    protected String notifyUrl = BuildConfig.BASE_URL + "jxbank/interfaceSucc";
 
     @SerializedName("acqRes")
     protected String acqRes;
