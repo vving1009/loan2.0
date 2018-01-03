@@ -12,7 +12,7 @@ import com.jiaye.cashloan.view.BasePresenter;
 
 public class LoanContract {
 
-    interface View extends AuthView {
+   public interface View extends AuthView {
 
         /**
          * 查询产品信息
@@ -38,9 +38,9 @@ public class LoanContract {
          * 显示借款认证页面
          */
         void showLoanAuthView();
-    }
+   }
 
-    interface Presenter extends BasePresenter {
+    public interface Presenter extends BasePresenter {
 
         /**
          * 查询产品信息

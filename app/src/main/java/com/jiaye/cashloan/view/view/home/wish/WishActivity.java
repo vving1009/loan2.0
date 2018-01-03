@@ -24,6 +24,8 @@ public class WishActivity extends BaseActivity implements WishContract.View{
 
     private int[] itemName = {R.string.wish_item1,R.string.wish_item2,R.string.wish_item3,R.string.wish_item4,R.string.wish_item5,R.string.wish_item6,
             R.string.wish_item7,R.string.wish_item8,R.string.wish_item9,R.string.wish_item10};
+    private int[] itemIcon = {R.drawable.market_ic_household,R.drawable.market_ic_phone,R.drawable.market_ic_computer,R.drawable.market_ic_watch,R.drawable.market_ic_clothes,
+            R.drawable.market_ic_beauty,R.drawable.market_ic_gem,R.drawable.market_ic_digit,R.drawable.market_ic_other,R.drawable.market_ic_old};
 
     private EditText mEdit1,mEdit2,mEdit3,mEdit4 ;
     private WishPresenter presenter ;
@@ -94,6 +96,7 @@ public class WishActivity extends BaseActivity implements WishContract.View{
         @Override
         public void onBindViewHolder(GridViewHolder holder, int position) {
             holder.mTextName.setText(itemName[position]);
+            holder.mImgIcon.setBackgroundResource(itemIcon[position]);
             if(selectPosition!=-1){
                 if(selectPosition==position){
                     holder.mTextName.setTextColor(getResources().getColor(R.color.color_red));

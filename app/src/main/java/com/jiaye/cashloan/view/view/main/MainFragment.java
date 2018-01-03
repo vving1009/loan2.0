@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.data.main.MainRepository;
+import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.home.HomeFragment;
 import com.jiaye.cashloan.view.view.loan.LoanFragment;
+import com.jiaye.cashloan.view.view.market.MarketFragment;
 import com.jiaye.cashloan.view.view.my.MyFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
@@ -25,16 +29,20 @@ import com.jiaye.cashloan.widget.NoScrollViewPager;
  * @author 贾博瑄
  */
 
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment implements MainContract.View{
 
     private static final int[] TAB_ICON = new int[]{R.drawable.main_ic_home, R.drawable.main_ic_loan, R.drawable.main_ic_my};
 
-    private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.loan, R.string.my};
+    private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.market, R.string.my};
 
     private NoScrollViewPager mViewPager;
 
+    private MainPresenter presenter ;
+
     /*是否为选中的产品*/
     private boolean mIsSelect;
+
+    private int tabPosition = 0 ;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -57,7 +65,7 @@ public class MainFragment extends BaseFragment {
                     case 0:
                         return HomeFragment.newInstance();
                     case 1:
-                        return LoanFragment.newInstance();
+                        return MarketFragment.newInstance();
                     case 2:
                         return MyFragment.newInstance();
                     default:
@@ -82,16 +90,23 @@ public class MainFragment extends BaseFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 1) {
-                    String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
-                    LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
-                    if (mIsSelect) {
-                        mIsSelect = false;
-                        fragment.queryProduct();
-                    } else {
-                        fragment.requestProduct();
-                    }
-                }
+//                if (tab.getPosition() == 1) {
+//                    String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
+//                    LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
+//                    if (mIsSelect) {
+//                        mIsSelect = false;
+//                        fragment.queryProduct();
+//                    } else {
+//                        fragment.requestProduct();
+//                    }
+//                }
+//                if(tabPosition!=1){
+//                    tabPosition = tab.getPosition();
+//                }
+//
+//                if(tab.getPosition()==1){
+//                    presenter.requestCheck();
+//                }
             }
 
             @Override
@@ -104,7 +119,11 @@ public class MainFragment extends BaseFragment {
 
             }
         });
+
+        presenter = new MainPresenter(this,new MainRepository());
+        presenter.subscribe();
         return root;
+
     }
 
     /**
@@ -126,5 +145,19 @@ public class MainFragment extends BaseFragment {
             imgTab.setImageResource(icon[i]);
             tabLayout.addTab(tab);
         }
+    }
+
+
+
+    @Override
+    public void startAuthView() {
+//        Intent intent = new Intent(getActivity(), AuthActivity.class);
+//        startActivity(intent);
+//        mViewPager.setCurrentItem(tabPosition, false);
+    }
+
+    @Override
+    public void isLogin() {
+//        tabPosition=1 ;
     }
 }

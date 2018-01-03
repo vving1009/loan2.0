@@ -1,10 +1,12 @@
 package com.jiaye.cashloan.view.view.home;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -44,6 +46,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private Adapter mAdapter;
     private Banner banner ;
+    private int[] images = {R.drawable.home_ic_price,R.drawable.home_ic_credit,R.drawable.home_ic_loan};
+    private int[] tab_images = {R.drawable.home_tab_price,R.drawable.home_tab_credit,R.drawable.home_tab_loan} ;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -99,11 +103,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
          * 假数据
          */
         Product p1 = new Product();
-        p1.setName("分期消费");
+        p1.setName("消费分期");
         Product p2 = new Product();
-        p2.setName("借款产品");
+        p2.setName("信贷产品");
         Product p3 = new Product();
-        p3.setName("信用分期");
+        p3.setName("借款产品");
 
         ArrayList<Product> arrayList = new ArrayList<>();
         arrayList.add(p1);
@@ -112,7 +116,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         mAdapter.setList(arrayList);
     }
-
     @Override
     public void showLoanView() {
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.layout_content);
@@ -124,6 +127,36 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void showWishView() {
         startActivity(new Intent(getActivity(),WishActivity.class));
+    }
+
+    @Override
+    public void showCreditView() {//先判断是否登录 跳一个空白页 然后跳到六部认证
+
+    }
+
+    @Override
+    public void showLoanProductView() {
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("");
+        builder.setMessage("尽情期待");
+        builder.setPositiveButton("确定" , new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setNegativeButton("取消",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create();
+        builder.show();
+
     }
 
     //    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -196,6 +229,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.mTextName.setText(mList.get(position).getName());
+            holder.mImgProduct.setBackgroundResource(images[position]);
+            holder.mImgIcon.setBackgroundResource(tab_images[position]);
         }
 
         @Override

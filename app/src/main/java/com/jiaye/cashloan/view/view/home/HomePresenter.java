@@ -109,12 +109,12 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                    @Override
                    public void accept(Product p) throws Exception {
                        mView.dismissProgressDialog();
-                        if(p.getName().equals("分期消费")){
+                        if(p.getName().equals("消费分期")){
                             mView.showWishView();
-                        }else if(p.getName().equals("借款产品")){
-
+                        }else if(p.getName().equals("信贷产品")){
+                            mView.showCreditView();
                         }else{
-
+                            mView.showLoanProductView();
                         }
                    }
                },new ThrowableConsumer(mView));

@@ -3,6 +3,7 @@
     <string name="home">首页</string>
     <string name="loan">现金贷</string>
     <string name="my">我的</string>
+    <string name="market">商城</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
     <!--home-->

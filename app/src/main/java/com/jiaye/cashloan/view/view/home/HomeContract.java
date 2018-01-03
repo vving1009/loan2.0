@@ -27,9 +27,17 @@ public class HomeContract {
         void showLoanView();
 
         /**
-         * 显示愿望清单界面
+         * 显示消费分期界面
          */
         void showWishView();
+        /**
+         * 显示信贷产品界面
+         */
+        void showCreditView();
+        /**
+         * 显示借款产品界面
+         */
+        void showLoanProductView();
     }
 
     interface Presenter extends BasePresenter {
@@ -38,5 +46,6 @@ public class HomeContract {
          * 选择产品
          */
         void selectProduct(Product product);
+
     }
 }

@@ -97,5 +97,6 @@
             android:name=".view.view.market.MarketActivity"
             android:screenOrientation="portrait" />
 
+
     </application>
 </manifest>
