@@ -30,11 +30,9 @@ public enum  UploadContactClient {
                 .build();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
-
-        Gson gson = new GsonBuilder()
+        Gson gson = gsonBuilder
                 .registerTypeAdapter(String.class, new StringNullAdapter())
                 .create();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.UPLOAD_CONTACT_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

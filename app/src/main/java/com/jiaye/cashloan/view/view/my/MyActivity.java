@@ -8,11 +8,12 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.view.my.about.AboutFragment;
-import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
+import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
+import com.jiaye.cashloan.view.view.my.credit.CreditFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
 
@@ -77,6 +78,11 @@ public class MyActivity extends BaseActivity {
                 textView.setText(R.string.my_settings_gesture);
                 GestureFragment gestureFragment = GestureFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, gestureFragment).commit();
+                break;
+            case "credit":
+                textView.setText(R.string.my_credit);
+                CreditFragment creditFragment = CreditFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditFragment).commit();
                 break;
         }
     }

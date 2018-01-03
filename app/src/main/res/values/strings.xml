@@ -137,6 +137,7 @@
     <string name="my_wechat_description">随时随地想借就借</string>
     <string name="my_moments">朋友圈</string>
     <string name="my_cancel">取消</string>
+    <string name="my_credit">存管账户管理</string>
     <!--login-->
     <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>

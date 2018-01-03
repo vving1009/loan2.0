@@ -138,6 +138,17 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
     }
 
     @Override
+    public void credit() {
+        Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Exception {
+                mView.showCreditView();
+            }
+        }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
     public void save() {
         try {
             InputStream is = LoanApplication.getInstance().getAssets().open("QRCode.png");

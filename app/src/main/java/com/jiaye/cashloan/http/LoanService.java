@@ -73,7 +73,9 @@ import com.jiaye.cashloan.http.data.my.UserRequest;
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * LoanService
@@ -286,4 +288,10 @@ public interface LoanService {
      */
     @POST("sendMsg/juageCodeTime")
     Flowable<Response<CheckForgetPasswordVerificationCode>> checkForgetPasswordVerificationCode(@Body Request<CheckForgetPasswordVerificationCodeRequest> request);
+
+    /**
+     * 签名
+     */
+    @GET("jxbank/requestSign")
+    Flowable<retrofit2.Response<ResponseBody>> sign(@Query(value = "mapJson") String mapJson);
 }

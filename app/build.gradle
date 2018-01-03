@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "GONGXINBAO_URL", properties.getProperty("GONGXINBAO_URL"))
         buildConfigField("String", "GONGXINBAO_APPID", properties.getProperty("GONGXINBAO_APPID"))
         buildConfigField("String", "GONGXINBAO_APPSECURITY", properties.getProperty("GONGXINBAO_APPSECURITY"))
+        buildConfigField("String", "CREDIT2GO_URL", properties.getProperty("CREDIT2GO_URL"))
         buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
     }
     buildTypes {
