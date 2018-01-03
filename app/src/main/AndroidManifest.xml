@@ -88,6 +88,9 @@
         <activity
             android:name=".view.view.my.MyActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.view.my.credit.CreditActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.view.home.wish.WishActivity"

@@ -42,6 +42,11 @@ public class MyContract {
         void showHistoryView();
 
         /**
+         * 显示存管账户管理页面
+         */
+        void showCreditView();
+
+        /**
          * 显示设置页面
          */
         void showSettingsView();
@@ -78,6 +83,11 @@ public class MyContract {
          * 历史借款
          */
         void history();
+
+        /**
+         * 存管账户管理
+         */
+        void credit();
 
         /**
          * 保存二维码

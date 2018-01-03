@@ -15,4 +15,14 @@ public class DateUtil {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
         return formatter.format(millis);
     }
+
+    public static String formatDate(long millis) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
+        return formatter.format(millis);
+    }
+
+    public static String formatTime(long millis) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HHmmss", Locale.CHINA);
+        return formatter.format(millis);
+    }
 }

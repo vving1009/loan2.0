@@ -106,6 +106,12 @@ public class MyFragment extends BaseFragment implements MyContract.View {
                 mPresenter.history();
             }
         });
+        root.findViewById(R.id.layout_credit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.credit();
+            }
+        });
         root.findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +248,13 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     public void showHistoryView() {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
         intent.putExtra("title", getString(R.string.loan_details_history_title));
+        startActivity(intent);
+    }
+
+    @Override
+    public void showCreditView() {
+        Intent intent = new Intent(getActivity(), MyActivity.class);
+        intent.putExtra("view", "credit");
         startActivity(intent);
     }
 
