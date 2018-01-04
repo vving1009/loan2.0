@@ -104,7 +104,7 @@
     <string name="loan_bank_number">银行卡号</string>
     <string name="loan_bank_number_hint">输入储蓄卡号</string>
     <string name="loan_bank_tips">新卡必须是本人名下储蓄卡</string>
-     <!--my-->
+    <!--my-->
     <string name="my_certificate">我的认证</string>
     <string name="my_certificate_basics">基本信息</string>
     <string name="my_certificate_head">头像</string>
@@ -122,6 +122,14 @@
     <string name="my_approve">借款审批</string>
     <string name="my_loan">放款还款</string>
     <string name="my_history">历史借款</string>
+    <string name="my_credit">存管账户管理</string>
+    <string name="my_credit_not_open">存管账户未开通</string>
+    <string name="my_credit_password">设置初始密码</string>
+    <string name="my_credit_password_reset">重置密码</string>
+    <string name="my_credit_cash">提现</string>
+    <string name="my_credit_balance">查询余额</string>
+    <string name="my_credit_balance_avail">可用余额:%1$s</string>
+    <string name="my_credit_balance_curr">账面余额:%1$s</string>
     <string name="my_help">帮助中心</string>
     <string name="my_qrcode">关注公众号</string>
     <string name="my_qrcode_success">保存成功</string>
@@ -138,7 +146,6 @@
     <string name="my_wechat_description">随时随地想借就借</string>
     <string name="my_moments">朋友圈</string>
     <string name="my_cancel">取消</string>
-    <string name="my_credit">存管账户管理</string>
     <!--login-->
     <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>

@@ -1,25 +1,18 @@
-package com.jiaye.cashloan.view.data.my.credit;
+package com.jiaye.cashloan.http.data.my;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
-
 /**
- * CreditPasswordRequest
+ * CreditPasswordResetRequest
  *
  * @author 贾博瑄
  */
 
-public class CreditPasswordRequest extends BaseCreditRequest implements Parcelable {
+public class CreditPasswordResetRequest extends BaseCreditRequest implements Parcelable {
 
-    public CreditPasswordRequest() {
-        txCode = "passwordSet";
-    }
-
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
+    public CreditPasswordResetRequest() {
+        txCode = "passwordReset";
     }
 
     @Override
@@ -48,7 +41,7 @@ public class CreditPasswordRequest extends BaseCreditRequest implements Parcelab
         dest.writeString(this.sign);
     }
 
-    protected CreditPasswordRequest(Parcel in) {
+    protected CreditPasswordResetRequest(Parcel in) {
         this.version = in.readString();
         this.txCode = in.readString();
         this.instCode = in.readString();
@@ -68,15 +61,15 @@ public class CreditPasswordRequest extends BaseCreditRequest implements Parcelab
         this.sign = in.readString();
     }
 
-    public static final Parcelable.Creator<CreditPasswordRequest> CREATOR = new Parcelable.Creator<CreditPasswordRequest>() {
+    public static final Parcelable.Creator<CreditPasswordResetRequest> CREATOR = new Parcelable.Creator<CreditPasswordResetRequest>() {
         @Override
-        public CreditPasswordRequest createFromParcel(Parcel source) {
-            return new CreditPasswordRequest(source);
+        public CreditPasswordResetRequest createFromParcel(Parcel source) {
+            return new CreditPasswordResetRequest(source);
         }
 
         @Override
-        public CreditPasswordRequest[] newArray(int size) {
-            return new CreditPasswordRequest[size];
+        public CreditPasswordResetRequest[] newArray(int size) {
+            return new CreditPasswordResetRequest[size];
         }
     };
 }

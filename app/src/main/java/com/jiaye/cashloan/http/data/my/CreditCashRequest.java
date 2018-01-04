@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.my.credit;
+package com.jiaye.cashloan.http.data.my;
 
 import android.os.Parcel;
 import android.os.Parcelable;

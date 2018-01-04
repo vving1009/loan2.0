@@ -24,13 +24,13 @@
             android:layout_height="45dp">
 
             <TextView
+                android:id="@+id/text_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/my_ic_password"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="设置初始密码/重置密码"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
 
@@ -59,7 +59,7 @@
                 android:drawableLeft="@drawable/me_ic_bank"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="提现"
+                android:text="@string/my_credit_cash"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
 
@@ -88,7 +88,7 @@
                 android:drawableLeft="@drawable/me_ic_bank"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="查询余额"
+                android:text="@string/my_credit_balance"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
 
