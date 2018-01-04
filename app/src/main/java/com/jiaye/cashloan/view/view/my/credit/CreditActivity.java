@@ -73,14 +73,9 @@ public class CreditActivity extends BaseActivity {
             case "cash":
                 CreditCashRequest creditCashRequest = getIntent().getExtras().getParcelable("request");
                 creditCashRequest.setName(URLEncoder.encode(creditCashRequest.getName()));
+                creditCashRequest.setSign(URLEncoder.encode(creditCashRequest.getSign()));
                 creditCashRequest.setNotifyUrl(URLEncoder.encode(creditCashRequest.getNotifyUrl()));
-                if (TextUtils.isEmpty(creditCashRequest.getSign())) {
-                    showToast("签名失败");
-                    finish();
-                } else {
-                    creditCashRequest.setSign(URLEncoder.encode(creditCashRequest.getSign()));
-                    mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrow/p2p/page/withdraw", json2KeyValue(creditCashRequest.toString()).getBytes());
-                }
+                mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrow/p2p/page/withdraw", json2KeyValue(creditCashRequest.toString()).getBytes());
                 break;
         }
     }

@@ -3,6 +3,8 @@ package com.jiaye.cashloan.http.data.my;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 /**
  * CreditPasswordResetRequest
  *
@@ -13,6 +15,11 @@ public class CreditPasswordResetRequest extends BaseCreditRequest implements Par
 
     public CreditPasswordResetRequest() {
         txCode = "passwordReset";
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 
     @Override

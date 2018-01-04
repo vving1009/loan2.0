@@ -16,7 +16,7 @@ public class CreditPasswordStatus extends ChildResponse {
     private String open = "0";
 
     /*密码状态 0 设置初始密码 1 重置密码*/
-    @SerializedName("pinFlag")
+    @SerializedName("pin_flag")
     private String status = "0";
 
     public String getOpen() {

@@ -32,6 +32,8 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private TextView mTextAvail;
 
+    private TextView mTextFreeze;
+
     private TextView mTextCurr;
 
     public static CreditFragment newInstance() {
@@ -73,6 +75,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
             }
         });
         mTextAvail = balanceView.findViewById(R.id.text_avail);
+        mTextFreeze = balanceView.findViewById(R.id.text_freeze);
         mTextCurr = balanceView.findViewById(R.id.text_curr);
         mBalanceDialog.setContentView(balanceView);
         mPresenter = new CreditPresenter(this, new CreditRepository());
@@ -122,8 +125,9 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
-    public void showBalance(String availBal, String currBal) {
+    public void showBalance(String availBal, String freezeBal, String currBal) {
         mTextAvail.setText(String.format(getString(R.string.my_credit_balance_avail), availBal));
+        mTextFreeze.setText(String.format(getString(R.string.my_credit_balance_freeze), freezeBal));
         mTextCurr.setText(String.format(getString(R.string.my_credit_balance_curr), currBal));
         mBalanceDialog.show();
     }

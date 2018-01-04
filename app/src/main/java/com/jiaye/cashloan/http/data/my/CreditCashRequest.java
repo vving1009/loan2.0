@@ -3,6 +3,7 @@ package com.jiaye.cashloan.http.data.my;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -48,6 +49,11 @@ public class CreditCashRequest extends BaseCreditRequest implements Parcelable {
 
     public CreditCashRequest() {
         txCode = "withdraw";
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 
     @Override
