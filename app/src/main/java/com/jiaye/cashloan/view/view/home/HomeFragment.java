@@ -65,6 +65,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         ArrayList<Integer> imageList = new ArrayList<>();
         imageList.add(R.drawable.bannar1);
         imageList.add(R.drawable.bannar2);
+        imageList.add(R.drawable.bannar3);
+        imageList.add(R.drawable.bannar4);
+        imageList.add(R.drawable.bannar5);
         banner.setImages(imageList);
         banner.setDelayTime(4000);
         banner.setImageLoader(new GlideImageLoader());
