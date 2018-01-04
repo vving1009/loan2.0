@@ -49,11 +49,18 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
     @Override
     public void requestProduct() {
         Disposable disposable = Flowable.concat(mDataSource.queryDefaultProduct(), mDataSource.requestProduct())
-                .compose(new ViewTransformer<DefaultProduct>())
+                .compose(new ViewTransformer<DefaultProduct>(){
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .first(new DefaultProduct())
                 .subscribe(new Consumer<DefaultProduct>() {
                     @Override
                     public void accept(DefaultProduct defaultProduct) throws Exception {
+                        mView.dismissProgressDialog();
                         mView.setDefaultProduct(defaultProduct);
                     }
                 }, new ThrowableConsumer(mView));
@@ -64,10 +71,17 @@ public class LoanPresenter extends BasePresenterImpl implements LoanContract.Pre
     public void loan() {
         Disposable disposable = mDataSource
                 .requestCheck()
-                .compose(new ViewTransformer<LoanAuth>())
+                .compose(new ViewTransformer<LoanAuth>(){
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(new Consumer<LoanAuth>() {
                     @Override
                     public void accept(LoanAuth loanAuth) throws Exception {
+                        mView.dismissProgressDialog();
                         mView.showLoanAuthView();
                     }
                 }, new ThrowableConsumer(mView));

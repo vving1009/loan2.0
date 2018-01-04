@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.CreditCashRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.my.credit.CreditBalanceRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditCashRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditPasswordRequest;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
 
 /**
@@ -24,6 +26,14 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private CreditContract.Presenter mPresenter;
 
+    private TextView mTextPassword;
+
+    private BaseDialog mBalanceDialog;
+
+    private TextView mTextAvail;
+
+    private TextView mTextCurr;
+
     public static CreditFragment newInstance() {
         Bundle args = new Bundle();
         CreditFragment fragment = new CreditFragment();
@@ -35,6 +45,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.credit_fragment, container, false);
+        mTextPassword = view.findViewById(R.id.text_password);
         view.findViewById(R.id.layout_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +64,17 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
                 mPresenter.balance();
             }
         });
+        mBalanceDialog = new BaseDialog(getActivity());
+        View balanceView = LayoutInflater.from(getActivity()).inflate(R.layout.balance_dialog_layout, null);
+        balanceView.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBalanceDialog.dismiss();
+            }
+        });
+        mTextAvail = balanceView.findViewById(R.id.text_avail);
+        mTextCurr = balanceView.findViewById(R.id.text_curr);
+        mBalanceDialog.setContentView(balanceView);
         mPresenter = new CreditPresenter(this, new CreditRepository());
         mPresenter.subscribe();
         return view;
@@ -65,26 +87,44 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
+    public void notOpen() {
+        showToastById(R.string.my_credit_not_open);
+        getActivity().finish();
+    }
+
+    @Override
+    public void setPasswordText(String text) {
+        mTextPassword.setText(text);
+    }
+
+    @Override
     public void showPasswordView(CreditPasswordRequest request) {
         Intent intent = new Intent(getActivity(), CreditActivity.class);
-        intent.putExtra("type","password");
-        intent.putExtra("password", request);
+        intent.putExtra("type", "password");
+        intent.putExtra("request", request);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showPasswordResetView(CreditPasswordResetRequest request) {
+        Intent intent = new Intent(getActivity(), CreditActivity.class);
+        intent.putExtra("type", "passwordReset");
+        intent.putExtra("request", request);
         startActivity(intent);
     }
 
     @Override
     public void showCashView(CreditCashRequest request) {
         Intent intent = new Intent(getActivity(), CreditActivity.class);
-        intent.putExtra("type","cash");
-        intent.putExtra("cash", request);
+        intent.putExtra("type", "cash");
+        intent.putExtra("request", request);
         startActivity(intent);
     }
 
     @Override
-    public void showBalanceView(CreditBalanceRequest request) {
-        Intent intent = new Intent(getActivity(), CreditActivity.class);
-        intent.putExtra("type","balance");
-        intent.putExtra("balance", request);
-        startActivity(intent);
+    public void showBalance(String availBal, String currBal) {
+        mTextAvail.setText(String.format(getString(R.string.my_credit_balance_avail), availBal));
+        mTextCurr.setText(String.format(getString(R.string.my_credit_balance_curr), currBal));
+        mBalanceDialog.show();
     }
 }

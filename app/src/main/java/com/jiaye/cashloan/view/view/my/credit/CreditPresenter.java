@@ -1,11 +1,15 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
+import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditCashRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.my.credit.CreditBalanceRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditCashRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditPasswordRequest;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditDataSource;
 
 import io.reactivex.disposables.Disposable;
@@ -23,31 +27,70 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     private final CreditDataSource mDataSource;
 
+    private String mPasswordStatus = "0";
+
     public CreditPresenter(CreditContract.View view, CreditDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
-    public void password() {
-        Disposable disposable = mDataSource.password()
-                .compose(new ViewTransformer<CreditPasswordRequest>())
-                .subscribe(new Consumer<CreditPasswordRequest>() {
+    public void subscribe() {
+        super.subscribe();
+        Disposable disposable = mDataSource.passwordStatus()
+                .compose(new ViewTransformer<CreditPasswordStatus>() {
                     @Override
-                    public void accept(CreditPasswordRequest request) throws Exception {
-                        mView.showPasswordView(request);
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<CreditPasswordStatus>() {
+                    @Override
+                    public void accept(CreditPasswordStatus creditPasswordStatus) throws Exception {
+                        mView.dismissProgressDialog();
+                        if (creditPasswordStatus.getOpen().equals("0")) {
+                            mView.notOpen();
+                        } else if (creditPasswordStatus.getOpen().equals("1")) {
+                            if (creditPasswordStatus.getStatus().equals("0")) {
+                                mPasswordStatus = "0";
+                                mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
+                            } else if (creditPasswordStatus.getStatus().equals("1")) {
+                                mPasswordStatus = "1";
+                                mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password_reset));
+                            }
+                        }
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
     @Override
+    public void password() {
+        switch (mPasswordStatus) {
+            case "0":
+                passwordInit();
+                break;
+            case "1":
+                passwordReset();
+                break;
+        }
+    }
+
+    @Override
     public void cash() {
         Disposable disposable = mDataSource.cash()
-                .compose(new ViewTransformer<CreditCashRequest>())
+                .compose(new ViewTransformer<CreditCashRequest>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(new Consumer<CreditCashRequest>() {
                     @Override
                     public void accept(CreditCashRequest request) throws Exception {
+                        mView.dismissProgressDialog();
                         mView.showCashView(request);
                     }
                 }, new ThrowableConsumer(mView));
@@ -57,11 +100,56 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     @Override
     public void balance() {
         Disposable disposable = mDataSource.balance()
-                .compose(new ViewTransformer<CreditBalanceRequest>())
-                .subscribe(new Consumer<CreditBalanceRequest>() {
+                .compose(new ViewTransformer<CreditBalance>() {
                     @Override
-                    public void accept(CreditBalanceRequest request) throws Exception {
-                        mView.showBalanceView(request);
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<CreditBalance>() {
+                    @Override
+                    public void accept(CreditBalance creditBalance) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showBalance(creditBalance.getResult().getContent().getAvailBal(), creditBalance.getResult().getContent().getCurrBal());
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    private void passwordInit() {
+        Disposable disposable = mDataSource.password()
+                .compose(new ViewTransformer<CreditPasswordRequest>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<CreditPasswordRequest>() {
+                    @Override
+                    public void accept(CreditPasswordRequest request) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showPasswordView(request);
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    private void passwordReset() {
+        Disposable disposable = mDataSource.passwordReset()
+                .compose(new ViewTransformer<CreditPasswordResetRequest>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<CreditPasswordResetRequest>() {
+                    @Override
+                    public void accept(CreditPasswordResetRequest request) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showPasswordResetView(request);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

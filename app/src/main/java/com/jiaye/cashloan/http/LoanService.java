@@ -27,10 +27,8 @@ import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanOpen;
-import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
-import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
-import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
+import com.jiaye.cashloan.http.data.loan.LoanBindBank;
+import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
@@ -45,12 +43,12 @@ import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
-import com.jiaye.cashloan.http.data.loan.LoanBindBank;
-import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
@@ -67,6 +65,12 @@ import com.jiaye.cashloan.http.data.loan.WatchContract;
 import com.jiaye.cashloan.http.data.loan.WatchContractRequest;
 import com.jiaye.cashloan.http.data.my.Bank;
 import com.jiaye.cashloan.http.data.my.BankRequest;
+import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditBalanceRequest;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
+import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
+import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
@@ -306,8 +310,20 @@ public interface LoanService {
     Flowable<Response<LoanOpenSMS>> loanOpenSMS(@Body Request<LoanOpenSMSRequest> request);
 
     /**
-     * 开户
+     * 开户及密码状态查询
      */
-    @POST("jxOpen")
-    Flowable<Response<LoanOpen>> loanOpen(@Body Request<LoanOpenRequest> request);
+    @POST("pwdSetQuery")
+    Flowable<Response<CreditPasswordStatus>> creditPasswordStatus(@Body Request<CreditPasswordStatusRequest> request);
+
+    /**
+     * 开户信息查询
+     */
+    @POST("jxUtil")
+    Flowable<Response<CreditInfo>> creditInfo(@Body Request<CreditInfoRequest> request);
+
+    /**
+     * 查询余额
+     */
+    @POST("balanceQuery")
+    Flowable<Response<CreditBalance>> creditBalance(@Body Request<CreditBalanceRequest> request);
 }

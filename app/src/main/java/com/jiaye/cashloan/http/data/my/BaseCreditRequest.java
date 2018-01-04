@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.my.credit;
+package com.jiaye.cashloan.http.data.my;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.BuildConfig;
@@ -38,7 +38,7 @@ public abstract class BaseCreditRequest {
     protected String channel = "000001";
 
     @SerializedName("accountId")
-    protected String accountId = "1";
+    protected String accountId;
 
     @SerializedName("idType")
     protected String idType = "01";

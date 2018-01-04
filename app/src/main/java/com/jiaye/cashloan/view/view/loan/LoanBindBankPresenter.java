@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
-import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.utils.RegexUtil;
@@ -13,7 +12,6 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.source.LoanBindBankDataSource;
 
-import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -100,11 +98,8 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             bankRequest.setPhone(mView.getPhone());
             bankRequest.setBank(mView.getBank());
             bankRequest.setNumber(mView.getNumber());
-            LoanOpenRequest openRequest = new LoanOpenRequest();
-            openRequest.setPhone(mView.getPhone());
-            openRequest.setSms(mView.getSMS());
-            openRequest.setCard(mView.getNumber());
-            Disposable disposable = Flowable.merge(mDataSource.requestBindBank(bankRequest), mDataSource.requestOpen(openRequest))
+            bankRequest.setSms(mView.getSMS());
+            Disposable disposable = mDataSource.requestBindBank(bankRequest)
                     .compose(new ViewTransformer<Object>() {
                         @Override
                         public void accept() {

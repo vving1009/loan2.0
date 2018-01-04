@@ -42,11 +42,6 @@ public class LoanAuthContract {
         void showLoanAuthInfoView();
 
         /**
-         * 显示借款个人资料认证页面
-         */
-        void showLoanAuthInfoGranted();
-
-        /**
          * 显示借款手机认证页面
          */
         void showLoanAuthPhoneView();

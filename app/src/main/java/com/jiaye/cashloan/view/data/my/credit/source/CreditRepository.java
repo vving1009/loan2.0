@@ -1,9 +1,16 @@
 package com.jiaye.cashloan.view.data.my.credit.source;
 
 import com.jiaye.cashloan.http.LoanClient;
-import com.jiaye.cashloan.view.data.my.credit.CreditBalanceRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditCashRequest;
-import com.jiaye.cashloan.view.data.my.credit.CreditPasswordRequest;
+import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditBalanceRequest;
+import com.jiaye.cashloan.http.data.my.CreditCashRequest;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
+import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
+import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
+import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
+import com.jiaye.cashloan.http.utils.ResponseTransformer;
 
 import org.reactivestreams.Publisher;
 
@@ -21,19 +28,31 @@ import okhttp3.ResponseBody;
 
 public class CreditRepository implements CreditDataSource {
 
-    private CreditPasswordRequest mRequest;
+    private CreditPasswordRequest mPasswordRequest;
+
+    private CreditPasswordResetRequest mPasswordResetRequest;
+
+    private CreditCashRequest mCashRequest;
+
+    @Override
+    public Flowable<CreditPasswordStatus> passwordStatus() {
+        return Flowable.just(new CreditPasswordStatusRequest())
+                .compose(new ResponseTransformer<CreditPasswordStatusRequest, CreditPasswordStatus>("creditPasswordStatus"));
+    }
 
     @Override
     public Flowable<CreditPasswordRequest> password() {
-        // TODO: 2018/1/2 查询服务器数据
-        mRequest = new CreditPasswordRequest();
-        mRequest.setIdNo("120101198610240518");
-        mRequest.setName("贾博瑄");
-        mRequest.setMobile("13752126558");
-        mRequest.setRetUrl("www.baidu.com");
-        mRequest.setNotifyUrl("www.baidu.com");
-        mRequest.setAcqRes("www.baidu.com");
-        return Flowable.just(mRequest).flatMap(new Function<CreditPasswordRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
+        return creditInfo().map(new Function<CreditInfo, CreditPasswordRequest>() {
+            @Override
+            public CreditPasswordRequest apply(CreditInfo creditInfo) throws Exception {
+                mPasswordRequest = new CreditPasswordRequest();
+                mPasswordRequest.setAccountId(creditInfo.getAccountId());
+                mPasswordRequest.setIdNo(creditInfo.getId());
+                mPasswordRequest.setName(creditInfo.getName());
+                mPasswordRequest.setMobile(creditInfo.getPhone());
+                return mPasswordRequest;
+            }
+        }).flatMap(new Function<CreditPasswordRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
             @Override
             public Publisher<retrofit2.Response<ResponseBody>> apply(CreditPasswordRequest request) throws Exception {
                 return LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()));
@@ -41,19 +60,74 @@ public class CreditRepository implements CreditDataSource {
         }).flatMap(new Function<retrofit2.Response<ResponseBody>, Publisher<CreditPasswordRequest>>() {
             @Override
             public Publisher<CreditPasswordRequest> apply(retrofit2.Response<ResponseBody> sign) throws Exception {
-                mRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
-                return Flowable.just(mRequest);
+                mPasswordRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
+                return Flowable.just(mPasswordRequest);
+            }
+        });
+    }
+
+    @Override
+    public Flowable<CreditPasswordResetRequest> passwordReset() {
+        return creditInfo().map(new Function<CreditInfo, CreditPasswordResetRequest>() {
+            @Override
+            public CreditPasswordResetRequest apply(CreditInfo creditInfo) throws Exception {
+                mPasswordResetRequest = new CreditPasswordResetRequest();
+                mPasswordResetRequest.setAccountId(creditInfo.getAccountId());
+                mPasswordResetRequest.setIdNo(creditInfo.getId());
+                mPasswordResetRequest.setName(creditInfo.getName());
+                mPasswordResetRequest.setMobile(creditInfo.getPhone());
+                return mPasswordResetRequest;
+            }
+        }).flatMap(new Function<CreditPasswordResetRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
+            @Override
+            public Publisher<retrofit2.Response<ResponseBody>> apply(CreditPasswordResetRequest request) throws Exception {
+                return LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()));
+            }
+        }).flatMap(new Function<retrofit2.Response<ResponseBody>, Publisher<CreditPasswordResetRequest>>() {
+            @Override
+            public Publisher<CreditPasswordResetRequest> apply(retrofit2.Response<ResponseBody> sign) throws Exception {
+                mPasswordResetRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
+                return Flowable.just(mPasswordResetRequest);
             }
         });
     }
 
     @Override
     public Flowable<CreditCashRequest> cash() {
-        return null;
+        return creditInfo().map(new Function<CreditInfo, CreditCashRequest>() {
+            @Override
+            public CreditCashRequest apply(CreditInfo creditInfo) throws Exception {
+                mCashRequest = new CreditCashRequest();
+                mCashRequest.setAccountId(creditInfo.getAccountId());
+                mCashRequest.setIdNo(creditInfo.getId());
+                mCashRequest.setName(creditInfo.getName());
+                mCashRequest.setMobile(creditInfo.getPhone());
+                return mCashRequest;
+            }
+        }).flatMap(new Function<CreditCashRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
+            @Override
+            public Publisher<retrofit2.Response<ResponseBody>> apply(CreditCashRequest request) throws Exception {
+                return LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()));
+            }
+        }).flatMap(new Function<retrofit2.Response<ResponseBody>, Publisher<CreditCashRequest>>() {
+            @Override
+            public Publisher<CreditCashRequest> apply(retrofit2.Response<ResponseBody> sign) throws Exception {
+                if (sign.body() != null) {
+                    mCashRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
+                }
+                return Flowable.just(mCashRequest);
+            }
+        });
     }
 
     @Override
-    public Flowable<CreditBalanceRequest> balance() {
-        return null;
+    public Flowable<CreditBalance> balance() {
+        return Flowable.just(new CreditBalanceRequest())
+                .compose(new ResponseTransformer<CreditBalanceRequest, CreditBalance>("creditBalance"));
+    }
+
+    private Flowable<CreditInfo> creditInfo() {
+        return Flowable.just(new CreditInfoRequest())
+                .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
     }
 }

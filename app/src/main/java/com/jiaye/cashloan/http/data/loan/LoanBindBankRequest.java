@@ -23,6 +23,12 @@ public class LoanBindBankRequest extends ChildRequest {
     @SerializedName("source")
     private String source = "02";
 
+    @SerializedName("sms_code")
+    private String sms;
+
+    @SerializedName("lastserviceauth_code")
+    private String code;
+
     public String getPhone() {
         return phone;
     }
@@ -55,8 +61,24 @@ public class LoanBindBankRequest extends ChildRequest {
         this.source = source;
     }
 
+    public String getSms() {
+        return sms;
+    }
+
+    public void setSms(String sms) {
+        this.sms = sms;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     protected String getBusiness() {
-        return "CL027";
+        return "CL016";
     }
 }

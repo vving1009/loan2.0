@@ -10,6 +10,7 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthDataSource;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,32 +51,27 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     @Override
                     public void accept(LoanAuth loanAuth) throws Exception {
                         List<LoanAuthModel> list = new ArrayList<>();
-                        boolean isVerify;
 
                         LoanAuthModel card = new LoanAuthModel();
                         card.setIcon(R.drawable.loan_auth_ic_card);
                         card.setName(R.string.loan_auth_ocr);
                         setLoanAuthModel(loanAuth.getCardState(), card, false);
                         mIsCardVerify = card.isVerify();
-                        isVerify = card.isVerify();
 
                         LoanAuthModel face = new LoanAuthModel();
                         face.setIcon(R.drawable.loan_auth_ic_face);
                         face.setName(R.string.loan_auth_face);
                         setLoanAuthModel(loanAuth.getFaceState(), face, false);
-                        isVerify = isVerify && face.isVerify();
 
                         LoanAuthModel person = new LoanAuthModel();
                         person.setIcon(R.drawable.loan_auth_ic_person);
                         person.setName(R.string.loan_auth_info);
                         setLoanAuthModel(loanAuth.getPersonState(), person, true);
-                        isVerify = isVerify && person.isVerify();
 
                         LoanAuthModel phone = new LoanAuthModel();
                         phone.setIcon(R.drawable.loan_auth_ic_phone);
                         phone.setName(R.string.loan_auth_phone);
                         setLoanAuthModel(loanAuth.getPhoneState(), phone, false);
-                        isVerify = isVerify && phone.isVerify();
 
                         LoanAuthModel taobao = new LoanAuthModel();
                         taobao.setIcon(R.drawable.loan_auth_ic_taobao);
@@ -86,7 +82,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         sesame.setIcon(R.drawable.loan_auth_ic_sesame);
                         sesame.setName(R.string.loan_auth_sesame);
                         setLoanAuthModel(loanAuth.getSesameState(), sesame, false);
-                        isVerify = isVerify && sesame.isVerify();
 
                         list.add(card);
                         list.add(face);
@@ -96,7 +91,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         list.add(sesame);
 
                         mView.setList(list);
-                        if (isVerify) {
+                        if (card.isVerify()) {
                             mView.setNextEnable();
                         }
                         mView.dismissProgressDialog();
@@ -153,14 +148,13 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                 .subscribe(new Consumer<UploadContactResponse>() {
                     @Override
                     public void accept(UploadContactResponse uploadContactResponse) throws Exception {
+                        Logger.d("通讯录上传成功");
                         mView.dismissProgressDialog();
-                        mView.showLoanAuthInfoGranted();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showLoanAuthInfoGranted();
                     }
                 });
         mCompositeDisposable.add(disposable);

@@ -1,15 +1,26 @@
-package com.jiaye.cashloan.view.data.my.credit;
+package com.jiaye.cashloan.http.data.my;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 /**
- * CreditBalanceRequest
+ * CreditPasswordRequest
  *
  * @author 贾博瑄
  */
 
-public class CreditBalanceRequest extends BaseCreditRequest implements Parcelable {
+public class CreditPasswordRequest extends BaseCreditRequest implements Parcelable {
+
+    public CreditPasswordRequest() {
+        txCode = "passwordSet";
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 
     @Override
     public int describeContents() {
@@ -37,10 +48,7 @@ public class CreditBalanceRequest extends BaseCreditRequest implements Parcelabl
         dest.writeString(this.sign);
     }
 
-    public CreditBalanceRequest() {
-    }
-
-    protected CreditBalanceRequest(Parcel in) {
+    protected CreditPasswordRequest(Parcel in) {
         this.version = in.readString();
         this.txCode = in.readString();
         this.instCode = in.readString();
@@ -60,15 +68,15 @@ public class CreditBalanceRequest extends BaseCreditRequest implements Parcelabl
         this.sign = in.readString();
     }
 
-    public static final Parcelable.Creator<CreditBalanceRequest> CREATOR = new Parcelable.Creator<CreditBalanceRequest>() {
+    public static final Parcelable.Creator<CreditPasswordRequest> CREATOR = new Parcelable.Creator<CreditPasswordRequest>() {
         @Override
-        public CreditBalanceRequest createFromParcel(Parcel source) {
-            return new CreditBalanceRequest(source);
+        public CreditPasswordRequest createFromParcel(Parcel source) {
+            return new CreditPasswordRequest(source);
         }
 
         @Override
-        public CreditBalanceRequest[] newArray(int size) {
-            return new CreditBalanceRequest[size];
+        public CreditPasswordRequest[] newArray(int size) {
+            return new CreditPasswordRequest[size];
         }
     };
 }
