@@ -29,20 +29,20 @@ import com.jiaye.cashloan.widget.NoScrollViewPager;
  * @author 贾博瑄
  */
 
-public class MainFragment extends BaseFragment implements MainContract.View{
+public class MainFragment extends BaseFragment implements MainContract.View {
 
-    private static final int[] TAB_ICON = new int[]{R.drawable.main_ic_home, R.drawable.main_ic_loan, R.drawable.main_ic_my};
+    private static final int[] TAB_ICON = new int[]{R.drawable.main_ic_home, R.drawable.main_ic_my};
 
-    private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.market, R.string.my};
+    private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.my};
 
     private NoScrollViewPager mViewPager;
 
-    private MainPresenter presenter ;
+    private MainPresenter presenter;
 
     /*是否为选中的产品*/
     private boolean mIsSelect;
 
-    private int tabPosition = 0 ;
+    private int tabPosition = 0;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -65,8 +65,6 @@ public class MainFragment extends BaseFragment implements MainContract.View{
                     case 0:
                         return HomeFragment.newInstance();
                     case 1:
-                        return MarketFragment.newInstance();
-                    case 2:
                         return MyFragment.newInstance();
                     default:
                         return null;
@@ -75,7 +73,7 @@ public class MainFragment extends BaseFragment implements MainContract.View{
 
             @Override
             public int getCount() {
-                return 3;
+                return 2;
             }
 
             @Override
@@ -120,7 +118,7 @@ public class MainFragment extends BaseFragment implements MainContract.View{
             }
         });
 
-        presenter = new MainPresenter(this,new MainRepository());
+        presenter = new MainPresenter(this, new MainRepository());
         presenter.subscribe();
         return root;
 
@@ -146,7 +144,6 @@ public class MainFragment extends BaseFragment implements MainContract.View{
             tabLayout.addTab(tab);
         }
     }
-
 
 
     @Override

@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.home.wish;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,23 +13,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.data.home.source.wish.source.WishRepository;
-import com.jiaye.cashloan.view.view.home.HomeFragment;
+import com.jiaye.cashloan.view.data.loan.source.LoanRepository;
+import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
+import com.jiaye.cashloan.view.view.loan.LoanContract;
+import com.jiaye.cashloan.view.view.loan.LoanPresenter;
 
 /**
  * Created by guozihua on 2018/1/2.
  */
 
-public class WishActivity extends BaseActivity implements WishContract.View{
+public class WishActivity extends BaseActivity implements LoanContract.View {
 
-    private int[] itemName = {R.string.wish_item1,R.string.wish_item2,R.string.wish_item3,R.string.wish_item4,R.string.wish_item5,R.string.wish_item6,
-            R.string.wish_item7,R.string.wish_item8,R.string.wish_item9,R.string.wish_item10};
-    private int[] itemIcon = {R.drawable.market_ic_household,R.drawable.market_ic_phone,R.drawable.market_ic_computer,R.drawable.market_ic_watch,R.drawable.market_ic_clothes,
-            R.drawable.market_ic_beauty,R.drawable.market_ic_gem,R.drawable.market_ic_digit,R.drawable.market_ic_other,R.drawable.market_ic_old};
+    private LoanPresenter mPresenter;
 
-    private EditText mEdit1,mEdit2,mEdit3,mEdit4 ;
-    private WishPresenter presenter ;
+    private int[] itemName = {R.string.wish_item1, R.string.wish_item2, R.string.wish_item3, R.string.wish_item4, R.string.wish_item5, R.string.wish_item6,
+            R.string.wish_item7, R.string.wish_item8, R.string.wish_item9, R.string.wish_item10};
+    private int[] itemIcon = {R.drawable.market_ic_household, R.drawable.market_ic_phone, R.drawable.market_ic_computer, R.drawable.market_ic_watch, R.drawable.market_ic_clothes,
+            R.drawable.market_ic_beauty, R.drawable.market_ic_gem, R.drawable.market_ic_digit, R.drawable.market_ic_other, R.drawable.market_ic_old};
+
+    private EditText mEdit1, mEdit2, mEdit3, mEdit4;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +48,7 @@ public class WishActivity extends BaseActivity implements WishContract.View{
         findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.commit();
+                mPresenter.loan();
             }
         });
 
@@ -50,43 +56,58 @@ public class WishActivity extends BaseActivity implements WishContract.View{
         mRecyclerGrid.setLayoutManager(new GridLayoutManager(this, 5));
         mRecyclerGrid.setAdapter(new GridAdapter());
 
-        presenter = new WishPresenter(this,new WishRepository());
-        presenter.subscribe();
-
+        mPresenter = new LoanPresenter(this, new LoanRepository());
+        mPresenter.subscribe();
+        mPresenter.requestProduct();
     }
 
     @Override
-    public String getBrand() {
-        return mEdit1.getText().toString().trim();
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
     @Override
-    public String getProductType() {
-        return mEdit2.getText().toString().trim();
+    public void startAuthView() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
     }
 
     @Override
-    public String getReferencePrice() {
-        return mEdit3.getText().toString().trim();
+    public void queryProduct() {
+        mPresenter.queryProduct();
     }
 
     @Override
-    public String getLoanNumber() {
-        return mEdit4.getText().toString().trim();
+    public void requestProduct() {
+        mPresenter.requestProduct();
     }
 
+    @Override
+    public void cleanProduct() {
+    }
 
-    private class GridAdapter extends RecyclerView.Adapter<GridViewHolder>{
-        int selectPosition = -1 ;
+    @Override
+    public void setDefaultProduct(DefaultProduct defaultProduct) {
+    }
+
+    @Override
+    public void showLoanAuthView() {
+        Intent intent = new Intent(this, LoanAuthActivity.class);
+        startActivity(intent);
+    }
+
+    private class GridAdapter extends RecyclerView.Adapter<GridViewHolder> {
+        int selectPosition = -1;
 
         @Override
         public GridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view  = LayoutInflater.from(getApplicationContext()).inflate(R.layout.wish_product_grid_item,parent,false);
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.wish_product_grid_item, parent, false);
             final GridViewHolder holder = new GridViewHolder(view);
             holder.setListener(new GridViewHolder.OnClickViewHolderListener() {
                 @Override
                 public void onClickViewHolder(GridViewHolder viewHolder) {
-                    selectPosition = viewHolder.getAdapterPosition() ;
+                    selectPosition = viewHolder.getAdapterPosition();
                     notifyDataSetChanged();
                 }
             });
@@ -97,10 +118,10 @@ public class WishActivity extends BaseActivity implements WishContract.View{
         public void onBindViewHolder(GridViewHolder holder, int position) {
             holder.mTextName.setText(itemName[position]);
             holder.mImgIcon.setBackgroundResource(itemIcon[position]);
-            if(selectPosition!=-1){
-                if(selectPosition==position){
+            if (selectPosition != -1) {
+                if (selectPosition == position) {
                     holder.mTextName.setTextColor(getResources().getColor(R.color.color_red));
-                }else{
+                } else {
                     holder.mTextName.setTextColor(getResources().getColor(R.color.color_525252));
                 }
             }
@@ -113,10 +134,10 @@ public class WishActivity extends BaseActivity implements WishContract.View{
         }
     }
 
-    private static class GridViewHolder extends RecyclerView.ViewHolder{
+    private static class GridViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTextName ;
-        private ImageView mImgIcon ;
+        private TextView mTextName;
+        private ImageView mImgIcon;
 
         private interface OnClickViewHolderListener {
 
@@ -141,6 +162,7 @@ public class WishActivity extends BaseActivity implements WishContract.View{
             });
 
         }
+
         public void setListener(GridViewHolder.OnClickViewHolderListener listener) {
             mListener = listener;
         }
