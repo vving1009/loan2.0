@@ -4,10 +4,10 @@ package com.jiaye.cashloan.http.data.market;
  * Created by guozihua on 2018/1/3.
  */
 
-public class Market {
+public class Market<T> {
     private String code ;
     private String msg ;
-    private String body ;
+    private T body ;
 
     public void setCode(String code){
         this.code = code ;
@@ -22,10 +22,11 @@ public class Market {
     public String getMsg(){
         return msg ;
     }
-    public void setBody(String body){
+
+    public void setBody(T body){
         this.body = body ;
     }
-    public String getBody(){
+    public T getBody(){
         return body ;
     }
 }
