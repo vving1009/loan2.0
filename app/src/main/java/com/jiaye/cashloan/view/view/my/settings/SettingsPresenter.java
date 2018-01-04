@@ -51,6 +51,7 @@ public class SettingsPresenter extends BasePresenterImpl implements SettingsCont
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
+                        removeGesturePassword();
                         mView.result();
                     }
                 }, new ThrowableConsumer(mView));
