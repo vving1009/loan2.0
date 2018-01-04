@@ -60,17 +60,20 @@ public class CreditActivity extends BaseActivity {
                 CreditPasswordRequest passwordRequest = getIntent().getExtras().getParcelable("request");
                 passwordRequest.setName(URLEncoder.encode(passwordRequest.getName()));
                 passwordRequest.setSign(URLEncoder.encode(passwordRequest.getSign()));
+                passwordRequest.setNotifyUrl(URLEncoder.encode(passwordRequest.getNotifyUrl()));
                 mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrow/p2p/page/passwordset", json2KeyValue(passwordRequest.toString()).getBytes());
                 break;
             case "passwordReset":
                 CreditPasswordResetRequest passwordResetRequest = getIntent().getExtras().getParcelable("request");
                 passwordResetRequest.setName(URLEncoder.encode(passwordResetRequest.getName()));
                 passwordResetRequest.setSign(URLEncoder.encode(passwordResetRequest.getSign()));
+                passwordResetRequest.setNotifyUrl(URLEncoder.encode(passwordResetRequest.getNotifyUrl()));
                 mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrow/p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
                 break;
             case "cash":
                 CreditCashRequest creditCashRequest = getIntent().getExtras().getParcelable("request");
                 creditCashRequest.setName(URLEncoder.encode(creditCashRequest.getName()));
+                creditCashRequest.setNotifyUrl(URLEncoder.encode(creditCashRequest.getNotifyUrl()));
                 if (TextUtils.isEmpty(creditCashRequest.getSign())) {
                     showToast("签名失败");
                     finish();
