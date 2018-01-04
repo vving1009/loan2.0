@@ -43,8 +43,6 @@ import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanOpen;
-import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
@@ -310,12 +308,6 @@ public interface LoanService {
      */
     @POST("jxbank/sendJxMsg")
     Flowable<Response<LoanOpenSMS>> loanOpenSMS(@Body Request<LoanOpenSMSRequest> request);
-
-    /**
-     * 开户
-     */
-    @POST("jxOpen")
-    Flowable<Response<LoanOpen>> loanOpen(@Body Request<LoanOpenRequest> request);
 
     /**
      * 开户及密码状态查询

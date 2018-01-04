@@ -21,12 +21,12 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
+import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
+import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.sesame.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
-import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
-import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 
 import java.util.List;
 
@@ -77,10 +77,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 }
                 break;
             case REQUEST_INFO_PERMISSION:
-                if (isGrant(grantResults)) { // 如果用户授权,先获取通讯录并上传,再进入详细信息页面
+                if (isGrant(grantResults)) { // 如果用户授权,先获取通讯录并上传
                     mPresenter.updateContact();
-                } else { // 如果用户不授权直接进入详细信息页面
-                    showLoanAuthInfoGranted();
                 }
                 break;
         }
@@ -112,6 +110,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
+        if (hasContactPermission()) {
+            mPresenter.updateContact();
+        }
         return root;
     }
 
@@ -153,13 +154,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthInfoView() {
-        if (hasContactPermission()) {
-            mPresenter.updateContact();
-        }
-    }
-
-    @Override
-    public void showLoanAuthInfoGranted() {
         Intent intent = new Intent(getActivity(), LoanAuthInfoActivity.class);
         startActivity(intent);
     }
