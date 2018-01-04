@@ -37,6 +37,8 @@ public class MainFragment extends BaseFragment implements MainContract.View{
 
     private NoScrollViewPager mViewPager;
 
+    private  TabLayout tabLayout ;
+
     private MainPresenter presenter ;
 
     /*是否为选中的产品*/
@@ -83,7 +85,7 @@ public class MainFragment extends BaseFragment implements MainContract.View{
                 return POSITION_NONE;
             }
         });
-        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
+        tabLayout = root.findViewById(R.id.tab_layout);
         setTabs(tabLayout, inflater, TAB_ICON, TAB_TEXT);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -132,6 +134,27 @@ public class MainFragment extends BaseFragment implements MainContract.View{
     public void showLoanView() {
         mIsSelect = true;
         mViewPager.setCurrentItem(1, false);
+    }
+
+    /**
+     * 隐藏选项栏
+     */
+    public void hintTabLayout(){
+        tabLayout.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示选项栏
+     */
+    public void showTabLayout(){
+        tabLayout.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     *显示首页页面
+     */
+    public void showHomeView(){
+        mViewPager.setCurrentItem(0, false);
     }
 
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] icon, int[] text) {
