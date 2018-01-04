@@ -3,14 +3,17 @@ package com.jiaye.cashloan.view.view.loan;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.source.LoanBindBankDataSource;
 
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -61,6 +64,28 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
     }
 
     @Override
+    public void requestSMS() {
+        if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {
+            mView.showToastById(R.string.error_loan_bank_phone);
+        } else if (TextUtils.isEmpty(mView.getNumber())) {
+            mView.showToastById(R.string.error_loan_bank_number);
+        } else {
+            LoanOpenSMSRequest request = new LoanOpenSMSRequest();
+            request.setPhone(mView.getPhone());
+            request.setCard(mView.getNumber());
+            Disposable disposable = mDataSource.requestBindBankSMS(request)
+                    .compose(new ViewTransformer<LoanOpenSMS>())
+                    .subscribe(new Consumer<LoanOpenSMS>() {
+                        @Override
+                        public void accept(LoanOpenSMS loanBindBankSMS) throws Exception {
+                            mView.startCountDown();
+                        }
+                    }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        }
+    }
+
+    @Override
     public void submit() {
         if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_bank_phone);
@@ -68,22 +93,28 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             mView.showToastById(R.string.error_loan_bank_bank);
         } else if (TextUtils.isEmpty(mView.getNumber())) {
             mView.showToastById(R.string.error_loan_bank_number);
+        } else if (TextUtils.isEmpty(mView.getSMS())) {
+            mView.showToastById(R.string.error_loan_bank_sms);
         } else {
-            LoanBindBankRequest request = new LoanBindBankRequest();
-            request.setPhone(mView.getPhone());
-            request.setBank(mView.getBank());
-            request.setNumber(mView.getNumber());
-            Disposable disposable = mDataSource.requestBindBank(request)
-                    .compose(new ViewTransformer<LoanBindBank>() {
+            LoanBindBankRequest bankRequest = new LoanBindBankRequest();
+            bankRequest.setPhone(mView.getPhone());
+            bankRequest.setBank(mView.getBank());
+            bankRequest.setNumber(mView.getNumber());
+            LoanOpenRequest openRequest = new LoanOpenRequest();
+            openRequest.setPhone(mView.getPhone());
+            openRequest.setSms(mView.getSMS());
+            openRequest.setCard(mView.getNumber());
+            Disposable disposable = Flowable.merge(mDataSource.requestBindBank(bankRequest), mDataSource.requestOpen(openRequest))
+                    .compose(new ViewTransformer<Object>() {
                         @Override
                         public void accept() {
                             super.accept();
                             mView.showProgressDialog();
                         }
                     })
-                    .subscribe(new Consumer<LoanBindBank>() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
-                        public void accept(LoanBindBank loanBindBank) throws Exception {
+                        public void accept(Object o) throws Exception {
                             mView.dismissProgressDialog();
                             mView.result();
                         }

@@ -2,6 +2,10 @@ package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpen;
+import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 
 import io.reactivex.Flowable;
 
@@ -15,5 +19,9 @@ public interface LoanBindBankDataSource {
 
     Flowable<String> queryName();
 
+    Flowable<LoanOpenSMS> requestBindBankSMS(LoanOpenSMSRequest request);
+
     Flowable<LoanBindBank> requestBindBank(LoanBindBankRequest request);
+
+    Flowable<LoanOpen> requestOpen(LoanOpenRequest request);
 }
