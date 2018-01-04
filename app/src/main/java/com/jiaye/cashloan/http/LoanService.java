@@ -27,6 +27,10 @@ import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpen;
+import com.jiaye.cashloan.http.data.loan.LoanOpenRequest;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
+import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
@@ -294,4 +298,16 @@ public interface LoanService {
      */
     @GET("jxbank/requestSign")
     Flowable<retrofit2.Response<ResponseBody>> sign(@Query(value = "mapJson") String mapJson);
+
+    /**
+     * 开户获取验证码
+     */
+    @POST("jxbank/sendJxMsg")
+    Flowable<Response<LoanOpenSMS>> loanOpenSMS(@Body Request<LoanOpenSMSRequest> request);
+
+    /**
+     * 开户
+     */
+    @POST("jxOpen")
+    Flowable<Response<LoanOpen>> loanOpen(@Body Request<LoanOpenRequest> request);
 }

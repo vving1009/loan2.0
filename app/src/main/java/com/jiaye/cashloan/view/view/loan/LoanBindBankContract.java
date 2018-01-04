@@ -21,10 +21,16 @@ public interface LoanBindBankContract {
 
         String getNumber();
 
+        String getSMS();
+
+        void startCountDown();
+
         void result();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestSMS();
 
         void submit();
     }

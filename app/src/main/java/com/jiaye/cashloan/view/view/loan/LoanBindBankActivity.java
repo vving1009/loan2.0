@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.loan.source.LoanBindBankRepository;
+import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
  * LoanBindBankActivity
@@ -28,6 +29,8 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
 
     private EditText mEditNumber;
 
+    private LoanEditText mEditSMS;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
         mEditPhone = findViewById(R.id.edit_phone);
         mEditBank = findViewById(R.id.edit_bank);
         mEditNumber = findViewById(R.id.edit_number);
+        mEditSMS = findViewById(R.id.edit_sms_verification_code);
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +50,12 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
             @Override
             public void onClick(View v) {
                 mPresenter.submit();
+            }
+        });
+        mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
+            @Override
+            public void onClickVerificationCode() {
+                mPresenter.requestSMS();
             }
         });
         mPresenter = new LoanBindBankPresenter(this, new LoanBindBankRepository());
@@ -76,6 +86,16 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
     @Override
     public String getNumber() {
         return mEditNumber.getText().toString();
+    }
+
+    @Override
+    public String getSMS() {
+        return mEditSMS.getText().toString();
+    }
+
+    @Override
+    public void startCountDown() {
+        mEditSMS.startCountDown();
     }
 
     @Override

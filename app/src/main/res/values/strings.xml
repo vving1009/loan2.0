@@ -198,6 +198,7 @@
     <string name="error_loan_bank_phone">请输入正确的手机号</string>
     <string name="error_loan_bank_bank">请输入正确的开户银行</string>
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
+    <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <string name="error_wish_brand">请输入您心意的品牌</string>
     <string name="error_wish_product_type">请输入产品型号</string>
     <string name="error_wish_reference_price">请输入市场参考价</string>

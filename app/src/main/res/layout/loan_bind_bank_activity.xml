@@ -179,6 +179,18 @@
             android:layout_height="1px"
             android:background="@color/color_gray_dark" />
 
+        <com.jiaye.cashloan.widget.LoanEditText
+            android:id="@+id/edit_sms_verification_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_sms_verification"
+            app:iconMarginLeft="28dp"
+            android:inputType="number"
+            android:maxLength="6"
+            app:editHeight="45dp"
+            app:enable_verification="true"
+            app:icon="@drawable/loan_bank_ic_phone" />
+
     </LinearLayout>
 
     <TextView
