@@ -42,7 +42,8 @@ public class LoanProgress extends ChildResponse {
         13已放款;
         14未还款;
         15还款中;
-        16结清*/
+        16结清
+        17签约失败*/
         @SerializedName("loan_status")
         private String status;
 
