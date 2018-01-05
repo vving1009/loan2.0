@@ -14,6 +14,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.syd.oden.gesturelock.view.GesturePreference;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -136,6 +137,7 @@ public class LoanApplication extends Application {
             activity.finish();
         }
         activityList.clear();
+        new GesturePreference(LoanApplication.getInstance(), -1).WriteStringPreference("null");
         getSQLiteDatabase().delete("user", null, null);
         getSQLiteDatabase().delete("product", null, null);
         Intent intent1 = new Intent(this, MainActivity.class);

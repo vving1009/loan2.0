@@ -27,7 +27,7 @@ public interface CreditContract {
 
         void showCashView(CreditCashRequest request);
 
-        void showBalance(String availBal,String currBal);
+        void showBalance(String availBal, String freezeBal, String currBal);
     }
 
     interface Presenter extends BasePresenter {

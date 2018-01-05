@@ -129,6 +129,7 @@
     <string name="my_credit_cash">提现</string>
     <string name="my_credit_balance">查询余额</string>
     <string name="my_credit_balance_avail">可用余额:%1$s</string>
+    <string name="my_credit_balance_freeze">冻结余额:%1$s</string>
     <string name="my_credit_balance_curr">账面余额:%1$s</string>
     <string name="my_help">帮助中心</string>
     <string name="my_qrcode">关注公众号</string>

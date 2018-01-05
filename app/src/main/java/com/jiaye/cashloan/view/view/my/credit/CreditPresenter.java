@@ -111,7 +111,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                     @Override
                     public void accept(CreditBalance creditBalance) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showBalance(creditBalance.getResult().getContent().getAvailBal(), creditBalance.getResult().getContent().getCurrBal());
+                        mView.showBalance(creditBalance.getAvailBal(), creditBalance.getFreezeBal(), creditBalance.getCurrBal());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

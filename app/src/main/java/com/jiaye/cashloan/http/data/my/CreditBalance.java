@@ -11,55 +11,39 @@ import com.jiaye.cashloan.http.base.ChildResponse;
 
 public class CreditBalance extends ChildResponse {
 
-    @SerializedName("result")
-    private Result result;
+    /*可用余额*/
+    @SerializedName("avail_bal")
+    private String availBal;
 
-    public Result getResult() {
-        return result;
+    /*冻结余额*/
+    @SerializedName("freeze_bal")
+    private String freezeBal;
+
+    /*账面余额*/
+    @SerializedName("curr_bal")
+    private String currBal;
+
+    public String getAvailBal() {
+        return availBal;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setAvailBal(String availBal) {
+        this.availBal = availBal;
     }
 
-    public class Result {
-
-        @SerializedName("reponseStr")
-        private Content content;
-
-        public Content getContent() {
-            return content;
-        }
-
-        public void setContent(Content content) {
-            this.content = content;
-        }
+    public String getFreezeBal() {
+        return freezeBal;
     }
 
-    public class Content {
+    public void setFreezeBal(String freezeBal) {
+        this.freezeBal = freezeBal;
+    }
 
-        /*可用余额*/
-        @SerializedName("availBal")
-        private String availBal;
+    public String getCurrBal() {
+        return currBal;
+    }
 
-        /*账面余额*/
-        @SerializedName("currBal")
-        private String currBal;
-
-        public String getAvailBal() {
-            return availBal;
-        }
-
-        public void setAvailBal(String availBal) {
-            this.availBal = availBal;
-        }
-
-        public String getCurrBal() {
-            return currBal;
-        }
-
-        public void setCurrBal(String currBal) {
-            this.currBal = currBal;
-        }
+    public void setCurrBal(String currBal) {
+        this.currBal = currBal;
     }
 }
