@@ -3,12 +3,12 @@ package com.jiaye.cashloan.http.data.loan;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * UploadContactResponse
+ * UploadLocation
  *
  * @author 贾博瑄
  */
 
-public class UploadContactResponse {
+public class UploadLocation {
 
     @SerializedName("return_code")
     private String code;

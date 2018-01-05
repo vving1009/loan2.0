@@ -4,7 +4,8 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
-import com.jiaye.cashloan.http.data.loan.UploadContactResponse;
+import com.jiaye.cashloan.http.data.loan.UploadContact;
+import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -136,19 +137,44 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     }
 
     @Override
-    public void updateContact() {
+    public void uploadContact() {
         Disposable disposable = mDataSource.uploadContact()
-                .compose(new ViewTransformer<UploadContactResponse>() {
+                .compose(new ViewTransformer<UploadContact>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<UploadContactResponse>() {
+                .subscribe(new Consumer<UploadContact>() {
                     @Override
-                    public void accept(UploadContactResponse uploadContactResponse) throws Exception {
+                    public void accept(UploadContact uploadContact) throws Exception {
                         Logger.d("通讯录上传成功");
+                        mView.dismissProgressDialog();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.dismissProgressDialog();
+                    }
+                });
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void uploadLocation() {
+        Disposable disposable = mDataSource.uploadLocation()
+                .compose(new ViewTransformer<UploadLocation>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<UploadLocation>() {
+                    @Override
+                    public void accept(UploadLocation uploadLocation) throws Exception {
+                        Logger.d("地理位置上传成功");
                         mView.dismissProgressDialog();
                     }
                 }, new Consumer<Throwable>() {

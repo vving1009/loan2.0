@@ -44,7 +44,11 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static final int REQUEST_FACE_PERMISSION = 102;
 
-    private static final int REQUEST_INFO_PERMISSION = 103;
+    private static final int REQUEST_INFO_LOCATION_PERMISSION = 103;
+
+    private static final int REQUEST_INFO_PERMISSION = 104;
+
+    private static final int REQUEST_LOCATION_PERMISSION = 105;
 
     private LoanAuthContract.Presenter mPresenter;
 
@@ -76,13 +80,25 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                     showToastById(R.string.error_loan_auth_camera_and_write);
                 }
                 break;
+            case REQUEST_INFO_LOCATION_PERMISSION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPresenter.uploadContact();
+                }
+                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    mPresenter.uploadLocation();
+                }
+                break;
             case REQUEST_INFO_PERMISSION:
-                if (isGrant(grantResults)) { // 如果用户授权,先获取通讯录并上传
-                    mPresenter.updateContact();
+                if (isGrant(grantResults)) { // 如果用户授权,获取通讯录并上传
+                    mPresenter.uploadContact();
+                }
+                break;
+            case REQUEST_LOCATION_PERMISSION:
+                if (isGrant(grantResults)) { // 如果用户授权,获取地理位置并上传
+                    mPresenter.uploadLocation();
                 }
                 break;
         }
-
     }
 
     @Nullable
@@ -110,9 +126,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
-        if (hasContactPermission()) {
-            mPresenter.updateContact();
-        }
+        hasPermission();
         return root;
     }
 
@@ -207,11 +221,22 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         return hasPermission;
     }
 
-    private boolean hasContactPermission() {
+    private boolean hasPermission() {
         boolean hasPermission = false;
         boolean requestContact = checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED;
-        if (requestContact) {
+        boolean requestFine = checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        if (!requestContact) {
+            mPresenter.uploadContact();
+        }
+        if (!requestFine) {
+            mPresenter.uploadLocation();
+        }
+        if (requestContact && requestFine) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_INFO_LOCATION_PERMISSION);
+        } else if (requestContact) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_INFO_PERMISSION);
+        } else if (requestFine) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         } else {
             hasPermission = true;
         }
