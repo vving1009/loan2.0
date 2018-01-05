@@ -118,6 +118,9 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                             break;
                         case "16":
                             break;
+                        case "17":
+                            showContractView(true);
+                            break;
                     }
                 }
             });
@@ -213,6 +216,12 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                     holder.mImgStatus.setImageDrawable(getResources().getDrawable(R.drawable.loan_ic_pass));
                     holder.mTextStatus.setVisibility(View.INVISIBLE);
                     break;
+                case "17":
+                    holder.mImgStatus.setVisibility(View.INVISIBLE);
+                    holder.mTextStatus.setVisibility(View.VISIBLE);
+                    holder.mTextStatus.setText(getString(R.string.loan_progress_watch));
+                    break;
+
             }
             holder.mTextDate.setText(mList.get(position).getTime());
             holder.mTextMsg.setText(mList.get(position).getMsg());
