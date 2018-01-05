@@ -67,8 +67,6 @@ public class MainFragment extends BaseFragment implements MainContract.View {
                     case 0:
                         return HomeFragment.newInstance();
                     case 1:
-                        return MarketFragment.newInstance();
-                    case 2:
                         return MyFragment.newInstance();
                     default:
                         return null;

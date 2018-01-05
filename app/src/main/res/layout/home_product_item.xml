@@ -9,9 +9,10 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
         <View
-            android:layout_width="100dp"
-            android:layout_height="1dp"
-            android:background="@color/color_black"/>
+            android:layout_width="80dp"
+            android:layout_height="0.5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/color_626262"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,17 +26,21 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="1111"/>
         </LinearLayout>
         <View
-            android:layout_width="100dp"
-            android:layout_height="1dp"
-            android:background="@color/color_black"/>
+            android:layout_width="80dp"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/color_626262"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/img_product"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/color_black"/>
 
 </LinearLayout>

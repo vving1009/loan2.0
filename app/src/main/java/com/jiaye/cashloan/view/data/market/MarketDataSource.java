@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.data.market;
 
+import com.jiaye.cashloan.http.data.my.User;
+
 import io.reactivex.Flowable;
 
 /**
@@ -12,4 +14,9 @@ public interface MarketDataSource {
      * @return
      */
     Flowable<Boolean> checkLogin() ;
+    /**
+     * 查询用户
+     */
+
+     Flowable<User> queryUser() ;
 }

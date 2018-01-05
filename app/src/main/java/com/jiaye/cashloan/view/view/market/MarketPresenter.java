@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.market;
 
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.market.MarketDataSource;
@@ -37,4 +38,19 @@ public class MarketPresenter extends BasePresenterImpl implements MarketContract
 
         mCompositeDisposable.add(disposable);
     }
+
+    @Override
+    public void queryUser() {
+        Disposable disposable = mDataSource
+                .queryUser()
+                .compose(new ViewTransformer<User>())
+                .subscribe(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) throws Exception {
+                        mView.getUserInfo(user);
+                    }
+                });
+    }
+
+
 }

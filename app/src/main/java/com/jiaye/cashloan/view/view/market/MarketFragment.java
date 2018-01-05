@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.market;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,10 @@ import com.google.gson.Gson;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.market.Market;
 import com.jiaye.cashloan.http.data.market.MarketUserInfo;
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.market.MarketRepository;
+import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.main.MainFragment;
 
 
@@ -34,6 +37,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.View{
     private BridgeWebView mWebView ;
     private MarketPresenter presenter ;
     private boolean isLogin = false ;
+    private User  user ;
 
     public static MarketFragment newInstance() {
         Bundle args = new Bundle();
@@ -116,6 +120,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.View{
             @Override
             public void handler(String data, CallBackFunction function) {
                 Toast.makeText(getActivity(),"33333",Toast.LENGTH_SHORT).show();
+                presenter.queryUser();
 //                function.onCallBack();
             }
         });
@@ -143,6 +148,8 @@ public class MarketFragment extends BaseFragment implements MarketContract.View{
             public void handler(String data, CallBackFunction function) {
 //                function.onCallBack();
                 Toast.makeText(getActivity(),"66666",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), AuthActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -155,5 +162,10 @@ public class MarketFragment extends BaseFragment implements MarketContract.View{
     @Override
     public void isLogin(boolean login) {
         isLogin = login ;
+    }
+
+    @Override
+    public void getUserInfo(User user) {
+        this.user = user ;
     }
 }

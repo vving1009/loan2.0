@@ -52,6 +52,13 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
             }
         });
 
+        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    onBackPressed();
+            }
+        });
+
         RecyclerView mRecyclerGrid = findViewById(R.id.recycler_product_grid);
         mRecyclerGrid.setLayoutManager(new GridLayoutManager(this, 5));
         mRecyclerGrid.setAdapter(new GridAdapter());

@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.market;
 
+import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
@@ -14,6 +15,10 @@ public class MarketContract {
          * 是否登录
          */
         void isLogin(boolean login);
+        /**
+         * 得到用户信息
+         */
+        void getUserInfo(User user);
     }
 
     interface Presenter extends BasePresenter {
@@ -21,5 +26,10 @@ public class MarketContract {
          * 检测是否登录
          */
        void checklogin();
+
+        /**
+         * 查询用户
+         */
+        void queryUser();
     }
 }

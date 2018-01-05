@@ -1,10 +1,12 @@
 package com.jiaye.cashloan.view.view.home;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -73,6 +75,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         banner.setImageLoader(new GlideImageLoader());
         banner.start();
 
+
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
         mScrollView.smoothScrollTo(0, 0);
@@ -127,7 +130,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void showLoanProductView() {
 
 
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("");
         builder.setMessage("尽情期待");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -136,14 +139,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
         builder.create();
-        builder.show();*/
+        builder.show();
 
     }
 
