@@ -74,6 +74,11 @@ public class LoanAuthContract {
         /**
          * 上传联系人
          */
-        void updateContact();
+        void uploadContact();
+
+        /**
+         * 上传地理位置
+         */
+        void uploadLocation();
     }
 }

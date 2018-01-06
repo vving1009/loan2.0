@@ -1,7 +1,8 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
-import com.jiaye.cashloan.http.data.loan.UploadContactResponse;
+import com.jiaye.cashloan.http.data.loan.UploadContact;
+import com.jiaye.cashloan.http.data.loan.UploadLocation;
 
 import io.reactivex.Flowable;
 
@@ -16,7 +17,12 @@ public interface LoanAuthDataSource {
     /**
      * 上传联系人
      */
-    Flowable<UploadContactResponse> uploadContact();
+    Flowable<UploadContact> uploadContact();
+
+    /**
+     * 上传地理位置
+     */
+    Flowable<UploadLocation> uploadLocation();
 
     /**
      * 请求借款认证信息并保存

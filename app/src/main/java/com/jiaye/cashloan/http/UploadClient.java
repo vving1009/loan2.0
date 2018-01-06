@@ -11,18 +11,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * UploadContactClient
+ * UploadClient
  *
  * @author 贾博瑄
  */
 
-public enum  UploadContactClient {
+public enum UploadClient {
 
     INSTANCE;
 
-    private UploadContactService mService;
+    private UploadService mService;
 
-    UploadContactClient() {
+    UploadClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new LoggingInterceptor());
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -39,10 +39,10 @@ public enum  UploadContactClient {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
-        mService = retrofit.create(UploadContactService.class);
+        mService = retrofit.create(UploadService.class);
     }
 
-    public UploadContactService getService() {
+    public UploadService getService() {
         return mService;
     }
 }

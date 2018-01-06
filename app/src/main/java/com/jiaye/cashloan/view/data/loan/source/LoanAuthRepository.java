@@ -1,16 +1,22 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationManager;
 import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.UploadContactClient;
+import com.jiaye.cashloan.http.UploadClient;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.loan.UploadContactResponse;
+import com.jiaye.cashloan.http.data.loan.UploadLocation;
+import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
@@ -29,7 +35,7 @@ import io.reactivex.functions.Function;
 public class LoanAuthRepository implements LoanAuthDataSource {
 
     @Override
-    public Flowable<UploadContactResponse> uploadContact() {
+    public Flowable<UploadContact> uploadContact() {
         UploadContactRequest request = new UploadContactRequest();
         /*phone*/
         Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
@@ -65,7 +71,35 @@ public class LoanAuthRepository implements LoanAuthDataSource {
         if (cur != null) {
             cur.close();
         }
-        return UploadContactClient.INSTANCE.getService().uploadContact(request);
+        return UploadClient.INSTANCE.getService().uploadContact(request);
+    }
+
+    @Override
+    public Flowable<UploadLocation> uploadLocation() {
+        UploadLocationRequest request = new UploadLocationRequest();
+        String locationProvider = null;
+        LocationManager locationManager = (LocationManager) LoanApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = locationManager.getProviders(true);
+        if (providers.contains(LocationManager.GPS_PROVIDER)) {
+            locationProvider = LocationManager.GPS_PROVIDER;
+        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+        }
+        @SuppressLint("MissingPermission")
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+        if (location != null) {
+            request.setLongitude(String.valueOf(location.getLongitude()));
+            request.setLatitude(String.valueOf(location.getLatitude()));
+        }
+        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
+        if (cursorUser != null) {
+            if (cursorUser.moveToNext()) {
+                String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                request.setPhone(phone);
+            }
+            cursorUser.close();
+        }
+        return UploadClient.INSTANCE.getService().uploadLocation(request);
     }
 
     @Override
