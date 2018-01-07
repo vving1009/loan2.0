@@ -1,1 +1,1 @@
-include ':app', ':tongdun', ':gesturelock', ':takephoto', ':jsBridge'
+include ':app', ':tongdun', ':gesturelock', ':takephoto'

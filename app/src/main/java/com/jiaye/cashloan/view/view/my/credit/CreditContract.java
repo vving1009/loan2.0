@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.view.my.credit;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.http.data.my.CreditBalanceRequest;
 import com.jiaye.cashloan.http.data.my.CreditCashRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 

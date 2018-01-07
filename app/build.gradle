@@ -43,9 +43,9 @@ android {
     }
 }
 
-//repositories {
-//    maven { url "https://jitpack.io" }
-//}
+repositories {
+    maven { url "https://jitpack.io" }
+}
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
@@ -68,17 +68,16 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // https://github.com/orhanobut/logger
     api 'com.orhanobut:logger:2.1.1'
+    // https://github.com/Bigkoo/Android-PickerView
+    api 'com.contrarywind:Android-PickerView:3.2.7'
+    // https://github.com/youth5201314/banner
+    api 'com.youth.banner:banner:1.4.10'
+    // https://github.com/lzyzsd/JsBridge
+    api 'com.github.lzyzsd:jsbridge:1.0.4'
     // wechat
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    // picker
-    api 'com.contrarywind:Android-PickerView:3.2.6'
-    //https://github.com/youth5201314/banner
-    compile 'com.youth.banner:banner:1.4.10'
-    compile 'com.github.bumptech.glide:glide:3.6.1'
-//    compile 'com.github.lzyzsd:jsbridge:1.0.4'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0'
     // module
     implementation project(':tongdun')
     implementation project(':gesturelock')
     implementation project(':takephoto')
-    implementation project(':jsBridge')
 }

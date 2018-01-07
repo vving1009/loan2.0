@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.main;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -15,11 +14,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.main.MainRepository;
-import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.home.HomeFragment;
-import com.jiaye.cashloan.view.view.loan.LoanFragment;
-import com.jiaye.cashloan.view.view.market.MarketFragment;
 import com.jiaye.cashloan.view.view.my.MyFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
@@ -29,22 +24,11 @@ import com.jiaye.cashloan.widget.NoScrollViewPager;
  * @author 贾博瑄
  */
 
-public class MainFragment extends BaseFragment implements MainContract.View {
+public class MainFragment extends BaseFragment {
 
     private static final int[] TAB_ICON = new int[]{R.drawable.main_ic_home, R.drawable.main_ic_my};
 
     private static final int[] TAB_TEXT = new int[]{R.string.home, R.string.my};
-
-    private NoScrollViewPager mViewPager;
-
-    private  TabLayout tabLayout ;
-
-    private MainPresenter presenter ;
-
-    /*是否为选中的产品*/
-    private boolean mIsSelect;
-
-    private int tabPosition = 0;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -57,9 +41,9 @@ public class MainFragment extends BaseFragment implements MainContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.main_fragment, container, false);
-        mViewPager = root.findViewById(R.id.view_pager);
-        mViewPager.setOffscreenPageLimit(2);
-        mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        NoScrollViewPager viewPager = root.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
 
             @Override
             public Fragment getItem(int position) {
@@ -77,82 +61,12 @@ public class MainFragment extends BaseFragment implements MainContract.View {
             public int getCount() {
                 return 2;
             }
-
-            @Override
-            public int getItemPosition(Object object) {
-                return POSITION_NONE;
-            }
         });
-        tabLayout = root.findViewById(R.id.tab_layout);
+        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
         setTabs(tabLayout, inflater, TAB_ICON, TAB_TEXT);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-//                if (tab.getPosition() == 1) {
-//                    String tag = "android:switcher:" + mViewPager.getId() + ":" + "1";
-//                    LoanFragment fragment = (LoanFragment) getActivity().getSupportFragmentManager().findFragmentByTag(tag);
-//                    if (mIsSelect) {
-//                        mIsSelect = false;
-//                        fragment.queryProduct();
-//                    } else {
-//                        fragment.requestProduct();
-//                    }
-//                }
-//                if(tabPosition!=1){
-//                    tabPosition = tab.getPosition();
-//                }
-//
-//                if(tab.getPosition()==1){
-//                    presenter.requestCheck();
-//                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        presenter = new MainPresenter(this, new MainRepository());
-        presenter.subscribe();
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
         return root;
-
-    }
-
-    /**
-     * 显示借款页面
-     */
-    public void showLoanView() {
-        mIsSelect = true;
-        mViewPager.setCurrentItem(1, false);
-    }
-
-    /**
-     * 隐藏选项栏
-     */
-    public void hintTabLayout(){
-        tabLayout.setVisibility(View.GONE);
-    }
-
-    /**
-     * 显示选项栏
-     */
-    public void showTabLayout(){
-        tabLayout.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     *显示首页页面
-     */
-    public void showHomeView(){
-        mViewPager.setCurrentItem(0, false);
     }
 
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] icon, int[] text) {
@@ -166,19 +80,5 @@ public class MainFragment extends BaseFragment implements MainContract.View {
             imgTab.setImageResource(icon[i]);
             tabLayout.addTab(tab);
         }
-    }
-
-
-
-    @Override
-    public void startAuthView() {
-//        Intent intent = new Intent(getActivity(), AuthActivity.class);
-//        startActivity(intent);
-//        mViewPager.setCurrentItem(tabPosition, false);
-    }
-
-    @Override
-    public void isLogin() {
-//        tabPosition=1 ;
     }
 }

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.home.wish;
+package com.jiaye.cashloan.view.view.loan;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,43 +8,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.loan.source.LoanRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
-import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
-import com.jiaye.cashloan.view.view.loan.LoanContract;
-import com.jiaye.cashloan.view.view.loan.LoanPresenter;
 
 /**
- * Created by guozihua on 2018/1/2.
+ * LoanActivity
+ *
+ * @author 李柽
  */
 
-public class WishActivity extends BaseActivity implements LoanContract.View {
+public class LoanActivity extends BaseActivity implements LoanContract.View {
 
     private LoanPresenter mPresenter;
 
-    private int[] itemName = {R.string.wish_item1, R.string.wish_item2, R.string.wish_item3, R.string.wish_item4, R.string.wish_item5, R.string.wish_item6,
-            R.string.wish_item7, R.string.wish_item8, R.string.wish_item9, R.string.wish_item10};
-    private int[] itemIcon = {R.drawable.market_ic_household, R.drawable.market_ic_phone, R.drawable.market_ic_computer, R.drawable.market_ic_watch, R.drawable.market_ic_clothes,
-            R.drawable.market_ic_beauty, R.drawable.market_ic_gem, R.drawable.market_ic_digit, R.drawable.market_ic_other, R.drawable.market_ic_old};
+    private static final int[] ITEM_NAME = {R.string.wish_item1, R.string.wish_item2, R.string.wish_item3, R.string.wish_item4, R.string.wish_item5, R.string.wish_item6, R.string.wish_item7, R.string.wish_item8, R.string.wish_item9, R.string.wish_item10};
 
-    private EditText mEdit1, mEdit2, mEdit3, mEdit4;
+    private static final int[] ITEM_ICON = {R.drawable.market_ic_household, R.drawable.market_ic_phone, R.drawable.market_ic_computer, R.drawable.market_ic_watch, R.drawable.market_ic_clothes, R.drawable.market_ic_beauty, R.drawable.market_ic_gem, R.drawable.market_ic_digit, R.drawable.market_ic_other, R.drawable.market_ic_old};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wishlist_activity);
-
-        mEdit1 = findViewById(R.id.edit1);
-        mEdit2 = findViewById(R.id.edit2);
-        mEdit3 = findViewById(R.id.edit3);
-        mEdit4 = findViewById(R.id.edit4);
         findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +44,7 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -78,24 +67,6 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
     public void startAuthView() {
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void queryProduct() {
-        mPresenter.queryProduct();
-    }
-
-    @Override
-    public void requestProduct() {
-        mPresenter.requestProduct();
-    }
-
-    @Override
-    public void cleanProduct() {
-    }
-
-    @Override
-    public void setDefaultProduct(DefaultProduct defaultProduct) {
     }
 
     @Override
@@ -123,8 +94,8 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
 
         @Override
         public void onBindViewHolder(GridViewHolder holder, int position) {
-            holder.mTextName.setText(itemName[position]);
-            holder.mImgIcon.setBackgroundResource(itemIcon[position]);
+            holder.mTextName.setText(ITEM_NAME[position]);
+            holder.mImgIcon.setBackgroundResource(ITEM_ICON[position]);
             if (selectPosition != -1) {
                 if (selectPosition == position) {
                     holder.mTextName.setTextColor(getResources().getColor(R.color.color_red));
@@ -137,7 +108,7 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
 
         @Override
         public int getItemCount() {
-            return itemName.length;
+            return ITEM_NAME.length;
         }
     }
 
@@ -174,5 +145,4 @@ public class WishActivity extends BaseActivity implements LoanContract.View {
             mListener = listener;
         }
     }
-
 }

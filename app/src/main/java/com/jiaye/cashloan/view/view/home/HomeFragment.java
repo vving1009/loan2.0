@@ -1,32 +1,22 @@
 package com.jiaye.cashloan.view.view.home;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.home.Product;
 import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.home.source.HomeRepository;
-import com.jiaye.cashloan.view.view.home.wish.WishActivity;
-import com.jiaye.cashloan.view.view.main.MainFragment;
+import com.jiaye.cashloan.view.view.loan.LoanActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * HomeFragment
@@ -34,16 +24,15 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class HomeFragment extends BaseFragment implements HomeContract.View {
+public class HomeFragment extends BaseFragment {
 
-    private HomeContract.Presenter mPresenter;
+    private Banner mBanner;
 
-    private ScrollView mScrollView;
+    private static final int[] TAB_IMAGES = {R.drawable.home_tab_price, R.drawable.home_tab_credit, R.drawable.home_tab_loan};
 
-    private Adapter mAdapter;
-    private Banner banner;
-    private int[] images = {R.drawable.home_ic_price, R.drawable.home_ic_credit, R.drawable.home_ic_loan};
-    private int[] tab_images = {R.drawable.home_tab_price, R.drawable.home_tab_credit, R.drawable.home_tab_loan};
+    private static final int[] TAB_TITLE = {R.string.home_price, R.string.home_credit, R.string.home_loan};
+
+    private static final int[] IMAGES = {R.drawable.home_ic_price, R.drawable.home_ic_credit, R.drawable.home_ic_loan};
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,290 +45,61 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        mScrollView = root.findViewById(R.id.scroll_view);
-        RecyclerView recyclerView = root.findViewById(R.id.recycler);
-        mAdapter = new Adapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(mAdapter);
-
-        banner = root.findViewById(R.id.banner);
+        /*Banner*/
+        mBanner = root.findViewById(R.id.banner);
         ArrayList<Integer> imageList = new ArrayList<>();
         imageList.add(R.drawable.bannar1);
         imageList.add(R.drawable.bannar2);
         imageList.add(R.drawable.bannar3);
         imageList.add(R.drawable.bannar4);
         imageList.add(R.drawable.bannar5);
-        banner.setImages(imageList);
-        banner.setDelayTime(4000);
-        banner.setImageLoader(new GlideImageLoader());
-        banner.start();
+        mBanner.setImages(imageList);
+        mBanner.setDelayTime(4000);
+        mBanner.setImageLoader(new GlideImageLoader());
+        mBanner.start();
+        /*Product*/
+        View view1 = root.findViewById(R.id.include_1);
+        TextView textTitle1 = view1.findViewById(R.id.text_title);
+        ImageView imageView1 = view1.findViewById(R.id.img_product);
+        textTitle1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[0]), null, null, null);
+        textTitle1.setText(getString(TAB_TITLE[0]));
+        imageView1.setImageDrawable(getResources().getDrawable(IMAGES[0]));
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWishView();
+            }
+        });
 
+        View view2 = root.findViewById(R.id.include_2);
+        TextView textTitle2 = view2.findViewById(R.id.text_title);
+        ImageView imageView2 = view2.findViewById(R.id.img_product);
+        textTitle2.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[1]), null, null, null);
+        textTitle2.setText(getString(TAB_TITLE[1]));
+        imageView2.setImageDrawable(getResources().getDrawable(IMAGES[1]));
 
-        mPresenter = new HomePresenter(this, new HomeRepository());
-        mPresenter.subscribe();
-        mScrollView.smoothScrollTo(0, 0);
+        View view3 = root.findViewById(R.id.include_3);
+        TextView textTitle3 = view3.findViewById(R.id.text_title);
+        ImageView imageView3 = view3.findViewById(R.id.img_product);
+        textTitle3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[2]), null, null, null);
+        textTitle3.setText(getString(TAB_TITLE[2]));
+        imageView3.setImageDrawable(getResources().getDrawable(IMAGES[2]));
         return root;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void setList(List<Product> list) {
-        /**
-         * 假数据
-         */
-        Product p1 = new Product();
-        p1.setName("消费分期");
-        Product p2 = new Product();
-        p2.setName("信贷产品");
-        Product p3 = new Product();
-        p3.setName("借款产品");
-
-        ArrayList<Product> arrayList = new ArrayList<>();
-        arrayList.add(p1);
-        arrayList.add(p2);
-        arrayList.add(p3);
-
-        mAdapter.setList(arrayList);
-    }
-
-    @Override
-    public void showLoanView() {
-        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.layout_content);
-        if (fragment != null && fragment instanceof MainFragment) {
-            ((MainFragment) fragment).showLoanView();
-        }
-    }
-
-    @Override
-    public void showWishView() {
-        startActivity(new Intent(getActivity(), WishActivity.class));
-    }
-
-    @Override
-    public void showCreditView() {//先判断是否登录 跳一个空白页 然后跳到六部认证
-
-    }
-
-    @Override
-    public void showLoanProductView() {
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("");
-        builder.setMessage("尽情期待");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.create();
-        builder.show();
-
-    }
-
-    //    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
-//
-//        private List<Product> mList;
-//
-//        private String formatAmount;
-//
-//        public Adapter() {
-//            formatAmount = getString(R.string.home_card_amount);
-//        }
-//
-//        @Override
-//        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_item, parent, false);
-//            ViewHolder viewHolder = new ViewHolder(view);
-//            viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
-//                @Override
-//                public void onClickViewHolder(ViewHolder viewHolder) {
-//                    mPresenter.selectProduct(mList.get(viewHolder.getLayoutPosition()));
-//                }
-//            });
-//            return viewHolder;
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(ViewHolder holder, int position) {
-//            holder.setDrawable(mList.get(position).getLabelResId());
-//            holder.setColor(getResources().getColor(mList.get(position).getColor()));
-//            String amount = String.format(formatAmount, mList.get(position).getAmount());
-//            SpannableString sp = new SpannableString(amount);
-//            sp.setSpan(new AbsoluteSizeSpan(12, true), 0, 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-//            sp.setSpan(new AbsoluteSizeSpan(30, true), 5, amount.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-//            holder.setAmount(sp);
-//            holder.setDeadline(mList.get(position).getDeadline());
-//            holder.setPaymentMethod(mList.get(position).getPaymentMethod());
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            if (mList != null && mList.size() > 0) {
-//                return mList.size();
-//            } else {
-//                return 0;
-//            }
-//        }
-//
-//        public void setList(List<Product> list) {
-//            mList = list;
-//            notifyDataSetChanged();
-//        }
-//    }
-    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
-
-        private List<Product> mList;
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_product_item, parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
-                @Override
-                public void onClickViewHolder(ViewHolder viewHolder) {
-                    mPresenter.selectProduct(mList.get(viewHolder.getLayoutPosition()));
-                }
-            });
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.mTextName.setText(mList.get(position).getName());
-            holder.mImgProduct.setBackgroundResource(images[position]);
-            holder.mImgIcon.setBackgroundResource(tab_images[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            if (mList != null && mList.size() > 0) {
-                return mList.size();
-            } else {
-                return 0;
-            }
-        }
-
-        public void setList(List<Product> list) {
-            mList = list;
-            notifyDataSetChanged();
-        }
-
-    }
-
-    //    private static class ViewHolder extends RecyclerView.ViewHolder {
-//
-//        private interface OnClickViewHolderListener {
-//
-//            void onClickViewHolder(ViewHolder viewHolder);
-//        }
-//
-//        private OnClickViewHolderListener mListener;
-//
-//        private ImageView mImgLabel;
-//
-//        private TextView mTextAmount;
-//
-//        private TextView mTextDeadline;
-//
-//        private TextView mTextPaymentMethod;
-//
-//        public ViewHolder(View itemView) {
-//            super(itemView);
-//            itemView.findViewById(R.id.layout_card).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mListener != null) {
-//                        mListener.onClickViewHolder(ViewHolder.this);
-//                    }
-//                }
-//            });
-//            mImgLabel = itemView.findViewById(R.id.img_label);
-//            mTextAmount = itemView.findViewById(R.id.text_amount);
-//            mTextDeadline = itemView.findViewById(R.id.text_deadline);
-//            mTextPaymentMethod = itemView.findViewById(R.id.text_payment_method);
-//        }
-//
-//        public void setListener(OnClickViewHolderListener listener) {
-//            mListener = listener;
-//        }
-//
-//        public void setDrawable(int resId) {
-//            mImgLabel.setImageResource(resId);
-//        }
-//
-//        public void setColor(int color) {
-//            mTextAmount.setTextColor(color);
-//            mTextDeadline.setTextColor(color);
-//            mTextPaymentMethod.setTextColor(color);
-//        }
-//
-//        public void setAmount(SpannableString amount) {
-//            mTextAmount.setText(amount);
-//        }
-//
-//        public void setDeadline(String deadline) {
-//            mTextDeadline.setText(deadline);
-//        }
-//
-//        public void setPaymentMethod(String paymentMethod) {
-//            mTextPaymentMethod.setText(paymentMethod);
-//        }
-//    }
-    private static class ViewHolder extends RecyclerView.ViewHolder {
-
-
-        private interface OnClickViewHolderListener {
-
-            void onClickViewHolder(ViewHolder viewHolder);
-        }
-
-        private OnClickViewHolderListener mListener;
-
-
-        private ImageView mImgIcon;
-        private TextView mTextName;
-        private ImageView mImgProduct;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mImgIcon = itemView.findViewById(R.id.img_icon);
-            mImgProduct = itemView.findViewById(R.id.img_product);
-            mTextName = itemView.findViewById(R.id.tv_name);
-            mImgProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        mListener.onClickViewHolder(ViewHolder.this);
-                    }
-                }
-            });
-        }
-
-        public void setListener(OnClickViewHolderListener listener) {
-            mListener = listener;
-        }
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
-        //开始轮播
-        banner.startAutoPlay();
+        mBanner.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        //结束轮播
-        banner.stopAutoPlay();
+        mBanner.stopAutoPlay();
+    }
+
+    private void showWishView() {
+        startActivity(new Intent(getActivity(), LoanActivity.class));
     }
 }

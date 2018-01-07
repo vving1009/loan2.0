@@ -235,22 +235,22 @@ public abstract class LivenessDetectionMainActivity extends Activity implements 
         setContentView(getResources().getIdentifier("oliveapp_activity_liveness_detection_main", "layout", mPackageName));
 
         /// 步骤提示界面相关
-        mOliveappStepHintLayout = (RelativeLayout) findViewById(getResources().getIdentifier("oliveapp_step_hint_layout", "id", mPackageName));
-        mOliveappStepHintImage = (CircleImageView) findViewById(getResources().getIdentifier("oliveapp_step_hint_image", "id", mPackageName));
+        mOliveappStepHintLayout = findViewById(getResources().getIdentifier("oliveapp_step_hint_layout", "id", mPackageName));
+        mOliveappStepHintImage = findViewById(getResources().getIdentifier("oliveapp_step_hint_image", "id", mPackageName));
         mOliveappStepHintImage.start();
-        mOliveappStepHintText = (TextView) findViewById(getResources().getIdentifier("oliveapp_step_hint_text", "id", mPackageName));
-            mOliveappCountDownProgressbar = (CircularCountDownProgressBar) findViewById(getResources().getIdentifier("oliveapp_step_countdown_progressbar", "id", mPackageName));
+        mOliveappStepHintText = findViewById(getResources().getIdentifier("oliveapp_step_hint_text", "id", mPackageName));
+            mOliveappCountDownProgressbar = findViewById(getResources().getIdentifier("oliveapp_step_countdown_progressbar", "id", mPackageName));
         mOliveappCountDownProgressbar.setVisibility(View.INVISIBLE);
 
         /// 结果展示界面相关
-        mOliveappResultLayout = (RelativeLayout) findViewById(getResources().getIdentifier("oliveapp_step_hint_layout", "id", mPackageName));
-        mOliveappResultIcon = (ImageView) findViewById(getResources().getIdentifier("oliveapp_result_icon", "id", mPackageName));
-        mOliveappResultText = (TextView) findViewById(getResources().getIdentifier("oliveapp_result_text", "id", mPackageName));
+        mOliveappResultLayout = findViewById(getResources().getIdentifier("oliveapp_step_hint_layout", "id", mPackageName));
+        mOliveappResultIcon = findViewById(getResources().getIdentifier("oliveapp_result_icon", "id", mPackageName));
+        mOliveappResultText = findViewById(getResources().getIdentifier("oliveapp_result_text", "id", mPackageName));
 
         mAudioModule = new AudioModule();
 
         // DEBUG: 调试相关
-        mFrameRateText = (TextView) findViewById(getResources().getIdentifier("oliveapp_frame_rate_text", "id", mPackageName));
+        mFrameRateText = findViewById(getResources().getIdentifier("oliveapp_frame_rate_text", "id", mPackageName));
     }
 
     // 图片预处理参数

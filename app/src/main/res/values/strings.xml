@@ -2,24 +2,30 @@
     <string name="app_name">嘉E贷</string>
     <string name="home">首页</string>
     <string name="my">我的</string>
-    <string name="market">商城</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
     <!--home-->
-    <string name="home_card_label">明 星产 品</string>
-    <string name="home_card_amount_title">借款金额(元)</string>
-    <string name="home_card_amount">最高 ¥ %1$s.00</string>
-    <string name="home_card_deadline_title">借款期限</string>
-    <string name="home_card_payment_method">还款方式</string>
-    <!--loan-->
-    <string name="loan_easy">简单</string>
-    <string name="loan_easy_explain">资料极简</string>
-    <string name="loan_efficient">高效</string>
-    <string name="loan_efficient_explain">0秒审批</string>
-    <string name="loan_fast">快速</string>
-    <string name="loan_fast_explain">闪电到账</string>
-    <string name="loan_loan">我要借款</string>
-    <string name="loan_deadline_title">借款期限：%1$s</string>
+    <string name="home_price">消费分期</string>
+    <string name="home_credit">信贷产品</string>
+    <string name="home_loan">借款产品</string>
+    <!--心愿清单-->
+    <string name="wish_item1">家电</string>
+    <string name="wish_item2">手机</string>
+    <string name="wish_item3">电脑</string>
+    <string name="wish_item4">手表配饰</string>
+    <string name="wish_item5">运动服饰</string>
+    <string name="wish_item6">美妆</string>
+    <string name="wish_item7">箱包珠宝</string>
+    <string name="wish_item8">数码</string>
+    <string name="wish_item9">其他</string>
+    <string name="wish_item10">二手优选</string>
+    <string name="wish_list">心愿清单</string>
+    <string name="wish_edit1">请输入您心意的品牌</string>
+    <string name="wish_edit2">请输入产品型号</string>
+    <string name="wish_edit3">请输入市场参考价</string>
+    <string name="wish_edit4">请输入您想要借款金额</string>
+    <string name="wish_warn">*请填写准确的信息，用于额度的审批</string>
+    <string name="wish_commit">提交申请</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_ocr">身份认证</string>
@@ -86,14 +92,13 @@
     <string name="loan_progress_title">借款进度</string>
     <string name="loan_progress_step">借款使用此步骤</string>
     <string name="loan_progress_progress">我的借款进度</string>
-    <string name="loan_progress_phone">如有疑问请联系客服400-8780-777</string>
+    <string name="loan_progress_phone">如有疑问请联系客服400–8780-777</string>
     <string name="loan_progress_bind">绑定</string>
     <string name="loan_progress_contract">签订</string>
     <string name="loan_progress_watch">查看</string>
     <string name="loan_progress_repayment">还款</string>
     <string name="loan_contract">借款合同</string>
     <string name="loan_contract_agree">我已阅读并同意</string>
-
     <string name="loan_bank_title">银行卡</string>
     <string name="loan_bank_person">持卡人</string>
     <string name="loan_bank_phone">预留手机号</string>
@@ -236,24 +241,4 @@
     <string name="error_9997">验签失败</string>
     <string name="error_9998">数据格式不正确</string>
     <string name="error_9999">请求异常</string>
-
-    <!--心愿清单-->
-    <string name="wish_item1">家电</string>
-    <string name="wish_item2">手机</string>
-    <string name="wish_item3">电脑</string>
-    <string name="wish_item4">手表配饰</string>
-    <string name="wish_item5">运动服饰</string>
-    <string name="wish_item6">美妆</string>
-    <string name="wish_item7">箱包珠宝</string>
-    <string name="wish_item8">数码</string>
-    <string name="wish_item9">其他</string>
-    <string name="wish_item10">二手优选</string>
-
-    <string name="wish_list">心愿清单</string>
-    <string name="wish_edit1">请输入您心意的品牌</string>
-    <string name="wish_edit2">请输入产品型号</string>
-    <string name="wish_edit3">请输入市场参考价</string>
-    <string name="wish_edit4">请输入您想要借款金额</string>
-    <string name="wish_warn">*请填写准确的信息，用于额度的审批</string>
-    <string name="wish_commit">提交申请</string>
 </resources>

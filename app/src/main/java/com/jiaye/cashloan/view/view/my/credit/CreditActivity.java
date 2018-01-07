@@ -1,9 +1,9 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
+import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -27,17 +27,16 @@ import java.net.URLEncoder;
 
 public class CreditActivity extends BaseActivity {
 
-    private WebView mWebView;
-
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credit_activity);
-        mWebView = findViewById(R.id.web_view);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setDatabaseEnabled(true);
-        mWebView.setWebViewClient(new WebViewClient() {
+        WebView webView = findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -61,21 +60,21 @@ public class CreditActivity extends BaseActivity {
                 passwordRequest.setName(URLEncoder.encode(passwordRequest.getName()));
                 passwordRequest.setSign(URLEncoder.encode(passwordRequest.getSign()));
                 passwordRequest.setNotifyUrl(URLEncoder.encode(passwordRequest.getNotifyUrl()));
-                mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/passwordset", json2KeyValue(passwordRequest.toString()).getBytes());
+                webView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/passwordset", json2KeyValue(passwordRequest.toString()).getBytes());
                 break;
             case "passwordReset":
                 CreditPasswordResetRequest passwordResetRequest = getIntent().getExtras().getParcelable("request");
                 passwordResetRequest.setName(URLEncoder.encode(passwordResetRequest.getName()));
                 passwordResetRequest.setSign(URLEncoder.encode(passwordResetRequest.getSign()));
                 passwordResetRequest.setNotifyUrl(URLEncoder.encode(passwordResetRequest.getNotifyUrl()));
-                mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
+                webView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
                 break;
             case "cash":
                 CreditCashRequest creditCashRequest = getIntent().getExtras().getParcelable("request");
                 creditCashRequest.setName(URLEncoder.encode(creditCashRequest.getName()));
                 creditCashRequest.setSign(URLEncoder.encode(creditCashRequest.getSign()));
                 creditCashRequest.setNotifyUrl(URLEncoder.encode(creditCashRequest.getNotifyUrl()));
-                mWebView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/withdraw", json2KeyValue(creditCashRequest.toString()).getBytes());
+                webView.postUrl(BuildConfig.CREDIT2GO_URL + "escrowll/p2p/page/withdraw", json2KeyValue(creditCashRequest.toString()).getBytes());
                 break;
         }
     }

@@ -4,7 +4,6 @@ import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.my.User;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 
 /**

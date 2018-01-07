@@ -36,6 +36,10 @@
             android:name=".view.view.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.view.loan.LoanActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.loan.LoanAuthActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -91,14 +95,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.my.credit.CreditActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".view.view.home.wish.WishActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.view.market.MarketActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

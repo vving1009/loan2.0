@@ -1,11 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/oliveapp_activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/oliveapp_activity_horizontal_margin"
     android:paddingRight="@dimen/oliveapp_activity_horizontal_margin"
     android:paddingTop="@dimen/oliveapp_activity_vertical_margin"
     android:paddingBottom="@dimen/oliveapp_activity_vertical_margin"
-    android:background="#91D2DA"
-    tools:context="cn.tongdun.android.liveness.SampleStartActivity">
+    android:background="#91D2DA">
 
     <TextView
         android:layout_width="fill_parent"

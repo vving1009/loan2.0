@@ -17,7 +17,6 @@
         android:textSize="16sp" />
 
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,16 +31,17 @@
                 android:layout_height="150dp"
                 app:image_scale_type="fit_xy" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <include
+                android:id="@+id/include_1"
+                layout="@layout/include_home_product" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center" />
-            </RelativeLayout>
+            <include
+                android:id="@+id/include_2"
+                layout="@layout/include_home_product" />
+
+            <include
+                android:id="@+id/include_3"
+                layout="@layout/include_home_product" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
