@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.view.my.certificate.info;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.data.dictionary.Area;
 import com.jiaye.cashloan.http.data.dictionary.Education;
 import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -56,9 +55,6 @@ public class InfoPersonPresenter extends BasePresenterImpl implements InfoPerson
                 BufferedReader br = new BufferedReader(new InputStreamReader(input));
                 Gson gson = new Gson();
                 switch (file.getName()) {
-                    case "area.json":
-                        transformArea(br, gson);
-                        break;
                     case "education.json":
                         transformEducation(br, gson);
                         break;
@@ -102,31 +98,6 @@ public class InfoPersonPresenter extends BasePresenterImpl implements InfoPerson
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
-    }
-
-    private void transformArea(BufferedReader br, Gson gson) {
-        ArrayList<Area> areas = gson.fromJson(br, new TypeToken<List<Area>>() {
-        }.getType());
-        ArrayList<ArrayList<String>> areas2 = new ArrayList<>();
-        ArrayList<ArrayList<ArrayList<String>>> areas3 = new ArrayList<>();
-        for (int i = 0; i < areas.size(); i++) {//遍历省份
-            ArrayList<String> cities = new ArrayList<>();//该省的城市列表（第二级）
-            ArrayList<ArrayList<String>> provinces = new ArrayList<>();//该省的所有地区列表（第三极）
-            for (int c = 0; c < areas.get(i).getCity().size(); c++) {//遍历该省份的所有城市
-                String CityName = areas.get(i).getCity().get(c).getName();
-                cities.add(CityName);//添加城市
-                ArrayList<String> strings = new ArrayList<>();//该城市的所有地区列表
-                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                if (areas.get(i).getCity().get(c).getAreas() == null || areas.get(i).getCity().get(c).getAreas().size() == 0) {
-                    strings.add("");
-                } else {
-                    strings.addAll(areas.get(i).getCity().get(c).getAreas());
-                }
-                provinces.add(strings);//添加该省所有地区数据
-            }
-            areas2.add(cities);
-            areas3.add(provinces);
-        }
     }
 
     private void transformEducation(BufferedReader br, Gson gson) {
