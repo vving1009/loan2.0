@@ -77,7 +77,7 @@ public class LoanAuthTaoBaoNormalRepository implements LoanAuthTaoBaoNormalDataS
                         return GongXinBaoClient.INSTANCE.getService().ecommerceConfig(mToken);
                     }
                 })
-                .map(new GongXinBaoResponseFunction<Object>());
+                .map(new GongXinBaoResponseFunction<>());
     }
 
     @Override

@@ -221,8 +221,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         return hasPermission;
     }
 
-    private boolean hasPermission() {
-        boolean hasPermission = false;
+    private void hasPermission() {
         boolean requestContact = checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED;
         boolean requestFine = checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
         if (!requestContact) {
@@ -237,10 +236,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_INFO_PERMISSION);
         } else if (requestFine) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        } else {
-            hasPermission = true;
         }
-        return hasPermission;
     }
 
     private void showLoanAuthOCRGranted() {

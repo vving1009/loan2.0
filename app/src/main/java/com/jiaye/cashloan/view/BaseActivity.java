@@ -10,7 +10,7 @@ import android.widget.Toast;
  * @author 贾博瑄
  */
 
-public class BaseActivity extends AppCompatActivity implements BaseViewContract {
+public abstract class BaseActivity extends AppCompatActivity implements BaseViewContract {
 
     protected ProgressDialog mDialog;
 

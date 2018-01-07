@@ -22,11 +22,6 @@ public class NoScrollViewPager extends ViewPager {
     }
 
     @Override
-    public void scrollTo(int x, int y) {
-        super.scrollTo(x, y);
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent arg0) {
         return false;
     }
@@ -34,11 +29,6 @@ public class NoScrollViewPager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
         return false;
-    }
-
-    @Override
-    public void setCurrentItem(int item, boolean smoothScroll) {
-        super.setCurrentItem(item, smoothScroll);
     }
 
     @Override
