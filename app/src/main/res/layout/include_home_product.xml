@@ -37,5 +37,6 @@
     <ImageView
         android:id="@+id/img_product"
         android:layout_width="match_parent"
-        android:layout_height="160dp" />
+        android:layout_height="160dp"
+        android:scaleType="fitXY" />
 </LinearLayout>

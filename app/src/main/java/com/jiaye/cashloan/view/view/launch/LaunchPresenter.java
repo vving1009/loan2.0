@@ -58,8 +58,12 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long number) throws Exception {
-                        if (mDataSource.getCheckUpdate().getData().getVersionCode() > BuildConfig.VERSION_CODE) {
-                            mView.showUpdateView(mDataSource.getCheckUpdate().getData());
+                        if (mDataSource.getCheckUpdate().getCode() == 1000) {
+                            if (mDataSource.getCheckUpdate().getData().getVersionCode() > BuildConfig.VERSION_CODE) {
+                                mView.showUpdateView(mDataSource.getCheckUpdate().getData());
+                            } else {
+                                auto();
+                            }
                         } else {
                             auto();
                         }
