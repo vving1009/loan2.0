@@ -60,7 +60,6 @@
     <string name="loan_auth_phone_input_sms_verification">请输入短信验证码</string>
     <string name="loan_auth_phone_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_phone_bank">银行高级别加密 保障您的信息安全</string>
-    <string name="loan_auth_phone_fail">手机检测失败</string>
     <string name="loan_auth_taobao">淘宝认证</string>
     <string name="loan_auth_taobao_normal">帐号授权</string>
     <string name="loan_auth_taobao_normal_account">请输入淘宝账号</string>
@@ -70,15 +69,6 @@
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_sesame">芝麻信用分</string>
-    <string name="loan_confirm_title">借款确认</string>
-    <string name="loan_confirm_loan">借款金额</string>
-    <string name="loan_confirm_service">服务费</string>
-    <string name="loan_confirm_consult">咨询费</string>
-    <string name="loan_confirm_interest">利息</string>
-    <string name="loan_confirm_deadline">借款期限</string>
-    <string name="loan_confirm_payment_method">还款方式</string>
-    <string name="loan_confirm_amount">还款金额</string>
-    <string name="loan_confirm_unit">元</string>
     <string name="loan_details_approve_title">借款审批</string>
     <string name="loan_details_progress_title">放款还款</string>
     <string name="loan_details_history_title">历史借款</string>
@@ -120,8 +110,6 @@
     <string name="my_certificate_operator">手机运营商</string>
     <string name="my_certificate_taobao">淘宝认证</string>
     <string name="my_certificate_sesame">芝麻信用分</string>
-    <string name="my_certificate_bind">已绑定</string>
-    <string name="my_certificate_un_bind">未绑定</string>
     <string name="my_tourist">游客</string>
     <string name="my_approve">借款审批</string>
     <string name="my_loan">放款还款</string>
@@ -212,10 +200,6 @@
     <string name="error_loan_bank_bank">请输入正确的开户银行</string>
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
-    <string name="error_wish_brand">请输入您心意的品牌</string>
-    <string name="error_wish_product_type">请输入产品型号</string>
-    <string name="error_wish_reference_price">请输入市场参考价</string>
-    <string name="error_wish_loan_number">请输入您想要借款金额</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_0001">该手机号已经注册</string>
