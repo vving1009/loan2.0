@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.http;
 
+import com.jiaye.cashloan.http.data.launch.CheckUpdate;
+import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
@@ -22,4 +24,7 @@ public interface UploadService {
 
     @POST("phoneLocation")
     Flowable<UploadLocation> uploadLocation(@Body UploadLocationRequest request);
+
+    @POST("getversion")
+    Flowable<CheckUpdate> checkUpdate(@Body CheckUpdateRequest request);
 }

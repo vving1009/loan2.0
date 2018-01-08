@@ -1,5 +1,8 @@
 package com.jiaye.cashloan.view.data.launch.source;
 
+import com.jiaye.cashloan.http.data.launch.CheckUpdate;
+import com.jiaye.cashloan.http.download.DownloadProgressListener;
+
 import java.io.File;
 
 import io.reactivex.Flowable;
@@ -11,6 +14,21 @@ import io.reactivex.Flowable;
  */
 
 public interface LaunchDataSource {
+
+    /**
+     * 检测升级
+     */
+    Flowable<CheckUpdate> checkUpdate();
+
+    /**
+     * 下载应用
+     */
+    Flowable<File> download(DownloadProgressListener listener);
+
+    /**
+     * 获得检测结果
+     */
+    CheckUpdate getCheckUpdate();
 
     /**
      * 是否需要引导
