@@ -56,6 +56,11 @@ public class LoanAuthContract {
          */
         void showLoanAuthSesameView();
 
+        /**
+         * 显示贷款进度页面
+         */
+        void showLoanProgressView(String loanId);
+
         void result();
     }
 
@@ -80,5 +85,10 @@ public class LoanAuthContract {
          * 上传地理位置
          */
         void uploadLocation();
+
+        /**
+         * 确认
+         */
+        void confirm();
     }
 }

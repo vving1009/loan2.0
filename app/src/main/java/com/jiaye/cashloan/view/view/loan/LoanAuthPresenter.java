@@ -186,6 +186,26 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
         mCompositeDisposable.add(disposable);
     }
 
+    @Override
+    public void confirm() {
+        Disposable disposable = mDataSource.requestLoanConfirm()
+                .compose(new ViewTransformer<String>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String loanId) throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.showLoanProgressView(loanId);
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
     private void setLoanAuthModel(String state, LoanAuthModel model, boolean canModify) {
         if (TextUtils.isEmpty(state) || state.equals("0")) {
             model.setIcState(R.drawable.ic_angle_blue);

@@ -119,9 +119,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoanConfirmActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().finish();
+                mPresenter.confirm();
             }
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
@@ -188,6 +186,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     public void showLoanAuthSesameView() {
         Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void showLoanProgressView(String loanId) {
+        Intent intent = new Intent(getActivity(), LoanProgressActivity.class);
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
