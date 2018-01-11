@@ -1,9 +1,11 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -85,7 +87,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                     mPresenter.uploadContact();
                 }
                 if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenter.uploadLocation();
+                    uploadLocation();
                 }
                 break;
             case REQUEST_INFO_PERMISSION:
@@ -95,7 +97,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 break;
             case REQUEST_LOCATION_PERMISSION:
                 if (isGrant(grantResults)) { // 如果用户授权,获取地理位置并上传
-                    mPresenter.uploadLocation();
+                    uploadLocation();
                 }
                 break;
         }
@@ -234,7 +236,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             mPresenter.uploadContact();
         }
         if (!requestFine) {
-            mPresenter.uploadLocation();
+            uploadLocation();
         }
         if (requestContact && requestFine) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_INFO_LOCATION_PERMISSION);
@@ -243,6 +245,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         } else if (requestFine) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         }
+
     }
 
     private void showLoanAuthOCRGranted() {
@@ -356,6 +359,19 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
         public void setBackground(Drawable drawable) {
             mLayout.setBackgroundDrawable(drawable);
+        }
+    }
+
+    private boolean checkGPSIsOpen() {
+        boolean isOpen;
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        isOpen = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+        return isOpen;
+    }
+
+    private void uploadLocation() {
+        if (checkGPSIsOpen()) {
+            mPresenter.uploadLocation();
         }
     }
 }
