@@ -29,6 +29,7 @@ import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.sesame.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
+import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
 import java.util.List;
 
@@ -157,6 +158,12 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         if (hasCameraPermission(REQUEST_OCR_PERMISSION)) {
             showLoanAuthOCRGranted();
         }
+    }
+
+    @Override
+    public void showLoanAuthVisaView() {
+        Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
+        startActivity(intent);
     }
 
     @Override

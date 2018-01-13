@@ -51,6 +51,14 @@ public class LoanAuth extends ChildResponse {
     @SerializedName("jcb_phone")
     private String phone;
 
+    /*是否意愿签署*/
+    @SerializedName("eSign_state")
+    private String signState;
+
+    /*是否签署过合同*/
+    @SerializedName("signCompact_state")
+    private String hasSign;
+
     public String getLoanId() {
         return loanId;
     }
@@ -129,5 +137,21 @@ public class LoanAuth extends ChildResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getSignState() {
+        return signState;
+    }
+
+    public void setSignState(String signState) {
+        this.signState = signState;
+    }
+
+    public String getHasSign() {
+        return hasSign;
+    }
+
+    public void setHasSign(String hasSign) {
+        this.hasSign = hasSign;
     }
 }

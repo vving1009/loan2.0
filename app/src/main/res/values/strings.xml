@@ -36,6 +36,8 @@
     <string name="loan_auth_ocr_back">身份证反面扫描上传</string>
     <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="commit">提交</string>
+    <string name="loan_auth_visa">电子签章授权</string>
+    <string name="loan_auth_visa_confirm">确认电子签章授权</string>
     <string name="loan_auth_face">活体检测</string>
     <string name="loan_auth_face_fail">活体检测失败</string>
     <string name="loan_auth_info">个人资料</string>
@@ -181,6 +183,7 @@
     <string name="error_loan_auth_card_first">请先进行身份认证</string>
     <string name="error_loan_auth_card_failure">认证失败</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>
+    <string name="error_loan_visa_sms">请输入正确的验证码</string>
     <string name="error_loan_person_education">请选择最高学历</string>
     <string name="error_loan_person_marriage">请选择婚姻状况</string>
     <string name="error_loan_person_register_city">请选择户籍所在城市</string>

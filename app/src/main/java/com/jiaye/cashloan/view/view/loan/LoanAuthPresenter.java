@@ -52,12 +52,20 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     @Override
                     public void accept(LoanAuth loanAuth) throws Exception {
                         List<LoanAuthModel> list = new ArrayList<>();
+                        boolean isVerify;
 
                         LoanAuthModel card = new LoanAuthModel();
                         card.setIcon(R.drawable.loan_auth_ic_card);
                         card.setName(R.string.loan_auth_ocr);
                         setLoanAuthModel(loanAuth.getCardState(), card, false);
                         mIsCardVerify = card.isVerify();
+                        isVerify = card.isVerify();
+
+                        LoanAuthModel visa = new LoanAuthModel();
+                        visa.setIcon(R.drawable.loan_auth_ic_visa);
+                        visa.setName(R.string.loan_auth_visa);
+                        setLoanAuthModel(loanAuth.getSignState(), visa, false);
+                        isVerify = isVerify && visa.isVerify();
 
                         LoanAuthModel face = new LoanAuthModel();
                         face.setIcon(R.drawable.loan_auth_ic_face);
@@ -85,6 +93,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         setLoanAuthModel(loanAuth.getSesameState(), sesame, false);
 
                         list.add(card);
+                        list.add(visa);
                         list.add(face);
                         list.add(person);
                         list.add(phone);
@@ -92,7 +101,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         list.add(sesame);
 
                         mView.setList(list);
-                        if (card.isVerify()) {
+                        if (isVerify) {
                             mView.setNextEnable();
                         }
                         mView.dismissProgressDialog();
@@ -116,6 +125,9 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
             switch (model.getName()) {
                 case R.string.loan_auth_ocr:
                     mView.showLoanAuthOCRView();
+                    break;
+                case R.string.loan_auth_visa:
+                    mView.showLoanAuthVisaView();
                     break;
                 case R.string.loan_auth_face:
                     mView.showLoanAuthFaceView();

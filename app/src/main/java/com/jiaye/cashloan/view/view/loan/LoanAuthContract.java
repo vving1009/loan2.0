@@ -32,6 +32,11 @@ public class LoanAuthContract {
         void showLoanAuthOCRView();
 
         /**
+         * 显示电子签章认证页面
+         */
+        void showLoanAuthVisaView();
+
+        /**
          * 显示借款活体认证页面
          */
         void showLoanAuthFaceView();

@@ -49,6 +49,10 @@ import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSMSRequest;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSign;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSignRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
@@ -170,6 +174,18 @@ public interface LoanService {
      */
     @POST("cardAuth/queryIdentityInfo")
     Flowable<Response<IDCardAuth>> idCardAuth(@Body Request<IDCardAuthRequest> request);
+
+    /**
+     * 电子签章短信验证码
+     */
+    @POST("esign/sendMobileCode")
+    Flowable<Response<LoanVisaSMS>> loanVisaSMS(@Body Request<LoanVisaSMSRequest> request);
+
+    /**
+     * 电子签章
+     */
+    @POST("esign/eSignCompact")
+    Flowable<Response<LoanVisaSign>> loanVisaSign(@Body Request<LoanVisaSignRequest> request);
 
     /**
      * 借款活体检测认证
