@@ -1,4 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'bugly'
+
+Properties properties = new Properties()
+properties.load(project.file('src/main/config.properties').newDataInputStream())
+
+bugly {
+    appId = properties.getProperty("BUGLY_APPID")
+    appKey = properties.getProperty("BUGLY_APPKEY")
+}
 
 android {
     compileSdkVersion 26
@@ -7,23 +16,30 @@ android {
         applicationId "com.jiaye.cashloan"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 44
-        versionName "1.0"
+        versionCode properties.getProperty("VERSION_CODE").toInteger()
+        versionName versionName(properties)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
+        buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
+        buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
+        buildConfigField("String", "BUGLY_APPID", properties.getProperty("BUGLY_APPID"))
+        buildConfigField("String", "TONGDUN_URL", properties.getProperty("TONGDUN_URL"))
+        buildConfigField("String", "TONGDUN_CODE", properties.getProperty("TONGDUN_CODE"))
+        buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
+        buildConfigField("String", "GONGXINBAO_URL", properties.getProperty("GONGXINBAO_URL"))
+        buildConfigField("String", "GONGXINBAO_APPID", properties.getProperty("GONGXINBAO_APPID"))
+        buildConfigField("String", "GONGXINBAO_APPSECURITY", properties.getProperty("GONGXINBAO_APPSECURITY"))
+        buildConfigField("String", "CREDIT2GO_URL", properties.getProperty("CREDIT2GO_URL"))
     }
     flavorDimensions "url"
     productFlavors {
         urlTest {
             dimension "url"
-            Properties properties = new Properties()
-            properties.load(project.file('src/urlTest/config.properties').newDataInputStream())
-            buildConfigField(urlTest, properties)
+            flavorBuildConfigField(urlTest, loadProperties(urlTest))
         }
         urlProduct {
             dimension "url"
-            Properties properties = new Properties()
-            properties.load(project.file('src/urlProduct/config.properties').newDataInputStream())
-            buildConfigField(urlProduct, properties)
+            flavorBuildConfigField(urlProduct, loadProperties(urlProduct))
         }
     }
     buildTypes {
@@ -40,22 +56,9 @@ android {
             storePassword 'com.jiaye.cashloan'
         }
     }
-}
-
-static def buildConfigField(flavors, properties) {
-    flavors.buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
-    flavors.buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
-    flavors.buildConfigField("String", "BASE_SHARE_URL", properties.getProperty("BASE_SHARE_URL"))
-    flavors.buildConfigField("String", "UPLOAD_CONTACT_URL", properties.getProperty("UPLOAD_CONTACT_URL"))
-    flavors.buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
-    flavors.buildConfigField("String", "TONGDUN_URL", properties.getProperty("TONGDUN_URL"))
-    flavors.buildConfigField("String", "TONGDUN_CODE", properties.getProperty("TONGDUN_CODE"))
-    flavors.buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
-    flavors.buildConfigField("String", "GONGXINBAO_URL", properties.getProperty("GONGXINBAO_URL"))
-    flavors.buildConfigField("String", "GONGXINBAO_APPID", properties.getProperty("GONGXINBAO_APPID"))
-    flavors.buildConfigField("String", "GONGXINBAO_APPSECURITY", properties.getProperty("GONGXINBAO_APPSECURITY"))
-    flavors.buildConfigField("String", "CREDIT2GO_URL", properties.getProperty("CREDIT2GO_URL"))
-    flavors.buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
+    android.applicationVariants.all { variant ->
+        renameApk(variant)
+    }
 }
 
 repositories {
@@ -91,8 +94,33 @@ dependencies {
     api 'com.github.lzyzsd:jsbridge:1.0.4'
     // wechat
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0'
+    // bugly
+    api 'com.tencent.bugly:crashreport:2.6.6.1'
     // module
     implementation project(':tongdun')
     implementation project(':gesturelock')
     implementation project(':takephoto')
+}
+
+static def versionName(properties) {
+    return properties.getProperty("MILESTONE_CODE") + "." + properties.getProperty("CODE") + "." + properties.getProperty("FIX_CODE") + "." + properties.getProperty("VERSION_CODE")
+}
+
+def loadProperties(flavor) {
+    Properties properties = new Properties()
+    properties.load(project.file('src/'+flavor.name+'/config.properties').newDataInputStream())
+    return properties
+}
+
+static def flavorBuildConfigField(flavor, properties) {
+    flavor.buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
+    flavor.buildConfigField("String", "BASE_SHARE_URL", properties.getProperty("BASE_SHARE_URL"))
+    flavor.buildConfigField("String", "SATCATCHE_URL", properties.getProperty("SATCATCHE_URL"))
+}
+
+static def renameApk(variant) {
+    variant.outputs.all {
+        String fileName = outputFileName.toString()
+        outputFileName = fileName.substring(0, fileName.length() - 4) + "-" + "${variant.versionName}.apk"
+    }
 }

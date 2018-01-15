@@ -15,6 +15,7 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.syd.oden.gesturelock.view.GesturePreference;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -98,6 +99,7 @@ public class LoanApplication extends Application {
                 }
             }
         });
+        setupBugly();
         setupLogger();
         setupWeChat();
     }
@@ -144,6 +146,13 @@ public class LoanApplication extends Application {
         startActivity(intent1);
         Intent intent2 = new Intent(this, AuthActivity.class);
         startActivity(intent2);
+    }
+
+    /*setup Bugly*/
+    private void setupBugly() {
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+        strategy.setAppChannel(BuildConfig.FLAVOR);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_APPID, BuildConfig.DEBUG, strategy);
     }
 
     /*setup Logger*/
