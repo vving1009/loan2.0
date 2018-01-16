@@ -51,13 +51,21 @@ public class LoanAuth extends ChildResponse {
     @SerializedName("jcb_phone")
     private String phone;
 
-    /*是否意愿签署*/
+    /*电子签章*/
     @SerializedName("eSign_state")
     private String signState;
 
-    /*是否签署过合同*/
+    /*是否签署过电子签章*/
     @SerializedName("signCompact_state")
     private String hasSign;
+
+    /*历史电子签章*/
+    @SerializedName("eSignJK_state")
+    private String signHistoryState;
+
+    /*是否需要历史电子签章*/
+    @SerializedName("mustSignJK_state")
+    private String needSignHistory;
 
     public String getLoanId() {
         return loanId;
@@ -153,5 +161,21 @@ public class LoanAuth extends ChildResponse {
 
     public void setHasSign(String hasSign) {
         this.hasSign = hasSign;
+    }
+
+    public String getSignHistoryState() {
+        return signHistoryState;
+    }
+
+    public void setSignHistoryState(String signHistoryState) {
+        this.signHistoryState = signHistoryState;
+    }
+
+    public String getNeedSignHistory() {
+        return needSignHistory;
+    }
+
+    public void setNeedSignHistory(String needSignHistory) {
+        this.needSignHistory = needSignHistory;
     }
 }

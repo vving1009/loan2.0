@@ -163,6 +163,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void showLoanAuthVisaView() {
         Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
+        intent.putExtra("type","visa");
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLoanAuthVisaHistoryView() {
+        Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
+        intent.putExtra("type","visa_history");
         startActivity(intent);
     }
 

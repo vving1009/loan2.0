@@ -24,11 +24,12 @@ import io.reactivex.Flowable;
 public class LoanAuthVisaRepository implements LoanAuthVisaDataSource {
 
     @Override
-    public Flowable<Request<LoanVisaRequest>> visa() {
+    public Flowable<Request<LoanVisaRequest>> visa(String type) {
         Request<LoanVisaRequest> request = new Request<>();
         RequestContent<LoanVisaRequest> content = new RequestContent<>();
         List<LoanVisaRequest> list = new ArrayList<>();
         LoanVisaRequest visaRequest = new LoanVisaRequest();
+        visaRequest.setType(type);
         list.add(visaRequest);
         content.setBody(list);
         RequestHeader header = RequestHeader.create();
@@ -39,15 +40,17 @@ public class LoanAuthVisaRepository implements LoanAuthVisaDataSource {
     }
 
     @Override
-    public Flowable<LoanVisaSMS> sendSMS() {
+    public Flowable<LoanVisaSMS> sendSMS(String type) {
         LoanVisaSMSRequest request = new LoanVisaSMSRequest();
+        request.setType(type);
         return Flowable.just(request).compose(new ResponseTransformer<LoanVisaSMSRequest, LoanVisaSMS>("loanVisaSMS"));
     }
 
     @Override
-    public Flowable<LoanVisaSign> sign(String sms) {
+    public Flowable<LoanVisaSign> sign(String type, String sms) {
         LoanVisaSignRequest request = new LoanVisaSignRequest();
         request.setSms(sms);
+        request.setType(type);
         return Flowable.just(request).compose(new ResponseTransformer<LoanVisaSignRequest, LoanVisaSign>("loanVisaSign"));
     }
 }

@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
@@ -40,7 +41,18 @@ public class LoanAuthVisaActivity extends BaseActivity implements LoanAuthVisaCo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //noinspection ConstantConditions
+        String type = getIntent().getExtras().getString("type", "visa");
         setContentView(R.layout.loan_auth_visa_activity);
+        TextView textTitle = findViewById(R.id.text_title);
+        switch (type) {
+            case "visa":
+                textTitle.setText(R.string.loan_auth_visa);
+                break;
+            case "visa_history":
+                textTitle.setText(R.string.loan_auth_visa_history);
+                break;
+        }
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +102,14 @@ public class LoanAuthVisaActivity extends BaseActivity implements LoanAuthVisaCo
         });
         mSMSDialog.setContentView(smsView);
         mPresenter = new LoanAuthVisaPresenter(this, new LoanAuthVisaRepository());
+        switch (type) {
+            case "visa":
+                mPresenter.setType("01");
+                break;
+            case "visa_history":
+                mPresenter.setType("02");
+                break;
+        }
         mPresenter.subscribe();
     }
 

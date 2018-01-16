@@ -60,44 +60,53 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         setLoanAuthModel(loanAuth.getCardState(), card, false);
                         mIsCardVerify = card.isVerify();
                         isVerify = card.isVerify();
+                        list.add(card);
 
                         LoanAuthModel visa = new LoanAuthModel();
                         visa.setIcon(R.drawable.loan_auth_ic_visa);
                         visa.setName(R.string.loan_auth_visa);
                         setLoanAuthModel(loanAuth.getSignState(), visa, false);
                         isVerify = isVerify && visa.isVerify();
+                        list.add(visa);
+
+                        boolean needHistory = !TextUtils.isEmpty(loanAuth.getNeedSignHistory()) && loanAuth.getNeedSignHistory().equals("1");
+                        if (needHistory) {
+                            LoanAuthModel visaHistory = new LoanAuthModel();
+                            visaHistory.setIcon(R.drawable.loan_auth_ic_visa_history);
+                            visaHistory.setName(R.string.loan_auth_visa_history);
+                            setLoanAuthModel(loanAuth.getSignHistoryState(), visaHistory, false);
+                            isVerify = isVerify && visaHistory.isVerify();
+                            list.add(visaHistory);
+                        }
 
                         LoanAuthModel face = new LoanAuthModel();
                         face.setIcon(R.drawable.loan_auth_ic_face);
                         face.setName(R.string.loan_auth_face);
                         setLoanAuthModel(loanAuth.getFaceState(), face, false);
+                        list.add(face);
 
                         LoanAuthModel person = new LoanAuthModel();
                         person.setIcon(R.drawable.loan_auth_ic_person);
                         person.setName(R.string.loan_auth_info);
                         setLoanAuthModel(loanAuth.getPersonState(), person, true);
+                        list.add(person);
 
                         LoanAuthModel phone = new LoanAuthModel();
                         phone.setIcon(R.drawable.loan_auth_ic_phone);
                         phone.setName(R.string.loan_auth_phone);
                         setLoanAuthModel(loanAuth.getPhoneState(), phone, false);
+                        list.add(phone);
 
                         LoanAuthModel taobao = new LoanAuthModel();
                         taobao.setIcon(R.drawable.loan_auth_ic_taobao);
                         taobao.setName(R.string.loan_auth_taobao);
                         setLoanAuthModel(loanAuth.getTaobaoState(), taobao, false);
+                        list.add(taobao);
 
                         LoanAuthModel sesame = new LoanAuthModel();
                         sesame.setIcon(R.drawable.loan_auth_ic_sesame);
                         sesame.setName(R.string.loan_auth_sesame);
                         setLoanAuthModel(loanAuth.getSesameState(), sesame, false);
-
-                        list.add(card);
-                        list.add(visa);
-                        list.add(face);
-                        list.add(person);
-                        list.add(phone);
-                        list.add(taobao);
                         list.add(sesame);
 
                         mView.setList(list);
@@ -128,6 +137,9 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     break;
                 case R.string.loan_auth_visa:
                     mView.showLoanAuthVisaView();
+                    break;
+                case R.string.loan_auth_visa_history:
+                    mView.showLoanAuthVisaHistoryView();
                     break;
                 case R.string.loan_auth_face:
                     mView.showLoanAuthFaceView();

@@ -24,6 +24,8 @@ public interface LoanAuthVisaContract {
 
     interface Presenter extends BasePresenter {
 
+        void setType(String type);
+
         void sendSMS();
 
         void sign(String sms);

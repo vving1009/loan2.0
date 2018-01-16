@@ -14,8 +14,11 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.auth.source.visa.LoanAuthVisaDataSource;
 
+import org.reactivestreams.Publisher;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * LoanAuthVisaPresenter
@@ -29,6 +32,8 @@ public class LoanAuthVisaPresenter extends BasePresenterImpl implements LoanAuth
 
     private final LoanAuthVisaDataSource mDataSource;
 
+    private String mType;
+
     public LoanAuthVisaPresenter(LoanAuthVisaContract.View view, LoanAuthVisaDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -41,8 +46,13 @@ public class LoanAuthVisaPresenter extends BasePresenterImpl implements LoanAuth
     }
 
     @Override
+    public void setType(String type) {
+        mType = type;
+    }
+
+    @Override
     public void sendSMS() {
-        Disposable disposable = mDataSource.sendSMS()
+        Disposable disposable = mDataSource.sendSMS(mType)
                 .compose(new ViewTransformer<LoanVisaSMS>() {
                     @Override
                     public void accept() {
@@ -65,21 +75,27 @@ public class LoanAuthVisaPresenter extends BasePresenterImpl implements LoanAuth
         if (TextUtils.isEmpty(sms)) {
             mView.showToastById(R.string.error_loan_visa_sms);
         } else {
-            Disposable disposable = mDataSource.sign(sms)
-                    .compose(new ViewTransformer<LoanVisaSign>() {
+            Disposable disposable = mDataSource.sign(mType, sms)
+                    .flatMap(new Function<LoanVisaSign, Publisher<Request<LoanVisaRequest>>>() {
+                        @Override
+                        public Publisher<Request<LoanVisaRequest>> apply(LoanVisaSign loanVisaSign) throws Exception {
+                            return mDataSource.visa(mType);
+                        }
+                    })
+                    .compose(new ViewTransformer<Request<LoanVisaRequest>>() {
                         @Override
                         public void accept() {
                             super.accept();
                             mView.showProgressDialog();
                         }
                     })
-                    .subscribe(new Consumer<LoanVisaSign>() {
+                    .subscribe(new Consumer<Request<LoanVisaRequest>>() {
                         @Override
-                        public void accept(LoanVisaSign loanVisaSign) throws Exception {
+                        public void accept(Request<LoanVisaRequest> request) throws Exception {
                             mView.dismissProgressDialog();
                             mView.dismissSMSDialog();
                             mView.hideBtn();
-                            show();
+                            loadUrl(request);
                         }
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
@@ -87,14 +103,18 @@ public class LoanAuthVisaPresenter extends BasePresenterImpl implements LoanAuth
     }
 
     private void show() {
-        Disposable disposable = mDataSource.visa()
+        Disposable disposable = mDataSource.visa(mType)
                 .compose(new ViewTransformer<Request<LoanVisaRequest>>())
                 .subscribe(new Consumer<Request<LoanVisaRequest>>() {
                     @Override
                     public void accept(Request<LoanVisaRequest> request) throws Exception {
-                        mView.postUrl(BuildConfig.BASE_URL + "show", new Gson().toJson(request).getBytes());
+                        loadUrl(request);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
+    }
+
+    private void loadUrl(Request<LoanVisaRequest> request) {
+        mView.postUrl(BuildConfig.BASE_URL + "show", new Gson().toJson(request).getBytes());
     }
 }

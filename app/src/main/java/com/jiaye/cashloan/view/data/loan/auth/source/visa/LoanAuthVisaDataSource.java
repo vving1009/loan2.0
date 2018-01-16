@@ -15,9 +15,9 @@ import io.reactivex.Flowable;
 
 public interface LoanAuthVisaDataSource {
 
-    Flowable<Request<LoanVisaRequest>> visa();
+    Flowable<Request<LoanVisaRequest>> visa(String type);
 
-    Flowable<LoanVisaSMS> sendSMS();
+    Flowable<LoanVisaSMS> sendSMS(String type);
 
-    Flowable<LoanVisaSign> sign(String sms);
+    Flowable<LoanVisaSign> sign(String type, String sms);
 }

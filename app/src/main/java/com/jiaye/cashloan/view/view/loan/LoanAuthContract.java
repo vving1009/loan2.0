@@ -37,6 +37,11 @@ public class LoanAuthContract {
         void showLoanAuthVisaView();
 
         /**
+         * 显示历史电子签章认证页面
+         */
+        void showLoanAuthVisaHistoryView();
+
+        /**
          * 显示借款活体认证页面
          */
         void showLoanAuthFaceView();
