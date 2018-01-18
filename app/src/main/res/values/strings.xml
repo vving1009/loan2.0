@@ -36,6 +36,9 @@
     <string name="loan_auth_ocr_back">身份证反面扫描上传</string>
     <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="commit">提交</string>
+    <string name="loan_auth_visa">电子签章授权</string>
+    <string name="loan_auth_visa_history">历史签章授权</string>
+    <string name="loan_auth_visa_confirm">确认电子签章授权</string>
     <string name="loan_auth_face">活体检测</string>
     <string name="loan_auth_face_fail">活体检测失败</string>
     <string name="loan_auth_info">个人资料</string>
@@ -181,6 +184,7 @@
     <string name="error_loan_auth_card_first">请先进行身份认证</string>
     <string name="error_loan_auth_card_failure">认证失败</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>
+    <string name="error_loan_visa_sms">请输入正确的验证码</string>
     <string name="error_loan_person_education">请选择最高学历</string>
     <string name="error_loan_person_marriage">请选择婚姻状况</string>
     <string name="error_loan_person_register_city">请选择户籍所在城市</string>
@@ -202,28 +206,6 @@
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <!--error code-->
     <string name="error_0000">成功</string>
-    <string name="error_0001">该手机号已经注册</string>
-    <string name="error_0002">该手机号尚未注册</string>
-    <string name="error_0003">密码错误</string>
-    <string name="error_0004">短信验证码发送失败</string>
-    <string name="error_0005">发送间隔太短，请稍后再试</string>
-    <string name="error_0006">验证码不正确</string>
-    <string name="error_0007">不存在有效的借款信息</string>
-    <string name="error_0008">绑定银行卡失败</string>
-    <string name="error_0009">客户基本信息不存在</string>
-    <string name="error_0010">已绑定银行卡</string>
-    <string name="error_0011">身份认证信息不存在</string>
-    <string name="error_0012">手机运营商认证信息不存在</string>
-    <string name="error_2001">暂时不能操作，您存在未结束的借款</string>
-    <string name="error_2002">暂时不能操作，您未进行借款</string>
     <string name="error_9990">无有效记录</string>
-    <string name="error_9991">根据三方结果返回相应的错误信息</string>
-    <string name="error_9992">尚未接收到返回接口</string>
-    <string name="error_9993">活体认证次数已达上线</string>
     <string name="error_9994">您已在另一台设备上登录</string>
-    <string name="error_9995">用户授权失败</string>
-    <string name="error_9996">芝麻信用分查询失败</string>
-    <string name="error_9997">验签失败</string>
-    <string name="error_9998">数据格式不正确</string>
-    <string name="error_9999">请求异常</string>
 </resources>

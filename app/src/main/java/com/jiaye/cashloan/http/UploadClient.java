@@ -34,7 +34,7 @@ public enum UploadClient {
                 .registerTypeAdapter(String.class, new StringNullAdapter())
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.UPLOAD_CONTACT_URL)
+                .baseUrl(BuildConfig.SATCATCHE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
