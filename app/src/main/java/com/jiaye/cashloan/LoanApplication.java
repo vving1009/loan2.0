@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
-import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.main.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
@@ -142,10 +141,10 @@ public class LoanApplication extends Application {
         new GesturePreference(LoanApplication.getInstance(), -1).WriteStringPreference("null");
         getSQLiteDatabase().delete("user", null, null);
         getSQLiteDatabase().delete("product", null, null);
-        Intent intent1 = new Intent(this, MainActivity.class);
-        startActivity(intent1);
-        Intent intent2 = new Intent(this, AuthActivity.class);
-        startActivity(intent2);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("type", "reLogin");
+        startActivity(intent);
     }
 
     /*setup Bugly*/
