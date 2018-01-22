@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'bugly'
 
 Properties properties = new Properties()
-properties.load(project.file('src/main/config.properties').newDataInputStream())
+properties.load(project.file('configs/config.properties').newDataInputStream())
 
 bugly {
     appId = properties.getProperty("BUGLY_APPID")
@@ -46,11 +46,11 @@ android {
         }
         urlTest {
             dimension "url"
-            flavorBuildConfigField(urlTest, loadProperties(urlTest))
+            flavorBuildConfigField(urlTest, loadProperties('test'))
         }
         urlProduct {
             dimension "url"
-            flavorBuildConfigField(urlProduct, loadProperties(urlProduct))
+            flavorBuildConfigField(urlProduct, loadProperties('product'))
         }
     }
     buildTypes {
@@ -117,9 +117,9 @@ static def versionName(properties) {
     return properties.getProperty("MILESTONE_CODE") + "." + properties.getProperty("CODE") + "." + properties.getProperty("FIX_CODE") + "." + properties.getProperty("VERSION_CODE")
 }
 
-def loadProperties(flavor) {
+def loadProperties(path) {
     Properties properties = new Properties()
-    properties.load(project.file('src/' + flavor.name + '/config.properties').newDataInputStream())
+    properties.load(project.file('configs/url/' + path + '/config.properties').newDataInputStream())
     return properties
 }
 
@@ -127,6 +127,7 @@ static def flavorBuildConfigField(flavor, properties) {
     flavor.buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
     flavor.buildConfigField("String", "BASE_SHARE_URL", properties.getProperty("BASE_SHARE_URL"))
     flavor.buildConfigField("String", "SATCATCHE_URL", properties.getProperty("SATCATCHE_URL"))
+    flavor.buildConfigField("String", "CREDIT2GO_ESCROW_URL", properties.getProperty("CREDIT2GO_ESCROW_URL"))
 }
 
 static def renameApk(variant) {
