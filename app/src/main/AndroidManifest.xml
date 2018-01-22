@@ -21,7 +21,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.view.launch.LaunchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.view.launch.LaunchGestureActivity"
             android:screenOrientation="portrait" />
@@ -92,14 +97,5 @@
         <activity
             android:name=".view.view.my.credit.CreditActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.view.shop.ShopActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>

@@ -5,7 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -16,18 +19,32 @@ import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.BaseFragment;
 
-public class ShopActivity extends AppCompatActivity {
+/**
+ * ShopFragment
+ *
+ * @author 贾博瑄
+ */
+
+public class ShopFragment extends BaseFragment {
 
     private static final String URL = "http://192.168.0.111:8080/b2c/Default.html";
 
     private BridgeWebView mWebView;
 
+    public static ShopFragment newInstance() {
+        Bundle args = new Bundle();
+        ShopFragment fragment = new ShopFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_activity);
-        mWebView = findViewById(R.id.web_view);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.shop_activity, container, false);
+        mWebView = root.findViewById(R.id.web_view);
         mWebView.setDefaultHandler(new DefaultHandler());
         mWebView.registerHandler("getUserInfo", new BridgeHandler() {
             @Override
@@ -50,19 +67,19 @@ public class ShopActivity extends AppCompatActivity {
         mWebView.registerHandler("login", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
-                Toast.makeText(ShopActivity.this, "跳转到登录页面", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "跳转到登录页面", Toast.LENGTH_SHORT).show();
             }
         });
         mWebView.registerHandler("backHome", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
-                Toast.makeText(ShopActivity.this, "回到首页", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "回到首页", Toast.LENGTH_SHORT).show();
             }
         });
         mWebView.registerHandler("hiddenTabbar", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
-                Toast.makeText(ShopActivity.this, "hiddenTabbar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "hiddenTabbar", Toast.LENGTH_SHORT).show();
             }
         });
         mWebView.setWebViewClient(new BridgeWebViewClient(mWebView) {
@@ -72,6 +89,7 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
         mWebView.loadUrl(URL);
+        return root;
     }
 
     private boolean alipays(String url) {
@@ -79,7 +97,7 @@ public class ShopActivity extends AppCompatActivity {
             try {
                 startActivity(new Intent("android.intent.action.VIEW", Uri.parse(url)));
             } catch (Exception e) {
-                new AlertDialog.Builder(ShopActivity.this)
+                new AlertDialog.Builder(getActivity())
                         .setMessage("未检测到支付宝客户端，请安装后重试。")
                         .setPositiveButton("立即安装", new DialogInterface.OnClickListener() {
 
