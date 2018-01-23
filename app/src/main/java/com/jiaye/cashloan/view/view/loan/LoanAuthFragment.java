@@ -84,11 +84,16 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 }
                 break;
             case REQUEST_INFO_LOCATION_PERMISSION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenter.uploadContact();
-                }
-                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    uploadLocation();
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (i == 0) {
+                        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                            mPresenter.uploadContact();
+                        }
+                    } else if (i == 1) {
+                        if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                            uploadLocation();
+                        }
+                    }
                 }
                 break;
             case REQUEST_INFO_PERMISSION:
@@ -163,14 +168,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void showLoanAuthVisaView() {
         Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
-        intent.putExtra("type","visa");
+        intent.putExtra("type", "visa");
         startActivity(intent);
     }
 
     @Override
     public void showLoanAuthVisaHistoryView() {
         Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
-        intent.putExtra("type","visa_history");
+        intent.putExtra("type", "visa_history");
         startActivity(intent);
     }
 
