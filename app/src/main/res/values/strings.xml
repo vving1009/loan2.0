@@ -35,6 +35,7 @@
     <string name="loan_auth_ocr_front">身份证正面扫描上传</string>
     <string name="loan_auth_ocr_back">身份证反面扫描上传</string>
     <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
+    <string name="loan_auth_ocr_check">校验身份信息</string>
     <string name="commit">提交</string>
     <string name="loan_auth_visa">电子签章授权</string>
     <string name="loan_auth_visa_history">历史签章授权</string>
@@ -181,6 +182,7 @@
     <string name="error_auth_referral">*请输入正确的推荐码</string>
     <string name="error_auth_password_different">*两次密码输入不一致，请重新输入</string>
     <string name="error_loan_auth_camera_and_write">请在应用管理中打开“相机及读写”访问权限！</string>
+    <string name="error_loan_auth_ocr">请填写正确的姓名</string>
     <string name="error_loan_auth_card_first">请先进行身份认证</string>
     <string name="error_loan_auth_card_failure">认证失败</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>

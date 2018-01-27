@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
@@ -31,9 +33,17 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
 
     private ProgressDialog mDialog;
 
+    private EditText mEditName;
+
+    private TextView mTextId;
+
+    private TextView mTextDate;
+
     private ImageView mImgFront;
 
     private ImageView mImgBack;
+
+    private Button mBtnCheck;
 
     private Button mBtnCommit;
 
@@ -41,6 +51,10 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_ocr_activity);
+        mEditName = findViewById(R.id.edit_name);
+        mTextId = findViewById(R.id.text_id);
+        mTextDate = findViewById(R.id.text_date);
+        mBtnCheck = findViewById(R.id.btn_check);
         mBtnCommit = findViewById(R.id.btn_commit);
         mImgFront = findViewById(R.id.img_card_front);
         mImgBack = findViewById(R.id.img_card_back);
@@ -66,6 +80,12 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
             @Override
             public void onClick(View v) {
                 mPresenter.pickBack();
+            }
+        });
+        mBtnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.check();
             }
         });
         mBtnCommit.setOnClickListener(new View.OnClickListener() {
@@ -157,8 +177,25 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
     }
 
     @Override
-    public void setButtonEnable() {
+    public void setCheckEnable() {
+        mBtnCheck.setEnabled(true);
+    }
+
+    @Override
+    public void showInfo(String name, String id, String date) {
+        mEditName.setText(name);
+        mTextId.setText(id);
+        mTextDate.setText(date);
+    }
+
+    @Override
+    public void setSubmitEnable() {
         mBtnCommit.setEnabled(true);
+    }
+
+    @Override
+    public String getName() {
+        return mEditName.getText().toString();
     }
 
     @Override

@@ -21,7 +21,13 @@ public interface LoanAuthOCRContract {
 
         void setBackDrawable(String path);
 
-        void setButtonEnable();
+        void setCheckEnable();
+
+        void showInfo(String name, String id, String date);
+
+        void setSubmitEnable();
+
+        String getName();
 
         void result();
     }
@@ -33,6 +39,8 @@ public interface LoanAuthOCRContract {
         void pickBack();
 
         void savePath(String path);
+
+        void check();
 
         void submit();
     }

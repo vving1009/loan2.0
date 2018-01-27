@@ -60,15 +60,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:orientation="vertical">
+            android:paddingRight="15dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
 
                 <TextView
+                    android:id="@+id/text_name_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -78,25 +79,15 @@
                     android:text="@string/loan_auth_name"
                     android:textColor="@color/color_black"
                     android:textSize="13sp" />
-            </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp">
-
-                <TextView
+                <EditText
+                    android:id="@+id/edit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/loan_auth_ocr_ic_number"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="@string/loan_auth_ocr_number"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/text_name_title"
+                    android:background="@android:color/white"
                     android:textColor="@color/color_black"
                     android:textSize="13sp" />
             </RelativeLayout>
@@ -111,6 +102,39 @@
                 android:layout_height="45dp">
 
                 <TextView
+                    android:id="@+id/text_id_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/loan_auth_ocr_ic_number"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="@string/loan_auth_ocr_number"
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/text_id_title"
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_gray_dark" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <TextView
+                    android:id="@+id/text_date_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -118,6 +142,16 @@
                     android:drawablePadding="10dp"
                     android:gravity="center"
                     android:text="@string/loan_auth_ocr_validity_date"
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/text_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/text_date_title"
                     android:textColor="@color/color_black"
                     android:textSize="13sp" />
             </RelativeLayout>
@@ -172,20 +206,41 @@
                 android:textColor="@color/color_black"
                 android:textSize="10sp" />
 
-            <Button
-                android:id="@+id/btn_commit"
-                style="?android:attr/borderlessButtonStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/loan_btn"
-                android:enabled="false"
-                android:text="@string/commit"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_check"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/loan_btn"
+                    android:enabled="false"
+                    android:text="@string/loan_auth_ocr_check"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_commit"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/loan_btn"
+                    android:enabled="false"
+                    android:text="@string/commit"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.view.loan.auth.ocr;
 
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
@@ -34,6 +35,12 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
 
     private String mBack;
 
+    private String mName;
+
+    private String mId;
+
+    private String mDate;
+
     public LoanAuthOCRPresenter(LoanAuthOCRContract.View view, LoanAuthOCRDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -64,26 +71,54 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
                 break;
         }
         if (!TextUtils.isEmpty(mFront) && !TextUtils.isEmpty(mBack)) {
-            mView.setButtonEnable();
+            mView.setCheckEnable();
         }
     }
 
     @Override
-    public void submit() {
+    public void check() {
         Disposable disposable = mDataSource.ocrFront(mFront)
                 .flatMap(new Function<TongDunOCRFront, Publisher<TongDunOCRBack>>() {
                     @Override
                     public Publisher<TongDunOCRBack> apply(TongDunOCRFront tongDunOCRFront) throws Exception {
+                        mName = tongDunOCRFront.getName();
+                        mId = tongDunOCRFront.getIdNumber();
                         return mDataSource.ocrBack(mBack);
                     }
                 })
-                .flatMap(new Function<TongDunOCRBack, Publisher<LoanIDCardAuth>>() {
+                .compose(new ViewTransformer<TongDunOCRBack>() {
                     @Override
-                    public Publisher<LoanIDCardAuth> apply(TongDunOCRBack tongDunOCRBack) throws Exception {
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<TongDunOCRBack>() {
+                    @Override
+                    public void accept(TongDunOCRBack tongDunOCRBack) throws Exception {
+                        mView.dismissProgressDialog();
+                        mDate = tongDunOCRBack.getDateBegin() + "-" + tongDunOCRBack.getDateEnd();
+                        mView.showInfo(mName, mId, mDate);
+                        mView.setSubmitEnable();
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void submit() {
+        if (TextUtils.isEmpty(mView.getName())) {
+            mView.showToastById(R.string.error_loan_auth_ocr);
+            return;
+        }
+        Disposable disposable = mDataSource.check(mId, mView.getName())
+                .flatMap(new Function<Object, Publisher<LoanIDCardAuth>>() {
+                    @Override
+                    public Publisher<LoanIDCardAuth> apply(Object object) throws Exception {
                         return mDataSource.loanIDCardAuth();
                     }
                 })
-                .compose(new ViewTransformer<LoanIDCardAuth>(){
+                .compose(new ViewTransformer<LoanIDCardAuth>() {
                     @Override
                     public void accept() {
                         super.accept();

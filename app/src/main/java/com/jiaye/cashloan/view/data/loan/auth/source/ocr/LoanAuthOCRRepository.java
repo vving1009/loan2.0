@@ -91,6 +91,22 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
     }
 
     @Override
+    public Flowable<Object> check(String id, final String name) {
+        return TongDunClient.INSTANCE.getService()
+                .check(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, BuildConfig.TONGDUN_APP_NAME, "jiayeshiming", id, name)
+                .map(new TongDunResponseFunction<>())
+                .map(new Function<Object, Object>() {
+                    @Override
+                    public Object apply(Object o) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("ocr_name", name);
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                        return o;
+                    }
+                });
+    }
+
+    @Override
     public Flowable<LoanIDCardAuth> loanIDCardAuth() {
         return Flowable.zip(uploadFront(), uploadBack(), new BiFunction<LoanUploadPicture, LoanUploadPicture, LoanIDCardAuthRequest>() {
             @Override

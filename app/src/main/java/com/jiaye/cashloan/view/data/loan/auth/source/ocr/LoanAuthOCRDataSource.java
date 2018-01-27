@@ -25,6 +25,11 @@ public interface LoanAuthOCRDataSource {
     Flowable<TongDunOCRBack> ocrBack(String path);
 
     /**
+     * 检验信息
+     */
+    Flowable<Object> check(String id, String name);
+
+    /**
      * 身份证认证
      */
     Flowable<LoanIDCardAuth> loanIDCardAuth();
