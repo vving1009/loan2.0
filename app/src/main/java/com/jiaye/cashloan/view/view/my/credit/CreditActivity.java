@@ -8,14 +8,21 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.base.Request;
+import com.jiaye.cashloan.http.base.RequestContent;
+import com.jiaye.cashloan.http.base.RequestHeader;
 import com.jiaye.cashloan.http.data.my.CreditCashRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseActivity;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CreditActivity
@@ -38,7 +45,15 @@ public class CreditActivity extends BaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+                if (url.contains("action:log")) {
+                    String message = URLDecoder.decode(url.replace("action:log:", ""));
+                    showToast(message);
+                    finish();
+                } else if (url.contains("action:forgetPassword")) {
+                    finish();
+                } else {
+                    view.loadUrl(url);
+                }
                 return true;
             }
 
@@ -63,11 +78,17 @@ public class CreditActivity extends BaseActivity {
                 webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
                 break;
             case "cash":
-                CreditCashRequest creditCashRequest = getIntent().getExtras().getParcelable("request");
-                creditCashRequest.setName(URLEncoder.encode(creditCashRequest.getName()));
-                creditCashRequest.setSign(URLEncoder.encode(creditCashRequest.getSign()));
-                creditCashRequest.setNotifyUrl(URLEncoder.encode(creditCashRequest.getNotifyUrl()));
-                webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/withdraw", json2KeyValue(creditCashRequest.toString()).getBytes());
+                String cash = getIntent().getExtras().getString("cash");
+                Request<CreditCashRequest> request = new Request<>();
+                RequestContent<CreditCashRequest> requestContent = new RequestContent<>();
+                CreditCashRequest creditCashRequest = new CreditCashRequest();
+                creditCashRequest.setCash(cash);
+                requestContent.setHeader(RequestHeader.create());
+                List<CreditCashRequest> list = new ArrayList<>();
+                list.add(creditCashRequest);
+                requestContent.setBody(list);
+                request.setContent(requestContent);
+                webView.postUrl(BuildConfig.BASE_URL + "withdraw", new Gson().toJson(request).getBytes());
                 break;
         }
     }

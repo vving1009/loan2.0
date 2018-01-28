@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.data.my.credit.source;
 
 import com.jiaye.cashloan.http.data.my.CreditBalance;
-import com.jiaye.cashloan.http.data.my.CreditCashRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
@@ -21,8 +20,6 @@ public interface CreditDataSource {
     Flowable<CreditPasswordRequest> password();
 
     Flowable<CreditPasswordResetRequest> passwordReset();
-
-    Flowable<CreditCashRequest> cash();
 
     Flowable<CreditBalance> balance();
 }

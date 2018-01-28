@@ -206,6 +206,7 @@
     <string name="error_loan_bank_bank">请输入正确的开户银行</string>
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
+    <string name="error_my_credit_cash">请输入正确的金额</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>

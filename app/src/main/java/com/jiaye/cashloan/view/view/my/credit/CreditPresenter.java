@@ -1,9 +1,10 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
+import android.text.TextUtils;
+
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
-import com.jiaye.cashloan.http.data.my.CreditCashRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
@@ -78,23 +79,13 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     }
 
     @Override
-    public void cash() {
-        Disposable disposable = mDataSource.cash()
-                .compose(new ViewTransformer<CreditCashRequest>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(new Consumer<CreditCashRequest>() {
-                    @Override
-                    public void accept(CreditCashRequest request) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.showCashView(request);
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+    public void cash(String cash) {
+        if (TextUtils.isEmpty(cash)) {
+            mView.showToastById(R.string.error_my_credit_cash);
+            return;
+        }
+        mView.showCashView(cash);
+        mView.dismissCash();
     }
 
     @Override

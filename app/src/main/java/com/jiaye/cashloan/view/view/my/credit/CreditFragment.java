@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.my.CreditCashRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseDialog;
@@ -36,6 +36,10 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private TextView mTextCurr;
 
+    private BaseDialog mCashDialog;
+
+    private EditText mTextCash;
+
     public static CreditFragment newInstance() {
         Bundle args = new Bundle();
         CreditFragment fragment = new CreditFragment();
@@ -57,7 +61,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         view.findViewById(R.id.layout_cash).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.cash();
+                mCashDialog.show();
             }
         });
         view.findViewById(R.id.layout_balance).setOnClickListener(new View.OnClickListener() {
@@ -66,6 +70,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
                 mPresenter.balance();
             }
         });
+        /*balance*/
         mBalanceDialog = new BaseDialog(getActivity());
         View balanceView = LayoutInflater.from(getActivity()).inflate(R.layout.balance_dialog_layout, null);
         balanceView.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
@@ -78,6 +83,23 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         mTextFreeze = balanceView.findViewById(R.id.text_freeze);
         mTextCurr = balanceView.findViewById(R.id.text_curr);
         mBalanceDialog.setContentView(balanceView);
+        /*cash*/
+        mCashDialog = new BaseDialog(getActivity());
+        View cashView = LayoutInflater.from(getActivity()).inflate(R.layout.cash_dialog_layout, null);
+        cashView.findViewById(R.id.text_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.cash(mTextCash.getText().toString());
+            }
+        });
+        cashView.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCashDialog.dismiss();
+            }
+        });
+        mTextCash = cashView.findViewById(R.id.edit_cash);
+        mCashDialog.setContentView(cashView);
         mPresenter = new CreditPresenter(this, new CreditRepository());
         mPresenter.subscribe();
         return view;
@@ -117,10 +139,10 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
-    public void showCashView(CreditCashRequest request) {
+    public void showCashView(String cash) {
         Intent intent = new Intent(getActivity(), CreditActivity.class);
         intent.putExtra("type", "cash");
-        intent.putExtra("request", request);
+        intent.putExtra("cash", cash);
         startActivity(intent);
     }
 
@@ -130,5 +152,10 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         mTextFreeze.setText(String.format(getString(R.string.my_credit_balance_freeze), freezeBal));
         mTextCurr.setText(String.format(getString(R.string.my_credit_balance_curr), currBal));
         mBalanceDialog.show();
+    }
+
+    @Override
+    public void dismissCash() {
+        mCashDialog.dismiss();
     }
 }
