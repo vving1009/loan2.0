@@ -61,14 +61,16 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 if (cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        UploadContactRequest.Contact contact = new UploadContactRequest.Contact();
-                        contact.setName(name);
-                        contact.setPhone(phoneNo);
-                        mList.add(contact);
+                    if (pCur != null) {
+                        while (pCur.moveToNext()) {
+                            String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            UploadContactRequest.Contact contact = new UploadContactRequest.Contact();
+                            contact.setName(name);
+                            contact.setPhone(phoneNo);
+                            mList.add(contact);
+                        }
+                        pCur.close();
                     }
-                    pCur.close();
                 }
             }
         }
