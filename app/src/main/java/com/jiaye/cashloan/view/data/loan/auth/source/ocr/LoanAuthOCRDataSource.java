@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.data.loan.auth.source.ocr;
 
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
+import com.jiaye.cashloan.http.tongdun.TongDunAntifraudRealName;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 
@@ -27,7 +28,7 @@ public interface LoanAuthOCRDataSource {
     /**
      * 检验信息
      */
-    Flowable<Object> check(String id, String name);
+    Flowable<TongDunAntifraudRealName> check(String id, String name);
 
     /**
      * 身份证认证

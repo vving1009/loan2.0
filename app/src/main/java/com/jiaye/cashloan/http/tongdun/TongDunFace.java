@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * @author 贾博瑄
  */
 
-public class TongDunFace {
+public class TongDunFace extends TongDunOCR {
 
     /*相似度超过75为true*/
     @SerializedName("is_pass")
@@ -21,10 +21,6 @@ public class TongDunFace {
     /*type为1时解密后的图片base64编码*/
     @SerializedName("image")
     private String base64;
-
-    /*身份证网纹照base64编码*/
-    @SerializedName("origin_image")
-    private String originBase64;
 
     public boolean isPass() {
         return isPass;
@@ -48,13 +44,5 @@ public class TongDunFace {
 
     public void setBase64(String base64) {
         this.base64 = base64;
-    }
-
-    public String getOriginBase64() {
-        return originBase64;
-    }
-
-    public void setOriginBase64(String originBase64) {
-        this.originBase64 = originBase64;
     }
 }

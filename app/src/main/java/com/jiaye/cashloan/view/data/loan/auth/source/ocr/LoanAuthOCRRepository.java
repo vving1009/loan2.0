@@ -7,17 +7,21 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.gson.Gson;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.tongdun.TongDunAntifraudRealName;
+import com.jiaye.cashloan.http.tongdun.TongDunAntifraudResponseFunction;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
-import com.jiaye.cashloan.http.tongdun.TongDunResponseFunction;
+import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
+import com.jiaye.cashloan.view.LocalException;
 
 import java.io.File;
 
@@ -50,7 +54,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
         mBase64Front = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Front)
-                .map(new TongDunResponseFunction<TongDunOCRFront>())
+                .map(new TongDunOCRResponseFunction<TongDunOCRFront>())
                 .map(new Function<TongDunOCRFront, TongDunOCRFront>() {
                     @Override
                     public TongDunOCRFront apply(TongDunOCRFront tongDunOCRFront) throws Exception {
@@ -74,7 +78,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
         mBase64Back = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Back)
-                .map(new TongDunResponseFunction<TongDunOCRBack>())
+                .map(new TongDunOCRResponseFunction<TongDunOCRBack>())
                 .map(new Function<TongDunOCRBack, TongDunOCRBack>() {
                     @Override
                     public TongDunOCRBack apply(TongDunOCRBack tongDunOCRBack) throws Exception {
@@ -91,17 +95,21 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
     }
 
     @Override
-    public Flowable<Object> check(String id, final String name) {
+    public Flowable<TongDunAntifraudRealName> check(String id, final String name) {
         return TongDunClient.INSTANCE.getService()
-                .check(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, BuildConfig.TONGDUN_APP_NAME, "jiayeshiming", id, name)
-                .map(new TongDunResponseFunction<>())
-                .map(new Function<Object, Object>() {
+                .check(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, BuildConfig.TONGDUN_APP_NAME, "jiayeshimng", id, name)
+                .map(new TongDunAntifraudResponseFunction<TongDunAntifraudRealName>())
+                .map(new Function<TongDunAntifraudRealName, TongDunAntifraudRealName>() {
                     @Override
-                    public Object apply(Object o) throws Exception {
-                        ContentValues values = new ContentValues();
-                        values.put("ocr_name", name);
-                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
-                        return o;
+                    public TongDunAntifraudRealName apply(TongDunAntifraudRealName realName) throws Exception {
+                        if (realName.getRealNameCheck().getCode() == 0) {
+                            ContentValues values = new ContentValues();
+                            values.put("ocr_name", name);
+                            LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                            return realName;
+                        } else {
+                            throw new LocalException(R.string.error_loan_auth_ocr);
+                        }
                     }
                 });
     }

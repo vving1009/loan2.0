@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * @author 贾博瑄
  */
 
-public class TongDunOCRBack {
+public class TongDunOCRBack extends TongDunOCR {
 
     /*身份证照片类型 1 身份证正面 2 身份证背面*/
     @SerializedName("idcard_type")

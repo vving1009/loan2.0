@@ -14,8 +14,8 @@ import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunFace;
 import com.jiaye.cashloan.http.tongdun.TongDunFaceRequest;
-import com.jiaye.cashloan.http.tongdun.TongDunResponse;
-import com.jiaye.cashloan.http.tongdun.TongDunResponseFunction;
+import com.jiaye.cashloan.http.tongdun.TongDunOCRResponse;
+import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
@@ -68,13 +68,13 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                         return request;
                     }
                 })
-                .flatMap(new Function<TongDunFaceRequest, Publisher<TongDunResponse<TongDunFace>>>() {
+                .flatMap(new Function<TongDunFaceRequest, Publisher<TongDunOCRResponse<TongDunFace>>>() {
                     @Override
-                    public Publisher<TongDunResponse<TongDunFace>> apply(TongDunFaceRequest request) throws Exception {
+                    public Publisher<TongDunOCRResponse<TongDunFace>> apply(TongDunFaceRequest request) throws Exception {
                         return TongDunClient.INSTANCE.getService().face(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, request.getName(), request.getId(), request.getBase64(), request.getType());
                     }
                 })
-                .map(new TongDunResponseFunction<TongDunFace>())
+                .map(new TongDunOCRResponseFunction<TongDunFace>())
                 .map(new Function<TongDunFace, String>() {
                     @Override
                     public String apply(TongDunFace tongDunFace) throws Exception {

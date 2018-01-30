@@ -6,20 +6,20 @@ import io.reactivex.functions.Function;
 
 
 /**
- * TongDunResponseFunction
+ * TongDunOCRResponseFunction
  *
  * @author 贾博瑄
  */
 
-public class TongDunResponseFunction<T> implements Function<TongDunResponse<T>, T> {
+public class TongDunOCRResponseFunction<T extends TongDunOCR> implements Function<TongDunOCRResponse<T>, T> {
 
     @Override
-    public T apply(TongDunResponse<T> baseResponse) throws Exception {
+    public T apply(TongDunOCRResponse<T> baseResponse) throws Exception {
         if (baseResponse.isSuccess()) {
             if (baseResponse.getResult() == 0) {
                 return baseResponse.getBody();
             } else {
-                return null;
+                throw new NetworkException("", baseResponse.getBody().getMessage());
             }
         } else {
             throw new NetworkException(baseResponse.getReasonCode(), baseResponse.getReasonDesc());

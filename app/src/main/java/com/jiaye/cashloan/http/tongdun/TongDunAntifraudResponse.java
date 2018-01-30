@@ -3,15 +3,18 @@ package com.jiaye.cashloan.http.tongdun;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * TongDunResponse
+ * TongDunAntifraudResponse
  *
  * @author 贾博瑄
  */
 
-public class TongDunResponse<T> {
+public class TongDunAntifraudResponse<T> {
 
     @SerializedName("success")
     private boolean success;
+
+    @SerializedName("id")
+    private String id;
 
     @SerializedName("reason_code")
     private String reasonCode;
@@ -19,10 +22,7 @@ public class TongDunResponse<T> {
     @SerializedName("reason_desc")
     private String reasonDesc;
 
-    @SerializedName("result")
-    private int result;
-
-    @SerializedName("display")
+    @SerializedName("result_desc")
     private T body;
 
     public boolean isSuccess() {
@@ -31,6 +31,14 @@ public class TongDunResponse<T> {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getReasonCode() {
@@ -47,14 +55,6 @@ public class TongDunResponse<T> {
 
     public void setReasonDesc(String reasonDesc) {
         this.reasonDesc = reasonDesc;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
     }
 
     public T getBody() {
