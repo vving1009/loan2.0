@@ -80,7 +80,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     @Override
     public void cash(String cash) {
-        if (TextUtils.isEmpty(cash)) {
+        if (TextUtils.isEmpty(cash) || cash.substring(0, 1).equals("0")) {
             mView.showToastById(R.string.error_my_credit_cash);
             return;
         }
