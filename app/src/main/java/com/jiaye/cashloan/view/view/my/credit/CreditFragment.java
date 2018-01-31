@@ -156,6 +156,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     @Override
     public void dismissCash() {
+        mTextCash.setText("");
         mCashDialog.dismiss();
     }
 }
