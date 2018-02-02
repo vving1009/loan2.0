@@ -84,6 +84,16 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
             mView.showToastById(R.string.error_my_credit_cash);
             return;
         }
+        try {
+            int num = Integer.valueOf(cash);
+            if (num == 1) {
+                mView.showToastById(R.string.error_my_credit_cash_min_limit);
+                return;
+            }
+        } catch (NumberFormatException exception) {
+            exception.printStackTrace();
+        }
+        mView.showToastById(R.string.error_my_credit_cash_tips);
         mView.showCashView(cash);
         mView.dismissCash();
     }

@@ -207,6 +207,8 @@
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <string name="error_my_credit_cash">请输入正确的金额</string>
+    <string name="error_my_credit_cash_min_limit">输入金额必须大于1元</string>
+    <string name="error_my_credit_cash_tips">提现有1元的手续费</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>
