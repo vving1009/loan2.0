@@ -83,6 +83,8 @@
     <string name="loan_details_current_amount">本期还款金额</string>
     <string name="loan_details_deadline">还款日期</string>
     <string name="loan_details_status">审批状态</string>
+    <string name="loan_details_progress">查看借款进度</string>
+    <string name="loan_details_plan">查看还款计划</string>
     <string name="loan_progress_title">借款进度</string>
     <string name="loan_progress_step">借款使用此步骤</string>
     <string name="loan_progress_progress">我的借款进度</string>
@@ -91,6 +93,10 @@
     <string name="loan_progress_contract">签订</string>
     <string name="loan_progress_watch">查看</string>
     <string name="loan_progress_repayment">还款</string>
+    <string name="loan_plan_title">还款计划</string>
+    <string name="loan_plan_date">还款日</string>
+    <string name="loan_plan_money">月还款额</string>
+    <string name="loan_plan_state">还款状态</string>
     <string name="loan_contract">借款合同</string>
     <string name="loan_contract_agree">我已阅读并同意</string>
     <string name="loan_bank_title">银行卡</string>

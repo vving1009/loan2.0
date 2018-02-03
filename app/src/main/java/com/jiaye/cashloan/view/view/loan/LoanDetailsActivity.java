@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
@@ -75,6 +74,12 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         startActivity(intent);
     }
 
+    private void showLoanPlanView(String loanId) {
+        Intent intent = new Intent(this, LoanPlanActivity.class);
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<LoanDetails> mList;
@@ -85,8 +90,13 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
                 @Override
-                public void onClickViewHolder(ViewHolder viewHolder) {
+                public void onClickProgress(ViewHolder viewHolder) {
                     showLoanProgressView(mList.get(viewHolder.getLayoutPosition()).getLoanId());
+                }
+
+                @Override
+                public void onClickPlan(ViewHolder viewHolder) {
+                    showLoanPlanView(mList.get(viewHolder.getLayoutPosition()).getLoanId());
                 }
             });
             return viewHolder;
@@ -124,7 +134,9 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         private interface OnClickViewHolderListener {
 
-            void onClickViewHolder(ViewHolder viewHolder);
+            void onClickProgress(ViewHolder viewHolder);
+
+            void onClickPlan(ViewHolder viewHolder);
         }
 
         private OnClickViewHolderListener mListener;
@@ -149,15 +161,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         public ViewHolder(View itemView) {
             super(itemView);
-            LinearLayout layout = itemView.findViewById(R.id.layout);
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onClickViewHolder(ViewHolder.this);
-                    }
-                }
-            });
             mTextTitle = itemView.findViewById(R.id.text_title);
             mTextDate = itemView.findViewById(R.id.text_date);
             mTextLoan = itemView.findViewById(R.id.text_loan);
@@ -167,6 +170,22 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextCurrentAmount = itemView.findViewById(R.id.text_current_amount);
             mTextDeadline = itemView.findViewById(R.id.text_deadline);
             mTextStatus = itemView.findViewById(R.id.text_status);
+            itemView.findViewById(R.id.btn_progress).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onClickProgress(ViewHolder.this);
+                    }
+                }
+            });
+            itemView.findViewById(R.id.btn_plan).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onClickPlan(ViewHolder.this);
+                    }
+                }
+            });
         }
 
         public void setListener(OnClickViewHolderListener listener) {

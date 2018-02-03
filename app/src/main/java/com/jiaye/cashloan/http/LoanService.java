@@ -45,6 +45,8 @@ import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
+import com.jiaye.cashloan.http.data.loan.LoanPlan;
+import com.jiaye.cashloan.http.data.loan.LoanPlanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
@@ -282,6 +284,12 @@ public interface LoanService {
      */
     @POST("loanProgress")
     Flowable<Response<LoanProgress>> loanProgress(@Body Request<LoanProgressRequest> request);
+
+    /**
+     * 还款列表
+     */
+    @POST("shjk/repaymentPlans")
+    Flowable<Response<LoanPlan>> loanPlan(@Body Request<LoanPlanRequest> request);
 
     /**
      * 绑定银行卡
