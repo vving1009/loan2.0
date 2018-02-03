@@ -6,15 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
-import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
+import com.jiaye.cashloan.view.view.my.MyActivity;
 
 /**
  * CreditFragment
@@ -28,17 +28,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private TextView mTextPassword;
 
-    private BaseDialog mBalanceDialog;
-
-    private TextView mTextAvail;
-
-    private TextView mTextFreeze;
-
-    private TextView mTextCurr;
-
-    private BaseDialog mCashDialog;
-
-    private EditText mTextCash;
+    private TextView mTextBalance;
 
     public static CreditFragment newInstance() {
         Bundle args = new Bundle();
@@ -52,6 +42,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.credit_fragment, container, false);
         mTextPassword = view.findViewById(R.id.text_password);
+        mTextBalance = view.findViewById(R.id.text_balance);
         view.findViewById(R.id.layout_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,45 +52,9 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         view.findViewById(R.id.layout_cash).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCashDialog.show();
+                mPresenter.cash();
             }
         });
-        view.findViewById(R.id.layout_balance).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.balance();
-            }
-        });
-        /*balance*/
-        mBalanceDialog = new BaseDialog(getActivity());
-        View balanceView = LayoutInflater.from(getActivity()).inflate(R.layout.balance_dialog_layout, null);
-        balanceView.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBalanceDialog.dismiss();
-            }
-        });
-        mTextAvail = balanceView.findViewById(R.id.text_avail);
-        mTextFreeze = balanceView.findViewById(R.id.text_freeze);
-        mTextCurr = balanceView.findViewById(R.id.text_curr);
-        mBalanceDialog.setContentView(balanceView);
-        /*cash*/
-        mCashDialog = new BaseDialog(getActivity());
-        View cashView = LayoutInflater.from(getActivity()).inflate(R.layout.cash_dialog_layout, null);
-        cashView.findViewById(R.id.text_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.cash(mTextCash.getText().toString());
-            }
-        });
-        cashView.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCashDialog.dismiss();
-            }
-        });
-        mTextCash = cashView.findViewById(R.id.edit_cash);
-        mCashDialog.setContentView(cashView);
         mPresenter = new CreditPresenter(this, new CreditRepository());
         mPresenter.subscribe();
         return view;
@@ -139,24 +94,15 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
-    public void showCashView(String cash) {
-        Intent intent = new Intent(getActivity(), CreditActivity.class);
-        intent.putExtra("type", "cash");
-        intent.putExtra("cash", cash);
+    public void showCashView(CreditBalance balance) {
+        Intent intent = new Intent(getActivity(), MyActivity.class);
+        intent.putExtra("view", "credit_cash");
+        intent.putExtra("balance", balance);
         startActivity(intent);
     }
 
     @Override
-    public void showBalance(String availBal, String freezeBal, String currBal) {
-        mTextAvail.setText(String.format(getString(R.string.my_credit_balance_avail), availBal));
-        mTextFreeze.setText(String.format(getString(R.string.my_credit_balance_freeze), freezeBal));
-        mTextCurr.setText(String.format(getString(R.string.my_credit_balance_curr), currBal));
-        mBalanceDialog.show();
-    }
-
-    @Override
-    public void dismissCash() {
-        mTextCash.setText("");
-        mCashDialog.dismiss();
+    public void showBalance(String balance) {
+        mTextBalance.setText(balance);
     }
 }

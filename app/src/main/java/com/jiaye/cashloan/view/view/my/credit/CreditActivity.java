@@ -87,10 +87,12 @@ public class CreditActivity extends BaseActivity {
                 break;
             case "cash":
                 String cash = getIntent().getExtras().getString("cash");
+                String bank = getIntent().getExtras().getString("bank");
                 Request<CreditCashRequest> request = new Request<>();
                 RequestContent<CreditCashRequest> requestContent = new RequestContent<>();
                 CreditCashRequest creditCashRequest = new CreditCashRequest();
                 creditCashRequest.setCash(cash);
+                creditCashRequest.setBank(bank);
                 requestContent.setHeader(RequestHeader.create());
                 List<CreditCashRequest> list = new ArrayList<>();
                 list.add(creditCashRequest);

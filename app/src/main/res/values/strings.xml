@@ -123,10 +123,18 @@
     <string name="my_credit_password">设置初始密码</string>
     <string name="my_credit_password_reset">重置密码</string>
     <string name="my_credit_cash">提现</string>
-    <string name="my_credit_balance">查询余额</string>
-    <string name="my_credit_balance_avail">可用余额:%1$s</string>
-    <string name="my_credit_balance_freeze">冻结余额:%1$s</string>
-    <string name="my_credit_balance_curr">账面余额:%1$s</string>
+    <string name="my_credit_cash_title_1">江西银行\n存管账户</string>
+    <string name="my_credit_cash_title_2">提现至</string>
+    <string name="my_credit_cash_available">可用余额：</string>
+    <string name="my_credit_cash_available_unit">%1$s元</string>
+    <string name="my_credit_cash_cash">提现金额：</string>
+    <string name="my_credit_cash_cash_hint">最低提现1元</string>
+    <string name="my_credit_cash_bank">银行联行号：</string>
+    <string name="my_credit_cash_bank_hint">请填写银行联行号</string>
+    <string name="my_credit_cash_submit">确认提交</string>
+    <string name="my_credit_cash_description_title">提现说明</string>
+    <string name="my_credit_cash_description">1.快速提现单笔限额5万元，大额提现单笔限额50万元，每日最多可提现10次。\n\n2.提现手续费：1元/笔。\n\n3.提现时间：7×24小时。快速提现2小时左右到账，大额提现T+1工作日到账。节假日可能出现延迟。\n\n4.银行联行号：\n银行联行号就是一个地区银行的唯一识别标志。用于人民银行所组织的大额支付系统等跨区域支付结算业务，由12位组成。\n为了您的资金安全，提现金额大于5万需要填写银行联行号，联行号可以通过第三方网站或对应银行客服进行获取，银行联行号输入错误可能会导致提现失败，但不会影响资金安全。\n首次大额提现，系统会保存银行联行号，第二次大额提现，系统会自动为您填写银行联行号，不需要重新查询和输入(重新绑卡后需要重新输入)</string>
+    <string name="my_credit_balance">余额</string>
     <string name="my_help">帮助中心</string>
     <string name="my_qrcode">关注公众号</string>
     <string name="my_qrcode_success">保存成功</string>
@@ -206,9 +214,11 @@
     <string name="error_loan_bank_bank">请输入正确的开户银行</string>
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
-    <string name="error_my_credit_cash">请输入正确的金额</string>
-    <string name="error_my_credit_cash_min_limit">输入金额必须大于1元</string>
-    <string name="error_my_credit_cash_tips">提现有1元的手续费</string>
+    <string name="error_my_credit">没有设置密码或签约，暂时无法提现</string>
+    <string name="error_my_credit_cash">格式不正确，请重新输入</string>
+    <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>
+    <string name="error_my_credit_cash_max_limit">提现金额不能大于可用余额</string>
+    <string name="error_my_credit_cash_max_limit_bank">提现金额大于5万元请填写银行联行号</string>
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>

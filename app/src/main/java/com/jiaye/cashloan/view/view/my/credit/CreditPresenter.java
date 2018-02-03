@@ -1,7 +1,5 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
-import android.text.TextUtils;
-
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
@@ -13,8 +11,13 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditDataSource;
 
+import org.reactivestreams.Publisher;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * CreditPresenter
@@ -29,6 +32,8 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     private final CreditDataSource mDataSource;
 
     private String mPasswordStatus = "0";
+
+    private CreditBalance mBalance;
 
     public CreditPresenter(CreditContract.View view, CreditDataSource dataSource) {
         mView = view;
@@ -46,10 +51,9 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<CreditPasswordStatus>() {
+                .map(new Function<CreditPasswordStatus, CreditPasswordStatus>() {
                     @Override
-                    public void accept(CreditPasswordStatus creditPasswordStatus) throws Exception {
-                        mView.dismissProgressDialog();
+                    public CreditPasswordStatus apply(CreditPasswordStatus creditPasswordStatus) throws Exception {
                         if (creditPasswordStatus.getOpen().equals("0")) {
                             mView.notOpen();
                         } else if (creditPasswordStatus.getOpen().equals("1")) {
@@ -61,6 +65,23 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                                 mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password_reset));
                             }
                         }
+                        return creditPasswordStatus;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<CreditPasswordStatus, Publisher<CreditBalance>>() {
+                    @Override
+                    public Publisher<CreditBalance> apply(CreditPasswordStatus creditPasswordStatus) throws Exception {
+                        return mDataSource.balance();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CreditBalance>() {
+                    @Override
+                    public void accept(CreditBalance creditBalance) throws Exception {
+                        mBalance = creditBalance;
+                        mView.dismissProgressDialog();
+                        mView.showBalance(creditBalance.getAvailBal());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
@@ -79,43 +100,12 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     }
 
     @Override
-    public void cash(String cash) {
-        if (TextUtils.isEmpty(cash) || cash.substring(0, 1).equals("0")) {
-            mView.showToastById(R.string.error_my_credit_cash);
-            return;
+    public void cash() {
+        if (mBalance.getIsSupportCash().equals("1")) {
+            mView.showCashView(mBalance);
+        } else {
+            mView.showToastById(R.string.error_my_credit);
         }
-        try {
-            int num = Integer.valueOf(cash);
-            if (num == 1) {
-                mView.showToastById(R.string.error_my_credit_cash_min_limit);
-                return;
-            }
-        } catch (NumberFormatException exception) {
-            exception.printStackTrace();
-        }
-        mView.showToastById(R.string.error_my_credit_cash_tips);
-        mView.showCashView(cash);
-        mView.dismissCash();
-    }
-
-    @Override
-    public void balance() {
-        Disposable disposable = mDataSource.balance()
-                .compose(new ViewTransformer<CreditBalance>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(new Consumer<CreditBalance>() {
-                    @Override
-                    public void accept(CreditBalance creditBalance) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.showBalance(creditBalance.getAvailBal(), creditBalance.getFreezeBal(), creditBalance.getCurrBal());
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
     }
 
     private void passwordInit() {

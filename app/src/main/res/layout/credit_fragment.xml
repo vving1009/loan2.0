@@ -77,7 +77,6 @@
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
-            android:id="@+id/layout_balance"
             android:layout_width="match_parent"
             android:layout_height="45dp">
 
@@ -92,12 +91,14 @@
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
 
-            <ImageView
+            <TextView
+                android:id="@+id/text_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_angle_gray" />
+                android:textColor="@color/color_blue"
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View

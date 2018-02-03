@@ -14,12 +14,23 @@ public class CreditCashRequest extends ChildRequest {
     @SerializedName("tx_amount")
     private String cash;
 
+    @SerializedName("bank_cnapsNo")
+    private String bank;
+
     public String getCash() {
         return cash;
     }
 
     public void setCash(String cash) {
         this.cash = cash;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
     @Override
