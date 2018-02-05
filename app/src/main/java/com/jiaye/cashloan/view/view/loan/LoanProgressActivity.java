@@ -79,9 +79,8 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
         startActivity(intent);
     }
 
-    private void showContractView(boolean contract) {
-        Intent intent = new Intent(this, LoanContractActivity.class);
-        intent.putExtra("contract", contract);
+    private void showContractListView() {
+        Intent intent = new Intent(this, LoanContractListActivity.class);
         intent.putExtra("loanId", getIntent().getExtras().getString("loanId"));
         startActivity(intent);
     }
@@ -103,10 +102,9 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                             showBindBankView();
                             break;
                         case "10":
-                            showContractView(true);
                             break;
                         case "11":
-                            showContractView(false);
+                            showContractListView();
                             break;
                         case "12":
                             break;
@@ -119,7 +117,6 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
                         case "16":
                             break;
                         case "17":
-                            showContractView(true);
                             break;
                     }
                 }

@@ -103,8 +103,6 @@ public class MyRepository implements MyDataSource {
                         approveNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_APPROVE_NUMBER));
                         progressNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PROGRESS_NUMBER));
                         historyNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_HISTORY_NUMBER));
-                        loanApproveId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_APPROVE_ID));
-                        loanProgressId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_PROGRESS_ID));
                         name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                     }
                     cursor.close();
@@ -118,8 +116,6 @@ public class MyRepository implements MyDataSource {
                 user.setApproveNumber(approveNumber);
                 user.setProgressNumber(progressNumber);
                 user.setHistoryNumber(historyNumber);
-                user.setLoanApproveId(loanApproveId);
-                user.setLoanProgressId(loanProgressId);
                 return user;
             }
         });
@@ -139,16 +135,14 @@ public class MyRepository implements MyDataSource {
                 .map(new Function<User, User>() {
                     @Override
                     public User apply(User user) throws Exception {
-                                            /*更新数据库*/
+                        /*更新数据库*/
                         ContentValues values = new ContentValues();
                         values.put("approve_number", user.getApproveNumber());
                         values.put("progress_number", user.getProgressNumber());
                         values.put("history_number", user.getHistoryNumber());
-                        values.put("loan_approve_id", user.getLoanApproveId());
-                        values.put("loan_progress_id", user.getLoanProgressId());
                         values.put("ocr_name", user.getName());
                         LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
-                                            /*查询手机号*/
+                        /*查询手机号*/
                         String phone = "";
                         Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user;", null);
                         if (cursor != null) {

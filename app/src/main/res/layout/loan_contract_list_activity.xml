@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="RtlHardcoded,ContentDescription">
+    tools:ignore="RtlHardcoded,RtlSymmetry,ContentDescription">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/loan_contract"
+            android:text="@string/loan_contract_list"
             android:textColor="@color/color_black"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -38,8 +38,24 @@
         android:layout_height="4dp"
         android:background="@color/color_gray_light" />
 
-    <WebView
-        android:id="@+id/web_view"
+    <TextView
+        android:id="@+id/text_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="27dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="11dp"
+        android:background="#4CC1EC"
+        android:gravity="center_vertical"
+        android:paddingLeft="13sp"
+        android:textColor="@android:color/white"
+        android:textSize="13sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp" />
 </LinearLayout>

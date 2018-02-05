@@ -1,24 +1,24 @@
 package com.jiaye.cashloan.view.view.loan;
 
-import com.jiaye.cashloan.http.data.loan.LoanApply;
+import com.jiaye.cashloan.http.data.loan.ContractList;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * LoanDetailsContract
+ * LoanContractListContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanDetailsContract {
+public interface LoanContractListContract {
 
     interface View extends BaseViewContract {
 
-        void setList(LoanApply.Card[] cards);
+        void setContracts(ContractList.Contract[] contracts);
     }
 
     interface Presenter extends BasePresenter {
 
-        void requestDetails(String state);
+        void requestContractList(String loanId);
     }
 }

@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="340dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     android:background="@drawable/loan_details_bg"
     android:orientation="vertical"
-    android:paddingBottom="4dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="4dp">
+    android:paddingBottom="14dp"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp"
+    tools:ignore="RtlHardcoded,RelativeOverlap,SmallSp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="27dp">
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/loan_details_id"
+            android:textColor="#4CC1EC"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/color_blue"
-            android:textSize="16sp" />
+            android:layout_toRightOf="@id/text_id"
+            android:textColor="#4CC1EC"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/text_date"
@@ -28,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="@color/color_black_light"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
     <View
@@ -38,7 +52,90 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="27dp">
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/loan_details_product"
+                android:textColor="@color/color_black_light"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="14dp"
+                android:textColor="@color/color_black"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/loan_details_approve"
+                android:textColor="@color/color_black_light"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/text_approve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="14dp"
+                android:textColor="@color/color_black"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/loan_details_total"
+                android:textColor="@color/color_black_light"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/text_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/color_black"
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -52,17 +149,27 @@
                 android:layout_gravity="center"
                 android:text="@string/loan_details_loan"
                 android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/text_loan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="14dp"
                 android:textColor="@color/color_black"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -76,7 +183,7 @@
                 android:layout_gravity="center"
                 android:text="@string/loan_details_other"
                 android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/text_other"
@@ -85,99 +192,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="4dp"
                 android:textColor="@color/color_black"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="27dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/loan_details_payment_method"
-                android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/text_payment_method"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:textColor="@color/color_black"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/loan_details_amount"
-                android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/text_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:textColor="@color/color_black"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="27dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/loan_details_current_amount"
-                android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/text_current_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:textColor="@color/color_black"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -192,7 +207,7 @@
                 android:layout_gravity="center"
                 android:text="@string/loan_details_deadline"
                 android:textColor="@color/color_black_light"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/text_deadline"
@@ -201,7 +216,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="4dp"
                 android:textColor="@color/color_black"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -212,7 +227,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="27dp">
+        android:layout_height="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -220,7 +235,7 @@
             android:layout_gravity="center"
             android:text="@string/loan_details_status"
             android:textColor="@color/color_black_light"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/text_status"
@@ -229,13 +244,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="4dp"
             android:textColor="@color/color_orange"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -246,30 +256,24 @@
             android:id="@+id/btn_progress"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="13dp"
             android:layout_weight="1"
-            android:background="@drawable/loan_btn"
+            android:background="@drawable/loan_details_btn"
             android:text="@string/loan_details_progress"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/btn_plan"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="13dp"
             android:layout_weight="1"
-            android:background="@drawable/loan_btn"
+            android:background="@drawable/loan_details_btn"
             android:text="@string/loan_details_plan"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

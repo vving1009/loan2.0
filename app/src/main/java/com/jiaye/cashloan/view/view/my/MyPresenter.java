@@ -104,7 +104,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
             @Override
             public void accept(User user) throws Exception {
                 if (!TextUtils.isEmpty(user.getApproveNumber()) && !user.getApproveNumber().equals("0")) {
-                    mView.showApproveView(user.getLoanApproveId());
+                    mView.showApproveView();
                 }
             }
         }, new ThrowableConsumer(mView));
@@ -117,7 +117,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
             @Override
             public void accept(User user) throws Exception {
                 if (!TextUtils.isEmpty(user.getProgressNumber()) && !user.getProgressNumber().equals("0")) {
-                    mView.showProgressView(user.getLoanProgressId());
+                    mView.showProgressView();
                 }
             }
         }, new ThrowableConsumer(mView));

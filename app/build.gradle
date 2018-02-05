@@ -21,7 +21,6 @@ android {
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
         buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
         buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
-        buildConfigField("String", "BUGLY_APPID", properties.getProperty("BUGLY_APPID"))
         buildConfigField("String", "TONGDUN_URL", properties.getProperty("TONGDUN_URL"))
         buildConfigField("String", "TONGDUN_CODE", properties.getProperty("TONGDUN_CODE"))
         buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
@@ -46,15 +45,21 @@ android {
         }
         urlTest {
             dimension "url"
-            flavorBuildConfigField(urlTest, loadProperties('test'))
+            flavorBuildConfigField(urlTest, loadFlavorProperties('test'))
         }
         urlProduct {
             dimension "url"
-            flavorBuildConfigField(urlProduct, loadProperties('product'))
+            flavorBuildConfigField(urlProduct, loadFlavorProperties('product'))
         }
     }
     buildTypes {
+        debug {
+            buildBuildConfigField(debug, loadBuildProperties('debug'))
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
+            buildBuildConfigField(release, loadBuildProperties('release'))
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -117,9 +122,15 @@ static def versionName(properties) {
     return properties.getProperty("MILESTONE_CODE") + "." + properties.getProperty("CODE") + "." + properties.getProperty("FIX_CODE") + "." + properties.getProperty("VERSION_CODE")
 }
 
-def loadProperties(path) {
+def loadFlavorProperties(path) {
     Properties properties = new Properties()
     properties.load(project.file('configs/url/' + path + '/config.properties').newDataInputStream())
+    return properties
+}
+
+def loadBuildProperties(path) {
+    Properties properties = new Properties()
+    properties.load(project.file('configs/build/' + path + '/config.properties').newDataInputStream())
     return properties
 }
 
@@ -129,6 +140,10 @@ static def flavorBuildConfigField(flavor, properties) {
     flavor.buildConfigField("String", "SATCATCHE_URL", properties.getProperty("SATCATCHE_URL"))
     flavor.buildConfigField("String", "CREDIT2GO_URL", properties.getProperty("CREDIT2GO_URL"))
     flavor.buildConfigField("String", "CREDIT2GO_ESCROW_URL", properties.getProperty("CREDIT2GO_ESCROW_URL"))
+}
+
+static def buildBuildConfigField(build, properties) {
+    build.buildConfigField("String", "BUGLY_APPID", properties.getProperty("BUGLY_APPID"))
 }
 
 static def renameApk(variant) {

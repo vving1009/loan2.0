@@ -20,10 +20,8 @@ public class LoanContractContract {
 
     interface Presenter extends BasePresenter {
 
-        void setLoanId(String loanId);
+        void setContractId(String contractId);
 
         void showContract();
-
-        void requestContract();
     }
 }

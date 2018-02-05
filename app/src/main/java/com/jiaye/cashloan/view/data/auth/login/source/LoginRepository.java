@@ -19,5 +19,6 @@ public class LoginRepository implements LoginDataSource {
         values.put("token", login.getToken());
         values.put("phone", login.getPhone());
         LoanApplication.getInstance().getSQLiteDatabase().insert("user", null, values);
+        LoanApplication.getInstance().setupBuglyUserId(login.getPhone());
     }
 }

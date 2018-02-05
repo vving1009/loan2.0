@@ -30,12 +30,6 @@ public class User extends ChildResponse implements Parcelable {
     @SerializedName("loan_history")
     private String historyNumber;
 
-    @SerializedName("approval_jlaid")
-    private String loanApproveId;
-
-    @SerializedName("repayment_jlaid")
-    private String loanProgressId;
-
     /*前台实际显示的姓名信息
     1.没有姓名及手机号时,显示 "游客".
     2.没有姓名只有手机号时,显示 "137****6666"
@@ -77,22 +71,6 @@ public class User extends ChildResponse implements Parcelable {
         this.historyNumber = historyNumber;
     }
 
-    public String getLoanApproveId() {
-        return loanApproveId;
-    }
-
-    public void setLoanApproveId(String loanApproveId) {
-        this.loanApproveId = loanApproveId;
-    }
-
-    public String getLoanProgressId() {
-        return loanProgressId;
-    }
-
-    public void setLoanProgressId(String loanProgressId) {
-        this.loanProgressId = loanProgressId;
-    }
-
     public String getShowName() {
         return showName;
     }
@@ -120,8 +98,6 @@ public class User extends ChildResponse implements Parcelable {
         dest.writeString(this.approveNumber);
         dest.writeString(this.progressNumber);
         dest.writeString(this.historyNumber);
-        dest.writeString(this.loanApproveId);
-        dest.writeString(this.loanProgressId);
         dest.writeString(this.showName);
         dest.writeString(this.phone);
         dest.writeString(getSerialnumber());
@@ -137,8 +113,6 @@ public class User extends ChildResponse implements Parcelable {
         this.approveNumber = in.readString();
         this.progressNumber = in.readString();
         this.historyNumber = in.readString();
-        this.loanApproveId = in.readString();
-        this.loanProgressId = in.readString();
         this.showName = in.readString();
         this.phone = in.readString();
         setSerialnumber(in.readString());

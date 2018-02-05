@@ -8,14 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.LoanDetails;
+import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.data.loan.source.LoanDetailsRepository;
-
-import java.util.List;
 
 /**
  * LoanApproveActivity
@@ -49,11 +48,11 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         mPresenter = new LoanDetailsPresenter(this, new LoanDetailsRepository());
         mPresenter.subscribe();
         if (title.equals(getString(R.string.loan_details_approve_title))) {
-            mPresenter.requestDetails(getIntent().getExtras().getString("loanId"));
+            mPresenter.requestDetails("01");
         } else if (title.equals(getString(R.string.loan_details_progress_title))) {
-            mPresenter.requestDetails(getIntent().getExtras().getString("loanId"));
+            mPresenter.requestDetails("02");
         } else if (title.equals(getString(R.string.loan_details_history_title))) {
-            mPresenter.requestHistory();
+            mPresenter.requestDetails("03");
         }
     }
 
@@ -64,8 +63,8 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
     }
 
     @Override
-    public void setList(List<LoanDetails> list) {
-        mAdapter.setList(list);
+    public void setList(LoanApply.Card[] cards) {
+        mAdapter.setList(cards);
     }
 
     private void showLoanProgressView(String loanId) {
@@ -82,7 +81,7 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private List<LoanDetails> mList;
+        private LoanApply.Card[] mCards;
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
@@ -91,12 +90,12 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
                 @Override
                 public void onClickProgress(ViewHolder viewHolder) {
-                    showLoanProgressView(mList.get(viewHolder.getLayoutPosition()).getLoanId());
+                    showLoanProgressView(mCards[viewHolder.getLayoutPosition()].getId());
                 }
 
                 @Override
                 public void onClickPlan(ViewHolder viewHolder) {
-                    showLoanPlanView(mList.get(viewHolder.getLayoutPosition()).getLoanId());
+                    showLoanPlanView(mCards[viewHolder.getLayoutPosition()].getId());
                 }
             });
             return viewHolder;
@@ -104,28 +103,29 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.setTitle(mList.get(position).getName());
-            holder.setDate(mList.get(position).getDate());
-            holder.setLoan(mList.get(position).getLoan());
-            holder.setOther(mList.get(position).getOther());
-            holder.setPaymentMethod(mList.get(position).getPaymentMethod());
-            holder.setAmount(mList.get(position).getAmount());
-            holder.setCurrentAmount(mList.get(position).getCurrentAmount());
-            holder.setDeadline(mList.get(position).getDeadline());
-            holder.setStatus(mList.get(position).getStatus());
+            holder.setTitle(mCards[position].getId());
+            holder.setDate(mCards[position].getDate());
+            holder.setName(mCards[position].getName());
+            holder.setApprove(mCards[position].getApproveNum());
+            holder.setTotal(mCards[position].getCompactNum());
+            holder.setLoan(mCards[position].getLoanNum());
+            holder.setOther(mCards[position].getFee());
+            holder.setDeadline(mCards[position].getReturnDate());
+            holder.setStatus(mCards[position].getReturnState());
+            holder.setPlanEnabled(mCards[position].getPlan().equals("1"));
         }
 
         @Override
         public int getItemCount() {
-            if (mList != null) {
-                return mList.size();
+            if (mCards != null) {
+                return mCards.length;
             } else {
                 return 0;
             }
         }
 
-        public void setList(List<LoanDetails> list) {
-            mList = list;
+        public void setList(LoanApply.Card[] cards) {
+            mCards = cards;
             notifyDataSetChanged();
         }
     }
@@ -145,31 +145,34 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         private TextView mTextDate;
 
+        private TextView mTextName;
+
+        private TextView mTextApprove;
+
+        private TextView mTextTotal;
+
         private TextView mTextLoan;
 
         private TextView mTextOther;
-
-        private TextView mTextPaymentMethod;
-
-        private TextView mTextAmount;
-
-        private TextView mTextCurrentAmount;
 
         private TextView mTextDeadline;
 
         private TextView mTextStatus;
 
+        private Button mBtnPlan;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.text_title);
             mTextDate = itemView.findViewById(R.id.text_date);
+            mTextName = itemView.findViewById(R.id.text_name);
+            mTextApprove = itemView.findViewById(R.id.text_approve);
+            mTextTotal = itemView.findViewById(R.id.text_total);
             mTextLoan = itemView.findViewById(R.id.text_loan);
             mTextOther = itemView.findViewById(R.id.text_other);
-            mTextPaymentMethod = itemView.findViewById(R.id.text_payment_method);
-            mTextAmount = itemView.findViewById(R.id.text_amount);
-            mTextCurrentAmount = itemView.findViewById(R.id.text_current_amount);
             mTextDeadline = itemView.findViewById(R.id.text_deadline);
             mTextStatus = itemView.findViewById(R.id.text_status);
+            mBtnPlan = itemView.findViewById(R.id.btn_plan);
             itemView.findViewById(R.id.btn_progress).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -178,7 +181,7 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
                     }
                 }
             });
-            itemView.findViewById(R.id.btn_plan).setOnClickListener(new View.OnClickListener() {
+            mBtnPlan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
@@ -200,6 +203,18 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextDate.setText(text);
         }
 
+        public void setName(String text) {
+            mTextName.setText(text);
+        }
+
+        public void setApprove(String text) {
+            mTextApprove.setText(text);
+        }
+
+        public void setTotal(String text) {
+            mTextTotal.setText(text);
+        }
+
         public void setLoan(String text) {
             mTextLoan.setText(text);
         }
@@ -208,24 +223,20 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextOther.setText(text);
         }
 
-        public void setPaymentMethod(String text) {
-            mTextPaymentMethod.setText(text);
-        }
-
-        public void setAmount(String text) {
-            mTextAmount.setText(text);
-        }
-
-        public void setCurrentAmount(String text) {
-            mTextCurrentAmount.setText(text);
-        }
-
         public void setDeadline(String text) {
             mTextDeadline.setText(text);
         }
 
         public void setStatus(String text) {
             mTextStatus.setText(text);
+        }
+
+        public void setPlanEnabled(boolean enabled) {
+            if (enabled) {
+                mBtnPlan.setEnabled(true);
+            } else {
+                mBtnPlan.setEnabled(false);
+            }
         }
     }
 }

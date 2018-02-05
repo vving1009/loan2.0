@@ -21,10 +21,11 @@ import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
-import com.jiaye.cashloan.http.data.loan.Contract;
-import com.jiaye.cashloan.http.data.loan.ContractRequest;
+import com.jiaye.cashloan.http.data.loan.ContractList;
+import com.jiaye.cashloan.http.data.loan.ContractListRequest;
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
 import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
+import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanBindBank;
@@ -33,12 +34,8 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
-import com.jiaye.cashloan.http.data.loan.LoanDetails;
-import com.jiaye.cashloan.http.data.loan.LoanDetailsRequest;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanHistory;
-import com.jiaye.cashloan.http.data.loan.LoanHistoryRequest;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
@@ -268,22 +265,16 @@ public interface LoanService {
     Flowable<Response<LoanConfirm>> loanConfirm(@Body Request<LoanConfirmRequest> request);
 
     /**
-     * 借款详情
-     */
-    @POST("mine/loanDetail")
-    Flowable<Response<LoanDetails>> loanDetails(@Body Request<LoanDetailsRequest> request);
-
-    /**
-     * 借款历史
-     */
-    @POST("lendApply")
-    Flowable<Response<LoanHistory>> loanHistory(@Body Request<LoanHistoryRequest> request);
-
-    /**
      * 借款进度
      */
     @POST("loanProgress")
     Flowable<Response<LoanProgress>> loanProgress(@Body Request<LoanProgressRequest> request);
+
+    /**
+     * 申请借款
+     */
+    @POST("shjk")
+    Flowable<Response<LoanApply>> loanApply(@Body Request<LoanApply> request);
 
     /**
      * 还款列表
@@ -304,16 +295,16 @@ public interface LoanService {
     Flowable<Response<Bank>> bank(@Body Request<BankRequest> request);
 
     /**
-     * 查看合同
+     * 查看合同列表
      */
-    @POST("compact/cashLoan")
-    Flowable<Response<WatchContract>> watchContract(@Body Request<WatchContractRequest> request);
+    @POST("shCompactShow")
+    Flowable<Response<ContractList>> contractList(@Body Request<ContractListRequest> request);
 
     /**
-     * 签订合同
+     * 查看合同
      */
-    @POST("compact/confirmCompact")
-    Flowable<Response<Contract>> contract(@Body Request<ContractRequest> request);
+    @POST("shCompactDetail")
+    Flowable<Response<WatchContract>> watchContract(@Body Request<WatchContractRequest> request);
 
     /**
      * 校验忘记密码验证码

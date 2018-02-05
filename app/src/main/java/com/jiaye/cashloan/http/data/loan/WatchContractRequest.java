@@ -11,19 +11,19 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class WatchContractRequest extends ChildRequest {
 
-    @SerializedName("jla_id")
-    private String loanId;
+    @SerializedName("el_id")
+    private String contractId;
 
-    public String getLoanId() {
-        return loanId;
+    public String getContractId() {
+        return contractId;
     }
 
-    public void setLoanId(String loanId) {
-        this.loanId = loanId;
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 
     @Override
     protected String getBusiness() {
-        return "CL031";
+        return "CL058";
     }
 }

@@ -229,25 +229,22 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
-    public void showApproveView(String loanId) {
+    public void showApproveView() {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
         intent.putExtra("title", getString(R.string.loan_details_approve_title));
-        intent.putExtra("loanId", loanId);
         startActivity(intent);
     }
 
     @Override
-    public void showProgressView(String loanId) {
+    public void showProgressView() {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
         intent.putExtra("title", getString(R.string.loan_details_progress_title));
-        intent.putExtra("loanId", loanId);
         startActivity(intent);
     }
 
     @Override
     public void showHistoryView() {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
-        intent.putExtra("title", getString(R.string.loan_details_history_title));
         startActivity(intent);
     }
 

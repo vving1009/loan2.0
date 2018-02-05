@@ -1,14 +1,10 @@
 package com.jiaye.cashloan.view.view.loan;
 
-import com.jiaye.cashloan.http.data.loan.LoanDetails;
-import com.jiaye.cashloan.http.data.loan.LoanHistory;
+import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.loan.source.LoanDetailsDataSource;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -31,41 +27,19 @@ public class LoanDetailsPresenter extends BasePresenterImpl implements LoanDetai
     }
 
     @Override
-    public void requestDetails(String id) {
-        Disposable disposable = mDataSource.requestLoanDetails(id)
-                .compose(new ViewTransformer<LoanDetails>() {
+    public void requestDetails(String state) {
+        Disposable disposable = mDataSource.requestLoanApply(state)
+                .compose(new ViewTransformer<LoanApply>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<LoanDetails>() {
+                .subscribe(new Consumer<LoanApply>() {
                     @Override
-                    public void accept(LoanDetails loanDetails) throws Exception {
-                        List<LoanDetails> list = new ArrayList<>();
-                        list.add(loanDetails);
-                        mView.setList(list);
-                        mView.dismissProgressDialog();
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void requestHistory() {
-        Disposable disposable = mDataSource.requestLoanHistory()
-                .compose(new ViewTransformer<LoanHistory>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(new Consumer<LoanHistory>() {
-                    @Override
-                    public void accept(LoanHistory loanHistory) throws Exception {
-                        mView.setList(loanHistory.getList());
+                    public void accept(LoanApply loanApply) throws Exception {
+                        mView.setList(loanApply.getCards());
                         mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));

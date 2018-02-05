@@ -3,9 +3,12 @@ package com.jiaye.cashloan;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
 import com.jiaye.cashloan.view.view.main.MainActivity;
@@ -59,6 +62,7 @@ public class LoanApplication extends Application {
                     DbHelper dbHelper = new DbHelper(getApplicationContext());
                     mDatabase = dbHelper.getWritableDatabase();
                     mPreferencesHelper = new PreferencesHelper(getApplicationContext());
+                    setupBuglyUserId(null);
                 }
                 mActivityNumber++;
                 activityList.add(activity);
@@ -134,6 +138,7 @@ public class LoanApplication extends Application {
      * 重新登录
      */
     public void reLogin() {
+        setupBuglyUserId("unknown");
         for (Activity activity : activityList) {
             activity.finish();
         }
@@ -147,11 +152,34 @@ public class LoanApplication extends Application {
         startActivity(intent);
     }
 
+    /**
+     * 设置Bugly用户
+     *
+     * @param phone 手机号
+     */
+    public void setupBuglyUserId(String phone) {
+        String userId = "unknown";
+        if (!TextUtils.isEmpty(phone)) {
+            userId = phone;
+        } else {
+            Cursor cursor = mDatabase.rawQuery("SELECT phone FROM user;", null);
+            if (cursor != null) {
+                if (cursor.moveToNext()) {
+                    userId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                }
+                cursor.close();
+            }
+        }
+        CrashReport.setUserId(userId);
+    }
+
     /*setup Bugly*/
     private void setupBugly() {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
         strategy.setAppChannel(BuildConfig.FLAVOR);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_APPID, BuildConfig.DEBUG, strategy);
+        // 测试环境记录详细bugly信息
+        boolean buglyDebug = BuildConfig.FLAVOR_url.equals("urlTest");
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_APPID, buglyDebug, strategy);
     }
 
     /*setup Logger*/

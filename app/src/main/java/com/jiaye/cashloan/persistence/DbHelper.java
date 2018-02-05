@@ -32,8 +32,6 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_APPROVE_NUMBER + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_HISTORY_NUMBER + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_LOAN_APPROVE_ID + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_LOAN_PROGRESS_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_LOAN_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
@@ -69,6 +67,22 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        for (int i = oldVersion; i < newVersion; i++) {
+            switch (i) {
+                case 1:
+                    // 2018.2.5 user 表 删除 loan_approve_id;loan_progress_id;
+                    db.execSQL("create table temp_user as select " +
+                            "token, phone, " +
+                            "approve_number, progress_number, history_number, loan_id, " +
+                            "ocr_id, ocr_name, ocr_birthday, ocr_gender, ocr_nation, ocr_address, " +
+                            "ocr_date_begin, ocr_date_end, ocr_agency" +
+                            " from user");
+                    db.execSQL("drop table user");
+                    db.execSQL("alter table temp_user rename to user");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

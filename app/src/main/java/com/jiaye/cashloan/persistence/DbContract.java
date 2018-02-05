@@ -22,8 +22,6 @@ public class DbContract {
      * approve_number   借贷审批次数
      * progress_number  放款还贷次数
      * history_number   历史借贷次数
-     * loan_approve_id  正在审批的借款编号
-     * loan_progress_id 正在借款还款的借款编号
      * <p>
      * loan_id          借款编号
      * <p>
@@ -46,8 +44,6 @@ public class DbContract {
         public static final String COLUMN_NAME_APPROVE_NUMBER = "approve_number";
         public static final String COLUMN_NAME_PROGRESS_NUMBER = "progress_number";
         public static final String COLUMN_NAME_HISTORY_NUMBER = "history_number";
-        public static final String COLUMN_NAME_LOAN_APPROVE_ID = "loan_approve_id";
-        public static final String COLUMN_NAME_LOAN_PROGRESS_ID = "loan_progress_id";
         /*开始借款后存入数据库*/
         public static final String COLUMN_NAME_LOAN_ID = "loan_id";
         /*OCR*/

@@ -29,12 +29,12 @@ public class MyContract {
         /**
          * 显示借款审批页面
          */
-        void showApproveView(String loanId);
+        void showApproveView();
 
         /**
          * 显示放款还款页面
          */
-        void showProgressView(String loanId);
+        void showProgressView();
 
         /**
          * 显示历史借款页面

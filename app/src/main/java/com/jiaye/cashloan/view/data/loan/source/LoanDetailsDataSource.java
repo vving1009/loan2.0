@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
-import com.jiaye.cashloan.http.data.loan.LoanDetails;
-import com.jiaye.cashloan.http.data.loan.LoanHistory;
+import com.jiaye.cashloan.http.data.loan.LoanApply;
 
 import io.reactivex.Flowable;
 
@@ -13,7 +12,5 @@ import io.reactivex.Flowable;
 
 public interface LoanDetailsDataSource {
 
-    Flowable<LoanDetails> requestLoanDetails(String id);
-
-    Flowable<LoanHistory> requestLoanHistory();
+    Flowable<LoanApply> requestLoanApply(String state);
 }

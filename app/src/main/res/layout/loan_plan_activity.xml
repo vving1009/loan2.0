@@ -38,7 +38,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="11dp"
+        android:background="#4CC1EC"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -48,8 +52,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/loan_plan_date"
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -57,8 +61,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/loan_plan_money"
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -66,18 +70,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/loan_plan_state"
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/color_gray" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

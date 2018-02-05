@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
@@ -69,6 +71,7 @@ public class LoanPlanActivity extends BaseActivity implements LoanPlanContract.V
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.setBackground(position);
             holder.setDate(mPlans[position].getDate());
             holder.setMoney(mPlans[position].getMoney());
             holder.setState(mPlans[position].getStatus());
@@ -91,6 +94,8 @@ public class LoanPlanActivity extends BaseActivity implements LoanPlanContract.V
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
+        private LinearLayout mLayout;
+
         private TextView mTextDate;
 
         private TextView mTextMoney;
@@ -99,9 +104,18 @@ public class LoanPlanActivity extends BaseActivity implements LoanPlanContract.V
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mLayout = itemView.findViewById(R.id.layout);
             mTextState = itemView.findViewById(R.id.text_state);
             mTextMoney = itemView.findViewById(R.id.text_money);
             mTextDate = itemView.findViewById(R.id.text_date);
+        }
+
+        public void setBackground(int position) {
+            if (position % 2 == 0) {
+                mLayout.setBackgroundColor(Color.WHITE);
+            } else {
+                mLayout.setBackgroundColor(Color.parseColor("#E6E6E6"));
+            }
         }
 
         public void setDate(String date) {
