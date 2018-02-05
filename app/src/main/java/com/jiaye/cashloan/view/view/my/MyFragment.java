@@ -245,6 +245,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     @Override
     public void showHistoryView() {
         Intent intent = new Intent(getActivity(), LoanDetailsActivity.class);
+        intent.putExtra("title", getString(R.string.loan_details_history_title));
         startActivity(intent);
     }
 
