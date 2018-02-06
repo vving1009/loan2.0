@@ -223,7 +223,7 @@
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <string name="error_my_credit">没有设置密码或签约，暂时无法提现</string>
-    <string name="error_my_credit_account">不可以开户</string>
+    <string name="error_my_credit_account">已开户</string>
     <string name="error_my_credit_cash">格式不正确，请重新输入</string>
     <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>
     <string name="error_my_credit_cash_max_limit">提现金额不能大于可用余额</string>
