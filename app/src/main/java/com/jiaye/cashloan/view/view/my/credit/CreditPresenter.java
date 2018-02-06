@@ -55,7 +55,8 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                     @Override
                     public CreditPasswordStatus apply(CreditPasswordStatus creditPasswordStatus) throws Exception {
                         if (creditPasswordStatus.getOpen().equals("0")) {
-                            mView.notOpen();
+                            mPasswordStatus = "0";
+                            mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
                         } else if (creditPasswordStatus.getOpen().equals("1")) {
                             if (creditPasswordStatus.getStatus().equals("0")) {
                                 mPasswordStatus = "0";

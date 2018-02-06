@@ -30,6 +30,8 @@ public interface LoanBindBankContract {
 
     interface Presenter extends BasePresenter {
 
+        void setSource(String source);
+
         void requestSMS();
 
         void submit();

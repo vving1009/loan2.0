@@ -21,7 +21,7 @@ public class LoanBindBankRequest extends ChildRequest {
     private String number;
 
     @SerializedName("source")
-    private String source = "02";
+    private String source;
 
     @SerializedName("sms_code")
     private String sms;

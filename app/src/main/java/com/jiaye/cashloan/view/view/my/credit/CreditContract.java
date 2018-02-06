@@ -16,8 +16,6 @@ public interface CreditContract {
 
     interface View extends BaseViewContract {
 
-        void notOpen();
-
         void setPasswordText(String text);
 
         void showPasswordView(CreditPasswordRequest request);

@@ -76,6 +76,7 @@ public class LoanProgressActivity extends BaseActivity implements LoanProgressCo
 
     private void showBindBankView() {
         Intent intent = new Intent(this, LoanBindBankActivity.class);
+        intent.putExtra("source","02");
         startActivity(intent);
     }
 

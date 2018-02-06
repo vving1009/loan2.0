@@ -19,6 +19,35 @@
         android:paddingRight="15dp">
 
         <RelativeLayout
+            android:id="@+id/layout_acccount"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/loan_auth_ic_contact"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/my_credit_account"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_angle_gray" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
+
+        <RelativeLayout
             android:id="@+id/layout_password"
             android:layout_width="match_parent"
             android:layout_height="45dp">

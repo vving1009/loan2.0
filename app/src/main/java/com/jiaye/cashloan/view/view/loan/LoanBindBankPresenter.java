@@ -28,6 +28,8 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
 
     private final LoanBindBankDataSource mDataSource;
 
+    private String mSource;
+
     public LoanBindBankPresenter(LoanBindBankContract.View view, LoanBindBankDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -59,6 +61,11 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void setSource(String source) {
+        mSource = source;
     }
 
     @Override
@@ -99,6 +106,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             bankRequest.setBank(mView.getBank());
             bankRequest.setNumber(mView.getNumber());
             bankRequest.setSms(mView.getSMS());
+            bankRequest.setSource(mSource);
             Disposable disposable = mDataSource.requestBindBank(bankRequest)
                     .compose(new ViewTransformer<Object>() {
                         @Override

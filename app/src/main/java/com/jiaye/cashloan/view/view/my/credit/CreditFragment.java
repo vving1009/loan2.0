@@ -14,6 +14,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
+import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;
 import com.jiaye.cashloan.view.view.my.MyActivity;
 
 /**
@@ -43,6 +44,12 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         View view = inflater.inflate(R.layout.credit_fragment, container, false);
         mTextPassword = view.findViewById(R.id.text_password);
         mTextBalance = view.findViewById(R.id.text_balance);
+        view.findViewById(R.id.layout_acccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBindBankView();
+            }
+        });
         view.findViewById(R.id.layout_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,12 +71,6 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void notOpen() {
-        showToastById(R.string.my_credit_not_open);
-        getActivity().finish();
     }
 
     @Override
@@ -104,5 +105,11 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     @Override
     public void showBalance(String balance) {
         mTextBalance.setText(balance);
+    }
+
+    private void showBindBankView() {
+        Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
+        intent.putExtra("source","01");
+        startActivity(intent);
     }
 }

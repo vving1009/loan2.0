@@ -127,7 +127,7 @@
     <string name="my_loan">放款还款</string>
     <string name="my_history">历史借款</string>
     <string name="my_credit">存管账户管理</string>
-    <string name="my_credit_not_open">存管账户未开通</string>
+    <string name="my_credit_account">开户</string>
     <string name="my_credit_password">设置初始密码</string>
     <string name="my_credit_password_reset">重置密码</string>
     <string name="my_credit_cash">提现</string>
