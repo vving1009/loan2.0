@@ -43,7 +43,7 @@ public class LoanContractPresenter extends BasePresenterImpl implements LoanCont
                 .subscribe(new Consumer<Request<WatchContractRequest>>() {
                     @Override
                     public void accept(Request<WatchContractRequest> request) throws Exception {
-                        mView.postUrl(BuildConfig.BASE_URL + "shCompactDetail", new Gson().toJson(request).getBytes());
+                        mView.postUrl(BuildConfig.BASE_URL + "shCompactShow/shCompactDetail", new Gson().toJson(request).getBytes());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
