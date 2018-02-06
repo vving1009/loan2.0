@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.view.my.credit;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
@@ -83,6 +84,30 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                         mBalance = creditBalance;
                         mView.dismissProgressDialog();
                         mView.showBalance(creditBalance.getAvailBal());
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void account() {
+        Disposable disposable = mDataSource.requestAuth()
+                .compose(new ViewTransformer<Auth>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<Auth>() {
+                    @Override
+                    public void accept(Auth auth) throws Exception {
+                        mView.dismissProgressDialog();
+                        if (auth.getAccountState().equals("1")) {
+                            mView.showBindBankView();
+                        } else {
+                            mView.showToastById(R.string.error_my_credit_account);
+                        }
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

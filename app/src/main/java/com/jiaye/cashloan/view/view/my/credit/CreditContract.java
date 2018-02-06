@@ -18,6 +18,8 @@ public interface CreditContract {
 
         void setPasswordText(String text);
 
+        void showBindBankView();
+
         void showPasswordView(CreditPasswordRequest request);
 
         void showPasswordResetView(CreditPasswordResetRequest request);
@@ -28,6 +30,8 @@ public interface CreditContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void account();
 
         void password();
 

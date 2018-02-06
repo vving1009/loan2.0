@@ -47,7 +47,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         view.findViewById(R.id.layout_acccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBindBankView();
+                mPresenter.account();
             }
         });
         view.findViewById(R.id.layout_password).setOnClickListener(new View.OnClickListener() {
@@ -79,6 +79,13 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
+    public void showBindBankView() {
+        Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
+        intent.putExtra("source","01");
+        startActivity(intent);
+    }
+
+    @Override
     public void showPasswordView(CreditPasswordRequest request) {
         Intent intent = new Intent(getActivity(), CreditActivity.class);
         intent.putExtra("type", "password");
@@ -105,11 +112,5 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     @Override
     public void showBalance(String balance) {
         mTextBalance.setText(balance);
-    }
-
-    private void showBindBankView() {
-        Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
-        intent.putExtra("source","01");
-        startActivity(intent);
     }
 }
