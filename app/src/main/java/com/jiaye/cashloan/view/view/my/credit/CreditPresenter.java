@@ -127,7 +127,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     @Override
     public void cash() {
-        if (mBalance != null && mBalance.getIsSupportCash().equals("1")) {
+        if (mBalance != null && mBalance.getIsSupportCash().equals("1") && mPasswordStatus.equals("1")) {
             mView.showCashView(mBalance);
         } else {
             mView.showToastById(R.string.error_my_credit);
