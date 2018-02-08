@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.my;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -283,9 +284,14 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     private void startContactView() {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.my_contact_phone)));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.my_contact_phone)));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException exception) {
+            // 捕获在不支持拨号功能的设备上调用拨号功能时发生的异常
+            exception.printStackTrace();
+        }
     }
 
     private boolean hasPermission(int requestCode) {
