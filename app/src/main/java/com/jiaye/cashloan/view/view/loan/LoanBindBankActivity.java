@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -58,6 +59,12 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
                 mPresenter.requestSMS();
             }
         });
+        findViewById(R.id.text_support).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSupportBankView();
+            }
+        });
         mPresenter = new LoanBindBankPresenter(this, new LoanBindBankRepository());
         mPresenter.subscribe();
         //noinspection ConstantConditions
@@ -103,5 +110,10 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
     @Override
     public void result() {
         finish();
+    }
+
+    private void showSupportBankView() {
+        Intent intent = new Intent(this, LoanSupportBankActivity.class);
+        startActivity(intent);
     }
 }

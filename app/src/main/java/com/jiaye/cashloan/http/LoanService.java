@@ -64,6 +64,8 @@ import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.Sesame;
 import com.jiaye.cashloan.http.data.loan.SesameRequest;
+import com.jiaye.cashloan.http.data.loan.SupportBankList;
+import com.jiaye.cashloan.http.data.loan.SupportBankListRequest;
 import com.jiaye.cashloan.http.data.loan.WatchContract;
 import com.jiaye.cashloan.http.data.loan.WatchContractRequest;
 import com.jiaye.cashloan.http.data.my.Bank;
@@ -74,6 +76,8 @@ import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
+import com.jiaye.cashloan.http.data.my.CreditUnBindBank;
+import com.jiaye.cashloan.http.data.my.CreditUnBindBankRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
@@ -341,4 +345,22 @@ public interface LoanService {
      */
     @POST("balanceQuery")
     Flowable<Response<CreditBalance>> creditBalance(@Body Request<CreditBalanceRequest> request);
+
+    /**
+     * 解绑银行卡
+     */
+    @POST("unbind")
+    Flowable<Response<CreditUnBindBank>> creditBankUnBind(@Body Request<CreditUnBindBankRequest> request);
+
+    /**
+     * 已开户绑定银行卡
+     */
+    @POST("bindBankCard/openAccountBindCard")
+    Flowable<Response<LoanBindBank>> bindBankAgain(@Body Request<LoanBindBankRequest> request);
+
+    /**
+     * 查看银行列表信息
+     */
+    @POST("bklist")
+    Flowable<Response<SupportBankList>> supportBankList(@Body Request<SupportBankListRequest> request);
 }

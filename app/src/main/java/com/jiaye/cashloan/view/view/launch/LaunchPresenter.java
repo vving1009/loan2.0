@@ -46,7 +46,7 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
         final Flowable<File> education = mDataSource.download("dict_edu", "education.json");
         final Flowable<File> marriage = mDataSource.download("dict_mar", "marriage.json");
         final Flowable<File> relation = mDataSource.download("dict_rel", "relation.json");
-        Disposable disposable = mDataSource.checkUpdate()
+        /*Disposable disposable = mDataSource.checkUpdate()
                 .flatMap(new Function<CheckUpdate, Publisher<File>>() {
                     @Override
                     public Publisher<File> apply(CheckUpdate checkUpdate) throws Exception {
@@ -69,7 +69,8 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
                         }
                     }
                 }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        mCompositeDisposable.add(disposable);*/
+        auto();
     }
 
     @Override

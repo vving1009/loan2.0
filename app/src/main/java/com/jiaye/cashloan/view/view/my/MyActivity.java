@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.view.my.about.AboutFragment;
 import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
@@ -15,6 +16,7 @@ import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
 import com.jiaye.cashloan.view.view.my.credit.CreditFragment;
+import com.jiaye.cashloan.view.view.my.credit.bank.CreditBankFragment;
 import com.jiaye.cashloan.view.view.my.credit.cash.CreditCashFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
@@ -90,6 +92,11 @@ public class MyActivity extends BaseActivity {
                 textView.setText(R.string.my_credit_cash);
                 CreditCashFragment creditCashFragment = CreditCashFragment.newInstance((CreditBalance) getIntent().getParcelableExtra("balance"));
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditCashFragment).commit();
+                break;
+            case "credit_bank":
+                textView.setText(R.string.my_credit_bank);
+                CreditBankFragment creditBankFragment = CreditBankFragment.newInstance(false, (CreditInfo) getIntent().getParcelableExtra("creditInfo"));
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditBankFragment).commit();
                 break;
         }
     }

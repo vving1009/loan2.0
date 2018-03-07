@@ -19,7 +19,7 @@
         android:paddingRight="15dp">
 
         <RelativeLayout
-            android:id="@+id/layout_acccount"
+            android:id="@+id/layout_account"
             android:layout_width="match_parent"
             android:layout_height="45dp">
 
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/loan_auth_ic_contact"
+                android:drawableLeft="@drawable/my_credit_ic_open"
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="@string/my_credit_account"
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/me_ic_bank"
+                android:drawableLeft="@drawable/my_credit_ic_cash"
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="@string/my_credit_cash"
@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/me_ic_bank"
+                android:drawableLeft="@drawable/my_credit_ic_balance"
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="@string/my_credit_balance"
@@ -128,6 +128,83 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_blue"
                 android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
+
+        <RelativeLayout
+            android:id="@+id/layout_bank"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/my_credit_ic_bank"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/my_credit_bank"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_angle_gray" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_dark" />
+
+        <RelativeLayout
+            android:id="@+id/layout_manage_account"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/my_credit_ic_account"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/my_credit_manage_account"
+                android:textColor="@color/color_black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/text_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/my_credit_bg"
+                android:paddingBottom="1dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="1dp"
+                android:text="@string/my_credit_copy"
+                android:textColor="@color/color_blue_dark"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/text_bank_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:layout_toLeftOf="@id/text_copy"
+                android:textColor="@color/color_blue_dark"
+                android:textSize="12sp" />
+
         </RelativeLayout>
 
         <View

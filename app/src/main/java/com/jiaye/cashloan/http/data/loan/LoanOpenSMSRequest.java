@@ -17,8 +17,9 @@ public class LoanOpenSMSRequest extends ChildRequest {
     @SerializedName("card_phone")
     private String phone;
 
+    /* accountOpenPlus cardBindPlus */
     @SerializedName("service_tradeCode")
-    private String code = "accountOpenPlus";
+    private String code;
 
     @SerializedName("req_type")
     private String type = "1";

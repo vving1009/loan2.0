@@ -1,8 +1,11 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +13,10 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
 import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;
@@ -31,6 +36,10 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private TextView mTextBalance;
 
+    private TextView mTextBankNo;
+
+    private BaseDialog mOpenDialog;
+
     public static CreditFragment newInstance() {
         Bundle args = new Bundle();
         CreditFragment fragment = new CreditFragment();
@@ -44,7 +53,8 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         View view = inflater.inflate(R.layout.credit_fragment, container, false);
         mTextPassword = view.findViewById(R.id.text_password);
         mTextBalance = view.findViewById(R.id.text_balance);
-        view.findViewById(R.id.layout_acccount).setOnClickListener(new View.OnClickListener() {
+        mTextBankNo = view.findViewById(R.id.text_bank_no);
+        view.findViewById(R.id.layout_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.account();
@@ -62,6 +72,35 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
                 mPresenter.cash();
             }
         });
+        view.findViewById(R.id.layout_bank).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.bank();
+            }
+        });
+        view.findViewById(R.id.text_copy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copy();
+            }
+        });
+        mOpenDialog = new BaseDialog(getActivity());
+        View updateView = LayoutInflater.from(getActivity()).inflate(R.layout.credit_open_dialog_layout, null);
+        updateView.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOpenDialog.dismiss();
+            }
+        });
+        updateView.findViewById(R.id.text_open).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBindBankView();
+                mOpenDialog.dismiss();
+            }
+        });
+        mOpenDialog.setContentView(updateView);
+
         mPresenter = new CreditPresenter(this, new CreditRepository());
         mPresenter.subscribe();
         return view;
@@ -81,7 +120,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     @Override
     public void showBindBankView() {
         Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
-        intent.putExtra("source","01");
+        intent.putExtra("source", "01");
         startActivity(intent);
     }
 
@@ -112,5 +151,32 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     @Override
     public void showBalance(String balance) {
         mTextBalance.setText(balance);
+    }
+
+    @Override
+    public void showBankNo(String bankNo) {
+        mTextBankNo.setText(bankNo);
+    }
+
+    @Override
+    public void showOpenDialog() {
+        mOpenDialog.show();
+    }
+
+    @Override
+    public void showBankView(boolean bind, CreditInfo creditInfo) {
+        Intent intent = new Intent(getActivity(), MyActivity.class);
+        intent.putExtra("view", "credit_bank");
+        intent.putExtra("bind", bind);
+        intent.putExtra("creditInfo", creditInfo);
+        startActivity(intent);
+    }
+
+    private void copy() {
+        if (!TextUtils.isEmpty(mTextBankNo.getText().toString())) {
+            ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setText(mTextBankNo.getText().toString().trim());
+            showToastById(R.string.my_credit_copy_success);
+        }
     }
 }

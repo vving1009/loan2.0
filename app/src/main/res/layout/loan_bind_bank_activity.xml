@@ -184,12 +184,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_sms_verification"
-            app:iconMarginLeft="28dp"
             android:inputType="number"
             android:maxLength="6"
             app:editHeight="45dp"
             app:enable_verification="true"
-            app:icon="@drawable/loan_bank_ic_phone" />
+            app:icon="@drawable/loan_bank_ic_phone"
+            app:iconMarginLeft="28dp" />
+
+        <TextView
+            android:id="@+id/text_support"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/my_credit_bg"
+            android:paddingBottom="1dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="1dp"
+            android:text="@string/loan_bank_support"
+            android:textColor="@color/color_blue_dark"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

@@ -12,7 +12,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.certificate.bank.source.BankRepository;
 
 /**
- * BankFragment
+ * CreditBankFragment
  *
  * @author 贾博瑄
  */

@@ -78,6 +78,12 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             LoanOpenSMSRequest request = new LoanOpenSMSRequest();
             request.setPhone(mView.getPhone());
             request.setCard(mView.getNumber());
+            // 如果没有传source代表是重新绑卡
+            if (TextUtils.isEmpty(mSource)) {
+                request.setCode("cardBindPlus");
+            } else {
+                request.setCode("accountOpenPlus");
+            }
             Disposable disposable = mDataSource.requestBindBankSMS(request)
                     .compose(new ViewTransformer<LoanOpenSMS>())
                     .subscribe(new Consumer<LoanOpenSMS>() {

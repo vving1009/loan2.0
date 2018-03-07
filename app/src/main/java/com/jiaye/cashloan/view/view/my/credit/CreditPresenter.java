@@ -4,6 +4,7 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
@@ -78,12 +79,27 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<CreditBalance>() {
+                .map(new Function<CreditBalance, CreditBalance>() {
                     @Override
-                    public void accept(CreditBalance creditBalance) throws Exception {
-                        mBalance = creditBalance;
+                    public CreditBalance apply(CreditBalance balance) throws Exception {
+                        mBalance = balance;
+                        mView.showBalance(balance.getAvailBal());
+                        return balance;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<CreditBalance, Publisher<CreditInfo>>() {
+                    @Override
+                    public Publisher<CreditInfo> apply(CreditBalance balance) throws Exception {
+                        return mDataSource.creditInfo();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CreditInfo>() {
+                    @Override
+                    public void accept(CreditInfo creditInfo) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showBalance(creditBalance.getAvailBal());
+                        mView.showBankNo(creditInfo.getBankNo());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
@@ -132,6 +148,36 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
         } else {
             mView.showToastById(R.string.error_my_credit);
         }
+    }
+
+    @Override
+    public void bank() {
+        Disposable disposable = mDataSource.creditInfo()
+                .compose(new ViewTransformer<CreditInfo>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(new Consumer<CreditInfo>() {
+                    @Override
+                    public void accept(CreditInfo creditInfo) throws Exception {
+                        mView.dismissProgressDialog();
+                        switch (creditInfo.getBankStatus()) {
+                            case "01":
+                                mView.showOpenDialog();
+                                break;
+                            case "02":
+                                mView.showBankView(false, creditInfo);
+                                break;
+                            case "03":
+                                mView.showBankView(true, creditInfo);
+                                break;
+                        }
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 
     private void passwordInit() {

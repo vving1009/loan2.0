@@ -123,7 +123,8 @@ public class CreditRepository implements CreditDataSource {
                 .compose(new ResponseTransformer<CreditBalanceRequest, CreditBalance>("creditBalance"));
     }
 
-    private Flowable<CreditInfo> creditInfo() {
+    @Override
+    public Flowable<CreditInfo> creditInfo() {
         return Flowable.just(new CreditInfoRequest())
                 .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
     }

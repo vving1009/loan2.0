@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/color_gray_light" />
+
+    <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/credit_bank_bg">
+
+        <RelativeLayout
+            android:id="@+id/layout_bind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="53dp"
+                android:src="@drawable/credit_bank_ic_add" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="29dp"
+                android:text="@string/my_credit_bank_bind"
+                android:textColor="#464646"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_un_bind"
+            android:layout_width="252dp"
+            android:layout_height="86dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/text_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#464646"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="#464646"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textColor="#464646"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_un_bind"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@drawable/loan_btn"
+        android:text="@string/my_credit_bank_un_bind"
+        android:textColor="#ffffff"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/text_tips"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:lineSpacingExtra="10dp"
+        android:text="@string/my_credit_bank_tip"
+        android:textColor="#464646"
+        android:textSize="14sp" />
+</LinearLayout>
