@@ -138,7 +138,7 @@
     <string name="my_credit_password_reset">重置密码</string>
     <string name="my_credit_cash">提现</string>
     <string name="my_credit_bank">银行卡</string>
-    <string name="my_credit_manage_account">存管账号</string>
+    <string name="my_credit_manage_account">存管账户号</string>
     <string name="my_credit_copy">复制</string>
     <string name="my_credit_copy_success">复制成功</string>
     <string name="my_credit_bank_bind">添加银行卡</string>
