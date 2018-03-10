@@ -100,6 +100,7 @@
                 android:gravity="right|center_vertical"
                 android:hint="@string/loan_bank_phone_hint"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -114,6 +115,7 @@
             android:layout_height="45dp">
 
             <TextView
+                android:id="@+id/text_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -131,9 +133,12 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/text_bank"
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:hint="@string/loan_bank_bank_hint"
+                android:singleLine="true"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
         </RelativeLayout>
