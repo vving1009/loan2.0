@@ -82,7 +82,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                 .map(new Function<CreditInfo, CreditInfo>() {
                     @Override
                     public CreditInfo apply(CreditInfo creditInfo) throws Exception {
-                        mView.showBankNo(creditInfo.getBankNo());
+                        mView.showAccountId(creditInfo.getAccountId());
                         return creditInfo;
                     }
                 })

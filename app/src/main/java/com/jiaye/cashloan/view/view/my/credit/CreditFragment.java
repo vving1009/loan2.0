@@ -36,7 +36,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
 
     private TextView mTextBalance;
 
-    private TextView mTextBankNo;
+    private TextView mTextAccountId;
 
     private BaseDialog mOpenDialog;
 
@@ -53,7 +53,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         View view = inflater.inflate(R.layout.credit_fragment, container, false);
         mTextPassword = view.findViewById(R.id.text_password);
         mTextBalance = view.findViewById(R.id.text_balance);
-        mTextBankNo = view.findViewById(R.id.text_bank_no);
+        mTextAccountId = view.findViewById(R.id.text_account_id);
         view.findViewById(R.id.layout_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,8 +154,8 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     @Override
-    public void showBankNo(String bankNo) {
-        mTextBankNo.setText(bankNo);
+    public void showAccountId(String accountId) {
+        mTextAccountId.setText(accountId);
     }
 
     @Override
@@ -173,9 +173,9 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
     }
 
     private void copy() {
-        if (!TextUtils.isEmpty(mTextBankNo.getText().toString())) {
+        if (!TextUtils.isEmpty(mTextAccountId.getText().toString())) {
             ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-            cmb.setText(mTextBankNo.getText().toString().trim());
+            cmb.setText(mTextAccountId.getText().toString().trim());
             showToastById(R.string.my_credit_copy_success);
         }
     }

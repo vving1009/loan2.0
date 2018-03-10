@@ -29,7 +29,7 @@ public interface CreditContract {
 
         void showBalance(String balance);
 
-        void showBankNo(String bankNo);
+        void showAccountId(String accountId);
 
         void showOpenDialog();
 
