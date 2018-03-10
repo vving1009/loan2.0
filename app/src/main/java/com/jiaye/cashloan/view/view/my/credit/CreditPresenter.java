@@ -122,7 +122,11 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                         if (auth.getAccountState().equals("1")) {
                             mView.showBindBankView();
                         } else {
-                            mView.showToastById(R.string.error_my_credit_account);
+                            if (mBalance == null) {
+                                mView.showToastById(R.string.error_my_credit_un_account);
+                            } else {
+                                mView.showToastById(R.string.error_my_credit_account);
+                            }
                         }
                     }
                 }, new ThrowableConsumer(mView));
