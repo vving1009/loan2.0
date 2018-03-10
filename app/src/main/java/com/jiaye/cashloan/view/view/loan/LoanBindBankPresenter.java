@@ -72,7 +72,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
     public void requestSMS() {
         if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_bank_phone);
-        } else if (TextUtils.isEmpty(mView.getNumber())) {
+        } else if (TextUtils.isEmpty(mView.getNumber()) || mView.getNumber().length() > 19) {
             mView.showToastById(R.string.error_loan_bank_number);
         } else {
             LoanOpenSMSRequest request = new LoanOpenSMSRequest();
@@ -102,7 +102,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             mView.showToastById(R.string.error_loan_bank_phone);
         } else if (TextUtils.isEmpty(mView.getBank())) {
             mView.showToastById(R.string.error_loan_bank_bank);
-        } else if (TextUtils.isEmpty(mView.getNumber())) {
+        } else if (TextUtils.isEmpty(mView.getNumber()) || mView.getNumber().length() > 19) {
             mView.showToastById(R.string.error_loan_bank_number);
         } else if (TextUtils.isEmpty(mView.getSMS())) {
             mView.showToastById(R.string.error_loan_bank_sms);
