@@ -53,10 +53,15 @@ public class BankPresenter extends BasePresenterImpl implements BankContract.Pre
                         }
                         mView.setName(name);
                         /*phone*/
-                        String phone = bank.getPhone();
-                        String start = phone.substring(0, 3);
-                        String end = phone.substring(7, 11);
-                        mView.setPhone(start + "****" + end);
+                        try {
+                            String phone = bank.getPhone();
+                            String start = phone.substring(0, 3);
+                            String end = phone.substring(7, 11);
+                            mView.setPhone(start + "****" + end);
+                        } catch (StringIndexOutOfBoundsException exception) {
+                            // 捕获手机号位数不正确时,对字符串操作造成的数组越界问题.
+                            exception.printStackTrace();
+                        }
                         mView.setBank(bank.getBank());
                         /*number*/
                         String number = bank.getNumber();
