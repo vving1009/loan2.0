@@ -95,7 +95,7 @@ public class MyActivity extends BaseActivity {
                 break;
             case "credit_bank":
                 textView.setText(R.string.my_credit_bank);
-                CreditBankFragment creditBankFragment = CreditBankFragment.newInstance(false, (CreditInfo) getIntent().getParcelableExtra("creditInfo"));
+                CreditBankFragment creditBankFragment = CreditBankFragment.newInstance(getIntent().getBooleanExtra("bind", true), (CreditInfo) getIntent().getParcelableExtra("creditInfo"));
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditBankFragment).commit();
                 break;
         }

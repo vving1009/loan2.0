@@ -173,10 +173,12 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                                 mView.showOpenDialog();
                                 break;
                             case "02":
-                                mView.showBankView(false, creditInfo);
+                                // 绑卡
+                                mView.showBankView(true, creditInfo);
                                 break;
                             case "03":
-                                mView.showBankView(true, creditInfo);
+                                // 解绑
+                                mView.showBankView(false, creditInfo);
                                 break;
                         }
                     }
