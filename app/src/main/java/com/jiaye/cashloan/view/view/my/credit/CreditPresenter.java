@@ -72,34 +72,34 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                     }
                 })
                 .observeOn(Schedulers.io())
-                .flatMap(new Function<CreditPasswordStatus, Publisher<CreditBalance>>() {
+                .flatMap(new Function<CreditPasswordStatus, Publisher<CreditInfo>>() {
                     @Override
-                    public Publisher<CreditBalance> apply(CreditPasswordStatus creditPasswordStatus) throws Exception {
-                        return mDataSource.balance();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<CreditBalance, CreditBalance>() {
-                    @Override
-                    public CreditBalance apply(CreditBalance balance) throws Exception {
-                        mBalance = balance;
-                        mView.showBalance(balance.getAvailBal());
-                        return balance;
-                    }
-                })
-                .observeOn(Schedulers.io())
-                .flatMap(new Function<CreditBalance, Publisher<CreditInfo>>() {
-                    @Override
-                    public Publisher<CreditInfo> apply(CreditBalance balance) throws Exception {
+                    public Publisher<CreditInfo> apply(CreditPasswordStatus balance) throws Exception {
                         return mDataSource.creditInfo();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<CreditInfo>() {
+                .map(new Function<CreditInfo, CreditInfo>() {
                     @Override
-                    public void accept(CreditInfo creditInfo) throws Exception {
-                        mView.dismissProgressDialog();
+                    public CreditInfo apply(CreditInfo creditInfo) throws Exception {
                         mView.showBankNo(creditInfo.getBankNo());
+                        return creditInfo;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Function<CreditInfo, Publisher<CreditBalance>>() {
+                    @Override
+                    public Publisher<CreditBalance> apply(CreditInfo creditInfo) throws Exception {
+                        return mDataSource.balance();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CreditBalance>() {
+                    @Override
+                    public void accept(CreditBalance balance) throws Exception {
+                        mView.dismissProgressDialog();
+                        mBalance = balance;
+                        mView.showBalance(balance.getAvailBal());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
