@@ -61,7 +61,7 @@ public class BankPresenter extends BasePresenterImpl implements BankContract.Pre
                         /*number*/
                         String number = bank.getNumber();
                         String startNumber = number.substring(0, 3);
-                        String endNumber = number.substring(12, 16);
+                        String endNumber = number.substring(number.length() - 4, number.length());
                         mView.setNumber(startNumber + "*********" + endNumber);
                     }
                 }, new ThrowableConsumer(mView));
