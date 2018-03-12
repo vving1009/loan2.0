@@ -9,6 +9,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,11 +44,13 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
         View view = inflater.inflate(R.layout.credit_bank_fragment, container, false);
         RelativeLayout bindLayout = view.findViewById(R.id.layout_bind);
         RelativeLayout unBindLayout = view.findViewById(R.id.layout_un_bind);
+        Button unBindBtn = view.findViewById(R.id.btn_un_bind);
         TextView textTips = view.findViewById(R.id.text_tips);
         boolean bind = getArguments().getBoolean("bind");
         if (bind) {
             bindLayout.setVisibility(View.VISIBLE);
             unBindLayout.setVisibility(View.GONE);
+            unBindBtn.setVisibility(View.GONE);
             bindLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -79,7 +82,7 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
             }
             number = number.substring(0, 2) + unKnownNumber + number.substring(number.length() - 4, number.length());
             textNumber.setText(String.format(getString(R.string.my_credit_bank_number), number));
-            view.findViewById(R.id.btn_un_bind).setOnClickListener(new View.OnClickListener() {
+            unBindBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mPresenter.unBind();
@@ -107,6 +110,7 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
 
     private void showBindBankView() {
         Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
+        intent.putExtra("source", "");
         startActivity(intent);
     }
 }

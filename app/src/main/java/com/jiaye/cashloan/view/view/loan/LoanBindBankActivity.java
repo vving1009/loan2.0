@@ -68,7 +68,7 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
         mPresenter = new LoanBindBankPresenter(this, new LoanBindBankRepository());
         mPresenter.subscribe();
         //noinspection ConstantConditions
-        mPresenter.setSource(getIntent().getExtras().getString("source"));
+        mPresenter.setSource(getIntent().getExtras().getString("source", ""));
     }
 
     @Override
