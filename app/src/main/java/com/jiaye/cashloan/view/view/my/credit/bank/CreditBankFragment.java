@@ -72,15 +72,15 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
             for (int i = 0; i < length - 1; i++) {
                 unKnown.append("*");
             }
-            name = name.substring(0, 1) + unKnown;
+            name = unKnown + name.substring(name.length() - 1, name.length());
             textName.setText(String.format(getString(R.string.my_credit_bank_name), name));
             String number = creditInfo.getBankNo();
             int numberLength = number.length();
             StringBuilder unKnownNumber = new StringBuilder();
-            for (int i = 0; i < numberLength - 6; i++) {
+            for (int i = 0; i < numberLength - 7; i++) {
                 unKnownNumber.append("*");
             }
-            number = number.substring(0, 2) + unKnownNumber + number.substring(number.length() - 4, number.length());
+            number = number.substring(0, 3) + unKnownNumber + number.substring(number.length() - 4, number.length());
             textNumber.setText(String.format(getString(R.string.my_credit_bank_number), number));
             unBindBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
