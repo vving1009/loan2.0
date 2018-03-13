@@ -112,23 +112,42 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
             bankRequest.setBank(mView.getBank());
             bankRequest.setNumber(mView.getNumber());
             bankRequest.setSms(mView.getSMS());
-            bankRequest.setSource(mSource);
-            Disposable disposable = mDataSource.requestBindBank(bankRequest)
-                    .compose(new ViewTransformer<Object>() {
-                        @Override
-                        public void accept() {
-                            super.accept();
-                            mView.showProgressDialog();
-                        }
-                    })
-                    .subscribe(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object o) throws Exception {
-                            mView.dismissProgressDialog();
-                            mView.result();
-                        }
-                    }, new ThrowableConsumer(mView));
-            mCompositeDisposable.add(disposable);
+            if (!TextUtils.isEmpty(mSource)) {
+                bankRequest.setSource(mSource);
+                Disposable disposable = mDataSource.requestBindBank(bankRequest)
+                        .compose(new ViewTransformer<Object>() {
+                            @Override
+                            public void accept() {
+                                super.accept();
+                                mView.showProgressDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) throws Exception {
+                                mView.dismissProgressDialog();
+                                mView.result();
+                            }
+                        }, new ThrowableConsumer(mView));
+                mCompositeDisposable.add(disposable);
+            } else {
+                Disposable disposable = mDataSource.requestBindBankAgain(bankRequest)
+                        .compose(new ViewTransformer<Object>() {
+                            @Override
+                            public void accept() {
+                                super.accept();
+                                mView.showProgressDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) throws Exception {
+                                mView.dismissProgressDialog();
+                                mView.result();
+                            }
+                        }, new ThrowableConsumer(mView));
+                mCompositeDisposable.add(disposable);
+            }
         }
     }
 }

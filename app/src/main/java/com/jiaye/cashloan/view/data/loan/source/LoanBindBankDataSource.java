@@ -20,4 +20,6 @@ public interface LoanBindBankDataSource {
     Flowable<LoanOpenSMS> requestBindBankSMS(LoanOpenSMSRequest request);
 
     Flowable<LoanBindBank> requestBindBank(LoanBindBankRequest request);
+
+    Flowable<LoanBindBank> requestBindBankAgain(LoanBindBankRequest request);
 }

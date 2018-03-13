@@ -68,4 +68,11 @@ public class LoanBindBankRepository implements LoanBindBankDataSource {
         return Flowable.just(request)
                 .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("loanBindBank"));
     }
+
+    @Override
+    public Flowable<LoanBindBank> requestBindBankAgain(LoanBindBankRequest request) {
+        request.setCode(mCode);
+        return Flowable.just(request)
+                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("bindBankAgain"));
+    }
 }
