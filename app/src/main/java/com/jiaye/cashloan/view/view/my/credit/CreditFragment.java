@@ -95,7 +95,7 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         updateView.findViewById(R.id.text_open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBindBankView();
+                mPresenter.account();
                 mOpenDialog.dismiss();
             }
         });
@@ -104,6 +104,12 @@ public class CreditFragment extends BaseFragment implements CreditContract.View 
         mPresenter = new CreditPresenter(this, new CreditRepository());
         mPresenter.subscribe();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.init();
     }
 
     @Override

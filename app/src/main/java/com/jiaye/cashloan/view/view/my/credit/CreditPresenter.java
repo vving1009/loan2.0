@@ -43,8 +43,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     }
 
     @Override
-    public void subscribe() {
-        super.subscribe();
+    public void init() {
         Disposable disposable = mDataSource.passwordStatus()
                 .compose(new ViewTransformer<CreditPasswordStatus>() {
                     @Override

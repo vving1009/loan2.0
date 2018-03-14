@@ -25,6 +25,11 @@ public interface LoanBindBankContract {
 
         void startCountDown();
 
+        /**
+         * 开户成功
+         */
+        void complete();
+
         void result();
     }
 

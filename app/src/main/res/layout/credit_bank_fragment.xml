@@ -62,7 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/text_name"
-                android:maxLines="2"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="#464646"
                 android:textSize="18sp" />
 

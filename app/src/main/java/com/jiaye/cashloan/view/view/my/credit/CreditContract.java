@@ -38,6 +38,8 @@ public interface CreditContract {
 
     interface Presenter extends BasePresenter {
 
+        void init();
+
         void account();
 
         void password();

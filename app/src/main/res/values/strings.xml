@@ -111,6 +111,7 @@
     <string name="loan_bank_number_hint">输入储蓄卡号</string>
     <string name="loan_bank_support">支持银行</string>
     <string name="loan_bank_tips">新卡必须是本人名下储蓄卡</string>
+    <string name="loan_bank_complete">开户成功</string>
     <string name="loan_support_id">序号</string>
     <string name="loan_support_bank">银行</string>
     <string name="loan_support_once">单笔限额</string>
