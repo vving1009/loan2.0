@@ -5,8 +5,8 @@ Properties properties = new Properties()
 properties.load(project.file('configs/config.properties').newDataInputStream())
 
 bugly {
-    appId = properties.getProperty("BUGLY_APPID")
-    appKey = properties.getProperty("BUGLY_APPKEY")
+    appId = loadBuildProperties('release').getProperty("BUGLY_APPID")
+    appKey = loadBuildProperties('release').getProperty("BUGLY_APPKEY")
 }
 
 android {
