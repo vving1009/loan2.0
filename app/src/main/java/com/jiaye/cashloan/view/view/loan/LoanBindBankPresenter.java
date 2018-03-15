@@ -126,7 +126,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
                             @Override
                             public void accept(Object o) throws Exception {
                                 mView.dismissProgressDialog();
-                                mView.complete();
+                                mView.result();
                             }
                         }, new ThrowableConsumer(mView));
                 mCompositeDisposable.add(disposable);
@@ -143,7 +143,7 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
                             @Override
                             public void accept(Object o) throws Exception {
                                 mView.dismissProgressDialog();
-                                mView.result();
+                                mView.complete();
                             }
                         }, new ThrowableConsumer(mView));
                 mCompositeDisposable.add(disposable);
