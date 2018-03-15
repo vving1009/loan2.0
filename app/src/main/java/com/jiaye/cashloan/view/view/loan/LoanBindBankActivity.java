@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
@@ -110,7 +109,8 @@ public class LoanBindBankActivity extends BaseActivity implements LoanBindBankCo
 
     @Override
     public void complete() {
-        Toast.makeText(this, getString(R.string.loan_bank_complete), Toast.LENGTH_LONG).show();
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

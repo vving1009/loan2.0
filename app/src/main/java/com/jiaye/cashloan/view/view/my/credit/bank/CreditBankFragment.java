@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.my.credit.bank;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
@@ -27,6 +29,8 @@ import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;
 
 public class CreditBankFragment extends BaseFragment implements CreditBankContract.View {
 
+    private static final int REQUEST_CODE_BANK = 101;
+
     private CreditBankContract.Presenter mPresenter;
 
     public static CreditBankFragment newInstance(boolean bind, CreditInfo creditInfo) {
@@ -36,6 +40,15 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
         CreditBankFragment fragment = new CreditBankFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_BANK && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), getString(R.string.loan_bank_complete), Toast.LENGTH_LONG).show();
+            getActivity().finish();
+        }
     }
 
     @Nullable
@@ -111,6 +124,6 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
     private void showBindBankView() {
         Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
         intent.putExtra("source", "");
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_BANK);
     }
 }

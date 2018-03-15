@@ -127,7 +127,6 @@ public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBind
                             public void accept(Object o) throws Exception {
                                 mView.dismissProgressDialog();
                                 mView.complete();
-                                mView.result();
                             }
                         }, new ThrowableConsumer(mView));
                 mCompositeDisposable.add(disposable);
