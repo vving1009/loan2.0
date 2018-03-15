@@ -46,7 +46,7 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_BANK && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), getString(R.string.loan_bank_complete), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.my_bank_bind_complete), Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
     }
@@ -118,6 +118,7 @@ public class CreditBankFragment extends BaseFragment implements CreditBankContra
 
     @Override
     public void complete() {
+        Toast.makeText(getActivity(), getString(R.string.my_bank_un_bind_complete), Toast.LENGTH_LONG).show();
         getActivity().finish();
     }
 
