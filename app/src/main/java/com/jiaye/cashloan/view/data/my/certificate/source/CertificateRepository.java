@@ -3,10 +3,17 @@ package com.jiaye.cashloan.view.data.my.certificate.source;
 import android.database.Cursor;
 
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.UploadClient;
+import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
+import com.jiaye.cashloan.http.data.auth.UploadSesameRequest;
+import com.jiaye.cashloan.http.data.loan.Upload;
+import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
+
+import org.reactivestreams.Publisher;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -41,11 +48,28 @@ public class CertificateRepository implements CertificateDataSource {
                     }
                 })
                 .compose(new ResponseTransformer<AuthRequest, Auth>("auth"))
-                .map(new Function<Auth, Auth>() {
+                .map(new Function<Auth, UploadSesameRequest>() {
                     @Override
-                    public Auth apply(Auth auth) throws Exception {
+                    public UploadSesameRequest apply(Auth auth) throws Exception {
                         mAuth = auth;
-                        return auth;
+                        UploadSesameRequest request = new UploadSesameRequest();
+                        if (auth.getSesameState().equals("1")) {
+                            request.setSource(auth.getSesame());
+                        }
+                        return request;
+                    }
+                })
+                .map(new RequestFunction<UploadSesameRequest>())
+                .flatMap(new Function<Request<UploadSesameRequest>, Publisher<Upload>>() {
+                    @Override
+                    public Publisher<Upload> apply(Request<UploadSesameRequest> request) throws Exception {
+                        return UploadClient.INSTANCE.getService().uploadSesame(request);
+                    }
+                })
+                .map(new Function<Upload, Auth>() {
+                    @Override
+                    public Auth apply(Upload upload) throws Exception {
+                        return mAuth;
                     }
                 });
     }

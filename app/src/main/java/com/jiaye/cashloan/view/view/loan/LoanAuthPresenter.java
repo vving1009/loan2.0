@@ -41,7 +41,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     @Override
     public void requestLoanAuth() {
-        mDataSource.requestLoanAuth()
+        Disposable disposable = mDataSource.requestLoanAuth()
                 .compose(new ViewTransformer<LoanAuth>() {
                     @Override
                     public void accept() {
@@ -116,6 +116,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         mView.dismissProgressDialog();
                     }
                 }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 
     @Override

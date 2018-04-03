@@ -4,8 +4,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.UploadClient;
+import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
+import com.jiaye.cashloan.http.data.loan.Upload;
+import com.jiaye.cashloan.http.data.loan.UploadOperatorRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
@@ -14,6 +18,7 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
+import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
@@ -47,6 +52,8 @@ public class LoanAuthPhoneRepository implements LoanAuthPhoneDataSource {
     private boolean isSMS;
 
     private boolean isIMG;
+
+    private SavePhoneRequest mRequest;
 
     @Override
     public Flowable<GongXinBaoOperatorsConfig> requestGongXinBaoOperatorsConfig() {
@@ -217,12 +224,36 @@ public class LoanAuthPhoneRepository implements LoanAuthPhoneDataSource {
 
     @Override
     public Flowable<SavePhone> requestSavePhone(String token) {
-        SavePhoneRequest request = new SavePhoneRequest();
-        request.setToken(token);
-        request.setPhone(mPhone);
-        request.setOperator(mOperators);
-        request.setPassword(mPassword);
-        return Flowable.just(request)
+        mRequest = new SavePhoneRequest();
+        mRequest.setToken(token);
+        mRequest.setPhone(mPhone);
+        mRequest.setOperator(mOperators);
+        mRequest.setPassword(mPassword);
+        return Flowable.just(mRequest)
+                .map(new Function<SavePhoneRequest, UploadOperatorRequest>() {
+                    @Override
+                    public UploadOperatorRequest apply(SavePhoneRequest savePhoneRequest) throws Exception {
+                        UploadOperatorRequest request = new UploadOperatorRequest();
+                        request.setToken(savePhoneRequest.getToken());
+                        request.setPhone(savePhoneRequest.getPhone());
+                        request.setOperator(savePhoneRequest.getOperator());
+                        request.setPassword(savePhoneRequest.getPassword());
+                        return request;
+                    }
+                })
+                .map(new RequestFunction<UploadOperatorRequest>())
+                .flatMap(new Function<Request<UploadOperatorRequest>, Publisher<Upload>>() {
+                    @Override
+                    public Publisher<Upload> apply(Request<UploadOperatorRequest> request) throws Exception {
+                        return UploadClient.INSTANCE.getService().uploadOperator(request);
+                    }
+                })
+                .map(new Function<Upload, SavePhoneRequest>() {
+                    @Override
+                    public SavePhoneRequest apply(Upload upload) throws Exception {
+                        return mRequest;
+                    }
+                })
                 .compose(new ResponseTransformer<SavePhoneRequest, SavePhone>("savePhone"));
     }
 

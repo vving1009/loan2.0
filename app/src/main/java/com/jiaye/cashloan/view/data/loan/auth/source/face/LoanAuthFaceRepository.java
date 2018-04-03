@@ -7,15 +7,20 @@ import android.util.Base64;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.UploadClient;
+import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
 import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.data.loan.Upload;
+import com.jiaye.cashloan.http.data.loan.UploadBioAssayRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunFace;
 import com.jiaye.cashloan.http.tongdun.TongDunFaceRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponse;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
+import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
@@ -35,6 +40,8 @@ import io.reactivex.functions.Function;
 public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
 
     private float mSimilarity;
+
+    private LoanFaceAuthRequest mRequest;
 
     @Override
     public Flowable<LoanFaceAuth> upload(byte[] data) {
@@ -95,11 +102,34 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                 .map(new Function<LoanUploadPicture, LoanFaceAuthRequest>() {
                     @Override
                     public LoanFaceAuthRequest apply(LoanUploadPicture loanUploadPicture) throws Exception {
-                        LoanFaceAuthRequest request = new LoanFaceAuthRequest();
-                        request.setPicId(loanUploadPicture.getPicId());
-                        request.setPass(true);
-                        request.setSimilarity(mSimilarity);
+                        mRequest = new LoanFaceAuthRequest();
+                        mRequest.setPicId(loanUploadPicture.getPicId());
+                        mRequest.setPass(true);
+                        mRequest.setSimilarity(mSimilarity);
+                        return mRequest;
+                    }
+                })
+                .map(new Function<LoanFaceAuthRequest, UploadBioAssayRequest>() {
+                    @Override
+                    public UploadBioAssayRequest apply(LoanFaceAuthRequest loanFaceAuthRequest) throws Exception {
+                        UploadBioAssayRequest request = new UploadBioAssayRequest();
+                        request.setPicId(loanFaceAuthRequest.getPicId());
+                        request.setPass(loanFaceAuthRequest.isPass());
+                        request.setSimilarity(loanFaceAuthRequest.getSimilarity());
                         return request;
+                    }
+                })
+                .map(new RequestFunction<UploadBioAssayRequest>())
+                .flatMap(new Function<Request<UploadBioAssayRequest>, Publisher<Upload>>() {
+                    @Override
+                    public Publisher<Upload> apply(Request<UploadBioAssayRequest> request) throws Exception {
+                        return UploadClient.INSTANCE.getService().uploadBioAssay(request);
+                    }
+                })
+                .map(new Function<Upload, LoanFaceAuthRequest>() {
+                    @Override
+                    public LoanFaceAuthRequest apply(Upload upload) throws Exception {
+                        return mRequest;
                     }
                 })
                 .compose(new ResponseTransformer<LoanFaceAuthRequest, LoanFaceAuth>("loanFaceAuth"));

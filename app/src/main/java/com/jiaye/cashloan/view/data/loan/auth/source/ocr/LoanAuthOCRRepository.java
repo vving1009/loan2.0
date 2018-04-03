@@ -8,20 +8,27 @@ import com.google.gson.Gson;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.UploadClient;
+import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.data.loan.Upload;
+import com.jiaye.cashloan.http.data.loan.UploadAuthRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunAntifraudRealName;
 import com.jiaye.cashloan.http.tongdun.TongDunAntifraudResponseFunction;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
+import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.LocalException;
+
+import org.reactivestreams.Publisher;
 
 import java.io.File;
 
@@ -48,6 +55,8 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
     private String mDataFront;
 
     private String mDataBack;
+
+    private LoanIDCardAuthRequest mRequest;
 
     @Override
     public Flowable<TongDunOCRFront> ocrFront(String path) {
@@ -134,17 +143,43 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                     }
                     cursor.close();
                 }
-                LoanIDCardAuthRequest request = new LoanIDCardAuthRequest();
-                request.setName(ocrName);
-                request.setId(ocrId);
-                request.setValidDate(ocrDateBegin + "-" + ocrDateEnd);
-                request.setPicFrontId(mPicFront);
-                request.setPicBackId(mPicBack);
-                request.setDataFront(mDataFront);
-                request.setDataBack(mDataBack);
-                return request;
+                mRequest = new LoanIDCardAuthRequest();
+                mRequest.setName(ocrName);
+                mRequest.setId(ocrId);
+                mRequest.setValidDate(ocrDateBegin + "-" + ocrDateEnd);
+                mRequest.setPicFrontId(mPicFront);
+                mRequest.setPicBackId(mPicBack);
+                mRequest.setDataFront(mDataFront);
+                mRequest.setDataBack(mDataBack);
+                return mRequest;
             }
-        }).compose(new ResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
+        })
+                .map(new Function<LoanIDCardAuthRequest, UploadAuthRequest>() {
+                    @Override
+                    public UploadAuthRequest apply(LoanIDCardAuthRequest request) throws Exception {
+                        UploadAuthRequest authRequest = new UploadAuthRequest();
+                        authRequest.setName(request.getName());
+                        authRequest.setId(request.getId());
+                        authRequest.setValidDate(request.getValidDate());
+                        authRequest.setPicFrontId(request.getPicFrontId());
+                        authRequest.setPicBackId(request.getPicBackId());
+                        authRequest.setDataFront(request.getDataFront());
+                        authRequest.setDataBack(request.getDataBack());
+                        return authRequest;
+                    }
+                })
+                .map(new RequestFunction<UploadAuthRequest>())
+                .flatMap(new Function<Request<UploadAuthRequest>, Publisher<Upload>>() {
+                    @Override
+                    public Publisher<Upload> apply(Request<UploadAuthRequest> request) throws Exception {
+                        return UploadClient.INSTANCE.getService().uploadAuth(request);
+                    }
+                }).map(new Function<Upload, LoanIDCardAuthRequest>() {
+                    @Override
+                    public LoanIDCardAuthRequest apply(Upload upload) throws Exception {
+                        return mRequest;
+                    }
+                }).compose(new ResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
     }
 
     // 上传正面照片,并保存正面照片id

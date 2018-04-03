@@ -15,7 +15,7 @@ public class UploadContactRequest {
     @SerializedName("login_name")
     private String phone;
 
-    @SerializedName("contents_data")
+    @SerializedName("data")
     private List<Contact> contacts;
 
     public String getPhone() {
