@@ -56,6 +56,10 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
 
     private String mDataBack;
 
+    private TongDunOCRFront mOCRFront;
+
+    private TongDunOCRBack mOCRBack;
+
     private LoanIDCardAuthRequest mRequest;
 
     @Override
@@ -68,6 +72,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                     @Override
                     public TongDunOCRFront apply(TongDunOCRFront tongDunOCRFront) throws Exception {
                         Gson gson = new Gson();
+                        mOCRFront = tongDunOCRFront;
                         mDataFront = gson.toJson(tongDunOCRFront);
                         ContentValues values = new ContentValues();
                         values.put("ocr_id", tongDunOCRFront.getIdNumber());
@@ -92,6 +97,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                     @Override
                     public TongDunOCRBack apply(TongDunOCRBack tongDunOCRBack) throws Exception {
                         Gson gson = new Gson();
+                        mOCRBack = tongDunOCRBack;
                         mDataBack = gson.toJson(tongDunOCRBack);
                         ContentValues values = new ContentValues();
                         values.put("ocr_date_begin", tongDunOCRBack.getDateBegin());
@@ -163,8 +169,8 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                         authRequest.setValidDate(request.getValidDate());
                         authRequest.setPicFrontId(request.getPicFrontId());
                         authRequest.setPicBackId(request.getPicBackId());
-                        authRequest.setDataFront(request.getDataFront());
-                        authRequest.setDataBack(request.getDataBack());
+                        authRequest.setDataFront(mOCRFront);
+                        authRequest.setDataBack(mOCRBack);
                         return authRequest;
                     }
                 })
