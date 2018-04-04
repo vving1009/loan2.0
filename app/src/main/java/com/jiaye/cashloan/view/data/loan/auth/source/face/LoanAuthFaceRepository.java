@@ -114,8 +114,12 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                     public UploadBioAssayRequest apply(LoanFaceAuthRequest loanFaceAuthRequest) throws Exception {
                         UploadBioAssayRequest request = new UploadBioAssayRequest();
                         request.setPicId(loanFaceAuthRequest.getPicId());
-                        request.setPass(loanFaceAuthRequest.isPass());
-                        request.setSimilarity(loanFaceAuthRequest.getSimilarity());
+                        if (loanFaceAuthRequest.isPass()) {
+                            request.setIsPass("1");
+                        } else {
+                            request.setIsPass("0");
+                        }
+                        request.setSimilarity("" + loanFaceAuthRequest.getSimilarity());
                         return request;
                     }
                 })
