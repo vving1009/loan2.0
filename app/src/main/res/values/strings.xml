@@ -5,8 +5,8 @@
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
     <!--home-->
-    <string name="home_price">消费分期</string>
-    <string name="home_credit">信贷产品</string>
+    <string name="home_price">快审通道</string>
+    <string name="home_credit">消费分期</string>
     <string name="home_loan">借款产品</string>
     <!--心愿清单-->
     <string name="wish_item1">家电</string>
