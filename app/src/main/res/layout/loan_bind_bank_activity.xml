@@ -194,7 +194,7 @@
             android:maxLength="6"
             app:editHeight="45dp"
             app:enable_verification="true"
-            app:icon="@drawable/loan_bank_ic_phone"
+            app:icon="@drawable/loan_bank_ic_sms"
             app:iconMarginLeft="28dp" />
 
         <TextView

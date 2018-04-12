@@ -28,9 +28,4 @@ public interface LoanAuthDataSource {
      * 请求借款认证信息并保存
      */
     Flowable<LoanAuth> requestLoanAuth();
-
-    /**
-     * 请求确认借款
-     */
-    Flowable<String> requestLoanConfirm();
 }

@@ -67,11 +67,9 @@ public class LoanAuthContract {
         void showLoanAuthSesameView();
 
         /**
-         * 显示贷款进度页面
+         * 显示进件上传页面
          */
-        void showLoanProgressView(String loanId);
-
-        void result();
+        void showLoanFileView();
     }
 
     interface Presenter extends BasePresenter {

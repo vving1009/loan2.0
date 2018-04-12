@@ -11,18 +11,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * UploadClient
+ * SatcatcheClient
  *
  * @author 贾博瑄
  */
-
-public enum UploadClient {
+public enum  SatcatcheClient {
 
     INSTANCE;
 
-    private UploadService mService;
+    private SatcatcheService mService;
 
-    UploadClient() {
+    SatcatcheClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new LoggingInterceptor());
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -34,15 +33,15 @@ public enum UploadClient {
                 .registerTypeAdapter(String.class, new StringNullAdapter())
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.DATA_URL)
+                .baseUrl(BuildConfig.SATCATCHE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
-        mService = retrofit.create(UploadService.class);
+        mService = retrofit.create(SatcatcheService.class);
     }
 
-    public UploadService getService() {
+    public SatcatcheService getService() {
         return mService;
     }
 }

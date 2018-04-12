@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
+import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
@@ -53,6 +55,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static final int REQUEST_LOCATION_PERMISSION = 105;
 
+    private static final int REQUEST = 200;
+
     private LoanAuthContract.Presenter mPresenter;
 
     private Adapter mAdapter;
@@ -64,6 +68,14 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         LoanAuthFragment fragment = new LoanAuthFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST && resultCode == Activity.RESULT_OK) {
+            result();
+        }
     }
 
     @Override
@@ -211,15 +223,12 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void showLoanProgressView(String loanId) {
-        Intent intent = new Intent(getActivity(), LoanProgressActivity.class);
-        intent.putExtra("loanId", loanId);
-        startActivity(intent);
-        getActivity().finish();
+    public void showLoanFileView() {
+        Intent intent = new Intent(getActivity(), LoanAuthFileActivity.class);
+        startActivityForResult(intent, REQUEST);
     }
 
-    @Override
-    public void result() {
+    private void result() {
         getActivity().finish();
     }
 
@@ -278,6 +287,19 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         startActivity(intent);
     }
 
+    private boolean checkGPSIsOpen() {
+        boolean isOpen;
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        isOpen = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+        return isOpen;
+    }
+
+    private void uploadLocation() {
+        if (checkGPSIsOpen()) {
+            mPresenter.uploadLocation();
+        }
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<LoanAuthModel> mList;
@@ -286,7 +308,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.loan_auth_item, parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
-            viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
+            viewHolder.setListener(new OnClickViewHolderListener() {
                 @Override
                 public void onClickViewHolder(ViewHolder viewHolder) {
                     mPresenter.selectLoanAuthModel(mList.get(viewHolder.getLayoutPosition()));
@@ -322,11 +344,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private interface OnClickViewHolderListener {
-
-            void onClickViewHolder(ViewHolder viewHolder);
-        }
-
         private OnClickViewHolderListener mListener;
 
         private LinearLayout mLayout;
@@ -353,7 +370,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             mImgState = itemView.findViewById(R.id.img_state);
         }
 
-        public void setListener(ViewHolder.OnClickViewHolderListener listener) {
+        public void setListener(OnClickViewHolderListener listener) {
             mListener = listener;
         }
 
@@ -382,16 +399,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         }
     }
 
-    private boolean checkGPSIsOpen() {
-        boolean isOpen;
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        isOpen = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
-        return isOpen;
-    }
+    private interface OnClickViewHolderListener {
 
-    private void uploadLocation() {
-        if (checkGPSIsOpen()) {
-            mPresenter.uploadLocation();
-        }
+        void onClickViewHolder(ViewHolder viewHolder);
     }
 }

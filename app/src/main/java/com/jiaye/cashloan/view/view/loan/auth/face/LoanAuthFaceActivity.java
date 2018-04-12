@@ -26,6 +26,7 @@ public class LoanAuthFaceActivity extends LivenessDetectionMainActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new LoanAuthFacePresenter(this, new LoanAuthFaceRepository());
+        mPresenter.subscribe();
     }
 
     @Override
