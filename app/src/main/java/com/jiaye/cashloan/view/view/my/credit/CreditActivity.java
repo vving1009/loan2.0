@@ -76,6 +76,7 @@ public class CreditActivity extends BaseActivity {
                 CreditPasswordRequest passwordRequest = getIntent().getExtras().getParcelable("request");
                 passwordRequest.setName(URLEncoder.encode(passwordRequest.getName()));
                 passwordRequest.setSign(URLEncoder.encode(passwordRequest.getSign()));
+                passwordRequest.setRetUrl(URLEncoder.encode(passwordRequest.getRetUrl()));
                 passwordRequest.setNotifyUrl(URLEncoder.encode(passwordRequest.getNotifyUrl()));
                 webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/passwordset", json2KeyValue(passwordRequest.toString()).getBytes());
                 break;
@@ -83,6 +84,7 @@ public class CreditActivity extends BaseActivity {
                 CreditPasswordResetRequest passwordResetRequest = getIntent().getExtras().getParcelable("request");
                 passwordResetRequest.setName(URLEncoder.encode(passwordResetRequest.getName()));
                 passwordResetRequest.setSign(URLEncoder.encode(passwordResetRequest.getSign()));
+                passwordResetRequest.setRetUrl(URLEncoder.encode(passwordResetRequest.getRetUrl()));
                 passwordResetRequest.setNotifyUrl(URLEncoder.encode(passwordResetRequest.getNotifyUrl()));
                 webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
                 break;
