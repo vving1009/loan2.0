@@ -15,8 +15,6 @@ public class CreditPasswordResetRequest extends BaseCreditRequest implements Par
 
     public CreditPasswordResetRequest() {
         txCode = "passwordReset";
-        /*服务器约定*/
-        retUrl = "action:jiayidai";
     }
 
     @Override

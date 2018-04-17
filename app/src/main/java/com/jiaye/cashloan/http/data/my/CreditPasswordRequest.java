@@ -15,6 +15,8 @@ public class CreditPasswordRequest extends BaseCreditRequest implements Parcelab
 
     public CreditPasswordRequest() {
         txCode = "passwordSet";
+        /*服务器约定*/
+        retUrl = "action:jiayidai";
     }
 
     @Override
