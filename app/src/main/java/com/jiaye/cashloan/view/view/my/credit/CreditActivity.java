@@ -58,7 +58,7 @@ public class CreditActivity extends BaseActivity {
                     showToast(message);
                     finish();
                 } else if (url.contains("action:forgetPassword")
-                        || url.contains("action=jiayidai")) {
+                        || url.contains("action:jiayidai")) {
                     finish();
                 } else {
                     view.loadUrl(url);
