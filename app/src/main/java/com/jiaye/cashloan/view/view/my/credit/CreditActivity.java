@@ -57,7 +57,8 @@ public class CreditActivity extends BaseActivity {
                     String message = URLDecoder.decode(url.replace("action:log:", ""));
                     showToast(message);
                     finish();
-                } else if (url.contains("action:forgetPassword")) {
+                } else if (url.contains("action:forgetPassword")
+                        || url.contains("action:jiayidai")) {
                     finish();
                 } else {
                     view.loadUrl(url);

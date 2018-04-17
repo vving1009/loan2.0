@@ -52,8 +52,9 @@ public abstract class BaseCreditRequest {
     @SerializedName("mobile")
     protected String mobile;
 
+    /*服务器约定*/
     @SerializedName("retUrl")
-    protected String retUrl;
+    protected String retUrl = "action:jiayidai";
 
     @SerializedName("notifyUrl")
     protected String notifyUrl = BuildConfig.BASE_URL + "jxbank/interfaceSucc";
