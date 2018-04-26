@@ -9,6 +9,7 @@
     <color name="color_gray_dark">#cdcdcd</color>
     <color name="color_gray_holo">#a5a5a5</color>
     <color name="color_black_light">#929292</color>
+    <color name="color_black_hole">#626262</color>
     <color name="color_black">#464646</color>
     <color name="color_blue">#52c2ea</color>
     <color name="color_blue_dark">#4cc1ec</color>
@@ -16,9 +17,4 @@
     <color name="color_orange">#ff9600</color>
 
 
-    <color name="color_EDF2F7">#EDF2F7</color>
-    <color name="color_F06262">#F06262</color>
-    <color name="color_6B4D9F">#6B4D9F</color>
-    <color name="color_525252">#525252</color>
-    <color name="color_626262">#626262</color>
 </resources>

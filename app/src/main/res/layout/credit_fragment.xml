@@ -165,7 +165,6 @@
             android:background="@color/color_gray_dark" />
 
         <RelativeLayout
-            android:id="@+id/layout_manage_account"
             android:layout_width="match_parent"
             android:layout_height="45dp">
 

@@ -22,11 +22,11 @@ public class SatcatcheRequestHeader {
     @SerializedName("req_no")
     private String serialnumber;
 
-    /*令牌*/
+    /*令牌(登录后必填)*/
     @SerializedName("userinfo_id")
     private String token;
 
-    /*手机号(可选)*/
+    /*手机号(登录后必填)*/
     @SerializedName("phone")
     private String phone;
 

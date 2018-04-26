@@ -37,10 +37,6 @@
             android:name=".view.view.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.LoanActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".view.view.loan.LoanAuthActivity"
             android:screenOrientation="portrait" />
         <activity

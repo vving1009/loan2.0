@@ -18,7 +18,6 @@
         android:textSize="16sp" />
 
     <RelativeLayout
-        android:id="@+id/layout_family_name"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"
@@ -94,7 +93,6 @@
         android:background="@color/color_gray_dark" />
 
     <RelativeLayout
-        android:id="@+id/layout_family_phone"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"
@@ -142,7 +140,6 @@
         android:textSize="16sp" />
 
     <RelativeLayout
-        android:id="@+id/layout_friend_name"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"
@@ -218,7 +215,6 @@
         android:background="@color/color_gray_dark" />
 
     <RelativeLayout
-        android:id="@+id/layout_friend_phone"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"

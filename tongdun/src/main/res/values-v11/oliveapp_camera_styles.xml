@@ -14,26 +14,4 @@
      limitations under the License.
 -->
 
-<resources>
-    <style name="Theme.ProxyLauncher" parent="@android:style/Theme.Translucent.NoTitleBar">
-    </style>
-    <style name="Theme.Camera" parent="android:Theme.Holo">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowTitleSize">0dp</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:colorBackground">@android:color/black</item>
-        <item name="android:colorBackgroundCacheHint">@android:color/black</item>
-        <item name="android:actionBarStyle">@style/Holo.ActionBar</item>
-    </style>
-    <style name="Holo.ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:displayOptions">useLogo|showHome|homeAsUp</item>
-        <item name="android:background">@drawable/oliveapp_camera_actionbar_translucent</item>
-    </style>
-    <style name="SwitcherButton">
-        <item name="android:layout_width">@dimen/oliveapp_camera_switcher_size</item>
-        <item name="android:layout_height">@dimen/oliveapp_camera_switcher_size</item>
-        <item name="android:background">@drawable/oliveapp_camera_bg_pressed_exit_fading</item>
-    </style>
-</resources>
+<resources></resources>

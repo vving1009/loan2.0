@@ -15,13 +15,5 @@
 -->
 <resources>
     <!-- Camera resources below -->
-    <color name="oliveapp_camera_popup_title_color">#ff33b5e5</color>
-    <color name="oliveapp_camera_popup_background">#ff282828</color>
-    <color name="oliveapp_camera_bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
-    <color name="oliveapp_camera_bright_foreground_holo_dark">#fff3f3f3</color>
-    <color name="oliveapp_camera_face_detect_start">#80ffffff</color>
-    <color name="oliveapp_camera_face_detect_success">#8050d060</color>
-    <color name="oliveapp_camera_face_detect_fail">#80d05060</color>
-    <color name="oliveapp_camera_gray">#FFAAAAAA</color>
 
 </resources>

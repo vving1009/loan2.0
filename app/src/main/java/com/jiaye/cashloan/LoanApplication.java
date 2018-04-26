@@ -178,7 +178,7 @@ public class LoanApplication extends Application {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
         strategy.setAppChannel(BuildConfig.FLAVOR);
         // 测试环境记录详细bugly信息
-        boolean buglyDebug = BuildConfig.FLAVOR_url.equals("urlTest");
+        boolean buglyDebug = BuildConfig.FLAVOR.equals("urlTest");
         CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_APPID, buglyDebug, strategy);
     }
 

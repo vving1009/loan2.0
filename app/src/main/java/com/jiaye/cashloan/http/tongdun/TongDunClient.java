@@ -31,7 +31,9 @@ public enum TongDunClient {
                 .build();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
-        Gson gson = gsonBuilder.create();
+        Gson gson = gsonBuilder
+                .registerTypeAdapter(TongDunFace.class, new TongDunOCRAdapter())
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.TONGDUN_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

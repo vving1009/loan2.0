@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.view.loan.LoanActivity;
+import com.jiaye.cashloan.view.data.home.HomeRepository;
+import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -24,7 +26,9 @@ import java.util.ArrayList;
  * @author 贾博瑄
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements HomeContract.View {
+
+    private HomePresenter mPresenter;
 
     private Banner mBanner;
 
@@ -67,7 +71,7 @@ public class HomeFragment extends BaseFragment {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWishView();
+                mPresenter.loan();
             }
         });
 
@@ -84,6 +88,10 @@ public class HomeFragment extends BaseFragment {
         textTitle3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[2]), null, null, null);
         textTitle3.setText(getString(TAB_TITLE[2]));
         imageView3.setImageDrawable(getResources().getDrawable(IMAGES[2]));
+
+        mPresenter = new HomePresenter(this, new HomeRepository());
+        mPresenter.subscribe();
+        mPresenter.requestProduct();
         return root;
     }
 
@@ -99,7 +107,15 @@ public class HomeFragment extends BaseFragment {
         mBanner.stopAutoPlay();
     }
 
-    private void showWishView() {
-        startActivity(new Intent(getActivity(), LoanActivity.class));
+    @Override
+    public void showLoanAuthView() {
+        Intent intent = new Intent(getActivity(), LoanAuthActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void startAuthView() {
+        Intent intent = new Intent(getActivity(), AuthActivity.class);
+        startActivity(intent);
     }
 }
