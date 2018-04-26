@@ -53,6 +53,8 @@ public class CertificateRepository implements CertificateDataSource {
                     public UploadSesameRequest apply(Auth auth) throws Exception {
                         mAuth = auth;
                         UploadSesameRequest request = new UploadSesameRequest();
+                        request.setLoanId(auth.getProductId());
+                        request.setSource("");
                         if (auth.getSesameState().equals("1")) {
                             request.setSource(auth.getSesame());
                         }
