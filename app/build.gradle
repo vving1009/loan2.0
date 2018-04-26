@@ -17,6 +17,7 @@ android {
         targetSdkVersion 26
         versionCode properties.getProperty("VERSION_CODE").toInteger()
         versionName versionName(properties)
+        applicationId "com.jiaye.cashloan"
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
         buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
         buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
@@ -30,18 +31,9 @@ android {
     }
     /**
      * url  对应服务器地址
-     * type 对应应用类型
      */
-    flavorDimensions "url", "type"
+    flavorDimensions "url"
     productFlavors {
-        loan {
-            dimension "type"
-            applicationId "com.jiaye.cashloan"
-        }
-        shop {
-            dimension "type"
-            applicationId "com.jiaye.cashloan.shop"
-        }
         urlTest {
             dimension "url"
             flavorBuildConfigField(urlTest, loadFlavorProperties('test'))
