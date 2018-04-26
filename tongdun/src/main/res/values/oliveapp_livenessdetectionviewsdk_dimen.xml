@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="oliveapp_activity_horizontal_margin">0dp</dimen>
+    <dimen name="oliveapp_activity_vertical_margin">0dp</dimen>
+</resources>
