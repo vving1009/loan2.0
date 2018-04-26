@@ -17,7 +17,6 @@ android {
         targetSdkVersion 26
         versionCode properties.getProperty("VERSION_CODE").toInteger()
         versionName versionName(properties)
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("int", "DB_VERSION", properties.getProperty("DB_VERSION"))
         buildConfigField("String", "PUBLIC_KEY", properties.getProperty("PUBLIC_KEY"))
         buildConfigField("String", "WECHAT_APPID", properties.getProperty("WECHAT_APPID"))
