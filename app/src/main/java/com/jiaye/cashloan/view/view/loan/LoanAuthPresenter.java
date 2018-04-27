@@ -93,7 +93,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         phone.setIcon(R.drawable.loan_auth_ic_phone);
                         phone.setName(R.string.loan_auth_phone);
                         setLoanAuthModel(loanAuth.getPhoneState(), phone, false);
-                        isVerify = isVerify && phone.isVerify();
                         list.add(phone);
 
                         LoanAuthModel face = new LoanAuthModel();
