@@ -39,30 +39,9 @@
         android:layout_height="4dp"
         android:background="@color/color_gray_light" />
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/btn_commit"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/loan_btn"
-            android:text="@string/commit"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/btn_commit"
-            android:overScrollMode="never" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
 </LinearLayout>

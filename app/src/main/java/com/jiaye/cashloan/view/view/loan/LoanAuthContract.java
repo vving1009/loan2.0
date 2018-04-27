@@ -62,14 +62,14 @@ public class LoanAuthContract {
         void showLoanAuthTaoBaoView();
 
         /**
-         * 显示借款芝麻信用认证页面
-         */
-        void showLoanAuthSesameView();
-
-        /**
          * 显示进件上传页面
          */
         void showLoanFileView();
+
+        /**
+         * 显示贷款进度页面
+         */
+        void showLoanProgressView(String loanId);
     }
 
     interface Presenter extends BasePresenter {

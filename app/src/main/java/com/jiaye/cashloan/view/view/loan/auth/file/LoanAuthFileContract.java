@@ -31,11 +31,6 @@ public interface LoanAuthFileContract {
          * 相册
          */
         void photo();
-
-        /**
-         * 显示贷款进度页面
-         */
-        void showLoanProgressView(String loanId);
     }
 
     interface Presenter extends BasePresenter {
@@ -61,10 +56,5 @@ public interface LoanAuthFileContract {
          * @param list 列表
          */
         void upload(ArrayList<TImage> list);
-
-        /**
-         * 确认
-         */
-        void confirm();
     }
 }

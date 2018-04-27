@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.data.home;
 
-import com.jiaye.cashloan.http.data.loan.DefaultProduct;
-import com.jiaye.cashloan.http.data.loan.LoanAuth;
+import com.jiaye.cashloan.http.data.loan.Upload;
 
 import io.reactivex.Flowable;
 
@@ -14,12 +13,7 @@ import io.reactivex.Flowable;
 public interface HomeDataSource {
 
     /**
-     * 请求默认产品信息
+     * 上传身份证信息
      */
-    Flowable<DefaultProduct> requestProduct();
-
-    /**
-     * 请求检查是否可以借款
-     */
-    Flowable<LoanAuth> requestCheck();
+    Flowable<Upload> requestUpload();
 }

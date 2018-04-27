@@ -80,26 +80,6 @@ public class LoanAuthFilePresenter extends BasePresenterImpl implements LoanAuth
         mCompositeDisposable.add(disposable);
     }
 
-    @Override
-    public void confirm() {
-        Disposable disposable = mDataSource.requestLoanConfirm()
-                .compose(new ViewTransformer<String>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String loanId) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.showLoanProgressView(loanId);
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
-    }
-
     private void requestFileState() {
         Disposable disposable = mDataSource.requestFileState()
                 .compose(new ViewTransformer<FileState>() {

@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,6 +34,7 @@ import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
 /**
@@ -73,7 +73,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST && resultCode == RESULT_OK) {
             result();
         }
     }
@@ -217,15 +217,17 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void showLoanAuthSesameView() {
-        Intent intent = new Intent(getActivity(), LoanAuthSesameActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void showLoanFileView() {
         Intent intent = new Intent(getActivity(), LoanAuthFileActivity.class);
         startActivityForResult(intent, REQUEST);
+    }
+
+    @Override
+    public void showLoanProgressView(String loanId) {
+        Intent intent = new Intent(getActivity(), LoanProgressActivity.class);
+        intent.putExtra("loanId", loanId);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void result() {

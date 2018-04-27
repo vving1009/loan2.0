@@ -40,9 +40,37 @@ public interface LoanAuthContactInfoContract {
 
         String getFriendPhone();
 
+        void setFamilyName2(String text);
+
+        void setFamily2(String text);
+
+        void setFamilyPhone2(String text);
+
+        void setFriendName2(String text);
+
+        void setFriend2(String text);
+
+        void setFriendPhone2(String text);
+
+        String getFamilyName2();
+
+        String getFamily2();
+
+        String getFamilyPhone2();
+
+        String getFriendName2();
+
+        String getFriend2();
+
+        String getFriendPhone2();
+
         void initFamily(final ArrayList<Relation> relations);
 
         void initFriend(final ArrayList<Relation> relations);
+
+        void initFamily2(final ArrayList<Relation> relations);
+
+        void initFriend2(final ArrayList<Relation> relations);
 
         void result();
     }

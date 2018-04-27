@@ -21,11 +21,6 @@ public interface HomeContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 请求产品信息
-         */
-        void requestProduct();
-
-        /**
          * 借款
          */
         void loan();

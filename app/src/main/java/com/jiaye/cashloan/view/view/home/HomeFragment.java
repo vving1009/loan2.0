@@ -91,7 +91,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
-        mPresenter.requestProduct();
         return root;
     }
 

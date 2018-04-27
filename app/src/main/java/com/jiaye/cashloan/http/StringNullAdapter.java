@@ -18,7 +18,7 @@ public class StringNullAdapter extends TypeAdapter<String> {
     @Override
     public void write(JsonWriter out, String value) throws IOException {
         if (value == null) {
-            out.nullValue();
+            out.value("");
             return;
         }
         out.value(value);

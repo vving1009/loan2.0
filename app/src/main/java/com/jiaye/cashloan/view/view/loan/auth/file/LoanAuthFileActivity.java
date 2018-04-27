@@ -58,12 +58,6 @@ public class LoanAuthFileActivity extends TakePhotoAppCompatActivity implements 
                 onBackPressed();
             }
         });
-        findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.confirm();
-            }
-        });
         mBottomDialog = new BottomSheetDialog(this);
         View layout = LayoutInflater.from(this).inflate(R.layout.photo_layout, null);
         layout.findViewById(R.id.text_camera).setOnClickListener(new View.OnClickListener() {
@@ -130,15 +124,6 @@ public class LoanAuthFileActivity extends TakePhotoAppCompatActivity implements 
         compressConfig.setMaxSize(500 * 1024);
         getTakePhoto().onEnableCompress(compressConfig, false);
         getTakePhoto().onPickMultiple(9);
-    }
-
-    @Override
-    public void showLoanProgressView(String loanId) {
-        Intent intent = new Intent(this, LoanProgressActivity.class);
-        intent.putExtra("loanId", loanId);
-        startActivity(intent);
-        setResult(RESULT_OK);
-        finish();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactData;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
@@ -14,7 +15,6 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoDataSource;
 
 import java.io.BufferedReader;
@@ -44,6 +44,10 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
     private ArrayList<Relation> mRelationFamily;
 
     private ArrayList<Relation> mRelationFriend;
+
+    private ArrayList<Relation> mRelationFamily2;
+
+    private ArrayList<Relation> mRelationFriend2;
 
     private String mFamilyId;
 
@@ -80,7 +84,35 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                 Gson gson = new Gson();
                 switch (file.getName()) {
                     case "relation.json":
+                        transformRelationFamily2(br, gson);
+                        break;
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        for (File file : files) {
+            try {
+                InputStream input = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(input));
+                Gson gson = new Gson();
+                switch (file.getName()) {
+                    case "relation.json":
                         transformRelationFriend(br, gson);
+                        break;
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        for (File file : files) {
+            try {
+                InputStream input = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(input));
+                Gson gson = new Gson();
+                switch (file.getName()) {
+                    case "relation.json":
+                        transformRelationFriend2(br, gson);
                         break;
                 }
             } catch (FileNotFoundException e) {
@@ -141,9 +173,21 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
             mView.showToastById(R.string.error_loan_contact_friend);
         } else if (TextUtils.isEmpty(mView.getFriendPhone()) || !mView.getFriendPhone().matches(RegexUtil.phone())) {
             mView.showToastById(R.string.error_loan_contact_friend_phone);
+        } else if (TextUtils.isEmpty(mView.getFamilyName2()) || mView.getFamilyName2().length() > 5) {
+            mView.showToastById(R.string.error_loan_contact_family_name);
+        } else if (TextUtils.isEmpty(mView.getFamily2())) {
+            mView.showToastById(R.string.error_loan_contact_family);
+        } else if (TextUtils.isEmpty(mView.getFamilyPhone2()) || !mView.getFamilyPhone2().matches(RegexUtil.phone())) {
+            mView.showToastById(R.string.error_loan_contact_family_phone);
+        } else if (TextUtils.isEmpty(mView.getFriendName2()) || mView.getFriendName2().length() > 5) {
+            mView.showToastById(R.string.error_loan_contact_friend_name);
+        } else if (TextUtils.isEmpty(mView.getFriend2())) {
+            mView.showToastById(R.string.error_loan_contact_friend);
+        } else if (TextUtils.isEmpty(mView.getFriendPhone2()) || !mView.getFriendPhone2().matches(RegexUtil.phone())) {
+            mView.showToastById(R.string.error_loan_contact_friend_phone);
         } else {
             SaveContactRequest request = new SaveContactRequest();
-            ContactData[] data = new ContactData[2];
+            ContactData[] data = new ContactData[4];
             data[0] = new ContactData();
             data[0].setId(mFamilyId);
             data[0].setName(mView.getFamilyName());
@@ -162,6 +206,26 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                 if (mRelationFriend.get(i).isSelect()) {
                     data[1].setType(mRelationFriend.get(i).getKey());
                     data[1].setRelation(mRelationFriend.get(i).getValue());
+                }
+            }
+            data[2] = new ContactData();
+            data[2].setId("");
+            data[2].setName(mView.getFamilyName2());
+            data[2].setPhone(mView.getFamilyPhone2());
+            for (int i = 0; i < mRelationFamily2.size(); i++) {
+                if (mRelationFamily2.get(i).isSelect()) {
+                    data[2].setType(mRelationFamily2.get(i).getKey());
+                    data[2].setRelation(mRelationFamily2.get(i).getValue());
+                }
+            }
+            data[3] = new ContactData();
+            data[3].setId("");
+            data[3].setName(mView.getFriendName2());
+            data[3].setPhone(mView.getFriendPhone2());
+            for (int i = 0; i < mRelationFriend2.size(); i++) {
+                if (mRelationFriend2.get(i).isSelect()) {
+                    data[3].setType(mRelationFriend2.get(i).getKey());
+                    data[3].setRelation(mRelationFriend2.get(i).getValue());
                 }
             }
             request.setData(data);
@@ -190,9 +254,21 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
         mView.initFamily(mRelationFamily);
     }
 
+    private void transformRelationFamily2(BufferedReader br, Gson gson) {
+        mRelationFamily2 = gson.fromJson(br, new TypeToken<List<Relation>>() {
+        }.getType());
+        mView.initFamily2(mRelationFamily2);
+    }
+
     private void transformRelationFriend(BufferedReader br, Gson gson) {
         mRelationFriend = gson.fromJson(br, new TypeToken<List<Relation>>() {
         }.getType());
         mView.initFriend(mRelationFriend);
+    }
+
+    private void transformRelationFriend2(BufferedReader br, Gson gson) {
+        mRelationFriend2 = gson.fromJson(br, new TypeToken<List<Relation>>() {
+        }.getType());
+        mView.initFriend2(mRelationFriend2);
     }
 }

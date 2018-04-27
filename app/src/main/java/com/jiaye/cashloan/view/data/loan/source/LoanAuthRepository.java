@@ -5,20 +5,28 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
 import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.UploadClient;
+import com.jiaye.cashloan.http.data.loan.FileState;
+import com.jiaye.cashloan.http.data.loan.FileStateRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
+import com.jiaye.cashloan.http.data.loan.LoanConfirm;
+import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
+
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +113,29 @@ public class LoanAuthRepository implements LoanAuthDataSource {
     }
 
     @Override
+    public Flowable<FileState> requestFileState() {
+        return Flowable.just("SELECT loan_id FROM user;")
+                .map(new Function<String, FileStateRequest>() {
+                    @Override
+                    public FileStateRequest apply(String sql) throws Exception {
+                        String loanId = "";
+                        FileStateRequest request = new FileStateRequest();
+                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+                        Cursor cursor = database.rawQuery(sql, null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+                            }
+                            cursor.close();
+                        }
+                        request.setLoanId(loanId);
+                        return request;
+                    }
+                })
+                .compose(new SatcatcheResponseTransformer<FileStateRequest, FileState>("fileState"));
+    }
+
+    @Override
     public Flowable<LoanAuth> requestLoanAuth() {
         return Flowable.just("")
                 .map(new Function<String, LoanAuthRequest>() {
@@ -140,6 +171,54 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                         values.put("ocr_id", loanAuth.getOcrID());
                         LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
                         return loanAuth;
+                    }
+                });
+    }
+
+    @Override
+    public Flowable<String> requestLoanConfirm() {
+        return Flowable.just("SELECT loan_id FROM user;")
+                .map(new Function<String, LoanConfirmRequest>() {
+                    @Override
+                    public LoanConfirmRequest apply(String sql) throws Exception {
+                        String loanId = "";
+                        LoanConfirmRequest request = new LoanConfirmRequest();
+                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+                        Cursor cursor = database.rawQuery(sql, null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+                            }
+                            cursor.close();
+                        }
+                        request.setLoanId(loanId);
+                        return request;
+                    }
+                })
+                .compose(new ResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"))
+                .flatMap(new Function<LoanConfirm, Publisher<String>>() {
+                    @Override
+                    public Publisher<String> apply(LoanConfirm loanConfirm) throws Exception {
+                        return queryLoanId();
+                    }
+                });
+    }
+
+    private Flowable<String> queryLoanId() {
+        return Flowable.just("SELECT loan_id FROM user;")
+                .map(new Function<String, String>() {
+                    @Override
+                    public String apply(String sql) throws Exception {
+                        String loanId = "";
+                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+                        Cursor cursor = database.rawQuery(sql, null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+                            }
+                            cursor.close();
+                        }
+                        return loanId;
                     }
                 });
     }

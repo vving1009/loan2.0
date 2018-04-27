@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.view.home;
 
-import com.jiaye.cashloan.http.data.loan.DefaultProduct;
-import com.jiaye.cashloan.http.data.loan.LoanAuth;
+import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -28,39 +27,18 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     }
 
     @Override
-    public void requestProduct() {
-        Disposable disposable = mDataSource.requestProduct()
-                .compose(new ViewTransformer<DefaultProduct>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .first(new DefaultProduct())
-                .subscribe(new Consumer<DefaultProduct>() {
-                    @Override
-                    public void accept(DefaultProduct defaultProduct) throws Exception {
-                        mView.dismissProgressDialog();
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
-    }
-
-    @Override
     public void loan() {
-        Disposable disposable = mDataSource
-                .requestCheck()
-                .compose(new ViewTransformer<LoanAuth>() {
+        Disposable disposable = mDataSource.requestUpload()
+                .compose(new ViewTransformer<Upload>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<LoanAuth>() {
+                .subscribe(new Consumer<Upload>() {
                     @Override
-                    public void accept(LoanAuth loanAuth) throws Exception {
+                    public void accept(Upload upload) throws Exception {
                         mView.dismissProgressDialog();
                         mView.showLoanAuthView();
                     }

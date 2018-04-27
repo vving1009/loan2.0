@@ -23,9 +23,4 @@ public interface LoanAuthFileDataSource {
      * 请求上传文件
      */
     Flowable<UploadFile> uploadFile(int type, List<String> list);
-
-    /**
-     * 请求确认借款
-     */
-    Flowable<String> requestLoanConfirm();
 }
