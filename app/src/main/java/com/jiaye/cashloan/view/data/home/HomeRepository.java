@@ -89,6 +89,11 @@ public class HomeRepository implements HomeDataSource {
                 .map(new Function<LoanAuth, UploadAuthRequest>() {
                     @Override
                     public UploadAuthRequest apply(LoanAuth loanAuth) throws Exception {
+                        // 保存借款ID
+                        ContentValues values = new ContentValues();
+                        values.put("loan_id", loanAuth.getLoanId());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+
                         UploadAuthRequest request = new UploadAuthRequest();
                         request.setLoanId(loanAuth.getLoanId());
                         request.setId(loanAuth.getOcrID());

@@ -172,7 +172,11 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     }
                     break;
                 case R.string.loan_auth_phone:
-                    mView.showLoanAuthPhoneView();
+                    if (mStep < 2) {
+                        mView.showToastById(R.string.error_loan_auth_step);
+                    } else {
+                        mView.showLoanAuthPhoneView();
+                    }
                     break;
                 case R.string.loan_auth_face:
                     if (mStep < 2) {
@@ -199,7 +203,11 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     mView.showLoanAuthVisaHistoryView();
                     break;
                 case R.string.loan_auth_taobao:
-                    mView.showLoanAuthTaoBaoView();
+                    if (mStep < 4) {
+                        mView.showToastById(R.string.error_loan_auth_step);
+                    } else {
+                        mView.showLoanAuthTaoBaoView();
+                    }
                     break;
             }
         }
