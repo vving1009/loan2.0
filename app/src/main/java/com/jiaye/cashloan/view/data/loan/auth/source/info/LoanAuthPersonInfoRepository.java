@@ -13,7 +13,7 @@ import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadPersonalRequest;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
@@ -48,7 +48,7 @@ public class LoanAuthPersonInfoRepository implements LoanAuthPersonInfoDataSourc
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<PersonRequest, Person>("person"));
+                .compose(new SatcatcheResponseTransformer<PersonRequest, Person>("person"));
     }
 
     @Override
@@ -95,7 +95,7 @@ public class LoanAuthPersonInfoRepository implements LoanAuthPersonInfoDataSourc
                         return mRequest;
                     }
                 })
-                .compose(new ResponseTransformer<SavePersonRequest, SavePerson>("savePerson"));
+                .compose(new SatcatcheResponseTransformer<SavePersonRequest, SavePerson>("savePerson"));
     }
 
     private String getString(String sql) {

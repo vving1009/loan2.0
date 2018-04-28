@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class LoanProgress extends ChildResponse {
+public class LoanProgress extends SatcatcheChildResponse {
 
     @SerializedName("loan_data")
     private List<Data> mList;

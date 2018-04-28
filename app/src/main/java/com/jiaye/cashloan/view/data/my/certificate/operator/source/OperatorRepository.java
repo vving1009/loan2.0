@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.data.my.certificate.operator.source;
 
 import com.jiaye.cashloan.http.data.my.Phone;
 import com.jiaye.cashloan.http.data.my.PhoneRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 
@@ -17,6 +17,6 @@ public class OperatorRepository implements OperatorDataSource {
     @Override
     public Flowable<Phone> phone() {
         return Flowable.just(new PhoneRequest())
-                .compose(new ResponseTransformer<PhoneRequest, Phone>("phone"));
+                .compose(new SatcatcheResponseTransformer<PhoneRequest, Phone>("phone"));
     }
 }

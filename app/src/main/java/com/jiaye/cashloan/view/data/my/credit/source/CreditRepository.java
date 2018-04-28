@@ -15,6 +15,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
@@ -62,7 +63,7 @@ public class CreditRepository implements CreditDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<AuthRequest, Auth>("auth"));
+                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"));
     }
 
     @Override

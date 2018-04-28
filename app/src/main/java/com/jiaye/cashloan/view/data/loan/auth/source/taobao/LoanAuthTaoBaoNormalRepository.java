@@ -17,7 +17,7 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
@@ -220,6 +220,6 @@ public class LoanAuthTaoBaoNormalRepository implements LoanAuthTaoBaoNormalDataS
                         return mRequest;
                     }
                 })
-                .compose(new ResponseTransformer<SaveTaoBaoRequest, SaveTaoBao>("saveTaoBao"));
+                .compose(new SatcatcheResponseTransformer<SaveTaoBaoRequest, SaveTaoBao>("saveTaoBao"));
     }
 }

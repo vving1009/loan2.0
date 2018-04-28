@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * @author 贾博瑄
  */
 
-public class Response<T> {
+public class Response<T extends ChildResponse> {
 
     @SerializedName("jycl_content")
     private ResponseContent<T> content;

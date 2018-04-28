@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.loan;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * SavePhone
@@ -8,5 +8,5 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class SavePhone extends ChildResponse {
+public class SavePhone extends SatcatcheChildResponse {
 }

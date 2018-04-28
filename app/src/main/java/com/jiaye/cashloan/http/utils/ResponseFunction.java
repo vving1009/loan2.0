@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.http.utils;
 
 
+import com.jiaye.cashloan.http.base.ChildResponse;
 import com.jiaye.cashloan.http.base.ErrorCode;
 import com.jiaye.cashloan.http.base.NetworkException;
 import com.jiaye.cashloan.http.base.Response;
@@ -13,7 +14,7 @@ import io.reactivex.functions.Function;
  * @author 贾博瑄
  */
 
-public class ResponseFunction<T> implements Function<Response<T>, T> {
+public class ResponseFunction<T extends ChildResponse> implements Function<Response<T>, T> {
 
     @Override
     public T apply(Response<T> baseResponse) throws Exception {

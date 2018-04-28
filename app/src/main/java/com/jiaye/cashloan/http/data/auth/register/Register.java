@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth.register;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Register
@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Register extends ChildResponse {
+public class Register extends SatcatcheChildResponse {
 
     private String phone;
 

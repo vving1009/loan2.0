@@ -1,6 +1,9 @@
 package com.jiaye.cashloan.view.data.auth.register.source;
 
+import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.register.Register;
+
+import io.reactivex.Flowable;
 
 /**
  * RegisterDataSource
@@ -9,6 +12,8 @@ import com.jiaye.cashloan.http.data.auth.register.Register;
  */
 
 public interface RegisterDataSource {
+
+    Flowable<VerificationCode> requestVerificationCode(String phone);
 
     /**
      * 增加用户信息

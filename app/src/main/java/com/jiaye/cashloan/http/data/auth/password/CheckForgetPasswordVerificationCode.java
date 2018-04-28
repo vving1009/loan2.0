@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth.password;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * CheckForgetPasswordVerificationCode
@@ -8,5 +8,5 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class CheckForgetPasswordVerificationCode extends ChildResponse {
+public class CheckForgetPasswordVerificationCode extends SatcatcheChildResponse {
 }

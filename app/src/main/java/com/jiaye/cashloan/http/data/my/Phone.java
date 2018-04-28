@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.my;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Phone
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Phone extends ChildResponse {
+public class Phone extends SatcatcheChildResponse {
 
     @SerializedName("phone")
     private String phone;

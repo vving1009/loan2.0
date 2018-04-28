@@ -10,7 +10,7 @@ import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
 
@@ -72,7 +72,7 @@ public class MyRepository implements MyDataSource {
                                 return request;
                             }
                         })
-                        .compose(new ResponseTransformer<AuthRequest, Auth>("auth"))
+                        .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"))
                         .map(new Function<Auth, Auth>() {
                             @Override
                             public Auth apply(Auth auth) throws Exception {
@@ -131,7 +131,7 @@ public class MyRepository implements MyDataSource {
 
     private Flowable<User> remoteUser() {
         return Flowable.just(new UserRequest())
-                .compose(new ResponseTransformer<UserRequest, User>("user"))
+                .compose(new SatcatcheResponseTransformer<UserRequest, User>("user"))
                 .map(new Function<User, User>() {
                     @Override
                     public User apply(User user) throws Exception {

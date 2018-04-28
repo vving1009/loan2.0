@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.home;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class ProductList extends ChildResponse {
+public class ProductList extends SatcatcheChildResponse {
 
     @SerializedName("product_list")
     private List<Product> products;

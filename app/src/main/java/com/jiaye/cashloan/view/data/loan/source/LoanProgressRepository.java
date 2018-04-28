@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -26,6 +26,6 @@ public class LoanProgressRepository implements LoanProgressDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<LoanProgressRequest, LoanProgress>("loanProgress"));
+                .compose(new SatcatcheResponseTransformer<LoanProgressRequest, LoanProgress>("loanProgress"));
     }
 }

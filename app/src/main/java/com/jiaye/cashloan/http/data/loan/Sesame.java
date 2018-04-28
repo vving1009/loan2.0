@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Sesame
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Sesame extends ChildResponse {
+public class Sesame extends SatcatcheChildResponse {
 
     @SerializedName("zm_score")
     private String score;

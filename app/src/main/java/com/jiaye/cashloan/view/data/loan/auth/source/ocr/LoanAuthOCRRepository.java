@@ -23,7 +23,7 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.LocalException;
@@ -185,7 +185,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                     public LoanIDCardAuthRequest apply(Upload upload) throws Exception {
                         return mRequest;
                     }
-                }).compose(new ResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
+                }).compose(new SatcatcheResponseTransformer<LoanIDCardAuthRequest, LoanIDCardAuth>("loanIDCardAuth"));
     }
 
     // 上传正面照片,并保存正面照片id
@@ -197,7 +197,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                         return getLoanUploadPictureRequest("01", "01", base64, "front.jpg");
                     }
                 })
-                .compose(new ResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
+                .compose(new SatcatcheResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
                 .map(new Function<LoanUploadPicture, LoanUploadPicture>() {
                     @Override
                     public LoanUploadPicture apply(LoanUploadPicture loanUploadPicture) throws Exception {
@@ -216,7 +216,7 @@ public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
                         return getLoanUploadPictureRequest("01", "02", base64, "back.jpg");
                     }
                 })
-                .compose(new ResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
+                .compose(new SatcatcheResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
                 .map(new Function<LoanUploadPicture, LoanUploadPicture>() {
                     @Override
                     public LoanUploadPicture apply(LoanUploadPicture loanUploadPicture) throws Exception {

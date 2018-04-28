@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth.password;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * ChangePassword
@@ -8,5 +8,5 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class ChangePassword extends ChildResponse {
+public class ChangePassword extends SatcatcheChildResponse {
 }

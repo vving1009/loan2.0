@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadLinkmanRequest;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import org.reactivestreams.Publisher;
 
@@ -29,7 +29,7 @@ public class LoanAuthContactInfoRepository implements LoanAuthContactInfoDataSou
     @Override
     public Flowable<Contact> requestContact() {
         return Flowable.just(new ContactRequest())
-                .compose(new ResponseTransformer<ContactRequest, Contact>("contact"));
+                .compose(new SatcatcheResponseTransformer<ContactRequest, Contact>("contact"));
     }
 
     @Override
@@ -57,6 +57,6 @@ public class LoanAuthContactInfoRepository implements LoanAuthContactInfoDataSou
                         return mRequest;
                     }
                 })
-                .compose(new ResponseTransformer<SaveContactRequest, SaveContact>("saveContact"));
+                .compose(new SatcatcheResponseTransformer<SaveContactRequest, SaveContact>("saveContact"));
     }
 }

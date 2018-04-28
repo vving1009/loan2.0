@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.http.data.loan.LoanApplyRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -26,6 +26,6 @@ public class LoanDetailsRepository implements LoanDetailsDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<LoanApplyRequest, LoanApply>("loanApply"));
+                .compose(new SatcatcheResponseTransformer<LoanApplyRequest, LoanApply>("loanApply"));
     }
 }

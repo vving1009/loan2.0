@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.loan;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * LoanConfirm
@@ -8,6 +8,6 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class LoanConfirm extends ChildResponse {
+public class LoanConfirm extends SatcatcheChildResponse {
 
 }

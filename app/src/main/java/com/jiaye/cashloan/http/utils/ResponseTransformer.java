@@ -2,6 +2,7 @@ package com.jiaye.cashloan.http.utils;
 
 import com.jiaye.cashloan.http.LoanClient;
 import com.jiaye.cashloan.http.LoanService;
+import com.jiaye.cashloan.http.base.ChildResponse;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
 
@@ -19,7 +20,7 @@ import io.reactivex.functions.Function;
  * @author 贾博瑄
  */
 
-public class ResponseTransformer<Upstream, Downstream> implements FlowableTransformer<Upstream, Downstream> {
+public class ResponseTransformer<Upstream, Downstream extends ChildResponse> implements FlowableTransformer<Upstream, Downstream> {
 
     private String mMethodName;
 

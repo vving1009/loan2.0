@@ -7,7 +7,7 @@ import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCode;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -80,7 +80,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
                     break;
             }
             Disposable disposable = Flowable.just(request)
-                    .compose(new ResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
+                    .compose(new SatcatcheResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
                     .compose(new ViewTransformer<VerificationCode>() {
                         @Override
                         public void accept() {
@@ -109,7 +109,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             request.setPhone(mView.getPhone());
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
             Disposable disposable = Flowable.just(request)
-                    .compose(new ResponseTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>("checkForgetPasswordVerificationCode"))
+                    .compose(new SatcatcheResponseTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>("checkForgetPasswordVerificationCode"))
                     .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>() {
                         @Override
                         public void accept() {

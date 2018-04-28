@@ -6,7 +6,7 @@ import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
 import com.jiaye.cashloan.http.data.auth.password.ChangePasswordRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.RSAUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -68,7 +68,7 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
                     break;
             }
             Disposable disposable = Flowable.just(request)
-                    .compose(new ResponseTransformer<ChangePasswordRequest, ChangePassword>("changePassword"))
+                    .compose(new SatcatcheResponseTransformer<ChangePasswordRequest, ChangePassword>("changePassword"))
                     .compose(new ViewTransformer<ChangePassword>() {
                         @Override
                         public void accept() {

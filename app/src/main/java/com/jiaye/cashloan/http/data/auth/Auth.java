@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.auth;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Auth
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Auth extends ChildResponse {
+public class Auth extends SatcatcheChildResponse {
 
     /*产品编号*/
     @SerializedName("jla_id")

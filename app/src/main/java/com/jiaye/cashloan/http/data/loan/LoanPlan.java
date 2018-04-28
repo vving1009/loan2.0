@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * LoanPlan
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class LoanPlan extends ChildResponse {
+public class LoanPlan extends SatcatcheChildResponse {
 
     @SerializedName("repayment_plans")
     private Plan[] plans;

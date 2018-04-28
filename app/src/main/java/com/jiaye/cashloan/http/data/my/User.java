@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * User
@@ -12,7 +12,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class User extends ChildResponse implements Parcelable {
+public class User extends SatcatcheChildResponse implements Parcelable {
 
     /*姓名*/
     @SerializedName("jcb_name")
@@ -100,9 +100,8 @@ public class User extends ChildResponse implements Parcelable {
         dest.writeString(this.historyNumber);
         dest.writeString(this.showName);
         dest.writeString(this.phone);
-        dest.writeString(getSerialnumber());
+        dest.writeString(getSerialNumber());
         dest.writeString(getToken());
-        dest.writeString(getDeviceId());
     }
 
     public User() {
@@ -115,9 +114,8 @@ public class User extends ChildResponse implements Parcelable {
         this.historyNumber = in.readString();
         this.showName = in.readString();
         this.phone = in.readString();
-        setSerialnumber(in.readString());
+        setSerialNumber(in.readString());
         setToken(in.readString());
-        setDeviceId(in.readString());
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

@@ -11,13 +11,25 @@ public abstract class SatcatcheChildResponse {
 
     /*流水号*/
     @SerializedName("req_no")
-    private String serialnumber;
+    private String serialNumber;
 
-    public String getSerialnumber() {
-        return serialnumber;
+    /*令牌*/
+    @SerializedName("userinfo_id")
+    private String token;
+
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setSerialnumber(String serialnumber) {
-        this.serialnumber = serialnumber;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

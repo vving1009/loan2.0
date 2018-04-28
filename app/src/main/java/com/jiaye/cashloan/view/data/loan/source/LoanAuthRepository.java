@@ -22,7 +22,6 @@ import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
@@ -161,7 +160,7 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"))
+                .compose(new SatcatcheResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"))
                 .map(new Function<LoanAuth, LoanAuth>() {
                     @Override
                     public LoanAuth apply(LoanAuth loanAuth) throws Exception {
@@ -195,7 +194,7 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"))
+                .compose(new SatcatcheResponseTransformer<LoanConfirmRequest, LoanConfirm>("loanConfirm"))
                 .flatMap(new Function<LoanConfirm, Publisher<String>>() {
                     @Override
                     public Publisher<String> apply(LoanConfirm loanConfirm) throws Exception {

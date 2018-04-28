@@ -19,7 +19,7 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
 
@@ -254,7 +254,7 @@ public class LoanAuthPhoneRepository implements LoanAuthPhoneDataSource {
                         return mRequest;
                     }
                 })
-                .compose(new ResponseTransformer<SavePhoneRequest, SavePhone>("savePhone"));
+                .compose(new SatcatcheResponseTransformer<SavePhoneRequest, SavePhone>("savePhone"));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Contact
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Contact extends ChildResponse {
+public class Contact extends SatcatcheChildResponse {
 
     @SerializedName("link_data")
     private ContactData[] data;

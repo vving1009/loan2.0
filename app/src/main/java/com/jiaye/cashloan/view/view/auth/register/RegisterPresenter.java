@@ -5,12 +5,12 @@ import android.text.TextUtils;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.VerificationCode;
-import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.register.Register;
 import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
-import com.jiaye.cashloan.utils.RegexUtil;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.RSAUtil;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -63,14 +63,11 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
             mView.showToastById(R.string.error_auth_img_verification);
         } else {
-            VerificationCodeRequest request = new VerificationCodeRequest();
-            request.setPhone(mView.getPhone());
-            request.setStatus("0");
-            Flowable.just(request)
-                    .compose(new ResponseTransformer<VerificationCodeRequest, VerificationCode>("verificationCode"))
+            Disposable disposable = mDataSource.requestVerificationCode(mView.getPhone())
                     .compose(new ViewTransformer<VerificationCode>() {
                         @Override
                         public void accept() {
+                            super.accept();
                             mView.showProgressDialog();
                         }
                     })
@@ -81,6 +78,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                             mView.dismissProgressDialog();
                         }
                     }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         }
     }
 
@@ -107,7 +105,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
             request.setReferralCode(mView.getReferralCode());
             Disposable disposable = Flowable.just(request)
-                    .compose(new ResponseTransformer<RegisterRequest, Register>("register"))
+                    .compose(new SatcatcheResponseTransformer<RegisterRequest, Register>("register"))
                     .compose(new ViewTransformer<Register>() {
                         @Override
                         public void accept() {

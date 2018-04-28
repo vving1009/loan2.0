@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.ContractList;
 import com.jiaye.cashloan.http.data.loan.ContractListRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -26,7 +26,7 @@ public class LoanContractListRepository implements LoanContractListDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<ContractListRequest, ContractList>("contractList"))
+                .compose(new SatcatcheResponseTransformer<ContractListRequest, ContractList>("contractList"))
                 .map(new Function<ContractList, ContractList.Contract[]>() {
                     @Override
                     public ContractList.Contract[] apply(ContractList contractList) throws Exception {

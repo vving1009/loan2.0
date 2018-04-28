@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import io.reactivex.Flowable;
@@ -37,7 +37,7 @@ public class InfoPersonRepository implements InfoPersonDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<PersonRequest, Person>("person"));
+                .compose(new SatcatcheResponseTransformer<PersonRequest, Person>("person"));
     }
 
     private String getString(String sql) {

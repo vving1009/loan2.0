@@ -21,7 +21,7 @@ import com.jiaye.cashloan.http.tongdun.TongDunFaceRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponse;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.LocalException;
@@ -98,7 +98,7 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                         return getLoanUploadPictureRequest("02", "03", base64, "face.jpg");
                     }
                 })
-                .compose(new ResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
+                .compose(new SatcatcheResponseTransformer<LoanUploadPictureRequest, LoanUploadPicture>("uploadPicture"))
                 .map(new Function<LoanUploadPicture, LoanFaceAuthRequest>() {
                     @Override
                     public LoanFaceAuthRequest apply(LoanUploadPicture loanUploadPicture) throws Exception {
@@ -136,7 +136,7 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
                         return mRequest;
                     }
                 })
-                .compose(new ResponseTransformer<LoanFaceAuthRequest, LoanFaceAuth>("loanFaceAuth"));
+                .compose(new SatcatcheResponseTransformer<LoanFaceAuthRequest, LoanFaceAuth>("loanFaceAuth"));
     }
 
     private LoanUploadPictureRequest getLoanUploadPictureRequest(String source, String type, String base64, String name) {

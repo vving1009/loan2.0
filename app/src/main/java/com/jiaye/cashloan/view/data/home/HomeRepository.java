@@ -21,6 +21,7 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
 
@@ -48,7 +49,7 @@ public class HomeRepository implements HomeDataSource {
                     }
                 })
                 // 判断是否可以借款
-                .compose(new ResponseTransformer<CheckLoanRequest, CheckLoan>("checkLoan"))
+                .compose(new SatcatcheResponseTransformer<CheckLoanRequest, CheckLoan>("checkLoan"))
                 .map(new Function<CheckLoan, DefaultProductRequest>() {
                     @Override
                     public DefaultProductRequest apply(CheckLoan checkLoan) throws Exception {
@@ -56,7 +57,7 @@ public class HomeRepository implements HomeDataSource {
                     }
                 })
                 // 请求默认产品
-                .compose(new ResponseTransformer<DefaultProductRequest, DefaultProduct>("defaultProduct"))
+                .compose(new SatcatcheResponseTransformer<DefaultProductRequest, DefaultProduct>("defaultProduct"))
                 .map(new Function<DefaultProduct, LoanAuthRequest>() {
                     @Override
                     public LoanAuthRequest apply(DefaultProduct defaultProduct) throws Exception {
@@ -85,7 +86,7 @@ public class HomeRepository implements HomeDataSource {
                     }
                 })
                 // 请求身份证信息
-                .compose(new ResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"))
+                .compose(new SatcatcheResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"))
                 .map(new Function<LoanAuth, UploadAuthRequest>() {
                     @Override
                     public UploadAuthRequest apply(LoanAuth loanAuth) throws Exception {

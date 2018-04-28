@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.data.auth.UploadLoginRequest;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.RSAUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -87,7 +87,7 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
                             return mRequest;
                         }
                     })
-                    .compose(new ResponseTransformer<LoginRequest, Login>("login"))
+                    .compose(new SatcatcheResponseTransformer<LoginRequest, Login>("login"))
                     .compose(new ViewTransformer<Login>(){
                         @Override
                         public void accept() {

@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth.login;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Login
@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class Login extends ChildResponse {
+public class Login extends SatcatcheChildResponse {
 
     private String phone;
 

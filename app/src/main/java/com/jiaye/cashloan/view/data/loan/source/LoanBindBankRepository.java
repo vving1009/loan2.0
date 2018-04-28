@@ -9,6 +9,7 @@ import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
@@ -66,13 +67,13 @@ public class LoanBindBankRepository implements LoanBindBankDataSource {
     public Flowable<LoanBindBank> requestBindBank(LoanBindBankRequest request) {
         request.setCode(mCode);
         return Flowable.just(request)
-                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("loanBindBank"));
+                .compose(new SatcatcheResponseTransformer<LoanBindBankRequest, LoanBindBank>("loanBindBank"));
     }
 
     @Override
     public Flowable<LoanBindBank> requestBindBankAgain(LoanBindBankRequest request) {
         request.setCode(mCode);
         return Flowable.just(request)
-                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("bindBankAgain"));
+                .compose(new SatcatcheResponseTransformer<LoanBindBankRequest, LoanBindBank>("bindBankAgain"));
     }
 }

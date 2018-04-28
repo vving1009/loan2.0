@@ -10,7 +10,7 @@ import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.auth.UploadSesameRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
@@ -47,7 +47,7 @@ public class CertificateRepository implements CertificateDataSource {
                         return request;
                     }
                 })
-                .compose(new ResponseTransformer<AuthRequest, Auth>("auth"))
+                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"))
                 .map(new Function<Auth, UploadSesameRequest>() {
                     @Override
                     public UploadSesameRequest apply(Auth auth) throws Exception {

@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.my;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * IDCardAuth
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class IDCardAuth extends ChildResponse {
+public class IDCardAuth extends SatcatcheChildResponse {
 
     @SerializedName("jcb_name")
     private String name;

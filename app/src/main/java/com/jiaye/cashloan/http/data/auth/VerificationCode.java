@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth;
 
-import com.jiaye.cashloan.http.base.ChildResponse;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * VerificationCode
@@ -8,5 +8,5 @@ import com.jiaye.cashloan.http.base.ChildResponse;
  * @author 贾博瑄
  */
 
-public class VerificationCode extends ChildResponse {
+public class VerificationCode extends SatcatcheChildResponse {
 }
