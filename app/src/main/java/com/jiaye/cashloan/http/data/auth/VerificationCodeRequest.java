@@ -12,11 +12,11 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 public class VerificationCodeRequest extends ChildRequest {
 
     /*手机号*/
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
     /*类型 0 注册页面获取验证码 1 修改密码页面获取验证码 2 忘记密码页面获取验证码*/
-    @SerializedName("msg_status")
+    @SerializedName("status")
     private String status;
 
     public String getPhone() {

@@ -15,4 +15,11 @@ public class RegexUtil {
     public static String email() {
         return "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
     }
+
+    /**
+     * 密码为6-16位字母加数据
+     */
+    public static String password() {
+        return "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
+    }
 }

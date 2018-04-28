@@ -12,15 +12,11 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 public class RegisterRequest extends ChildRequest {
 
     /*手机号*/
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
-    /*图片验证码*/
-    @SerializedName("img_code")
-    private String imgVerificationCode;
-
     /*密码*/
-    @SerializedName("tel_content")
+    @SerializedName("password")
     private String password;
 
     /*短信验证码*/
@@ -37,14 +33,6 @@ public class RegisterRequest extends ChildRequest {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getImgVerificationCode() {
-        return imgVerificationCode;
-    }
-
-    public void setImgVerificationCode(String imgVerificationCode) {
-        this.imgVerificationCode = imgVerificationCode;
     }
 
     public String getPassword() {

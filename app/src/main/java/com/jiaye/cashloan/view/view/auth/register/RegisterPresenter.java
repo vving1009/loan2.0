@@ -2,21 +2,15 @@ package com.jiaye.cashloan.view.view.auth.register;
 
 import android.text.TextUtils;
 
-import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.register.Register;
-import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
-import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.utils.RSAUtil;
 import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.auth.register.source.RegisterDataSource;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -89,7 +83,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
             mView.showToastById(R.string.error_auth_img_verification);
-        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches("^[a-zA-Z0-9]{6,12}$")) {/*检测密码规则*/
+        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.password())) {/*检测密码规则*/
             mView.showToastById(R.string.error_auth_password);
         } else if (TextUtils.isEmpty(mView.getInputSmsVerificationCode())) {/*检测是否填写验证码*/
             mView.showToastById(R.string.error_auth_sms_verification);
@@ -98,14 +92,10 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
         } else if (!mView.isAgree()) {/*检测是否同意注册协议*/
             mView.showToastById(R.string.error_auth_agree);
         } else {
-            RegisterRequest request = new RegisterRequest();
-            request.setPhone(mView.getPhone());
-            request.setImgVerificationCode(mView.getInputImgVerificationCode());
-            request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
-            request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
-            request.setReferralCode(mView.getReferralCode());
-            Disposable disposable = Flowable.just(request)
-                    .compose(new SatcatcheResponseTransformer<RegisterRequest, Register>("register"))
+            Disposable disposable = mDataSource.requestRegister(mView.getPhone(),
+                    mView.getPassword(),
+                    mView.getInputSmsVerificationCode(),
+                    mView.getReferralCode())
                     .compose(new ViewTransformer<Register>() {
                         @Override
                         public void accept() {

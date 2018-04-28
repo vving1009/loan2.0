@@ -13,7 +13,15 @@ import io.reactivex.Flowable;
 
 public interface RegisterDataSource {
 
+    /**
+     * 注册获取验证码
+     */
     Flowable<VerificationCode> requestVerificationCode(String phone);
+
+    /**
+     * 注册
+     */
+    Flowable<Register> requestRegister(String phone, String password, String sms, String code);
 
     /**
      * 增加用户信息
