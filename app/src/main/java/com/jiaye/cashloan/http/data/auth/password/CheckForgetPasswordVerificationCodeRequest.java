@@ -12,12 +12,16 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 public class CheckForgetPasswordVerificationCodeRequest extends ChildRequest {
 
     /*手机号*/
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
     /*短信验证码*/
     @SerializedName("sign_code")
     private String smsVerificationCode;
+
+    /*验证请求来源*/
+    @SerializedName("sign_soure")
+    private String source;
 
     public String getPhone() {
         return phone;
@@ -35,8 +39,16 @@ public class CheckForgetPasswordVerificationCodeRequest extends ChildRequest {
         this.smsVerificationCode = smsVerificationCode;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     @Override
     protected String getBusiness() {
-        return "CL010";
+        return "CL011";
     }
 }

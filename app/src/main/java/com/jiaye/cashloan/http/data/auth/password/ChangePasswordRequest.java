@@ -12,15 +12,15 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 public class ChangePasswordRequest extends ChildRequest {
 
     /*手机号*/
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
     /*密码*/
-    @SerializedName("tel_content")
+    @SerializedName("password")
     private String password;
 
     /*类型 0 用户登录的情况下 1 用户未登录的情况下 */
-    @SerializedName("tel_status")
+    @SerializedName("status")
     private String status;
 
     public String getPhone() {

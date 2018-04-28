@@ -73,9 +73,11 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             request.setPhone(mView.getPhone());
             switch (mType) {
                 case 0:
+                    // 忘记密码
                     request.setStatus("2");
                     break;
                 case 1:
+                    // 修改密码
                     request.setStatus("1");
                     break;
             }
@@ -108,6 +110,16 @@ public class ForgetPasswordPresenter extends BasePresenterImpl implements Forget
             CheckForgetPasswordVerificationCodeRequest request = new CheckForgetPasswordVerificationCodeRequest();
             request.setPhone(mView.getPhone());
             request.setSmsVerificationCode(mView.getInputSmsVerificationCode());
+            switch (mType) {
+                case 0:
+                    // 忘记密码
+                    request.setSource("2");
+                    break;
+                case 1:
+                    // 修改密码
+                    request.setSource("1");
+                    break;
+            }
             Disposable disposable = Flowable.just(request)
                     .compose(new SatcatcheResponseTransformer<CheckForgetPasswordVerificationCodeRequest, CheckForgetPasswordVerificationCode>("checkForgetPasswordVerificationCode"))
                     .compose(new ViewTransformer<CheckForgetPasswordVerificationCode>() {

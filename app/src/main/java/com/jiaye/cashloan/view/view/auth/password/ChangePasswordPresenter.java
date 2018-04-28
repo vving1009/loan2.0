@@ -8,6 +8,7 @@ import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
 import com.jiaye.cashloan.http.data.auth.password.ChangePasswordRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.RSAUtil;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -51,7 +52,7 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
 
     @Override
     public void save() {
-        if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches("^[a-zA-Z0-9]{6,12}$")) {/*检测密码规则*/
+        if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.password())) {/*检测密码规则*/
             mView.showToastById(R.string.error_auth_password);
         } else if (!mView.getPassword().equals(mView.getPasswordSecond())) {
             mView.showToastById(R.string.error_auth_password_different);
@@ -61,9 +62,11 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
             request.setPassword(RSAUtil.encryptByPublicKeyToBase64(mView.getPassword(), BuildConfig.PUBLIC_KEY));
             switch (mType) {
                 case 0:
+                    // 忘记密码
                     request.setStatus("1");
                     break;
                 case 1:
+                    // 修改密码
                     request.setStatus("0");
                     break;
             }
