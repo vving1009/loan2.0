@@ -2,6 +2,8 @@ package com.jiaye.cashloan.view.data.auth.login.source;
 
 import com.jiaye.cashloan.http.data.auth.login.Login;
 
+import io.reactivex.Flowable;
+
 /**
  * LoginDataSource
  *
@@ -9,6 +11,8 @@ import com.jiaye.cashloan.http.data.auth.login.Login;
  */
 
 public interface LoginDataSource {
+
+    Flowable<Login> requestLogin(String phone, String password);
 
     /**
      * 增加用户信息

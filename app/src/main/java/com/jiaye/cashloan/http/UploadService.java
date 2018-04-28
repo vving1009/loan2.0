@@ -1,28 +1,20 @@
 package com.jiaye.cashloan.http;
 
 import com.jiaye.cashloan.http.base.Request;
-import com.jiaye.cashloan.http.base.Response;
-import com.jiaye.cashloan.http.data.auth.UploadLoginRequest;
 import com.jiaye.cashloan.http.data.auth.UploadSesameRequest;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
-import com.jiaye.cashloan.http.data.loan.FileState;
-import com.jiaye.cashloan.http.data.loan.FileStateRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadAuthRequest;
 import com.jiaye.cashloan.http.data.loan.UploadBioAssayRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.loan.UploadFile;
-import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLinkmanRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.data.loan.UploadOperatorRequest;
 import com.jiaye.cashloan.http.data.loan.UploadPersonalRequest;
 import com.jiaye.cashloan.http.data.loan.UploadTaoBaoRequest;
-
-import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -35,9 +27,6 @@ import retrofit2.http.POST;
  */
 
 public interface UploadService {
-
-    @POST("loginPower")
-    Flowable<Upload> uploadLogin(@Body UploadLoginRequest request);
 
     @POST("phoneContacts")
     Flowable<UploadContact> uploadContact(@Body UploadContactRequest request);

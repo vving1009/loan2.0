@@ -12,11 +12,11 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 public class LoginRequest extends ChildRequest {
 
     /*手机号*/
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
     /*密码*/
-    @SerializedName("tel_content")
+    @SerializedName("password")
     private String password;
 
     public String getPhone() {
