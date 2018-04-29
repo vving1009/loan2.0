@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.view.home;
 
+import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -24,6 +25,20 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
+    }
+
+    @Override
+    public void subscribe() {
+        super.subscribe();
+        Disposable disposable = mDataSource.requestBannerList()
+                .compose(new ViewTransformer<BannerList.Banner[]>())
+                .subscribe(new Consumer<BannerList.Banner[]>() {
+                    @Override
+                    public void accept(BannerList.Banner[] banners) throws Exception {
+                        mView.setBanners(banners);
+                    }
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 
     @Override

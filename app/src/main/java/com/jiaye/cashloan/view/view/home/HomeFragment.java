@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.home.HomeRepository;
@@ -19,6 +20,7 @@ import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * HomeFragment
@@ -49,18 +51,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        /*Banner*/
+        /*BannerList*/
         mBanner = root.findViewById(R.id.banner);
-        ArrayList<Integer> imageList = new ArrayList<>();
-        imageList.add(R.drawable.bannar1);
-        imageList.add(R.drawable.bannar2);
-        imageList.add(R.drawable.bannar3);
-        imageList.add(R.drawable.bannar4);
-        imageList.add(R.drawable.bannar5);
-        mBanner.setImages(imageList);
         mBanner.setDelayTime(4000);
         mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.start();
         /*Product*/
         View view1 = root.findViewById(R.id.include_1);
         TextView textTitle1 = view1.findViewById(R.id.text_title);
@@ -104,6 +98,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void onStop() {
         super.onStop();
         mBanner.stopAutoPlay();
+    }
+
+    @Override
+    public void setBanners(BannerList.Banner[] banners) {
+        List<String> list = new ArrayList<>();
+        for (BannerList.Banner banner : banners) {
+            list.add(banner.getImgUrl());
+        }
+        mBanner.setImages(list);
+        mBanner.start();
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.UploadClient;
 import com.jiaye.cashloan.http.base.Request;
+import com.jiaye.cashloan.http.data.home.BannerList;
+import com.jiaye.cashloan.http.data.home.BannerListRequest;
 import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
@@ -37,6 +39,19 @@ import io.reactivex.functions.Function;
  */
 
 public class HomeRepository implements HomeDataSource {
+
+    @Override
+    public Flowable<BannerList.Banner[]> requestBannerList() {
+        return Flowable.just(new BannerListRequest())
+                .compose(new SatcatcheResponseTransformer<BannerListRequest, BannerList>
+                        ("bannerList"))
+                .map(new Function<BannerList, BannerList.Banner[]>() {
+                    @Override
+                    public BannerList.Banner[] apply(BannerList bannerList) throws Exception {
+                        return bannerList.getBannerArray();
+                    }
+                });
+    }
 
     @Override
     public Flowable<Upload> requestUpload() {

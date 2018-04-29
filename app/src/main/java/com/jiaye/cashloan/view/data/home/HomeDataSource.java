@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.data.home;
 
+import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.loan.Upload;
 
 import io.reactivex.Flowable;
@@ -11,6 +12,11 @@ import io.reactivex.Flowable;
  */
 
 public interface HomeDataSource {
+
+    /**
+     * 请求广告列表
+     */
+    Flowable<BannerList.Banner[]> requestBannerList();
 
     /**
      * 上传身份证信息

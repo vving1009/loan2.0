@@ -15,8 +15,8 @@ import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificatio
 import com.jiaye.cashloan.http.data.auth.register.Register;
 import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
-import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.home.ProductRequest;
+import com.jiaye.cashloan.http.data.home.BannerList;
+import com.jiaye.cashloan.http.data.home.BannerListRequest;
 import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
@@ -119,10 +119,10 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<User>> user(@Body SatcatcheRequest<UserRequest> request);
 
     /**
-     * 产品列表
+     * 首页商品轮播
      */
-    @POST("product")
-    Flowable<SatcatcheResponse<ProductList>> productList(@Body SatcatcheRequest<ProductRequest> request);
+    @POST("carouselPicture")
+    Flowable<SatcatcheResponse<BannerList>> bannerList(@Body SatcatcheRequest<BannerListRequest> request);
 
     /**
      * 默认产品
