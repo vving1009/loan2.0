@@ -28,7 +28,6 @@ import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
-import com.jiaye.cashloan.view.view.loan.auth.sesame.LoanAuthSesameActivity;
 import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
@@ -63,8 +62,9 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private Button btnNext;
 
-    public static LoanAuthFragment newInstance() {
+    public static LoanAuthFragment newInstance(String productId) {
         Bundle args = new Bundle();
+        args.putString("productId", productId);
         LoanAuthFragment fragment = new LoanAuthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -144,6 +144,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
+        mPresenter.setProductId(getArguments().getString("productId"));
         hasPermission();
         return root;
     }

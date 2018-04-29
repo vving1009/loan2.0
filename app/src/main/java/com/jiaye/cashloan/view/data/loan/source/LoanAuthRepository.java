@@ -41,6 +41,13 @@ import io.reactivex.functions.Function;
 
 public class LoanAuthRepository implements LoanAuthDataSource {
 
+    private String mProductId;
+
+    @Override
+    public void setProductId(String productId) {
+        mProductId = productId;
+    }
+
     @Override
     public Flowable<UploadContact> uploadContact() {
         UploadContactRequest request = new UploadContactRequest();
@@ -149,14 +156,7 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                             }
                             cursorUser.close();
                         }
-                        Cursor cursorProduct = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT product_id FROM product;", null);
-                        if (cursorProduct != null) {
-                            if (cursorProduct.moveToNext()) {
-                                String productId = cursorProduct.getString(cursorProduct.getColumnIndex(DbContract.Product.COLUMN_NAME_PRODUCT_ID));
-                                request.setProductId(productId);
-                            }
-                            cursorProduct.close();
-                        }
+                        request.setProductId(mProductId);
                         return request;
                     }
                 })

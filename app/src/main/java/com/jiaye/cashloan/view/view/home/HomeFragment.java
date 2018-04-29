@@ -130,6 +130,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void showLoanAuthView(String productId) {
         Intent intent = new Intent(getActivity(), LoanAuthActivity.class);
+        intent.putExtra("productId", productId);
         startActivity(intent);
     }
 

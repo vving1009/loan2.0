@@ -44,17 +44,6 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE +
                     " )";
 
-    private static final String SQL_CREATE_PRODUCT =
-            "CREATE TABLE " + DbContract.Product.TABLE_NAME + " (" +
-                    DbContract.Product._ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    DbContract.Product.COLUMN_NAME_PRODUCT_ID + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_PRODUCT_NAME + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_AMOUNT + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_DEADLINE + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_PAYMENT_METHOD + TEXT_TYPE + COMMA_SEP +
-                    DbContract.Product.COLUMN_NAME_IS_DEFAULT + INTEGER_TYPE +
-                    " )";
-
     public DbHelper(Context context) {
         super(context.getApplicationContext(), DATABASE_NAME, null, BuildConfig.DB_VERSION);
     }
@@ -62,7 +51,6 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USER);
-        db.execSQL(SQL_CREATE_PRODUCT);
     }
 
     @Override
@@ -79,7 +67,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             " from user");
                     db.execSQL("drop table user");
                     db.execSQL("alter table temp_user rename to user");
-                    break;
+                case 2:
+                    // 2018.4.29 删除表 product
+                    db.execSQL("drop table product");
                 default:
                     break;
             }

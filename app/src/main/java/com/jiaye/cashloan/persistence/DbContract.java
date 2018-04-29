@@ -57,24 +57,4 @@ public class DbContract {
         public static final String COLUMN_NAME_OCR_DATE_END = "ocr_date_end";
         public static final String COLUMN_NAME_OCR_AGENCY = "ocr_agency";
     }
-
-    /**
-     * 产品
-     * <p>
-     * product_id       产品编号
-     * product_name     产品名称
-     * amount           借款金额
-     * deadline         还款期限
-     * payment_method   还款方式
-     * is_default       是否为默认
-     */
-    public static abstract class Product implements BaseColumns {
-        public static final String TABLE_NAME = "product";
-        public static final String COLUMN_NAME_PRODUCT_ID = "product_id";
-        public static final String COLUMN_NAME_PRODUCT_NAME = "product_name";
-        public static final String COLUMN_NAME_AMOUNT = "amount";
-        public static final String COLUMN_NAME_DEADLINE = "deadline";
-        public static final String COLUMN_NAME_PAYMENT_METHOD = "payment_method";
-        public static final String COLUMN_NAME_IS_DEFAULT = "is_default";
-    }
 }

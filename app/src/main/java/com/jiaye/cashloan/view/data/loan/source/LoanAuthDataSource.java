@@ -16,6 +16,11 @@ import io.reactivex.Flowable;
 public interface LoanAuthDataSource {
 
     /**
+     * 设置产品编号
+     */
+    void setProductId(String productId);
+
+    /**
      * 上传联系人
      */
     Flowable<UploadContact> uploadContact();

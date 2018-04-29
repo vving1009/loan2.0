@@ -20,7 +20,8 @@ public class LoanAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        LoanAuthFragment fragment = LoanAuthFragment.newInstance();
+        String productId = getIntent().getStringExtra("productId");
+        LoanAuthFragment fragment = LoanAuthFragment.newInstance(productId);
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
     }
 }

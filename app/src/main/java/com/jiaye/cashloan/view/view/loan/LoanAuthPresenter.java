@@ -45,6 +45,11 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     }
 
     @Override
+    public void setProductId(String productId) {
+        mDataSource.setProductId(productId);
+    }
+
+    @Override
     public void requestLoanAuth() {
         Disposable disposable = mDataSource.requestFileState()
                 .flatMap(new Function<FileState, Publisher<LoanAuth>>() {
