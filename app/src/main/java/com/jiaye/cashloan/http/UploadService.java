@@ -5,7 +5,6 @@ import com.jiaye.cashloan.http.data.auth.UploadSesameRequest;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
-import com.jiaye.cashloan.http.data.loan.UploadAuthRequest;
 import com.jiaye.cashloan.http.data.loan.UploadBioAssayRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
@@ -40,10 +39,6 @@ public interface UploadService {
     /*活体检测*/
     @POST("bioAssay")
     Flowable<Upload> uploadBioAssay(@Body Request<UploadBioAssayRequest> request);
-
-    /*身份证认证*/
-    @POST("cardAuth")
-    Flowable<Upload> uploadAuth(@Body Request<UploadAuthRequest> request);
 
     /*手机运营商认证*/
     @POST("phoneOperator")

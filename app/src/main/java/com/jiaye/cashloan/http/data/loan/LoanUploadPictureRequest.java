@@ -11,7 +11,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class LoanUploadPictureRequest extends ChildRequest {
 
-    @SerializedName("tel_phone")
+    @SerializedName("phone")
     private String phone;
 
     /**
@@ -19,9 +19,6 @@ public class LoanUploadPictureRequest extends ChildRequest {
      */
     @SerializedName("pic_source")
     private String source;
-
-    @SerializedName("jla_id")
-    private String loanId;
 
     /**
      * 1 身份证正面 2 身份证反面 3 活体检测
@@ -34,11 +31,6 @@ public class LoanUploadPictureRequest extends ChildRequest {
 
     @SerializedName("pic_name")
     private String name;
-
-    @Override
-    protected String getBusiness() {
-        return "CL005";
-    }
 
     public String getPhone() {
         return phone;
@@ -54,14 +46,6 @@ public class LoanUploadPictureRequest extends ChildRequest {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public String getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(String loanId) {
-        this.loanId = loanId;
     }
 
     public String getType() {
@@ -86,5 +70,10 @@ public class LoanUploadPictureRequest extends ChildRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    protected String getBusiness() {
+        return "CL029";
     }
 }

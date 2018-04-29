@@ -145,7 +145,6 @@ public class LoanApplication extends Application {
         activityList.clear();
         new GesturePreference(LoanApplication.getInstance(), -1).WriteStringPreference("null");
         getSQLiteDatabase().delete("user", null, null);
-        getSQLiteDatabase().delete("product", null, null);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("type", "reLogin");

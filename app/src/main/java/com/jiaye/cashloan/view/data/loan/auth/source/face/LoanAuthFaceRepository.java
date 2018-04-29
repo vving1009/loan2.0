@@ -141,20 +141,17 @@ public class LoanAuthFaceRepository implements LoanAuthFaceDataSource {
 
     private LoanUploadPictureRequest getLoanUploadPictureRequest(String source, String type, String base64, String name) {
         String phone = "";
-        String loanId = "";
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
             }
             cursor.close();
         }
         LoanUploadPictureRequest request = new LoanUploadPictureRequest();
         request.setPhone(phone);
         request.setSource(source);
-        request.setLoanId(loanId);
         request.setType(type);
         request.setBase64(base64);
         request.setName(name);
