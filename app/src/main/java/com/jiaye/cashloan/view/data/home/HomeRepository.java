@@ -10,6 +10,8 @@ import com.jiaye.cashloan.http.UploadClient;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.BannerListRequest;
+import com.jiaye.cashloan.http.data.home.ProductList;
+import com.jiaye.cashloan.http.data.home.ProductListRequest;
 import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.DefaultProduct;
@@ -22,7 +24,6 @@ import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.utils.RequestFunction;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.LocalException;
@@ -49,6 +50,19 @@ public class HomeRepository implements HomeDataSource {
                     @Override
                     public BannerList.Banner[] apply(BannerList bannerList) throws Exception {
                         return bannerList.getBannerArray();
+                    }
+                });
+    }
+
+    @Override
+    public Flowable<ProductList.Product[]> requestProductList() {
+        return Flowable.just(new ProductListRequest())
+                .compose(new SatcatcheResponseTransformer<ProductListRequest, ProductList>
+                        ("productList"))
+                .map(new Function<ProductList, ProductList.Product[]>() {
+                    @Override
+                    public ProductList.Product[] apply(ProductList productList) throws Exception {
+                        return productList.getProductArray();
                     }
                 });
     }

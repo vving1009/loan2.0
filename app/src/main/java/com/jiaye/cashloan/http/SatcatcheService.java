@@ -17,6 +17,8 @@ import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.BannerListRequest;
+import com.jiaye.cashloan.http.data.home.ProductList;
+import com.jiaye.cashloan.http.data.home.ProductListRequest;
 import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
@@ -123,6 +125,12 @@ public interface SatcatcheService {
      */
     @POST("carouselPicture")
     Flowable<SatcatcheResponse<BannerList>> bannerList(@Body SatcatcheRequest<BannerListRequest> request);
+
+    /**
+     * 首页产品列表
+     */
+    @POST("pictureinfo")
+    Flowable<SatcatcheResponse<ProductList>> productList(@Body SatcatcheRequest<ProductListRequest> request);
 
     /**
      * 默认产品

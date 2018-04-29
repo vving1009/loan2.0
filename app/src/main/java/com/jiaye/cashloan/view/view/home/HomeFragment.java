@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.home.BannerList;
+import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.home.HomeRepository;
@@ -30,15 +32,19 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
 
-    private HomePresenter mPresenter;
-
-    private Banner mBanner;
-
     private static final int[] TAB_IMAGES = {R.drawable.home_tab_price, R.drawable.home_tab_credit, R.drawable.home_tab_loan};
 
     private static final int[] TAB_TITLE = {R.string.home_price, R.string.home_credit, R.string.home_loan};
 
-    private static final int[] IMAGES = {R.drawable.home_ic_price, R.drawable.home_ic_credit, R.drawable.home_ic_loan};
+    private HomePresenter mPresenter;
+
+    private Banner mBanner;
+
+    private ImageView mImage1;
+
+    private ImageView mImage2;
+
+    private ImageView mImage3;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -55,34 +61,28 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mBanner = root.findViewById(R.id.banner);
         mBanner.setDelayTime(4000);
         mBanner.setImageLoader(new GlideImageLoader());
-        /*Product*/
+        /*ProductList*/
         View view1 = root.findViewById(R.id.include_1);
         TextView textTitle1 = view1.findViewById(R.id.text_title);
-        ImageView imageView1 = view1.findViewById(R.id.img_product);
+        mImage1 = view1.findViewById(R.id.img_product);
         textTitle1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[0]), null, null, null);
         textTitle1.setText(getString(TAB_TITLE[0]));
-        imageView1.setImageDrawable(getResources().getDrawable(IMAGES[0]));
-        imageView1.setOnClickListener(new View.OnClickListener() {
+        mImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.loan();
             }
         });
-
         View view2 = root.findViewById(R.id.include_2);
         TextView textTitle2 = view2.findViewById(R.id.text_title);
-        ImageView imageView2 = view2.findViewById(R.id.img_product);
+        mImage2 = view2.findViewById(R.id.img_product);
         textTitle2.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[1]), null, null, null);
         textTitle2.setText(getString(TAB_TITLE[1]));
-        imageView2.setImageDrawable(getResources().getDrawable(IMAGES[1]));
-
         View view3 = root.findViewById(R.id.include_3);
         TextView textTitle3 = view3.findViewById(R.id.text_title);
-        ImageView imageView3 = view3.findViewById(R.id.img_product);
+        mImage3 = view3.findViewById(R.id.img_product);
         textTitle3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[2]), null, null, null);
         textTitle3.setText(getString(TAB_TITLE[2]));
-        imageView3.setImageDrawable(getResources().getDrawable(IMAGES[2]));
-
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
         return root;
@@ -108,6 +108,23 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         }
         mBanner.setImages(list);
         mBanner.start();
+    }
+
+    @Override
+    public void setProduct(ProductList.Product[] products) {
+        for (int i = 0; i < products.length; i++) {
+            switch (i) {
+                case 0:
+                    Glide.with(this).load(products[i].getUrl()).into(mImage1);
+                    break;
+                case 1:
+                    Glide.with(this).load(products[i].getUrl()).into(mImage2);
+                    break;
+                case 2:
+                    Glide.with(this).load(products[i].getUrl()).into(mImage3);
+                    break;
+            }
+        }
     }
 
     @Override
