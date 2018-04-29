@@ -19,6 +19,10 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("cardAuth_state")
     private String cardState;
 
+    /*手机运营商认证状态*/
+    @SerializedName("phoneAuth_state")
+    private String phoneState;
+
     /*活体识别认证状态*/
     @SerializedName("faceCheak_state")
     private String faceState;
@@ -27,9 +31,21 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("userAuth_state")
     private String personState;
 
-    /*手机运营商认证状态*/
-    @SerializedName("phoneAuth_state")
-    private String phoneState;
+    /*是否意愿签署(电子签章)*/
+    @SerializedName("eSign_state")
+    private String signState;
+
+    /*是否签署过合同(是否签署过电子签章)*/
+    @SerializedName("signCompact_state")
+    private String hasSign;
+
+    /*是否签署借款人授权书(历史电子签章)*/
+    @SerializedName("eSignJK_state")
+    private String signHistoryState;
+
+    /*是否需要签署借款人授权书(是否需要历史电子签章)*/
+    @SerializedName("mustSignJK_state")
+    private String needSignHistory;
 
     /*淘宝认证状态*/
     @SerializedName("taoAuth_state")
@@ -39,33 +55,25 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("zmAuth_state")
     private String sesameState;
 
-    /*身份证姓名*/
+    /*芝麻分*/
+    @SerializedName("zm_score")
+    private String sesameSource;
+
+    /*身份证姓名(身份证认证后返回)*/
     @SerializedName("jcb_name")
     private String ocrName;
 
-    /*身份证姓名*/
-    @SerializedName("jcb_identifyid")
+    /*身份证姓名(身份证认证后返回)*/
+    @SerializedName("id_number")
     private String ocrID;
 
     /*手机号*/
     @SerializedName("jcb_phone")
     private String phone;
 
-    /*电子签章*/
-    @SerializedName("eSign_state")
-    private String signState;
-
-    /*是否签署过电子签章*/
-    @SerializedName("signCompact_state")
-    private String hasSign;
-
-    /*历史电子签章*/
-    @SerializedName("eSignJK_state")
-    private String signHistoryState;
-
-    /*是否需要历史电子签章*/
-    @SerializedName("mustSignJK_state")
-    private String needSignHistory;
+    /*是否可开户*/
+    @SerializedName("jcb_canOpendAccount")
+    private String openAccount;
 
     public String getLoanId() {
         return loanId;
@@ -83,6 +91,14 @@ public class LoanAuth extends SatcatcheChildResponse {
         this.cardState = cardState;
     }
 
+    public String getPhoneState() {
+        return phoneState;
+    }
+
+    public void setPhoneState(String phoneState) {
+        this.phoneState = phoneState;
+    }
+
     public String getFaceState() {
         return faceState;
     }
@@ -97,54 +113,6 @@ public class LoanAuth extends SatcatcheChildResponse {
 
     public void setPersonState(String personState) {
         this.personState = personState;
-    }
-
-    public String getPhoneState() {
-        return phoneState;
-    }
-
-    public void setPhoneState(String phoneState) {
-        this.phoneState = phoneState;
-    }
-
-    public String getTaobaoState() {
-        return taobaoState;
-    }
-
-    public void setTaobaoState(String taobaoState) {
-        this.taobaoState = taobaoState;
-    }
-
-    public String getSesameState() {
-        return sesameState;
-    }
-
-    public void setSesameState(String sesameState) {
-        this.sesameState = sesameState;
-    }
-
-    public String getOcrName() {
-        return ocrName;
-    }
-
-    public void setOcrName(String ocrName) {
-        this.ocrName = ocrName;
-    }
-
-    public String getOcrID() {
-        return ocrID;
-    }
-
-    public void setOcrID(String ocrID) {
-        this.ocrID = ocrID;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getSignState() {
@@ -177,5 +145,61 @@ public class LoanAuth extends SatcatcheChildResponse {
 
     public void setNeedSignHistory(String needSignHistory) {
         this.needSignHistory = needSignHistory;
+    }
+
+    public String getTaobaoState() {
+        return taobaoState;
+    }
+
+    public void setTaobaoState(String taobaoState) {
+        this.taobaoState = taobaoState;
+    }
+
+    public String getSesameState() {
+        return sesameState;
+    }
+
+    public void setSesameState(String sesameState) {
+        this.sesameState = sesameState;
+    }
+
+    public String getSesameSource() {
+        return sesameSource;
+    }
+
+    public void setSesameSource(String sesameSource) {
+        this.sesameSource = sesameSource;
+    }
+
+    public String getOcrName() {
+        return ocrName;
+    }
+
+    public void setOcrName(String ocrName) {
+        this.ocrName = ocrName;
+    }
+
+    public String getOcrID() {
+        return ocrID;
+    }
+
+    public void setOcrID(String ocrID) {
+        this.ocrID = ocrID;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getOpenAccount() {
+        return openAccount;
+    }
+
+    public void setOpenAccount(String openAccount) {
+        this.openAccount = openAccount;
     }
 }

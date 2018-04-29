@@ -11,18 +11,25 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class LoanFaceAuthRequest extends ChildRequest {
 
+    @SerializedName("jla_id")
+    private String loanId;
+
     @SerializedName("pic_id")
     private String picId;
 
+    /*0 未通过 1 通过*/
     @SerializedName("isPass")
-    private boolean isPass;
+    private int isPass;
 
     @SerializedName("similarity")
     private float similarity;
 
-    @Override
-    protected String getBusiness() {
-        return "CL021";
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     public String getPicId() {
@@ -33,12 +40,12 @@ public class LoanFaceAuthRequest extends ChildRequest {
         this.picId = picId;
     }
 
-    public boolean isPass() {
+    public int getIsPass() {
         return isPass;
     }
 
-    public void setPass(boolean pass) {
-        isPass = pass;
+    public void setIsPass(int isPass) {
+        this.isPass = isPass;
     }
 
     public float getSimilarity() {
@@ -47,5 +54,10 @@ public class LoanFaceAuthRequest extends ChildRequest {
 
     public void setSimilarity(float similarity) {
         this.similarity = similarity;
+    }
+
+    @Override
+    protected String getBusiness() {
+        return "CL021";
     }
 }
