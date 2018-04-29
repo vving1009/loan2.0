@@ -25,8 +25,6 @@ import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.ContractList;
 import com.jiaye.cashloan.http.data.loan.ContractListRequest;
-import com.jiaye.cashloan.http.data.loan.DefaultProduct;
-import com.jiaye.cashloan.http.data.loan.DefaultProductRequest;
 import com.jiaye.cashloan.http.data.loan.FileState;
 import com.jiaye.cashloan.http.data.loan.FileStateRequest;
 import com.jiaye.cashloan.http.data.loan.LoanApply;
@@ -131,12 +129,6 @@ public interface SatcatcheService {
      */
     @POST("pictureinfo")
     Flowable<SatcatcheResponse<ProductList>> productList(@Body SatcatcheRequest<ProductListRequest> request);
-
-    /**
-     * 默认产品
-     */
-    @POST("defaultPro")
-    Flowable<SatcatcheResponse<DefaultProduct>> defaultProduct(@Body SatcatcheRequest<DefaultProductRequest> request);
 
     /**
      * 是否可以借款

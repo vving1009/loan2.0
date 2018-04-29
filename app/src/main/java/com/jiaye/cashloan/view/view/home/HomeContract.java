@@ -27,7 +27,7 @@ public interface HomeContract {
         /**
          * 显示借款认证页面
          */
-        void showLoanAuthView();
+        void showLoanAuthView(String productId);
     }
 
     interface Presenter extends BasePresenter {

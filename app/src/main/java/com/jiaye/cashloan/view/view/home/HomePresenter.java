@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.home;
 
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.loan.Upload;
+import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -22,6 +22,8 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     private final HomeContract.View mView;
 
     private final HomeDataSource mDataSource;
+
+    private ProductList.Product[] mProducts;
 
     public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
         mView = view;
@@ -45,6 +47,7 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                 .subscribe(new Consumer<ProductList.Product[]>() {
                     @Override
                     public void accept(ProductList.Product[] products) throws Exception {
+                        mProducts = products;
                         mView.setProduct(products);
                     }
                 }, new ThrowableConsumer(mView));
@@ -53,19 +56,22 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     @Override
     public void loan() {
-        Disposable disposable = mDataSource.requestUpload()
-                .compose(new ViewTransformer<Upload>() {
+        if (mProducts == null || mProducts.length == 0 || mProducts[0] == null) {
+            return;
+        }
+        Disposable disposable = mDataSource.requestCheckLoan()
+                .compose(new ViewTransformer<CheckLoan>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<Upload>() {
+                .subscribe(new Consumer<CheckLoan>() {
                     @Override
-                    public void accept(Upload upload) throws Exception {
+                    public void accept(CheckLoan checkLoan) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showLoanAuthView();
+                        mView.showLoanAuthView(mProducts[0].getId());
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
