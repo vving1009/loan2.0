@@ -1,14 +1,11 @@
 package com.jiaye.cashloan.view.data.loan.auth.source.taobao;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.UploadClient;
-import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
-import com.jiaye.cashloan.http.data.loan.Upload;
-import com.jiaye.cashloan.http.data.loan.UploadTaoBaoRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoAuth;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoClient;
@@ -16,7 +13,6 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponse;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoResponseFunction;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoSubmitRequest;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBaoTokenRequest;
-import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
@@ -44,8 +40,6 @@ public class LoanAuthTaoBaoNormalRepository implements LoanAuthTaoBaoNormalDataS
     private boolean isSMS;
 
     private boolean isIMG;
-
-    private SaveTaoBaoRequest mRequest;
 
     @Override
     public Flowable<Object> requestGongXinBaoInit() {
@@ -196,30 +190,20 @@ public class LoanAuthTaoBaoNormalRepository implements LoanAuthTaoBaoNormalDataS
 
     @Override
     public Flowable<SaveTaoBao> requestSaveTaoBao(String token) {
-        mRequest = new SaveTaoBaoRequest();
-        mRequest.setToken(token);
-        return Flowable.just(mRequest)
-                .map(new Function<SaveTaoBaoRequest, UploadTaoBaoRequest>() {
-                    @Override
-                    public UploadTaoBaoRequest apply(SaveTaoBaoRequest saveTaoBaoRequest) throws Exception {
-                        UploadTaoBaoRequest request = new UploadTaoBaoRequest();
-                        request.setToken(saveTaoBaoRequest.getToken());
-                        return request;
-                    }
-                })
-                .map(new RequestFunction<UploadTaoBaoRequest>())
-                .flatMap(new Function<Request<UploadTaoBaoRequest>, Publisher<Upload>>() {
-                    @Override
-                    public Publisher<Upload> apply(Request<UploadTaoBaoRequest> request) throws Exception {
-                        return UploadClient.INSTANCE.getService().uploadTaoBao(request);
-                    }
-                })
-                .map(new Function<Upload, SaveTaoBaoRequest>() {
-                    @Override
-                    public SaveTaoBaoRequest apply(Upload upload) throws Exception {
-                        return mRequest;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<SaveTaoBaoRequest, SaveTaoBao>("saveTaoBao"));
+        String loanId = "";
+        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
+                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+            }
+            cursor.close();
+        }
+        SaveTaoBaoRequest request = new SaveTaoBaoRequest();
+        request.setLoanId(loanId);
+        request.setToken(token);
+        return Flowable.just(request)
+                .compose(new SatcatcheResponseTransformer<SaveTaoBaoRequest, SaveTaoBao>
+                        ("saveTaoBao"));
     }
 }

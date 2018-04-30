@@ -207,7 +207,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     mView.showLoanAuthVisaHistoryView();
                     break;
                 case R.string.loan_auth_taobao:
-                    if (mStep < 4) {
+                    if (mStep < 5) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {
                         mView.showLoanAuthTaoBaoView();

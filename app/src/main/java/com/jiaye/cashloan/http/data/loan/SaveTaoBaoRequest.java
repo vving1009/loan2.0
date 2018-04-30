@@ -11,8 +11,19 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SaveTaoBaoRequest extends ChildRequest {
 
+    @SerializedName("jla_id")
+    private String loanId;
+
     @SerializedName("req_token")
     private String token;
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
+    }
 
     public String getToken() {
         return token;

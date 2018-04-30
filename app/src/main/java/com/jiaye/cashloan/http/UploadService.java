@@ -1,12 +1,9 @@
 package com.jiaye.cashloan.http;
 
-import com.jiaye.cashloan.http.base.Request;
-import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
-import com.jiaye.cashloan.http.data.loan.UploadTaoBaoRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -25,8 +22,4 @@ public interface UploadService {
 
     @POST("phoneLocation")
     Flowable<UploadLocation> uploadLocation(@Body UploadLocationRequest request);
-
-    /*淘宝支付宝*/
-    @POST("taobao")
-    Flowable<Upload> uploadTaoBao(@Body Request<UploadTaoBaoRequest> request);
 }
