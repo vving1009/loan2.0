@@ -11,25 +11,31 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class LoanInfoAuth extends SatcatcheChildResponse {
 
+    /**
+     * 个人基本信息提交状态（0：未提交，1：已提交）
+     */
     @SerializedName("user_baseinfo_msg")
-    private String person;
+    private int person;
 
+    /**
+     * 联系人信息提交状态（0：未提交，1：已提交）
+     */
     @SerializedName("user_linkman_msg")
-    private String contact;
+    private int contact;
 
-    public String getPerson() {
+    public int getPerson() {
         return person;
     }
 
-    public void setPerson(String person) {
+    public void setPerson(int person) {
         this.person = person;
     }
 
-    public String getContact() {
+    public int getContact() {
         return contact;
     }
 
-    public void setContact(String contact) {
+    public void setContact(int contact) {
         this.contact = contact;
     }
 }

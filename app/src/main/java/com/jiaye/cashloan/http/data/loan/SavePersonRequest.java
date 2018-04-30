@@ -11,17 +11,25 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SavePersonRequest extends ChildRequest {
 
-    /*手机号*/
-    @SerializedName("tel_phone")
-    private String phone;
+    /*借款编号*/
+    @SerializedName("jla_id")
+    private String loanId;
 
-    /*最高学历*/
+    /*最高学历编号*/
     @SerializedName("deu_typeid")
     private String education;
 
-    /*婚姻状况*/
+    /*最高学历*/
+    @SerializedName("deu")
+    private String educationValue;
+
+    /*婚姻状况编号*/
     @SerializedName("marry_typeid")
     private String marriage;
+
+    /*婚姻状况*/
+    @SerializedName("marry")
+    private String marriageValue;
 
     /*户籍所在城市*/
     @SerializedName("reg_city")
@@ -39,12 +47,12 @@ public class SavePersonRequest extends ChildRequest {
     @SerializedName("email")
     private String email;
 
-    public String getPhone() {
-        return phone;
+    public String getLoanId() {
+        return loanId;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     public String getEducation() {
@@ -55,12 +63,28 @@ public class SavePersonRequest extends ChildRequest {
         this.education = education;
     }
 
+    public String getEducationValue() {
+        return educationValue;
+    }
+
+    public void setEducationValue(String educationValue) {
+        this.educationValue = educationValue;
+    }
+
     public String getMarriage() {
         return marriage;
     }
 
     public void setMarriage(String marriage) {
         this.marriage = marriage;
+    }
+
+    public String getMarriageValue() {
+        return marriageValue;
+    }
+
+    public void setMarriageValue(String marriageValue) {
+        this.marriageValue = marriageValue;
     }
 
     public String getRegisterCity() {

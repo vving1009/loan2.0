@@ -4,8 +4,11 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.config.FileConfig;
+import com.jiaye.cashloan.http.data.dictionary.Area;
+import com.jiaye.cashloan.http.data.dictionary.Education;
+import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
@@ -13,9 +16,6 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.http.data.dictionary.Area;
-import com.jiaye.cashloan.http.data.dictionary.Education;
-import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoDataSource;
 
 import java.io.BufferedReader;
@@ -54,7 +54,7 @@ public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements Lo
     @Override
     public void subscribe() {
         super.subscribe();
-        File dir = LoanApplication.getInstance().getFilesDir();
+        File dir = new File(FileConfig.DOWNLOAD_PATH);
         File[] files = dir.listFiles();
         for (File file : files) {
             try {
@@ -129,11 +129,13 @@ public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements Lo
             for (int i = 0; i < mEducations.size(); i++) {
                 if (mEducations.get(i).isSelect()) {
                     request.setEducation(mEducations.get(i).getKey());
+                    request.setEducationValue(mEducations.get(i).getValue());
                 }
             }
             for (int i = 0; i < mMarriages.size(); i++) {
                 if (mMarriages.get(i).isSelect()) {
                     request.setMarriage(mMarriages.get(i).getKey());
+                    request.setMarriageValue(mMarriages.get(i).getValue());
                 }
             }
             request.setRegisterCity(mView.getRegisterCity());

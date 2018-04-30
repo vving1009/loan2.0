@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author 贾博瑄
  */
-public enum  SatcatcheClient {
+public enum SatcatcheClient {
 
     INSTANCE;
 

@@ -11,15 +11,15 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class PersonRequest extends ChildRequest {
 
-    @SerializedName("tel_phone")
-    private String phone;
+    @SerializedName("jla_id")
+    private String loanId;
 
-    public String getPhone() {
-        return phone;
+    public String getLoanId() {
+        return loanId;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     @Override

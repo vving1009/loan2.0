@@ -1,20 +1,20 @@
 package com.jiaye.cashloan.view.data.loan.auth.source.info;
 
-import com.jiaye.cashloan.http.UploadClient;
-import com.jiaye.cashloan.http.base.Request;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.data.loan.Contact;
+import com.jiaye.cashloan.http.data.loan.ContactData;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
-import com.jiaye.cashloan.http.data.loan.Upload;
-import com.jiaye.cashloan.http.data.loan.UploadLinkmanRequest;
-import com.jiaye.cashloan.http.utils.RequestFunction;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-
-import org.reactivestreams.Publisher;
+import com.jiaye.cashloan.persistence.DbContract;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * LoanAuthContactInfoRepository
@@ -24,39 +24,59 @@ import io.reactivex.functions.Function;
 
 public class LoanAuthContactInfoRepository implements LoanAuthContactInfoDataSource {
 
-    private SaveContactRequest mRequest;
-
     @Override
     public Flowable<Contact> requestContact() {
         return Flowable.just(new ContactRequest())
-                .compose(new SatcatcheResponseTransformer<ContactRequest, Contact>("contact"));
+                .map(new Function<ContactRequest, ContactRequest>() {
+                    @Override
+                    public ContactRequest apply(ContactRequest request) throws Exception {
+                        request.setLoanId(getLoanId());
+                        return request;
+                    }
+                })
+                .compose(new SatcatcheResponseTransformer<ContactRequest, Contact>
+                        ("contact"))
+                .filter(new Predicate<Contact>() {
+                    @Override
+                    public boolean test(Contact contact) throws Exception {
+                        boolean pass = true;
+                        try {
+                            ContactData contactData = contact.getData()[0];
+                            if (contactData == null) {
+                                pass = false;
+                            }
+                        } catch (NullPointerException exception) {
+                            pass = false;
+                        }
+                        return pass;
+                    }
+                });
     }
 
     @Override
     public Flowable<SaveContact> requestSaveContact(SaveContactRequest request) {
-        mRequest = request;
         return Flowable.just(request)
-                .map(new Function<SaveContactRequest, UploadLinkmanRequest>() {
+                .map(new Function<SaveContactRequest, SaveContactRequest>() {
                     @Override
-                    public UploadLinkmanRequest apply(SaveContactRequest saveContactRequest) throws Exception {
-                        UploadLinkmanRequest linkmanRequest = new UploadLinkmanRequest();
-                        linkmanRequest.setData(saveContactRequest.getData());
-                        return linkmanRequest;
+                    public SaveContactRequest apply(SaveContactRequest request) throws Exception {
+                        request.setLoanId(getLoanId());
+                        return request;
                     }
                 })
-                .map(new RequestFunction<UploadLinkmanRequest>())
-                .flatMap(new Function<Request<UploadLinkmanRequest>, Publisher<Upload>>() {
-                    @Override
-                    public Publisher<Upload> apply(Request<UploadLinkmanRequest> saveContactRequest) throws Exception {
-                        return UploadClient.INSTANCE.getService().uploadLinkman(saveContactRequest);
-                    }
-                })
-                .map(new Function<Upload, SaveContactRequest>() {
-                    @Override
-                    public SaveContactRequest apply(Upload upload) throws Exception {
-                        return mRequest;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<SaveContactRequest, SaveContact>("saveContact"));
+                .compose(new SatcatcheResponseTransformer<SaveContactRequest, SaveContact>
+                        ("saveContact"));
+    }
+
+    private String getLoanId() {
+        String loanId = "";
+        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
+        Cursor cursor = database.rawQuery("SELECT loan_id FROM user;", null);
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
+                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
+            }
+            cursor.close();
+        }
+        return loanId;
     }
 }

@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactData;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -49,10 +50,6 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
 
     private ArrayList<Relation> mRelationFriend2;
 
-    private String mFamilyId;
-
-    private String mFriendId;
-
     public LoanAuthContactInfoPresenter(LoanAuthContactInfoContract.View view, LoanAuthContactInfoDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -61,63 +58,54 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
     @Override
     public void subscribe() {
         super.subscribe();
-        File dir = LoanApplication.getInstance().getFilesDir();
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "relation.json":
-                        transformRelationFamily(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        File file = new File(FileConfig.RELATION_PATH);
+        try {
+            InputStream input = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new InputStreamReader(input));
+            Gson gson = new Gson();
+            switch (file.getName()) {
+                case "relation.json":
+                    transformRelationFamily(br, gson);
+                    break;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "relation.json":
-                        transformRelationFamily2(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        try {
+            InputStream input = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new InputStreamReader(input));
+            Gson gson = new Gson();
+            switch (file.getName()) {
+                case "relation.json":
+                    transformRelationFamily2(br, gson);
+                    break;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "relation.json":
-                        transformRelationFriend(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        try {
+            InputStream input = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new InputStreamReader(input));
+            Gson gson = new Gson();
+            switch (file.getName()) {
+                case "relation.json":
+                    transformRelationFriend(br, gson);
+                    break;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        for (File file : files) {
-            try {
-                InputStream input = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(input));
-                Gson gson = new Gson();
-                switch (file.getName()) {
-                    case "relation.json":
-                        transformRelationFriend2(br, gson);
-                        break;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        try {
+            InputStream input = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new InputStreamReader(input));
+            Gson gson = new Gson();
+            switch (file.getName()) {
+                case "relation.json":
+                    transformRelationFriend2(br, gson);
+                    break;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         Disposable disposable = mDataSource.requestContact()
                 .compose(new ViewTransformer<Contact>() {
@@ -138,24 +126,45 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                                         mView.setFamily(mRelationFamily.get(j).getValue());
                                     }
                                 }
-                                mFamilyId = contact.getData()[i].getId();
                                 mView.setFamilyName(contact.getData()[i].getName());
                                 mView.setFamilyPhone(contact.getData()[i].getPhone());
                             } else if (i == 1) {
+                                for (int j = 0; j < mRelationFamily2.size(); j++) {
+                                    if (mRelationFamily2.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                        mRelationFamily2.get(j).setSelect(true);
+                                        mView.setFamily(mRelationFamily2.get(j).getValue());
+                                    }
+                                }
+                                mView.setFamilyName2(contact.getData()[i].getName());
+                                mView.setFamilyPhone2(contact.getData()[i].getPhone());
+                            } else if (i == 2) {
                                 for (int j = 0; j < mRelationFriend.size(); j++) {
                                     if (mRelationFriend.get(j).getKey().equals(contact.getData()[i].getType())) {
                                         mRelationFriend.get(j).setSelect(true);
                                         mView.setFriend(mRelationFriend.get(j).getValue());
                                     }
                                 }
-                                mFriendId = contact.getData()[i].getId();
                                 mView.setFriendName(contact.getData()[i].getName());
                                 mView.setFriendPhone(contact.getData()[i].getPhone());
+                            } else if (i == 3) {
+                                for (int j = 0; j < mRelationFriend2.size(); j++) {
+                                    if (mRelationFriend2.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                        mRelationFriend2.get(j).setSelect(true);
+                                        mView.setFriend(mRelationFriend2.get(j).getValue());
+                                    }
+                                }
+                                mView.setFriendName2(contact.getData()[i].getName());
+                                mView.setFriendPhone2(contact.getData()[i].getPhone());
                             }
                             mView.dismissProgressDialog();
                         }
                     }
-                }, new ThrowableConsumer(mView));
+                }, new ThrowableConsumer(mView), new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mView.dismissProgressDialog();
+                    }
+                });
         mCompositeDisposable.add(disposable);
     }
 
@@ -189,7 +198,6 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
             SaveContactRequest request = new SaveContactRequest();
             ContactData[] data = new ContactData[4];
             data[0] = new ContactData();
-            data[0].setId(mFamilyId);
             data[0].setName(mView.getFamilyName());
             data[0].setPhone(mView.getFamilyPhone());
             for (int i = 0; i < mRelationFamily.size(); i++) {
@@ -199,27 +207,24 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                 }
             }
             data[1] = new ContactData();
-            data[1].setId(mFriendId);
-            data[1].setName(mView.getFriendName());
-            data[1].setPhone(mView.getFriendPhone());
-            for (int i = 0; i < mRelationFriend.size(); i++) {
-                if (mRelationFriend.get(i).isSelect()) {
-                    data[1].setType(mRelationFriend.get(i).getKey());
-                    data[1].setRelation(mRelationFriend.get(i).getValue());
+            data[1].setName(mView.getFamilyName2());
+            data[1].setPhone(mView.getFamilyPhone2());
+            for (int i = 0; i < mRelationFamily2.size(); i++) {
+                if (mRelationFamily2.get(i).isSelect()) {
+                    data[1].setType(mRelationFamily2.get(i).getKey());
+                    data[1].setRelation(mRelationFamily2.get(i).getValue());
                 }
             }
             data[2] = new ContactData();
-            data[2].setId("");
-            data[2].setName(mView.getFamilyName2());
-            data[2].setPhone(mView.getFamilyPhone2());
-            for (int i = 0; i < mRelationFamily2.size(); i++) {
-                if (mRelationFamily2.get(i).isSelect()) {
-                    data[2].setType(mRelationFamily2.get(i).getKey());
-                    data[2].setRelation(mRelationFamily2.get(i).getValue());
+            data[2].setName(mView.getFriendName());
+            data[2].setPhone(mView.getFriendPhone());
+            for (int i = 0; i < mRelationFriend.size(); i++) {
+                if (mRelationFriend.get(i).isSelect()) {
+                    data[2].setType(mRelationFriend.get(i).getKey());
+                    data[2].setRelation(mRelationFriend.get(i).getValue());
                 }
             }
             data[3] = new ContactData();
-            data[3].setId("");
             data[3].setName(mView.getFriendName2());
             data[3].setPhone(mView.getFriendPhone2());
             for (int i = 0; i < mRelationFriend2.size(); i++) {

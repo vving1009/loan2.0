@@ -22,31 +22,24 @@ public class InfoPersonRepository implements InfoPersonDataSource {
 
     @Override
     public Flowable<Person> requestPerson() {
-        return Flowable.just("SELECT phone FROM user;")
-                .map(new Function<String, String>() {
+        return Flowable.just(new PersonRequest())
+                .map(new Function<PersonRequest, PersonRequest>() {
                     @Override
-                    public String apply(String sql) throws Exception {
-                        return getString(sql);
-                    }
-                })
-                .map(new Function<String, PersonRequest>() {
-                    @Override
-                    public PersonRequest apply(String phone) throws Exception {
-                        PersonRequest request = new PersonRequest();
-                        request.setPhone(phone);
+                    public PersonRequest apply(PersonRequest request) throws Exception {
+                        request.setLoanId(getLoanId());
                         return request;
                     }
                 })
                 .compose(new SatcatcheResponseTransformer<PersonRequest, Person>("person"));
     }
 
-    private String getString(String sql) {
+    private String getLoanId() {
         String phone = "";
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-        Cursor cursor = database.rawQuery(sql, null);
+        Cursor cursor = database.rawQuery("SELECT loan_id FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
-                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
             }
             cursor.close();
         }

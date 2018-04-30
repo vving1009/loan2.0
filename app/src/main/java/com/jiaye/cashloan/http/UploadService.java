@@ -4,10 +4,8 @@ import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.loan.UploadLinkmanRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
-import com.jiaye.cashloan.http.data.loan.UploadPersonalRequest;
 import com.jiaye.cashloan.http.data.loan.UploadTaoBaoRequest;
 
 import io.reactivex.Flowable;
@@ -31,12 +29,4 @@ public interface UploadService {
     /*淘宝支付宝*/
     @POST("taobao")
     Flowable<Upload> uploadTaoBao(@Body Request<UploadTaoBaoRequest> request);
-
-    /*联系人信息*/
-    @POST("linkman")
-    Flowable<Upload> uploadLinkman(@Body Request<UploadLinkmanRequest> request);
-
-    /*个人信息*/
-    @POST("personalInfo/save")
-    Flowable<Upload> uploadPersonal(@Body Request<UploadPersonalRequest> request);
 }

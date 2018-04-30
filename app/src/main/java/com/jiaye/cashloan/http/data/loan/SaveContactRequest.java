@@ -11,8 +11,19 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SaveContactRequest extends ChildRequest {
 
+    @SerializedName("jla_id")
+    private String loanId;
+
     @SerializedName("link_data")
     private ContactData[] data;
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
+    }
 
     public ContactData[] getData() {
         return data;

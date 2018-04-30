@@ -42,12 +42,14 @@ public class LoanAuthInfoPresenter extends BasePresenterImpl implements LoanAuth
                 .subscribe(new Consumer<LoanInfoAuth>() {
                     @Override
                     public void accept(LoanInfoAuth loanInfoAuth) throws Exception {
+                        String submit = LoanApplication.getInstance().getResources()
+                                .getString(R.string.loan_auth_submit);
+                        String unSubmit = LoanApplication.getInstance().getResources()
+                                .getString(R.string.loan_auth_un_submit);
                         mView.dismissProgressDialog();
-                        mView.setPerson(loanInfoAuth.getPerson());
-                        mView.setContact(loanInfoAuth.getContact());
-                        String submit = LoanApplication.getInstance().getResources().getString(R.string.loan_auth_submit);
-                        if (loanInfoAuth.getPerson().equals(submit) &&
-                                loanInfoAuth.getContact().equals(submit)) {
+                        mView.setPerson(loanInfoAuth.getPerson() == 1 ? submit : unSubmit);
+                        mView.setContact(loanInfoAuth.getContact() == 1 ? submit : unSubmit);
+                        if (loanInfoAuth.getPerson() == 1 && loanInfoAuth.getContact() == 1) {
                             mView.setEnabled();
                         }
                     }
