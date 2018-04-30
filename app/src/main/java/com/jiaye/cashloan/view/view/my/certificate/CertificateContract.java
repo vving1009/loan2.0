@@ -44,11 +44,6 @@ public interface CertificateContract {
         void setTaoBaoStatus(String text);
 
         /**
-         * 设置芝麻信用状态
-         */
-        void setSesameStatus(String text);
-
-        /**
          * 显示银行卡信息页面
          */
         void showBankView();

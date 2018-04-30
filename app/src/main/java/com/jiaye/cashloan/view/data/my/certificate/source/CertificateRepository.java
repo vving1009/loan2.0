@@ -23,27 +23,20 @@ public class CertificateRepository implements CertificateDataSource {
 
     @Override
     public Flowable<Auth> requestAuth() {
-        return Flowable.just("SELECT phone FROM user;")
-                .map(new Function<String, AuthRequest>() {
+        return Flowable.just(new AuthRequest())
+                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"))
+                .map(new Function<Auth, Auth>() {
                     @Override
-                    public AuthRequest apply(String sql) throws Exception {
+                    public Auth apply(Auth auth) throws Exception {
                         String phone = "";
-                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
+                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user;", null);
                         if (cursor != null) {
                             if (cursor.moveToNext()) {
                                 phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
                             }
                             cursor.close();
                         }
-                        AuthRequest request = new AuthRequest();
-                        request.setPhone(phone);
-                        return request;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"))
-                .map(new Function<Auth, Auth>() {
-                    @Override
-                    public Auth apply(Auth auth) throws Exception {
+                        auth.setPhone(phone);
                         mAuth = auth;
                         return auth;
                     }

@@ -11,144 +11,84 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class Auth extends SatcatcheChildResponse {
 
-    /*产品编号*/
-    @SerializedName("jla_id")
-    private String productId;
-
     /* 银行卡认证状态*/
     @SerializedName("bindBank_state")
-    private String bankState;
+    private int bankState;
 
     /*身份证认证状态*/
     @SerializedName("cardAuth_state")
-    private String cardState;
+    private int cardState;
 
     /*活体识别认证状态*/
     @SerializedName("faceCheak_state")
-    private String faceState;
+    private int faceState;
 
     /*个人资料认证状态*/
     @SerializedName("userAuth_state")
-    private String personState;
+    private int personState;
 
     /*手机运营商认证状态*/
     @SerializedName("phoneAuth_state")
-    private String phoneState;
+    private int phoneState;
 
     /*淘宝认证状态*/
     @SerializedName("taoAuth_state")
-    private String taobaoState;
-
-    /*芝麻信用认证状态*/
-    @SerializedName("zmAuth_state")
-    private String sesameState;
-
-    /*芝麻信用分*/
-    @SerializedName("zm_score")
-    private String sesame;
-
-    /*身份证姓名*/
-    @SerializedName("jcb_name")
-    private String ocrName;
-
-    /*身份证姓名*/
-    @SerializedName("jcb_identifyid")
-    private String ocrID;
+    private int taobaoState;
 
     /*手机号*/
-    @SerializedName("jcb_phone")
+    @SerializedName("phone")
     private String phone;
 
     /*是否可以开户 0 不可以 1 可以*/
     @SerializedName("jcb_canOpendAccount")
     private String accountState;
 
-    public String getBankState() {
+    public int getBankState() {
         return bankState;
     }
 
-    public void setBankState(String bankState) {
+    public void setBankState(int bankState) {
         this.bankState = bankState;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getCardState() {
+    public int getCardState() {
         return cardState;
     }
 
-    public void setCardState(String cardState) {
+    public void setCardState(int cardState) {
         this.cardState = cardState;
     }
 
-    public String getFaceState() {
+    public int getFaceState() {
         return faceState;
     }
 
-    public void setFaceState(String faceState) {
+    public void setFaceState(int faceState) {
         this.faceState = faceState;
     }
 
-    public String getPersonState() {
+    public int getPersonState() {
         return personState;
     }
 
-    public void setPersonState(String personState) {
+    public void setPersonState(int personState) {
         this.personState = personState;
     }
 
-    public String getPhoneState() {
+    public int getPhoneState() {
         return phoneState;
     }
 
-    public void setPhoneState(String phoneState) {
+    public void setPhoneState(int phoneState) {
         this.phoneState = phoneState;
     }
 
-    public String getTaobaoState() {
+    public int getTaobaoState() {
         return taobaoState;
     }
 
-    public void setTaobaoState(String taobaoState) {
+    public void setTaobaoState(int taobaoState) {
         this.taobaoState = taobaoState;
-    }
-
-    public String getSesameState() {
-        return sesameState;
-    }
-
-    public void setSesameState(String sesameState) {
-        this.sesameState = sesameState;
-    }
-
-    public String getSesame() {
-        return sesame;
-    }
-
-    public void setSesame(String sesame) {
-        this.sesame = sesame;
-    }
-
-    public String getOcrName() {
-        return ocrName;
-    }
-
-    public void setOcrName(String ocrName) {
-        this.ocrName = ocrName;
-    }
-
-    public String getOcrID() {
-        return ocrID;
-    }
-
-    public void setOcrID(String ocrID) {
-        this.ocrID = ocrID;
     }
 
     public String getPhone() {

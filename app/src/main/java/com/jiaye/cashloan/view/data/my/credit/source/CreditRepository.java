@@ -1,8 +1,5 @@
 package com.jiaye.cashloan.view.data.my.credit.source;
 
-import android.database.Cursor;
-
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.LoanClient;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
@@ -16,7 +13,6 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.persistence.DbContract;
 
 import org.reactivestreams.Publisher;
 
@@ -46,24 +42,9 @@ public class CreditRepository implements CreditDataSource {
 
     @Override
     public Flowable<Auth> requestAuth() {
-        return Flowable.just("SELECT phone FROM user;")
-                .map(new Function<String, AuthRequest>() {
-                    @Override
-                    public AuthRequest apply(String sql) throws Exception {
-                        String phone = "";
-                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
-                        if (cursor != null) {
-                            if (cursor.moveToNext()) {
-                                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                            }
-                            cursor.close();
-                        }
-                        AuthRequest request = new AuthRequest();
-                        request.setPhone(phone);
-                        return request;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>("auth"));
+        return Flowable.just(new AuthRequest())
+                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>
+                        ("auth"));
     }
 
     @Override

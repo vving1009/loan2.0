@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.http.data.auth;
 
-import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.ChildRequest;
 
 /**
@@ -10,17 +9,6 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  */
 
 public class AuthRequest extends ChildRequest {
-
-    @SerializedName("tel_phone")
-    private String phone;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     @Override
     protected String getBusiness() {

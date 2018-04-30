@@ -35,8 +35,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
 
     private TextView mTextTaoBao;
 
-    private TextView mTextSesame;
-
     public static CertificateFragment newInstance() {
         Bundle args = new Bundle();
         CertificateFragment fragment = new CertificateFragment();
@@ -54,7 +52,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
         mTextInfo = view.findViewById(R.id.text_info);
         mTextOperator = view.findViewById(R.id.text_operator);
         mTextTaoBao = view.findViewById(R.id.text_taobao);
-        mTextSesame = view.findViewById(R.id.text_sesame);
         view.findViewById(R.id.layout_bank).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,11 +115,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     @Override
     public void setTaoBaoStatus(String text) {
         mTextTaoBao.setText(text);
-    }
-
-    @Override
-    public void setSesameStatus(String text) {
-        mTextSesame.setText(text);
     }
 
     @Override
