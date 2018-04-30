@@ -2,7 +2,7 @@ package com.jiaye.cashloan.http;
 
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
-import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
+import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
@@ -43,7 +43,7 @@ public interface LoanService {
      * 获取通用字典
      */
     @POST("dictEntry")
-    Flowable<ResponseBody> dictCommon(@Body DictionaryRequest request);
+    Flowable<ResponseBody> dictCommon(@Body DictionaryListRequest request);
 
     /**
      * 电子签章短信验证码

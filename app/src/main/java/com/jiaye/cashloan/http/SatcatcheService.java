@@ -14,11 +14,14 @@ import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificatio
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.register.Register;
 import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
-import com.jiaye.cashloan.http.data.dictionary.DictionaryRequest;
+import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
+import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.BannerListRequest;
 import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.http.data.home.ProductListRequest;
+import com.jiaye.cashloan.http.data.launch.CheckUpdate;
+import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
 import com.jiaye.cashloan.http.data.loan.CheckLoan;
 import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
@@ -71,7 +74,6 @@ import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 
 import io.reactivex.Flowable;
-import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -86,7 +88,13 @@ public interface SatcatcheService {
      * 获取通用字典
      */
     @POST("dictEntry")
-    Flowable<ResponseBody> dictCommon(@Body DictionaryRequest request);
+    Flowable<SatcatcheResponse<DictionaryList>> dictionaryList(@Body SatcatcheRequest<DictionaryListRequest> request);
+
+    /**
+     * 检测升级
+     */
+    @POST("getVersion")
+    Flowable<SatcatcheResponse<CheckUpdate>> checkUpdate(@Body SatcatcheRequest<CheckUpdateRequest> request);
 
     /**
      * 验证码

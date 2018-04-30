@@ -1,9 +1,6 @@
 package com.jiaye.cashloan.http;
 
 import com.jiaye.cashloan.http.base.Request;
-import com.jiaye.cashloan.http.data.auth.UploadSesameRequest;
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
-import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
 import com.jiaye.cashloan.http.data.loan.Upload;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
@@ -32,9 +29,6 @@ public interface UploadService {
     @POST("phoneLocation")
     Flowable<UploadLocation> uploadLocation(@Body UploadLocationRequest request);
 
-    @POST("getversion")
-    Flowable<CheckUpdate> checkUpdate(@Body CheckUpdateRequest request);
-
     /*手机运营商认证*/
     @POST("phoneOperator")
     Flowable<Upload> uploadOperator(@Body Request<UploadOperatorRequest> request);
@@ -50,8 +44,4 @@ public interface UploadService {
     /*个人信息*/
     @POST("personalInfo/save")
     Flowable<Upload> uploadPersonal(@Body Request<UploadPersonalRequest> request);
-
-    /*芝麻信用*/
-    @POST("sesame")
-    Flowable<Upload> uploadSesame(@Body Request<UploadSesameRequest> request);
 }

@@ -2,6 +2,7 @@ package com.jiaye.cashloan.http.data.launch;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.http.base.ChildRequest;
 
 /**
  * CheckUpdateRequest
@@ -9,7 +10,7 @@ import com.jiaye.cashloan.BuildConfig;
  * @author 贾博瑄
  */
 
-public class CheckUpdateRequest {
+public class CheckUpdateRequest extends ChildRequest {
 
     @SerializedName("versionCode")
     private int code = BuildConfig.VERSION_CODE;
@@ -31,5 +32,10 @@ public class CheckUpdateRequest {
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    @Override
+    protected String getBusiness() {
+        return "CL072";
     }
 }

@@ -14,7 +14,6 @@ import org.reactivestreams.Publisher;
 
 import java.io.File;
 
-import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -42,28 +41,19 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
     @Override
     public void subscribe() {
         super.subscribe();
-        final Flowable<File> area = mDataSource.download("dict_cd", "area.json");
-        final Flowable<File> education = mDataSource.download("dict_edu", "education.json");
-        final Flowable<File> marriage = mDataSource.download("dict_mar", "marriage.json");
-        final Flowable<File> relation = mDataSource.download("dict_rel", "relation.json");
-        Disposable disposable = mDataSource.checkUpdate()
-                .flatMap(new Function<CheckUpdate, Publisher<File>>() {
+        Disposable disposable = mDataSource.requestDictionaryList()
+                .flatMap(new Function<Object, Publisher<CheckUpdate>>() {
                     @Override
-                    public Publisher<File> apply(CheckUpdate checkUpdate) throws Exception {
-                        return Flowable.merge(area, education, marriage, relation);
+                    public Publisher<CheckUpdate> apply(Object file) throws Exception {
+                        return mDataSource.checkUpdate();
                     }
                 })
-                .compose(new ViewTransformer<File>())
-                .count()
-                .subscribe(new Consumer<Long>() {
+                .compose(new ViewTransformer<CheckUpdate>())
+                .subscribe(new Consumer<CheckUpdate>() {
                     @Override
-                    public void accept(Long number) throws Exception {
-                        if (mDataSource.getCheckUpdate().getCode() == 1000) {
-                            if (mDataSource.getCheckUpdate().getData().getVersionCode() > BuildConfig.VERSION_CODE) {
-                                mView.showUpdateView(mDataSource.getCheckUpdate().getData());
-                            } else {
-                                auto();
-                            }
+                    public void accept(CheckUpdate checkUpdate) throws Exception {
+                        if (checkUpdate.getVersionCode() > BuildConfig.VERSION_CODE) {
+                            mView.showUpdateView(checkUpdate);
                         } else {
                             auto();
                         }
@@ -74,7 +64,7 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
 
     @Override
     public void download() {
-        mDataSource.download(new DownloadProgressListener() {
+        Disposable disposable = mDataSource.download(new DownloadProgressListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
                 if (!done) {
@@ -89,6 +79,7 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
                 mView.install(file);
             }
         }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 
     @Override

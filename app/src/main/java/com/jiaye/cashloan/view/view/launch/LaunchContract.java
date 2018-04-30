@@ -34,7 +34,7 @@ public interface LaunchContract {
         /**
          * 显示升级页面
          */
-        void showUpdateView(CheckUpdate.Data data);
+        void showUpdateView(CheckUpdate data);
 
         /**
          * 设置进度

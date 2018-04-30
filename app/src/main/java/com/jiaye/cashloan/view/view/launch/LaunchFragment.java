@@ -4,13 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
+import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.launch.source.LaunchRepository;
@@ -152,7 +150,7 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
     }
 
     @Override
-    public void showUpdateView(CheckUpdate.Data data) {
+    public void showUpdateView(CheckUpdate data) {
         mTextName.setText(data.getVersionName());
         mTextNotes.setText(data.getNotes());
         if (data.getIsForce() == 1) {
@@ -168,16 +166,7 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
 
     @Override
     public void install(File file) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri contentUri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".fileProvider", file);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        }
-        startActivity(intent);
+        FileUtils.install(getActivity(), file);
     }
 
     private void startDownload() {

@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
+import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.view.main.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
@@ -21,6 +23,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -105,6 +108,7 @@ public class LoanApplication extends Application {
         setupBugly();
         setupLogger();
         setupWeChat();
+        setupDict();
     }
 
     /**
@@ -190,5 +194,27 @@ public class LoanApplication extends Application {
     /*setup WeChat*/
     private void setupWeChat() {
         mIWXAPI = WXAPIFactory.createWXAPI(this, BuildConfig.WECHAT_APPID, true);
+    }
+
+    /*setup Dict*/
+    private void setupDict() {
+        // 判断指定目录下是否有视频文件
+        // 如果没有 将assets下的视频文件保存到指定目录
+        File file1 = new File(FileConfig.AREA_PATH);
+        if (!file1.exists()) {
+            FileUtils.copyFiles(this, "area.json", file1.getPath());
+        }
+        File file2 = new File(FileConfig.EDUCATION_PATH);
+        if (!file2.exists()) {
+            FileUtils.copyFiles(this, "education.json", file2.getPath());
+        }
+        File file3 = new File(FileConfig.MARRIAGE_PATH);
+        if (!file3.exists()) {
+            FileUtils.copyFiles(this, "marriage.json", file3.getPath());
+        }
+        File file4 = new File(FileConfig.RELATION_PATH);
+        if (!file4.exists()) {
+            FileUtils.copyFiles(this, "relation.json", file4.getPath());
+        }
     }
 }

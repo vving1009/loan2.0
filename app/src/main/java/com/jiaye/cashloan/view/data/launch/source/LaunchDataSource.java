@@ -6,6 +6,7 @@ import com.jiaye.cashloan.http.download.DownloadProgressListener;
 import java.io.File;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * LaunchDataSource
@@ -16,6 +17,11 @@ import io.reactivex.Flowable;
 public interface LaunchDataSource {
 
     /**
+     * 请求数据字典列表
+     */
+    Flowable<Object> requestDictionaryList();
+
+    /**
      * 检测升级
      */
     Flowable<CheckUpdate> checkUpdate();
@@ -24,11 +30,6 @@ public interface LaunchDataSource {
      * 下载应用
      */
     Flowable<File> download(DownloadProgressListener listener);
-
-    /**
-     * 获得检测结果
-     */
-    CheckUpdate getCheckUpdate();
 
     /**
      * 是否需要引导
