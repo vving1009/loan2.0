@@ -17,6 +17,7 @@ public class OperatorRepository implements OperatorDataSource {
     @Override
     public Flowable<Phone> phone() {
         return Flowable.just(new PhoneRequest())
-                .compose(new SatcatcheResponseTransformer<PhoneRequest, Phone>("phone"));
+                .compose(new SatcatcheResponseTransformer<PhoneRequest, Phone>
+                        ("phone"));
     }
 }

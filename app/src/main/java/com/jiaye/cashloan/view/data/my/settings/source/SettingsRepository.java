@@ -20,7 +20,6 @@ public class SettingsRepository implements SettingsDataSource {
                     @Override
                     public Boolean apply(Boolean delete) throws Exception {
                         LoanApplication.getInstance().getSQLiteDatabase().delete("user", null, null);
-                        LoanApplication.getInstance().getSQLiteDatabase().delete("product", null, null);
                         return delete;
                     }
                 });

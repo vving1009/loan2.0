@@ -17,6 +17,7 @@ public class IdCardRepository implements IdCardDataSource {
     @Override
     public Flowable<IDCardAuth> idCardAuth() {
         return Flowable.just(new IDCardAuthRequest())
-                .compose(new SatcatcheResponseTransformer<IDCardAuthRequest, IDCardAuth>("idCardAuth"));
+                .compose(new SatcatcheResponseTransformer<IDCardAuthRequest, IDCardAuth>
+                        ("idCardAuth"));
     }
 }
