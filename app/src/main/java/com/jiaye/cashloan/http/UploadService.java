@@ -7,7 +7,6 @@ import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLinkmanRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
-import com.jiaye.cashloan.http.data.loan.UploadOperatorRequest;
 import com.jiaye.cashloan.http.data.loan.UploadPersonalRequest;
 import com.jiaye.cashloan.http.data.loan.UploadTaoBaoRequest;
 
@@ -28,10 +27,6 @@ public interface UploadService {
 
     @POST("phoneLocation")
     Flowable<UploadLocation> uploadLocation(@Body UploadLocationRequest request);
-
-    /*手机运营商认证*/
-    @POST("phoneOperator")
-    Flowable<Upload> uploadOperator(@Body Request<UploadOperatorRequest> request);
 
     /*淘宝支付宝*/
     @POST("taobao")

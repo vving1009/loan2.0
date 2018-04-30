@@ -11,6 +11,9 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class SavePhoneRequest extends ChildRequest {
 
+    @SerializedName("jla_id")
+    private String loanId;
+
     @SerializedName("req_token")
     private String token;
 
@@ -22,6 +25,14 @@ public class SavePhoneRequest extends ChildRequest {
 
     @SerializedName("ser_code")
     private String password;
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
+    }
 
     public String getToken() {
         return token;
