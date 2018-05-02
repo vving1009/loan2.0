@@ -130,16 +130,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         }
                         list.add(visa);
 
-                        boolean needHistory = !TextUtils.isEmpty(loanAuth.getNeedSignHistory()) && loanAuth.getNeedSignHistory().equals("1");
-                        if (needHistory) {
-                            LoanAuthModel visaHistory = new LoanAuthModel();
-                            visaHistory.setIcon(R.drawable.loan_auth_ic_visa_history);
-                            visaHistory.setName(R.string.loan_auth_visa_history);
-                            setLoanAuthModel(loanAuth.getSignHistoryState(), visaHistory, false);
-                            isVerify = isVerify && visaHistory.isVerify();
-                            list.add(visaHistory);
-                        }
-
                         LoanAuthModel taobao = new LoanAuthModel();
                         taobao.setIcon(R.drawable.loan_auth_ic_taobao);
                         taobao.setName(R.string.loan_auth_taobao);

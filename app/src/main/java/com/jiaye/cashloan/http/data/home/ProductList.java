@@ -26,13 +26,13 @@ public class ProductList extends SatcatcheChildResponse {
         /**
          * 产品编号
          */
-        @SerializedName("jpb_id")
+        @SerializedName("jpd_id")
         private String id;
 
         /**
          * 产品类别
          */
-        @SerializedName("jpb_type")
+        @SerializedName("jpd_type")
         private String type;
 
         /**

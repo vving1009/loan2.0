@@ -35,18 +35,6 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("eSign_state")
     private String signState;
 
-    /*是否签署过合同(是否签署过电子签章)*/
-    @SerializedName("signCompact_state")
-    private String hasSign;
-
-    /*是否签署借款人授权书(历史电子签章)*/
-    @SerializedName("eSignJK_state")
-    private String signHistoryState;
-
-    /*是否需要签署借款人授权书(是否需要历史电子签章)*/
-    @SerializedName("mustSignJK_state")
-    private String needSignHistory;
-
     /*淘宝认证状态*/
     @SerializedName("taoAuth_state")
     private String taobaoState;
@@ -70,10 +58,6 @@ public class LoanAuth extends SatcatcheChildResponse {
     /*手机号*/
     @SerializedName("jcb_phone")
     private String phone;
-
-    /*是否可开户*/
-    @SerializedName("jcb_canOpendAccount")
-    private String openAccount;
 
     public String getLoanId() {
         return loanId;
@@ -123,30 +107,6 @@ public class LoanAuth extends SatcatcheChildResponse {
         this.signState = signState;
     }
 
-    public String getHasSign() {
-        return hasSign;
-    }
-
-    public void setHasSign(String hasSign) {
-        this.hasSign = hasSign;
-    }
-
-    public String getSignHistoryState() {
-        return signHistoryState;
-    }
-
-    public void setSignHistoryState(String signHistoryState) {
-        this.signHistoryState = signHistoryState;
-    }
-
-    public String getNeedSignHistory() {
-        return needSignHistory;
-    }
-
-    public void setNeedSignHistory(String needSignHistory) {
-        this.needSignHistory = needSignHistory;
-    }
-
     public String getTaobaoState() {
         return taobaoState;
     }
@@ -193,13 +153,5 @@ public class LoanAuth extends SatcatcheChildResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getOpenAccount() {
-        return openAccount;
-    }
-
-    public void setOpenAccount(String openAccount) {
-        this.openAccount = openAccount;
     }
 }
