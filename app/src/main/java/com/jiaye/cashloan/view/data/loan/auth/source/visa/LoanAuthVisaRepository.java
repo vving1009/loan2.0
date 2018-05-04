@@ -32,9 +32,7 @@ public class LoanAuthVisaRepository implements LoanAuthVisaDataSource {
         visaRequest.setType(type);
         list.add(visaRequest);
         content.setBody(list);
-        RequestHeader header = RequestHeader.create();
-        header.setPhone("");
-        content.setHeader(header);
+        content.setHeader(RequestHeader.create());
         request.setContent(content);
         return Flowable.just(request);
     }

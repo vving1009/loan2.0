@@ -4,18 +4,17 @@ import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.ChildRequest;
 
 /**
- * LoanAuthRequest
+ * LoanRequest
  *
  * @author 贾博瑄
  */
-
-public class LoanAuthRequest extends ChildRequest {
+public class LoanRequest extends ChildRequest {
 
     @SerializedName("tel_phone")
     private String phone;
 
-    @SerializedName("jla_id")
-    private String loanId;
+    @SerializedName("jpd_id")
+    private String productId;
 
     public String getPhone() {
         return phone;
@@ -25,16 +24,16 @@ public class LoanAuthRequest extends ChildRequest {
         this.phone = phone;
     }
 
-    public String getLoanId() {
-        return loanId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setLoanId(String loanId) {
-        this.loanId = loanId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     @Override
     protected String getBusiness() {
-        return "CL006";
+        return "CL085";
     }
 }

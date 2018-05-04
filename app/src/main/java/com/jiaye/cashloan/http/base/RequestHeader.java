@@ -23,10 +23,6 @@ public class RequestHeader {
     @SerializedName("jcb_id")
     private String token;
 
-    /*手机号(可选)*/
-    @SerializedName("phone_num")
-    private String phone;
-
     /*设备名称*/
     @SerializedName("system_id")
     private String model;
@@ -43,6 +39,18 @@ public class RequestHeader {
     @SerializedName("token_id")
     private String deviceId;
 
+    /*身份证(获取后必填)*/
+    @SerializedName("user_identifyid")
+    private String ocrId;
+
+    /*姓名(获取后必填)*/
+    @SerializedName("user_name")
+    private String ocrName;
+
+    /*手机号(可选)*/
+    @SerializedName("phone_num")
+    private String phone;
+
     private RequestHeader() {
     }
 
@@ -52,14 +60,6 @@ public class RequestHeader {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getModel() {
@@ -94,11 +94,34 @@ public class RequestHeader {
         this.deviceId = deviceId;
     }
 
+    public String getOcrId() {
+        return ocrId;
+    }
+
+    public void setOcrId(String ocrId) {
+        this.ocrId = ocrId;
+    }
+
+    public String getOcrName() {
+        return ocrName;
+    }
+
+    public void setOcrName(String ocrName) {
+        this.ocrName = ocrName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "RequestHeader{" +
                 "token='" + token + '\'' +
-                ", phone='" + phone + '\'' +
                 ", model='" + model + '\'' +
                 ", networkType='" + networkType + '\'' +
                 ", ip='" + ip + '\'' +
@@ -110,18 +133,23 @@ public class RequestHeader {
         RequestHeader header = new RequestHeader();
         // 登录成功后查询数据库获取令牌
         String token = "";
+        String ocrId = "";
+        String ocrName = "";
         String phone = "";
         SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-        Cursor cursor = database.rawQuery("SELECT token, phone FROM user;", null);
+        Cursor cursor = database.rawQuery("SELECT token, ocr_id, ocr_name, phone FROM user;", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 token = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN));
+                ocrId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
+                ocrName = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                 phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
             }
             cursor.close();
         }
         header.setToken(token);
-        // 获取手机号(登录成功后从数据库获取)
+        header.setOcrId(ocrId);
+        header.setOcrName(ocrName);
         header.setPhone(phone);
         // 获取手机型号
         header.setModel(Build.MODEL);

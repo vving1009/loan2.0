@@ -27,5 +27,5 @@ public interface HomeDataSource {
     /**
      * 是否可以借款
      */
-    Flowable<CheckLoan> requestCheckLoan();
+    Flowable<CheckLoan> requestCheckLoan(String productId);
 }

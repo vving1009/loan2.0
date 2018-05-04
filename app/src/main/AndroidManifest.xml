@@ -64,9 +64,6 @@
             android:name=".view.view.loan.auth.taobao.LoanAuthTaoBaoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.sesame.LoanAuthSesameActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.view.loan.auth.file.LoanAuthFileActivity"
             android:screenOrientation="portrait" />
         <activity

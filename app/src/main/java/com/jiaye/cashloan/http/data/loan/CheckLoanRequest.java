@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.http.data.loan;
 
+import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.ChildRequest;
 
 /**
@@ -9,6 +10,17 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  */
 
 public class CheckLoanRequest extends ChildRequest {
+
+    @SerializedName("jpd_id")
+    private String productId;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     @Override
     protected String getBusiness() {

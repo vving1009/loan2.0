@@ -27,9 +27,7 @@ public class LoanContractRepository implements LoanContractDataSource {
         watchContract.setContractId(contractId);
         list.add(watchContract);
         content.setBody(list);
-        RequestHeader header = RequestHeader.create();
-        header.setPhone("");
-        content.setHeader(header);
+        content.setHeader(RequestHeader.create());
         request.setContent(content);
         return Flowable.just(request);
     }

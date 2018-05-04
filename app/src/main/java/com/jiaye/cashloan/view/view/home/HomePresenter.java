@@ -55,11 +55,11 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     }
 
     @Override
-    public void loan() {
+    public void loan(int position) {
         if (mProducts == null || mProducts.length == 0 || mProducts[0] == null) {
             return;
         }
-        Disposable disposable = mDataSource.requestCheckLoan()
+        Disposable disposable = mDataSource.requestCheckLoan(mProducts[position].getId())
                 .compose(new ViewTransformer<CheckLoan>() {
                     @Override
                     public void accept() {

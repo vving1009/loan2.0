@@ -35,6 +35,6 @@ public interface HomeContract {
         /**
          * 借款
          */
-        void loan();
+        void loan(int position);
     }
 }

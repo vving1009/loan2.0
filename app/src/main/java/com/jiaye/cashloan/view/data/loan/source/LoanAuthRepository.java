@@ -14,10 +14,12 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.UploadClient;
 import com.jiaye.cashloan.http.data.loan.FileState;
 import com.jiaye.cashloan.http.data.loan.FileStateRequest;
+import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
+import com.jiaye.cashloan.http.data.loan.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
@@ -144,10 +146,10 @@ public class LoanAuthRepository implements LoanAuthDataSource {
     @Override
     public Flowable<LoanAuth> requestLoanAuth() {
         return Flowable.just("")
-                .map(new Function<String, LoanAuthRequest>() {
+                .map(new Function<String, LoanRequest>() {
                     @Override
-                    public LoanAuthRequest apply(String s) throws Exception {
-                        LoanAuthRequest request = new LoanAuthRequest();
+                    public LoanRequest apply(String s) throws Exception {
+                        LoanRequest request = new LoanRequest();
                         Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
                         if (cursorUser != null) {
                             if (cursorUser.moveToNext()) {
@@ -160,12 +162,37 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                         return request;
                     }
                 })
+                .compose(new SatcatcheResponseTransformer<LoanRequest, Loan>("loan"))
+                .map(new Function<Loan, Loan>() {
+                    @Override
+                    public Loan apply(Loan loan) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("loan_id", loan.getLoanId());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                        return loan;
+                    }
+                })
+                .map(new Function<Loan, LoanAuthRequest>() {
+                    @Override
+                    public LoanAuthRequest apply(Loan loan) throws Exception {
+                        LoanAuthRequest request = new LoanAuthRequest();
+                        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
+                        if (cursorUser != null) {
+                            if (cursorUser.moveToNext()) {
+                                String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                                request.setPhone(phone);
+                            }
+                            cursorUser.close();
+                        }
+                        request.setLoanId(loan.getLoanId());
+                        return request;
+                    }
+                })
                 .compose(new SatcatcheResponseTransformer<LoanAuthRequest, LoanAuth>("loanAuth"))
                 .map(new Function<LoanAuth, LoanAuth>() {
                     @Override
                     public LoanAuth apply(LoanAuth loanAuth) throws Exception {
                         ContentValues values = new ContentValues();
-                        values.put("loan_id", loanAuth.getLoanId());
                         values.put("ocr_name", loanAuth.getOcrName());
                         values.put("ocr_id", loanAuth.getOcrID());
                         LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);

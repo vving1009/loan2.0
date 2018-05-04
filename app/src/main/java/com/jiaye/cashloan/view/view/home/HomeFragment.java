@@ -70,7 +70,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.loan();
+                mPresenter.loan(0);
             }
         });
         View view2 = root.findViewById(R.id.include_2);

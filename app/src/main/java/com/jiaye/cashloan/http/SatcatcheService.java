@@ -30,6 +30,7 @@ import com.jiaye.cashloan.http.data.loan.ContractList;
 import com.jiaye.cashloan.http.data.loan.ContractListRequest;
 import com.jiaye.cashloan.http.data.loan.FileState;
 import com.jiaye.cashloan.http.data.loan.FileStateRequest;
+import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.http.data.loan.LoanApplyRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
@@ -50,6 +51,7 @@ import com.jiaye.cashloan.http.data.loan.LoanPlan;
 import com.jiaye.cashloan.http.data.loan.LoanPlanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
+import com.jiaye.cashloan.http.data.loan.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -143,6 +145,12 @@ public interface SatcatcheService {
      */
     @POST("userApprove/ifAgainLend")
     Flowable<SatcatcheResponse<CheckLoan>> checkLoan(@Body SatcatcheRequest<CheckLoanRequest> request);
+
+    /**
+     * 我要借款
+     */
+    @POST("queryJlaId")
+    Flowable<SatcatcheResponse<Loan>> loan(@Body SatcatcheRequest<LoanRequest> request);
 
     /**
      * 借款认证状态

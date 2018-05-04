@@ -54,12 +54,14 @@ public class HomeRepository implements HomeDataSource {
     }
 
     @Override
-    public Flowable<CheckLoan> requestCheckLoan() {
+    public Flowable<CheckLoan> requestCheckLoan(final String productId) {
         return queryUser()
                 .map(new Function<User, CheckLoanRequest>() {
                     @Override
                     public CheckLoanRequest apply(User user) throws Exception {
-                        return new CheckLoanRequest();
+                        CheckLoanRequest checkLoanRequest = new CheckLoanRequest();
+                        checkLoanRequest.setProductId(productId);
+                        return checkLoanRequest;
                     }
                 })
                 .compose(new SatcatcheResponseTransformer<CheckLoanRequest, CheckLoan>("checkLoan"));

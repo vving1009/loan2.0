@@ -11,10 +11,6 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class LoanAuth extends SatcatcheChildResponse {
 
-    /*借款编号*/
-    @SerializedName("jla_id")
-    private String loanId;
-
     /*身份证认证状态*/
     @SerializedName("cardAuth_state")
     private String cardState;
@@ -58,14 +54,6 @@ public class LoanAuth extends SatcatcheChildResponse {
     /*手机号*/
     @SerializedName("jcb_phone")
     private String phone;
-
-    public String getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(String loanId) {
-        this.loanId = loanId;
-    }
 
     public String getCardState() {
         return cardState;

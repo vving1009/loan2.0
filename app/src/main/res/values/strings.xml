@@ -54,7 +54,6 @@
     <string name="loan_auth_taobao_input_sms_verification">请输入短信验证码</string>
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>
     <string name="loan_auth_taobao_qr">二维码授权</string>
-    <string name="loan_auth_sesame">芝麻信用分</string>
     <string name="loan_auth_file">进件上传</string>
     <string name="loan_auth_file_count">%1$d张</string>
     <string name="loan_auth_file_camera">拍照</string>
