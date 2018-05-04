@@ -230,6 +230,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                 // 输入收到的短信
                                 mView.cleanSmsVerificationCodeText();
                                 mView.setSmsVerificationCodeVisibility(View.VISIBLE);
+                                mView.setSmsVerificationCodeCountDown();
                                 break;
                             case "IMAGE_VERIFY_NEW":
                                 isSecond = true;
