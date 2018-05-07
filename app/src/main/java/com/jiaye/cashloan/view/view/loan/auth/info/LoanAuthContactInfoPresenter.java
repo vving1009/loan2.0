@@ -132,7 +132,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                                 for (int j = 0; j < mRelationFamily2.size(); j++) {
                                     if (mRelationFamily2.get(j).getKey().equals(contact.getData()[i].getType())) {
                                         mRelationFamily2.get(j).setSelect(true);
-                                        mView.setFamily(mRelationFamily2.get(j).getValue());
+                                        mView.setFamily2(mRelationFamily2.get(j).getValue());
                                     }
                                 }
                                 mView.setFamilyName2(contact.getData()[i].getName());
@@ -150,7 +150,7 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                                 for (int j = 0; j < mRelationFriend2.size(); j++) {
                                     if (mRelationFriend2.get(j).getKey().equals(contact.getData()[i].getType())) {
                                         mRelationFriend2.get(j).setSelect(true);
-                                        mView.setFriend(mRelationFriend2.get(j).getValue());
+                                        mView.setFriend2(mRelationFriend2.get(j).getValue());
                                     }
                                 }
                                 mView.setFriendName2(contact.getData()[i].getName());
