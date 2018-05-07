@@ -10,13 +10,4 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class Login extends SatcatcheChildResponse {
 
-    private String phone;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 }

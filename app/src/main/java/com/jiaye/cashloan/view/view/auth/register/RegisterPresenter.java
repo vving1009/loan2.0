@@ -4,18 +4,15 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.VerificationCode;
-import com.jiaye.cashloan.http.data.auth.register.Register;
+import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.data.auth.register.source.RegisterDataSource;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * RegisterPresenter
@@ -96,31 +93,15 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
                     mView.getPassword(),
                     mView.getInputSmsVerificationCode(),
                     mView.getReferralCode())
-                    .compose(new ViewTransformer<Register>() {
+                    .compose(new ViewTransformer<Login>() {
                         @Override
                         public void accept() {
                             mView.showProgressDialog();
                         }
                     })
-                    .map(new Function<Register, Register>() {
+                    .subscribe(new Consumer<Login>() {
                         @Override
-                        public Register apply(Register register) throws Exception {
-                            register.setPhone(mView.getPhone());
-                            return register;
-                        }
-                    })
-                    .observeOn(Schedulers.io())
-                    .map(new Function<Register, Register>() {
-                        @Override
-                        public Register apply(Register register) throws Exception {
-                            mDataSource.addUser(register);
-                            return register;
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Register>() {
-                        @Override
-                        public void accept(Register register) throws Exception {
+                        public void accept(Login login) throws Exception {
                             mView.dismissProgressDialog();
                             mView.finish();
                         }

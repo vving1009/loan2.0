@@ -13,9 +13,4 @@ import io.reactivex.Flowable;
 public interface LoginDataSource {
 
     Flowable<Login> requestLogin(String phone, String password);
-
-    /**
-     * 增加用户信息
-     */
-    void addUser(Login login);
 }

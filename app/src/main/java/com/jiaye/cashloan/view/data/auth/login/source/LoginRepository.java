@@ -10,6 +10,7 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.RSAUtil;
 
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 
 /**
  * LoginRepository
@@ -20,21 +21,23 @@ import io.reactivex.Flowable;
 public class LoginRepository implements LoginDataSource {
 
     @Override
-    public Flowable<Login> requestLogin(String phone, String password) {
+    public Flowable<Login> requestLogin(final String phone, String password) {
         LoginRequest request = new LoginRequest();
         request.setPhone(phone);
         request.setPassword(RSAUtil.encryptByPublicKeyToBase64(password, BuildConfig.PUBLIC_KEY));
         return Flowable.just(request)
                 .compose(new SatcatcheResponseTransformer<LoginRequest, Login>
-                        ("login"));
-    }
-
-    @Override
-    public void addUser(Login login) {
-        ContentValues values = new ContentValues();
-        values.put("token", login.getToken());
-        values.put("phone", login.getPhone());
-        LoanApplication.getInstance().getSQLiteDatabase().insert("user", null, values);
-        LoanApplication.getInstance().setupBuglyUserId(login.getPhone());
+                        ("login"))
+                .map(new Function<Login, Login>() {
+                    @Override
+                    public Login apply(Login login) throws Exception {
+                        ContentValues values = new ContentValues();
+                        values.put("token", login.getToken());
+                        values.put("phone", phone);
+                        LoanApplication.getInstance().getSQLiteDatabase().insert("user", null, values);
+                        LoanApplication.getInstance().setupBuglyUserId(phone);
+                        return login;
+                    }
+                });
     }
 }
