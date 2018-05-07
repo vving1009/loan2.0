@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.my.certificate.info;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.http.data.dictionary.Education;
 import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -47,7 +47,7 @@ public class InfoPersonPresenter extends BasePresenterImpl implements InfoPerson
     @Override
     public void subscribe() {
         super.subscribe();
-        File dir = LoanApplication.getInstance().getFilesDir();
+        File dir = new File(FileConfig.DOWNLOAD_PATH);
         File[] files = dir.listFiles();
         for (File file : files) {
             try {
