@@ -15,6 +15,10 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("cardAuth_state")
     private String cardState;
 
+    /*进件上传认证状态*/
+    @SerializedName("material_state")
+    private String fileUploadState;
+
     /*手机运营商认证状态*/
     @SerializedName("phoneAuth_state")
     private String phoneState;
@@ -55,12 +59,24 @@ public class LoanAuth extends SatcatcheChildResponse {
     @SerializedName("jcb_phone")
     private String phone;
 
+    /*相册上传状态*/
+    @SerializedName("album_state")
+    private String photoState;
+
     public String getCardState() {
         return cardState;
     }
 
     public void setCardState(String cardState) {
         this.cardState = cardState;
+    }
+
+    public String getFileUploadState() {
+        return fileUploadState;
+    }
+
+    public void setFileUploadState(String fileUploadState) {
+        this.fileUploadState = fileUploadState;
     }
 
     public String getPhoneState() {
@@ -141,5 +157,13 @@ public class LoanAuth extends SatcatcheChildResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPhotoState() {
+        return photoState;
+    }
+
+    public void setPhotoState(String photoState) {
+        this.photoState = photoState;
     }
 }

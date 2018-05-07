@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.view.loan;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.FileState;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
@@ -14,14 +13,11 @@ import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthDataSource;
 import com.orhanobut.logger.Logger;
 
-import org.reactivestreams.Publisher;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 /**
  * LoanAuthPresenter
@@ -34,8 +30,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     private final LoanAuthContract.View mView;
 
     private final LoanAuthDataSource mDataSource;
-
-    private int mCount;
 
     private int mStep;
 
@@ -51,17 +45,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     @Override
     public void requestLoanAuth() {
-        Disposable disposable = mDataSource.requestFileState()
-                .flatMap(new Function<FileState, Publisher<LoanAuth>>() {
-                    @Override
-                    public Publisher<LoanAuth> apply(FileState fileState) throws Exception {
-                        mCount = 0;
-                        for (FileState.Data data : fileState.getList()) {
-                            mCount += data.getCount();
-                        }
-                        return mDataSource.requestLoanAuth();
-                    }
-                })
+        Disposable disposable = mDataSource.requestLoanAuth()
                 .compose(new ViewTransformer<LoanAuth>() {
                     @Override
                     public void accept() {
@@ -87,8 +71,8 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         LoanAuthModel file = new LoanAuthModel();
                         file.setIcon(R.drawable.loan_auth_ic_file);
                         file.setName(R.string.loan_auth_file);
-                        setLoanAuthModel(mCount > 0 ? "1" : "0", file, true);
-                        isVerify = isVerify && mCount > 0;
+                        setLoanAuthModel(loanAuth.getFileUploadState(), file, true);
+                        isVerify = isVerify && file.isVerify();
                         if (isVerify) {
                             mStep = 2;
                         }

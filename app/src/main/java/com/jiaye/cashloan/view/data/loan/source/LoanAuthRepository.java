@@ -12,8 +12,6 @@ import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.UploadClient;
-import com.jiaye.cashloan.http.data.loan.FileState;
-import com.jiaye.cashloan.http.data.loan.FileStateRequest;
 import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
@@ -118,29 +116,6 @@ public class LoanAuthRepository implements LoanAuthDataSource {
             cursorUser.close();
         }
         return UploadClient.INSTANCE.getService().uploadLocation(request);
-    }
-
-    @Override
-    public Flowable<FileState> requestFileState() {
-        return Flowable.just("SELECT loan_id FROM user;")
-                .map(new Function<String, FileStateRequest>() {
-                    @Override
-                    public FileStateRequest apply(String sql) throws Exception {
-                        String loanId = "";
-                        FileStateRequest request = new FileStateRequest();
-                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-                        Cursor cursor = database.rawQuery(sql, null);
-                        if (cursor != null) {
-                            if (cursor.moveToNext()) {
-                                loanId = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
-                            }
-                            cursor.close();
-                        }
-                        request.setLoanId(loanId);
-                        return request;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<FileStateRequest, FileState>("fileState"));
     }
 
     @Override
