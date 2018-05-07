@@ -64,10 +64,10 @@ import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
-import com.jiaye.cashloan.http.data.loan.Sesame;
-import com.jiaye.cashloan.http.data.loan.SesameRequest;
 import com.jiaye.cashloan.http.data.loan.UploadFile;
 import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
+import com.jiaye.cashloan.http.data.loan.Visa;
+import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
@@ -231,16 +231,16 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<Phone>> phone(@Body SatcatcheRequest<PhoneRequest> request);
 
     /**
+     * 签名
+     */
+    @POST("eSign")
+    Flowable<SatcatcheResponse<Visa>> visa(@Body SatcatcheRequest<VisaRequest> request);
+
+    /**
      * 保存淘宝信息
      */
     @POST("taobao")
     Flowable<SatcatcheResponse<SaveTaoBao>> saveTaoBao(@Body SatcatcheRequest<SaveTaoBaoRequest> request);
-
-    /**
-     * 芝麻信用分
-     */
-    @POST("zmfQuery")
-    Flowable<SatcatcheResponse<Sesame>> sesame(@Body SatcatcheRequest<SesameRequest> request);
 
     /**
      * 借款确认信息

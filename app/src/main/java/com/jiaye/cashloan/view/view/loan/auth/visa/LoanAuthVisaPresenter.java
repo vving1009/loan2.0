@@ -8,7 +8,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.LoanVisaRequest;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
-import com.jiaye.cashloan.http.data.loan.LoanVisaSign;
+import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -76,9 +76,9 @@ public class LoanAuthVisaPresenter extends BasePresenterImpl implements LoanAuth
             mView.showToastById(R.string.error_loan_visa_sms);
         } else {
             Disposable disposable = mDataSource.sign(mType, sms)
-                    .flatMap(new Function<LoanVisaSign, Publisher<Request<LoanVisaRequest>>>() {
+                    .flatMap(new Function<Visa, Publisher<Request<LoanVisaRequest>>>() {
                         @Override
-                        public Publisher<Request<LoanVisaRequest>> apply(LoanVisaSign loanVisaSign) throws Exception {
+                        public Publisher<Request<LoanVisaRequest>> apply(Visa loanVisaSign) throws Exception {
                             return mDataSource.visa(mType);
                         }
                     })

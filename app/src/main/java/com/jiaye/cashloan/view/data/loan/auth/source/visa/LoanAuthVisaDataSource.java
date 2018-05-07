@@ -3,7 +3,7 @@ package com.jiaye.cashloan.view.data.loan.auth.source.visa;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.data.loan.LoanVisaRequest;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
-import com.jiaye.cashloan.http.data.loan.LoanVisaSign;
+import com.jiaye.cashloan.http.data.loan.Visa;
 
 import io.reactivex.Flowable;
 
@@ -19,5 +19,5 @@ public interface LoanAuthVisaDataSource {
 
     Flowable<LoanVisaSMS> sendSMS(String type);
 
-    Flowable<LoanVisaSign> sign(String type, String sms);
+    Flowable<Visa> sign(String type, String sms);
 }
