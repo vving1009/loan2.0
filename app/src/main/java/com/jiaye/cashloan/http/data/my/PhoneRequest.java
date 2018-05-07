@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.my;
 
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * PhoneRequest
@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class PhoneRequest extends ChildRequest {
+public class PhoneRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {

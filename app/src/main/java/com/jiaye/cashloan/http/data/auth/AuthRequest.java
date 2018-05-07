@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.auth;
 
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * AuthRequest
@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class AuthRequest extends ChildRequest {
+public class AuthRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {

@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * PersonRequest
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class PersonRequest extends ChildRequest {
+public class PersonRequest extends SatcatcheChildRequest {
 
     @SerializedName("jla_id")
     private String loanId;

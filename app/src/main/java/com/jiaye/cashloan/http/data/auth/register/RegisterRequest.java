@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.auth.register;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * RegisterRequest
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class RegisterRequest extends ChildRequest {
+public class RegisterRequest extends SatcatcheChildRequest {
 
     /*手机号*/
     @SerializedName("phone")

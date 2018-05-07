@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.auth.password;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * ChangePasswordRequest
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class ChangePasswordRequest extends ChildRequest {
+public class ChangePasswordRequest extends SatcatcheChildRequest {
 
     /*手机号*/
     @SerializedName("phone")

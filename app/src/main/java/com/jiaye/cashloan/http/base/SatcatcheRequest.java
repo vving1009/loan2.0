@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author 贾博瑄
  */
-public class SatcatcheRequest<T extends ChildRequest> {
+public class SatcatcheRequest<T extends SatcatcheChildRequest> {
 
     @SerializedName("jycl_content")
     private SatcatcheRequestContent<T> content;

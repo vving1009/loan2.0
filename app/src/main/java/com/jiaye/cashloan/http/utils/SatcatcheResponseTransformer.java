@@ -3,6 +3,7 @@ package com.jiaye.cashloan.http.utils;
 import com.jiaye.cashloan.http.SatcatcheClient;
 import com.jiaye.cashloan.http.SatcatcheService;
 import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
@@ -20,7 +21,7 @@ import io.reactivex.functions.Function;
  *
  * @author 贾博瑄
  */
-public class SatcatcheResponseTransformer<Upstream extends ChildRequest, Downstream extends SatcatcheChildResponse> implements FlowableTransformer<Upstream, Downstream> {
+public class SatcatcheResponseTransformer<Upstream extends SatcatcheChildRequest, Downstream extends SatcatcheChildResponse> implements FlowableTransformer<Upstream, Downstream> {
 
     private String mMethodName;
 

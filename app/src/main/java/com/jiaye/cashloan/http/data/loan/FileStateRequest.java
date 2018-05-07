@@ -1,14 +1,14 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * FileStateRequest
  *
  * @author 贾博瑄
  */
-public class FileStateRequest extends ChildRequest {
+public class FileStateRequest extends SatcatcheChildRequest {
 
     @SerializedName("jla_id")
     private String loanId;

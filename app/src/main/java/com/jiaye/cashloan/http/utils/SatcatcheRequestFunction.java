@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.http.utils;
 
 import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheRequestContent;
 import com.jiaye.cashloan.http.base.SatcatcheRequestHeader;
@@ -12,7 +13,7 @@ import io.reactivex.functions.Function;
  *
  * @author 贾博瑄
  */
-public class SatcatcheRequestFunction<T extends ChildRequest> implements Function<T, SatcatcheRequest<T>> {
+public class SatcatcheRequestFunction<T extends SatcatcheChildRequest> implements Function<T, SatcatcheRequest<T>> {
 
     @Override
     public SatcatcheRequest<T> apply(T t) throws Exception {

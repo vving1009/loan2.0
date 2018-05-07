@@ -2,7 +2,7 @@ package com.jiaye.cashloan.http.data.launch;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.BuildConfig;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * CheckUpdateRequest
@@ -10,7 +10,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class CheckUpdateRequest extends ChildRequest {
+public class CheckUpdateRequest extends SatcatcheChildRequest {
 
     @SerializedName("versionCode")
     private int code = BuildConfig.VERSION_CODE;

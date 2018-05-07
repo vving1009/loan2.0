@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.http.data.dictionary;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * DictionaryListRequest
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class DictionaryListRequest extends ChildRequest {
+public class DictionaryListRequest extends SatcatcheChildRequest {
 
     @SerializedName("dict_data")
     private Dictionary[] dictionaries;

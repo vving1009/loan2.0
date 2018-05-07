@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.http.data.loan;
 
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * LoanConfirmInfoRequest
@@ -8,7 +8,7 @@ import com.jiaye.cashloan.http.base.ChildRequest;
  * @author 贾博瑄
  */
 
-public class LoanConfirmInfoRequest extends ChildRequest {
+public class LoanConfirmInfoRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {

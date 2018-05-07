@@ -1,14 +1,14 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.http.base.ChildRequest;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * LoanRequest
  *
  * @author 贾博瑄
  */
-public class LoanRequest extends ChildRequest {
+public class LoanRequest extends SatcatcheChildRequest {
 
     @SerializedName("tel_phone")
     private String phone;

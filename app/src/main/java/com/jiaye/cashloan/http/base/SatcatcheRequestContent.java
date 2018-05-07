@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author 贾博瑄
  */
-public class SatcatcheRequestContent<T extends ChildRequest> {
+public class SatcatcheRequestContent<T extends SatcatcheChildRequest> {
 
     @SerializedName("jycl_pubData")
     private SatcatcheRequestHeader header;
