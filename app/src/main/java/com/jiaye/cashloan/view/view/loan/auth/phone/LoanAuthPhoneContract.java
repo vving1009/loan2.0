@@ -23,17 +23,15 @@ public interface LoanAuthPhoneContract {
 
         void setForgetPasswordVisibility(int visibility);
 
-        void setImgVerificationCodeVisibility(int visibility);
+        void addSms();
 
-        void setSmsVerificationCodeVisibility(int visibility);
+        void addImg();
+
+        void firstSubmit();
 
         void setImgVerificationCode(Bitmap bitmap);
 
         void setSmsVerificationCodeCountDown();
-
-        void cleanImgVerificationCodeText();
-
-        void cleanSmsVerificationCodeText();
 
         String getPassword();
 

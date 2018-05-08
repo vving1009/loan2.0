@@ -126,27 +126,11 @@
                 android:textSize="10sp"
                 android:visibility="gone" />
 
-            <com.jiaye.cashloan.widget.LoanEditText
-                android:id="@+id/edit_sms_verification_code"
+            <LinearLayout
+                android:id="@+id/layout_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/loan_auth_phone_input_sms_verification"
-                android:inputType="number"
-                android:maxLength="6"
-                android:visibility="gone"
-                app:enable_verification="true"
-                app:icon="@drawable/loan_auth_phone_ic_sms_verification" />
-
-            <com.jiaye.cashloan.widget.LoanEditText
-                android:id="@+id/edit_img_verification_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/loan_auth_phone_input_img_verification"
-                android:maxLength="6"
-                android:visibility="gone"
-                app:enable_verification="true"
-                app:icon="@drawable/loan_auth_phone_ic_sms_verification"
-                app:verification_type="2" />
+                android:orientation="vertical" />
 
             <Button
                 android:id="@+id/btn_commit"

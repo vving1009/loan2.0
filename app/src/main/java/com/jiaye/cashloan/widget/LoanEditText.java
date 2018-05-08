@@ -69,6 +69,26 @@ public class LoanEditText extends RelativeLayout {
         super.onDetachedFromWindow();
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (mEditText != null) {
+            mEditText.setEnabled(enabled);
+        }
+        if (mTextVerification != null) {
+            mTextVerification.setEnabled(enabled);
+        }
+        if (mImgVerification != null) {
+            mImgVerification.setEnabled(enabled);
+        }
+        if (mImg != null) {
+            mImg.setEnabled(enabled);
+        }
+        if (mTextError != null) {
+            mTextError.setEnabled(enabled);
+        }
+    }
+
     public void setOnClickVerificationCode(OnClickVerificationCode OnClickCaptchaListener) {
         mOnClickVerificationCode = OnClickCaptchaListener;
     }

@@ -65,13 +65,13 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                                     break;
                                 case "code":
                                     if (field.getFieldExtraConfig().getFieldExtraType().equals("PIC")) {
-                                        mView.setImgVerificationCodeVisibility(View.VISIBLE);
+                                        mView.addImg();
                                         isNeedRequestImgVerificationCode = true;
                                     }
                                     break;
                                 case "randomPassword":
                                     if (field.getFieldExtraConfig().getFieldExtraType().equals("SMS")) {
-                                        mView.setSmsVerificationCodeVisibility(View.VISIBLE);
+                                        mView.addSms();
                                     }
                                     break;
                             }
@@ -187,6 +187,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                         .subscribe(new Consumer<GongXinBao>() {
                             @Override
                             public void accept(GongXinBao response) throws Exception {
+                                mView.firstSubmit();
                                 polling();
                             }
                         }, new ThrowableConsumer(mView));
@@ -212,8 +213,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                             case "REFRESH_IMAGE_SUCCESS":
                                 isSecond = true;
                                 // 更新图形验证码
-                                mView.cleanImgVerificationCodeText();
-                                mView.setImgVerificationCodeVisibility(View.VISIBLE);
+                                mView.addImg();
                                 mView.setImgVerificationCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "REFRESH_IMAGE_FAILED":
@@ -228,15 +228,13 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                             case "SMS_VERIFY_NEW":
                                 isSecond = true;
                                 // 输入收到的短信
-                                mView.cleanSmsVerificationCodeText();
-                                mView.setSmsVerificationCodeVisibility(View.VISIBLE);
+                                mView.addSms();
                                 mView.setSmsVerificationCodeCountDown();
                                 break;
                             case "IMAGE_VERIFY_NEW":
                                 isSecond = true;
                                 // 更新图形验证码
-                                mView.cleanImgVerificationCodeText();
-                                mView.setImgVerificationCodeVisibility(View.VISIBLE);
+                                mView.addImg();
                                 mView.setImgVerificationCode(Base64Util.base64ToBitmap(response.getExtra().getRemark()));
                                 break;
                             case "WAITING":
