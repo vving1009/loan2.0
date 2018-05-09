@@ -4,10 +4,6 @@
     <string name="my">我的</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
-    <!--home-->
-    <string name="home_price">快审通道</string>
-    <string name="home_credit">消费分期</string>
-    <string name="home_loan">金融超市</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_ocr">身份认证</string>

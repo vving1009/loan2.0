@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,19 +33,11 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
 
-    private static final int[] TAB_IMAGES = {R.drawable.home_tab_price, R.drawable.home_tab_credit, R.drawable.home_tab_loan};
-
-    private static final int[] TAB_TITLE = {R.string.home_price, R.string.home_credit, R.string.home_loan};
-
     private HomePresenter mPresenter;
 
+    private LinearLayout mLayoutProduct;
+
     private Banner mBanner;
-
-    private ImageView mImage1;
-
-    private ImageView mImage2;
-
-    private ImageView mImage3;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -57,32 +50,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        /*BannerList*/
+        mLayoutProduct = root.findViewById(R.id.layout_product);
         mBanner = root.findViewById(R.id.banner);
         mBanner.setDelayTime(4000);
         mBanner.setImageLoader(new GlideImageLoader());
-        /*ProductList*/
-        View view1 = root.findViewById(R.id.include_1);
-        TextView textTitle1 = view1.findViewById(R.id.text_title);
-        mImage1 = view1.findViewById(R.id.img_product);
-        textTitle1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[0]), null, null, null);
-        textTitle1.setText(getString(TAB_TITLE[0]));
-        mImage1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.loan(0);
-            }
-        });
-        View view2 = root.findViewById(R.id.include_2);
-        TextView textTitle2 = view2.findViewById(R.id.text_title);
-        mImage2 = view2.findViewById(R.id.img_product);
-        textTitle2.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[1]), null, null, null);
-        textTitle2.setText(getString(TAB_TITLE[1]));
-        View view3 = root.findViewById(R.id.include_3);
-        TextView textTitle3 = view3.findViewById(R.id.text_title);
-        mImage3 = view3.findViewById(R.id.img_product);
-        textTitle3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(TAB_IMAGES[2]), null, null, null);
-        textTitle3.setText(getString(TAB_TITLE[2]));
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
         return root;
@@ -111,19 +82,27 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    public void setProduct(ProductList.Product[] products) {
-        for (int i = 0; i < products.length; i++) {
-            switch (i) {
-                case 0:
-                    Glide.with(this).load(products[i].getUrl()).into(mImage1);
-                    break;
-                case 1:
-                    Glide.with(this).load(products[i].getUrl()).into(mImage2);
-                    break;
-                case 2:
-                    Glide.with(this).load(products[i].getUrl()).into(mImage3);
-                    break;
-            }
+    public void setProduct(final ProductList.Product[] products) {
+        for (ProductList.Product product : products) {
+            View view = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.include_home_product, null, false);
+            mLayoutProduct.addView(view);
+            ImageView icon = view.findViewById(R.id.img_icon);
+            ImageView image = view.findViewById(R.id.img_product);
+            TextView textTitle = view.findViewById(R.id.text_title);
+            Glide.with(this).load(product.getIcon()).into(icon);
+            Glide.with(this).load(product.getUrl()).into(image);
+            textTitle.setText(product.getName());
+            final String loanId = product.getId();
+            final boolean isOpen = product.isOpen();
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isOpen) {
+                        mPresenter.loan(loanId);
+                    }
+                }
+            });
         }
     }
 

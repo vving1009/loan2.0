@@ -23,8 +23,6 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     private final HomeDataSource mDataSource;
 
-    private ProductList.Product[] mProducts;
-
     public HomePresenter(HomeContract.View view, HomeDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -47,7 +45,6 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                 .subscribe(new Consumer<ProductList.Product[]>() {
                     @Override
                     public void accept(ProductList.Product[] products) throws Exception {
-                        mProducts = products;
                         mView.setProduct(products);
                     }
                 }, new ThrowableConsumer(mView));
@@ -55,11 +52,8 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     }
 
     @Override
-    public void loan(int position) {
-        if (mProducts == null || mProducts.length == 0 || mProducts[0] == null) {
-            return;
-        }
-        Disposable disposable = mDataSource.requestCheckLoan(mProducts[position].getId())
+    public void loan(final String loanId) {
+        Disposable disposable = mDataSource.requestCheckLoan(loanId)
                 .compose(new ViewTransformer<CheckLoan>() {
                     @Override
                     public void accept() {
@@ -71,7 +65,7 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                     @Override
                     public void accept(CheckLoan checkLoan) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showLoanAuthView(mProducts[0].getId());
+                        mView.showLoanAuthView(loanId);
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
