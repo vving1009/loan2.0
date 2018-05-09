@@ -46,7 +46,7 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
 
     @Override
     public void login() {
-        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11 || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
+        if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.password())) {/*检测密码规则*/
             mView.showToastById(R.string.error_auth_password);

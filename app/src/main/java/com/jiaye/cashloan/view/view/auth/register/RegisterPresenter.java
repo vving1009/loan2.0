@@ -75,7 +75,7 @@ public class RegisterPresenter extends BasePresenterImpl implements RegisterCont
 
     @Override
     public void register() {
-        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11 || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
+        if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
         } else if (TextUtils.isEmpty(mView.getInputImgVerificationCode())
                 || !mView.getInputImgVerificationCode().equals(mView.getImgVerificationCode())) {/*校验图形验证码*/
