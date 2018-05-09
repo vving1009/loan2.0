@@ -64,8 +64,12 @@ import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.data.loan.SavePhoneRequest;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
+import com.jiaye.cashloan.http.data.loan.UploadContact;
+import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadFile;
 import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
+import com.jiaye.cashloan.http.data.loan.UploadLocation;
+import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
@@ -301,4 +305,10 @@ public interface SatcatcheService {
      */
     @POST("uploadMaterialPic")
     Flowable<SatcatcheResponse<UploadFile>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
+
+    @POST("phoneContacts")
+    Flowable<SatcatcheResponse<UploadContact>> uploadContact(@Body SatcatcheRequest<UploadContactRequest> request);
+
+    @POST("phoneLocation")
+    Flowable<SatcatcheResponse<UploadLocation>> uploadLocation(@Body SatcatcheRequest<UploadLocationRequest> request);
 }

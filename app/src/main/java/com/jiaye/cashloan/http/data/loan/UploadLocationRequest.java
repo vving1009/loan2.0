@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * UploadLocationRequest
@@ -8,24 +9,13 @@ import com.google.gson.annotations.SerializedName;
  * @author 贾博瑄
  */
 
-public class UploadLocationRequest {
-
-    @SerializedName("login_name")
-    private String phone;
+public class UploadLocationRequest extends SatcatcheChildRequest {
 
     @SerializedName("longitude")
     private String longitude;
 
     @SerializedName("latitude")
     private String latitude;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getLongitude() {
         return longitude;
@@ -41,5 +31,10 @@ public class UploadLocationRequest {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    @Override
+    protected String getBusiness() {
+        return "CLO89";
     }
 }

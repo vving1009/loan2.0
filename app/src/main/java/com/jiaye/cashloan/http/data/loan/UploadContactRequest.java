@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 import java.util.List;
 
@@ -10,21 +11,10 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class UploadContactRequest {
+public class UploadContactRequest extends SatcatcheChildRequest {
 
-    @SerializedName("login_name")
-    private String phone;
-
-    @SerializedName("data")
+    @SerializedName("contacts_list")
     private List<Contact> contacts;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public List<Contact> getContacts() {
         return contacts;
@@ -34,12 +24,17 @@ public class UploadContactRequest {
         this.contacts = contacts;
     }
 
+    @Override
+    protected String getBusiness() {
+        return "CL088";
+    }
+
     public static class Contact {
 
         @SerializedName("contacts_name")
         private String name;
 
-        @SerializedName("phone_number")
+        @SerializedName("contacts_phone")
         private String phone;
 
         public String getName() {

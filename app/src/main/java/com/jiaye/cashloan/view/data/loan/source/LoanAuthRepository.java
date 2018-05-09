@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.UploadClient;
 import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
@@ -51,15 +50,6 @@ public class LoanAuthRepository implements LoanAuthDataSource {
     @Override
     public Flowable<UploadContact> uploadContact() {
         UploadContactRequest request = new UploadContactRequest();
-        /*phone*/
-        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
-        if (cursorUser != null) {
-            if (cursorUser.moveToNext()) {
-                String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                request.setPhone(phone);
-            }
-            cursorUser.close();
-        }
         /*contact*/
         List<UploadContactRequest.Contact> mList = new ArrayList<>();
         ContentResolver cr = LoanApplication.getInstance().getContentResolver();
@@ -87,7 +77,7 @@ public class LoanAuthRepository implements LoanAuthDataSource {
         if (cur != null) {
             cur.close();
         }
-        return UploadClient.INSTANCE.getService().uploadContact(request);
+        return Flowable.just(request).compose(new SatcatcheResponseTransformer<UploadContactRequest, UploadContact>("uploadContact"));
     }
 
     @Override
@@ -107,15 +97,8 @@ public class LoanAuthRepository implements LoanAuthDataSource {
             request.setLongitude(String.valueOf(location.getLongitude()));
             request.setLatitude(String.valueOf(location.getLatitude()));
         }
-        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
-        if (cursorUser != null) {
-            if (cursorUser.moveToNext()) {
-                String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                request.setPhone(phone);
-            }
-            cursorUser.close();
-        }
-        return UploadClient.INSTANCE.getService().uploadLocation(request);
+
+        return Flowable.just(request).compose(new SatcatcheResponseTransformer<UploadLocationRequest, UploadLocation>("uploadLocation"));
     }
 
     @Override
