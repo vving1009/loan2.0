@@ -7,6 +7,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.utils.RSAUtil;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -45,9 +46,9 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
 
     @Override
     public void login() {
-        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11) {/*检测手机号*/
+        if (TextUtils.isEmpty(mView.getPhone()) || mView.getPhone().length() != 11 || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
-        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches("^[a-zA-Z0-9]{6,12}$")) {/*检测密码规则*/
+        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.password())) {/*检测密码规则*/
             mView.showToastById(R.string.error_auth_password);
         } else {
             LoginRequest request = new LoginRequest();
