@@ -75,11 +75,6 @@ public class LoanAuthContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 设置产品编号
-         */
-        void setProductId(String productId);
-
-        /**
          * 请求认证信息
          */
         void requestLoanAuth();

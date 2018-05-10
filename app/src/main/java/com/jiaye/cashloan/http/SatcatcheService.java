@@ -56,6 +56,8 @@ import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
+import com.jiaye.cashloan.http.data.loan.RiskAppList;
+import com.jiaye.cashloan.http.data.loan.RiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.http.data.loan.SavePerson;
@@ -70,6 +72,8 @@ import com.jiaye.cashloan.http.data.loan.UploadFile;
 import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
+import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
+import com.jiaye.cashloan.http.data.loan.UploadRiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
@@ -155,6 +159,18 @@ public interface SatcatcheService {
      */
     @POST("queryJlaId")
     Flowable<SatcatcheResponse<Loan>> loan(@Body SatcatcheRequest<LoanRequest> request);
+
+    /**
+     * 获取风险应用列表
+     */
+    @POST("androidAppList")
+    Flowable<SatcatcheResponse<RiskAppList>> riskAppList(@Body SatcatcheRequest<RiskAppListRequest> request);
+
+    /**
+     * 上传风险应用安装情况
+     */
+    @POST("saveAppList")
+    Flowable<SatcatcheResponse<UploadRiskAppList>> uploadRiskAppList(@Body SatcatcheRequest<UploadRiskAppListRequest> request);
 
     /**
      * 借款认证状态
@@ -306,9 +322,15 @@ public interface SatcatcheService {
     @POST("uploadMaterialPic")
     Flowable<SatcatcheResponse<UploadFile>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
 
+    /**
+     * 上传通讯录
+     */
     @POST("phoneContacts")
     Flowable<SatcatcheResponse<UploadContact>> uploadContact(@Body SatcatcheRequest<UploadContactRequest> request);
 
+    /**
+     * 上传地理位置
+     */
     @POST("phoneLocation")
     Flowable<SatcatcheResponse<UploadLocation>> uploadLocation(@Body SatcatcheRequest<UploadLocationRequest> request);
 }

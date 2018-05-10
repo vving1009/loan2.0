@@ -11,12 +11,10 @@ import android.location.LocationManager;
 import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
-import com.jiaye.cashloan.http.data.loan.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
@@ -39,13 +37,6 @@ import io.reactivex.functions.Function;
  */
 
 public class LoanAuthRepository implements LoanAuthDataSource {
-
-    private String mProductId;
-
-    @Override
-    public void setProductId(String productId) {
-        mProductId = productId;
-    }
 
     @Override
     public Flowable<UploadContact> uploadContact() {
@@ -104,45 +95,20 @@ public class LoanAuthRepository implements LoanAuthDataSource {
     @Override
     public Flowable<LoanAuth> requestLoanAuth() {
         return Flowable.just("")
-                .map(new Function<String, LoanRequest>() {
+                .map(new Function<String, LoanAuthRequest>() {
                     @Override
-                    public LoanRequest apply(String s) throws Exception {
-                        LoanRequest request = new LoanRequest();
-                        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
-                        if (cursorUser != null) {
-                            if (cursorUser.moveToNext()) {
-                                String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                                request.setPhone(phone);
-                            }
-                            cursorUser.close();
-                        }
-                        request.setProductId(mProductId);
-                        return request;
-                    }
-                })
-                .compose(new SatcatcheResponseTransformer<LoanRequest, Loan>("loan"))
-                .map(new Function<Loan, Loan>() {
-                    @Override
-                    public Loan apply(Loan loan) throws Exception {
-                        ContentValues values = new ContentValues();
-                        values.put("loan_id", loan.getLoanId());
-                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
-                        return loan;
-                    }
-                })
-                .map(new Function<Loan, LoanAuthRequest>() {
-                    @Override
-                    public LoanAuthRequest apply(Loan loan) throws Exception {
+                    public LoanAuthRequest apply(String s) throws Exception {
                         LoanAuthRequest request = new LoanAuthRequest();
-                        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user", null);
+                        Cursor cursorUser = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone, loan_id FROM user", null);
                         if (cursorUser != null) {
                             if (cursorUser.moveToNext()) {
                                 String phone = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                                String loanId = cursorUser.getString(cursorUser.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID));
                                 request.setPhone(phone);
+                                request.setLoanId(loanId);
                             }
                             cursorUser.close();
                         }
-                        request.setLoanId(loan.getLoanId());
                         return request;
                     }
                 })

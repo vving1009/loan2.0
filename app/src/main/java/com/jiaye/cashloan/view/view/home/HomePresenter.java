@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.view.home;
 
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.loan.CheckLoan;
+import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -53,19 +53,19 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
 
     @Override
     public void loan(final String loanId) {
-        Disposable disposable = mDataSource.requestCheckLoan(loanId)
-                .compose(new ViewTransformer<CheckLoan>() {
+        Disposable disposable = mDataSource.requestLoan(loanId)
+                .compose(new ViewTransformer<UploadRiskAppList>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<CheckLoan>() {
+                .subscribe(new Consumer<UploadRiskAppList>() {
                     @Override
-                    public void accept(CheckLoan checkLoan) throws Exception {
+                    public void accept(UploadRiskAppList checkLoan) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showLoanAuthView(loanId);
+                        mView.showLoanAuthView();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

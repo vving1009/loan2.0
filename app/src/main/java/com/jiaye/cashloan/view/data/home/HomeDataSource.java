@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.data.home;
 
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.loan.CheckLoan;
+import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
 
 import io.reactivex.Flowable;
 
@@ -25,7 +25,7 @@ public interface HomeDataSource {
     Flowable<ProductList.Product[]> requestProductList();
 
     /**
-     * 是否可以借款
+     * 我要借款
      */
-    Flowable<CheckLoan> requestCheckLoan(String productId);
+    Flowable<UploadRiskAppList> requestLoan(String productId);
 }

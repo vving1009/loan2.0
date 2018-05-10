@@ -39,11 +39,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     }
 
     @Override
-    public void setProductId(String productId) {
-        mDataSource.setProductId(productId);
-    }
-
-    @Override
     public void requestLoanAuth() {
         Disposable disposable = mDataSource.requestLoanAuth()
                 .compose(new ViewTransformer<LoanAuth>() {

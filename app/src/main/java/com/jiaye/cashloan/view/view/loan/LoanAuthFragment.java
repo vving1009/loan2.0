@@ -62,9 +62,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private Button btnNext;
 
-    public static LoanAuthFragment newInstance(String productId) {
+    public static LoanAuthFragment newInstance() {
         Bundle args = new Bundle();
-        args.putString("productId", productId);
         LoanAuthFragment fragment = new LoanAuthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -144,7 +143,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         });
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
-        mPresenter.setProductId(getArguments().getString("productId"));
         hasPermission();
         return root;
     }
