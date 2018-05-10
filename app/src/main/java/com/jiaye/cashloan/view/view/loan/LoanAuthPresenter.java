@@ -250,7 +250,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     @Override
                     public void accept(String loanId) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.showLoanProgressView(loanId);
+                        mView.exitView();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

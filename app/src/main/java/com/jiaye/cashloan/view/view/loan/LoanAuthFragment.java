@@ -222,10 +222,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     @Override
-    public void showLoanProgressView(String loanId) {
-        Intent intent = new Intent(getActivity(), LoanProgressActivity.class);
-        intent.putExtra("loanId", loanId);
-        startActivity(intent);
+    public void exitView() {
         getActivity().finish();
     }
 

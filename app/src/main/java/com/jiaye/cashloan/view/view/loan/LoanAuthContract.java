@@ -67,9 +67,9 @@ public class LoanAuthContract {
         void showLoanFileView();
 
         /**
-         * 显示贷款进度页面
+         * 退出当前页面
          */
-        void showLoanProgressView(String loanId);
+        void exitView();
     }
 
     interface Presenter extends BasePresenter {

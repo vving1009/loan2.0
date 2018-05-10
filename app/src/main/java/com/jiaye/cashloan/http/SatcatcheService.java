@@ -271,7 +271,7 @@ public interface SatcatcheService {
     /**
      * 借款确认
      */
-    @POST("loanConfirm/updateSatus")
+    @POST("updateStatus")
     Flowable<SatcatcheResponse<LoanConfirm>> loanConfirm(@Body SatcatcheRequest<LoanConfirmRequest> request);
 
     /**
