@@ -49,9 +49,6 @@ public class LoanAuthInfoPresenter extends BasePresenterImpl implements LoanAuth
                         mView.dismissProgressDialog();
                         mView.setPerson(loanInfoAuth.getPerson() == 1 ? submit : unSubmit);
                         mView.setContact(loanInfoAuth.getContact() == 1 ? submit : unSubmit);
-                        if (loanInfoAuth.getPerson() == 1 && loanInfoAuth.getContact() == 1) {
-                            mView.setEnabled();
-                        }
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

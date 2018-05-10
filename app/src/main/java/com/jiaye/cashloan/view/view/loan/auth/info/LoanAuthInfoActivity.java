@@ -26,15 +26,12 @@ public class LoanAuthInfoActivity extends BaseActivity implements LoanAuthInfoCo
 
     private TextView mTextContact;
 
-    private Button mBtnNext;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_auth_info_activity);
         mTextPerson = findViewById(R.id.text_person);
         mTextContact = findViewById(R.id.text_contact);
-        mBtnNext = findViewById(R.id.btn_next);
         findViewById(R.id.layout_person_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +54,6 @@ public class LoanAuthInfoActivity extends BaseActivity implements LoanAuthInfoCo
             @Override
             public void onClick(View v) {
                 LoanAuthHelpActivity.show(LoanAuthInfoActivity.this, R.string.loan_auth_info, "personalInfo/personalData");
-            }
-        });
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                next();
             }
         });
         mPresenter = new LoanAuthInfoPresenter(this, new LoanAuthInfoRepository());
@@ -88,11 +79,6 @@ public class LoanAuthInfoActivity extends BaseActivity implements LoanAuthInfoCo
     @Override
     public void setContact(String text) {
         mTextContact.setText(text);
-    }
-
-    @Override
-    public void setEnabled() {
-        mBtnNext.setEnabled(true);
     }
 
     private void startPersonView() {

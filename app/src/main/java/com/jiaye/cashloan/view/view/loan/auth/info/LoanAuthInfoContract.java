@@ -16,8 +16,6 @@ public interface LoanAuthInfoContract {
         void setPerson(String text);
 
         void setContact(String text);
-
-        void setEnabled();
     }
 
     interface Presenter extends BasePresenter {
