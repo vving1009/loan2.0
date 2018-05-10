@@ -90,11 +90,6 @@ public class LoanAuthContract {
         void uploadContact();
 
         /**
-         * 上传地理位置
-         */
-        void uploadLocation();
-
-        /**
          * 确认
          */
         void confirm();

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
@@ -294,7 +295,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private void uploadLocation() {
         if (checkGPSIsOpen()) {
-            mPresenter.uploadLocation();
+            Intent intent = new Intent(getContext(), LocationService.class);
+            getContext().startService(intent);
         }
     }
 

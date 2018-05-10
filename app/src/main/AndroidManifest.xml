@@ -102,5 +102,9 @@
         <activity
             android:name=".view.view.my.credit.CreditActivity"
             android:screenOrientation="portrait" />
+        <service
+            android:name=".service.LocationService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 </manifest>

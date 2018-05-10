@@ -1,13 +1,9 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
-import android.location.LocationManager;
 import android.provider.ContactsContract;
 
 import com.jiaye.cashloan.LoanApplication;
@@ -17,8 +13,6 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.loan.UploadLocation;
-import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
@@ -69,27 +63,6 @@ public class LoanAuthRepository implements LoanAuthDataSource {
             cur.close();
         }
         return Flowable.just(request).compose(new SatcatcheResponseTransformer<UploadContactRequest, UploadContact>("uploadContact"));
-    }
-
-    @Override
-    public Flowable<UploadLocation> uploadLocation() {
-        UploadLocationRequest request = new UploadLocationRequest();
-        String locationProvider = null;
-        LocationManager locationManager = (LocationManager) LoanApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = locationManager.getProviders(true);
-        if (providers.contains(LocationManager.GPS_PROVIDER)) {
-            locationProvider = LocationManager.GPS_PROVIDER;
-        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
-            locationProvider = LocationManager.NETWORK_PROVIDER;
-        }
-        @SuppressLint("MissingPermission")
-        Location location = locationManager.getLastKnownLocation(locationProvider);
-        if (location != null) {
-            request.setLongitude(String.valueOf(location.getLongitude()));
-            request.setLatitude(String.valueOf(location.getLatitude()));
-        }
-
-        return Flowable.just(request).compose(new SatcatcheResponseTransformer<UploadLocationRequest, UploadLocation>("uploadLocation"));
     }
 
     @Override
