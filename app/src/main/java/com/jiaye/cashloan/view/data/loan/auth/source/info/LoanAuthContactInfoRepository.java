@@ -40,12 +40,7 @@ public class LoanAuthContactInfoRepository implements LoanAuthContactInfoDataSou
                     @Override
                     public boolean test(Contact contact) throws Exception {
                         boolean pass = true;
-                        try {
-                            ContactData contactData = contact.getData()[0];
-                            if (contactData == null) {
-                                pass = false;
-                            }
-                        } catch (NullPointerException exception) {
+                        if (contact.getData() == null) {
                             pass = false;
                         }
                         return pass;
