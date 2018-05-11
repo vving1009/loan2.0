@@ -2,7 +2,6 @@ package com.jiaye.cashloan.view.view.my.credit;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
@@ -106,26 +105,23 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     @Override
     public void account() {
-        Disposable disposable = mDataSource.requestAuth()
-                .compose(new ViewTransformer<Auth>() {
+        Disposable disposable = mDataSource.creditInfo()
+                .compose(new ViewTransformer<CreditInfo>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<Auth>() {
+                .subscribe(new Consumer<CreditInfo>() {
                     @Override
-                    public void accept(Auth auth) throws Exception {
+                    public void accept(CreditInfo creditInfo) throws Exception {
                         mView.dismissProgressDialog();
-                        if (auth.getAccountState().equals("1")) {
-                            mView.showBindBankView();
-                        } else {
-                            if (mBalance == null) {
-                                mView.showToastById(R.string.error_my_credit_un_account);
-                            } else {
-                                mView.showToastById(R.string.error_my_credit_account);
-                            }
+                        //01-未开户;02-已开户未绑卡;03-已开户已绑卡
+                        switch (creditInfo.getBankStatus()) {
+                            case "01":
+                                mView.showBindBankView();
+                                break;
                         }
                     }
                 }, new ThrowableConsumer(mView));

@@ -39,10 +39,6 @@ public class Auth extends SatcatcheChildResponse {
     @SerializedName("phone")
     private String phone;
 
-    /*是否可以开户 0 不可以 1 可以*/
-    @SerializedName("jcb_canOpendAccount")
-    private String accountState;
-
     public int getBankState() {
         return bankState;
     }
@@ -97,13 +93,5 @@ public class Auth extends SatcatcheChildResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getAccountState() {
-        return accountState;
-    }
-
-    public void setAccountState(String accountState) {
-        this.accountState = accountState;
     }
 }

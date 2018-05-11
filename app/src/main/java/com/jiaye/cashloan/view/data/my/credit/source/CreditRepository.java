@@ -1,8 +1,6 @@
 package com.jiaye.cashloan.view.data.my.credit.source;
 
 import com.jiaye.cashloan.http.LoanClient;
-import com.jiaye.cashloan.http.data.auth.Auth;
-import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditBalanceRequest;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
@@ -12,7 +10,6 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
-import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import org.reactivestreams.Publisher;
 
@@ -38,13 +35,6 @@ public class CreditRepository implements CreditDataSource {
     public Flowable<CreditPasswordStatus> passwordStatus() {
         return Flowable.just(new CreditPasswordStatusRequest())
                 .compose(new ResponseTransformer<CreditPasswordStatusRequest, CreditPasswordStatus>("creditPasswordStatus"));
-    }
-
-    @Override
-    public Flowable<Auth> requestAuth() {
-        return Flowable.just(new AuthRequest())
-                .compose(new SatcatcheResponseTransformer<AuthRequest, Auth>
-                        ("auth"));
     }
 
     @Override

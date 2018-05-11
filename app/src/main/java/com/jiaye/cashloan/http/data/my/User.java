@@ -14,30 +14,31 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class User extends SatcatcheChildResponse implements Parcelable {
 
-    /*姓名*/
+    /*姓名[服务器返回]*/
     @SerializedName("jcb_name")
     private String name;
 
+    /*身份证号码[服务器返回]*/
+    @SerializedName("id_number")
+    private String id;
+
+    /*手机号*/
+    private String phone;
+
     /*借贷审批次数*/
-    @SerializedName("loan_approval")
-    private String approveNumber;
+    private int approveNumber;
 
     /*放款还贷次数*/
-    @SerializedName("loan_repayment")
-    private String progressNumber;
+    private int progressNumber;
 
     /*历史借贷次数*/
-    @SerializedName("loan_history")
-    private String historyNumber;
+    private int historyNumber;
 
     /*前台实际显示的姓名信息
     1.没有姓名及手机号时,显示 "游客".
     2.没有姓名只有手机号时,显示 "137****6666"
     3.有姓名时显示 "*名"*/
     private String showName;
-
-    /*手机号*/
-    private String phone;
 
     public String getName() {
         return name;
@@ -47,27 +48,43 @@ public class User extends SatcatcheChildResponse implements Parcelable {
         this.name = name;
     }
 
-    public String getApproveNumber() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getApproveNumber() {
         return approveNumber;
     }
 
-    public void setApproveNumber(String approveNumber) {
+    public void setApproveNumber(int approveNumber) {
         this.approveNumber = approveNumber;
     }
 
-    public String getProgressNumber() {
+    public int getProgressNumber() {
         return progressNumber;
     }
 
-    public void setProgressNumber(String progressNumber) {
+    public void setProgressNumber(int progressNumber) {
         this.progressNumber = progressNumber;
     }
 
-    public String getHistoryNumber() {
+    public int getHistoryNumber() {
         return historyNumber;
     }
 
-    public void setHistoryNumber(String historyNumber) {
+    public void setHistoryNumber(int historyNumber) {
         this.historyNumber = historyNumber;
     }
 
@@ -79,14 +96,6 @@ public class User extends SatcatcheChildResponse implements Parcelable {
         this.showName = showName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -95,13 +104,12 @@ public class User extends SatcatcheChildResponse implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeString(this.approveNumber);
-        dest.writeString(this.progressNumber);
-        dest.writeString(this.historyNumber);
-        dest.writeString(this.showName);
+        dest.writeString(this.id);
         dest.writeString(this.phone);
-        dest.writeString(getSerialNumber());
-        dest.writeString(getToken());
+        dest.writeInt(this.approveNumber);
+        dest.writeInt(this.progressNumber);
+        dest.writeInt(this.historyNumber);
+        dest.writeString(this.showName);
     }
 
     public User() {
@@ -109,13 +117,12 @@ public class User extends SatcatcheChildResponse implements Parcelable {
 
     protected User(Parcel in) {
         this.name = in.readString();
-        this.approveNumber = in.readString();
-        this.progressNumber = in.readString();
-        this.historyNumber = in.readString();
-        this.showName = in.readString();
+        this.id = in.readString();
         this.phone = in.readString();
-        setSerialNumber(in.readString());
-        setToken(in.readString());
+        this.approveNumber = in.readInt();
+        this.progressNumber = in.readInt();
+        this.historyNumber = in.readInt();
+        this.showName = in.readString();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

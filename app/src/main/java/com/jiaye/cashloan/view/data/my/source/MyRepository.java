@@ -51,6 +51,36 @@ public class MyRepository implements MyDataSource {
     }
 
     @Override
+    public Flowable<User> remoteUser() {
+        return Flowable.just(new UserRequest())
+                .compose(new SatcatcheResponseTransformer<UserRequest, User>("user"))
+                .map(new Function<User, User>() {
+                    @Override
+                    public User apply(User user) throws Exception {
+                        /*更新数据库*/
+                        ContentValues values = new ContentValues();
+                        values.put("approve_number", user.getApproveNumber());
+                        values.put("progress_number", user.getProgressNumber());
+                        values.put("history_number", user.getHistoryNumber());
+                        values.put("ocr_name", user.getName());
+                        values.put("ocr_id", user.getId());
+                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+                        /*查询手机号*/
+                        String phone = "";
+                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT * FROM user;", null);
+                        if (cursor != null) {
+                            if (cursor.moveToNext()) {
+                                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
+                            }
+                            cursor.close();
+                        }
+                        user.setPhone(phone);
+                        return user;
+                    }
+                });
+    }
+
+    @Override
     public Flowable<Auth> requestAuth() {
         return queryUser().flatMap(new Function<User, Publisher<Auth>>() {
             @Override
@@ -69,20 +99,16 @@ public class MyRepository implements MyDataSource {
             @Override
             public User apply(String sql) throws Exception {
                 String phone = "";
-                String approveNumber = "";
-                String progressNumber = "";
-                String historyNumber = "";
-                String loanApproveId = "";
-                String loanProgressId = "";
-                String name = "";
+                int approveNumber = 0;
+                int progressNumber = 0;
+                int historyNumber = 0;
                 Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery(sql, null);
                 if (cursor != null) {
                     if (cursor.moveToNext()) {
                         phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                        approveNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_APPROVE_NUMBER));
-                        progressNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PROGRESS_NUMBER));
-                        historyNumber = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_HISTORY_NUMBER));
-                        name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
+                        approveNumber = cursor.getInt(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_APPROVE_NUMBER));
+                        progressNumber = cursor.getInt(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PROGRESS_NUMBER));
+                        historyNumber = cursor.getInt(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_HISTORY_NUMBER));
                     }
                     cursor.close();
                 }
@@ -90,7 +116,6 @@ public class MyRepository implements MyDataSource {
                     throw new LocalException(R.string.error_auth_not_log_in);
                 }
                 User user = new User();
-                user.setName(name);
                 user.setPhone(phone);
                 user.setApproveNumber(approveNumber);
                 user.setProgressNumber(progressNumber);
@@ -102,37 +127,9 @@ public class MyRepository implements MyDataSource {
 
     private Flowable<User> emptyUser() {
         User user = new User();
-        user.setApproveNumber("0");
-        user.setProgressNumber("0");
-        user.setHistoryNumber("0");
+        user.setApproveNumber(0);
+        user.setProgressNumber(0);
+        user.setHistoryNumber(0);
         return Flowable.just(user);
-    }
-
-    private Flowable<User> remoteUser() {
-        return Flowable.just(new UserRequest())
-                .compose(new SatcatcheResponseTransformer<UserRequest, User>("user"))
-                .map(new Function<User, User>() {
-                    @Override
-                    public User apply(User user) throws Exception {
-                        /*更新数据库*/
-                        ContentValues values = new ContentValues();
-                        values.put("approve_number", user.getApproveNumber());
-                        values.put("progress_number", user.getProgressNumber());
-                        values.put("history_number", user.getHistoryNumber());
-                        values.put("ocr_name", user.getName());
-                        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
-                        /*查询手机号*/
-                        String phone = "";
-                        Cursor cursor = LoanApplication.getInstance().getSQLiteDatabase().rawQuery("SELECT phone FROM user;", null);
-                        if (cursor != null) {
-                            if (cursor.moveToNext()) {
-                                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-                            }
-                            cursor.close();
-                        }
-                        user.setPhone(phone);
-                        return user;
-                    }
-                });
     }
 }

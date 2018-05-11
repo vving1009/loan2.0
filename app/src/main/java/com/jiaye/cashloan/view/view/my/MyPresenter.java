@@ -103,7 +103,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
-                if (!TextUtils.isEmpty(user.getApproveNumber()) && !user.getApproveNumber().equals("0")) {
+                if (user.getApproveNumber() > 0) {
                     mView.showApproveView();
                 }
             }
@@ -116,7 +116,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
-                if (!TextUtils.isEmpty(user.getProgressNumber()) && !user.getProgressNumber().equals("0")) {
+                if (user.getProgressNumber() > 0) {
                     mView.showProgressView();
                 }
             }
@@ -129,7 +129,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
         Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) throws Exception {
-                if (!TextUtils.isEmpty(user.getHistoryNumber()) && !user.getHistoryNumber().equals("0")) {
+                if (user.getHistoryNumber() > 0) {
                     mView.showHistoryView();
                 }
             }
@@ -139,12 +139,18 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
 
     @Override
     public void credit() {
-        Disposable disposable = mDataSource.queryUser().subscribe(new Consumer<User>() {
-            @Override
-            public void accept(User user) throws Exception {
-                mView.showCreditView();
-            }
-        }, new ThrowableConsumer(mView));
+        Disposable disposable = mDataSource.remoteUser()
+                .compose(new ViewTransformer<User>())
+                .subscribe(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) throws Exception {
+                        if (!TextUtils.isEmpty(user.getName()) && !TextUtils.isEmpty(user.getId())) {
+                            mView.showCreditView();
+                        } else {
+                            mView.showToastById(R.string.error_my_credit_un_account);
+                        }
+                    }
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 

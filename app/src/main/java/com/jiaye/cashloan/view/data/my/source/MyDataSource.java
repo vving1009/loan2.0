@@ -16,6 +16,8 @@ public interface MyDataSource {
 
     Flowable<User> requestUser();
 
+    Flowable<User> remoteUser();
+
     Flowable<Auth> requestAuth();
 
     Flowable<User> queryUser();

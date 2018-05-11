@@ -23,6 +23,8 @@ import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.view.view.loan.LoanDetailsActivity;
 
+import java.util.Locale;
+
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
 /**
@@ -211,9 +213,9 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     @Override
     public void showUserInfo(User user) {
         mTextName.setText(user.getShowName());
-        mTextApproveNumber.setText(user.getApproveNumber());
-        mTextLoanNumber.setText(user.getProgressNumber());
-        mTextHistoryNumber.setText(user.getHistoryNumber());
+        mTextApproveNumber.setText(String.format(Locale.getDefault(), "%d", user.getApproveNumber()));
+        mTextLoanNumber.setText(String.format(Locale.getDefault(), "%d", user.getProgressNumber()));
+        mTextHistoryNumber.setText(String.format(Locale.getDefault(), "%d", user.getHistoryNumber()));
     }
 
     @Override

@@ -29,9 +29,9 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User._ID + INTEGER_TYPE + " PRIMARY KEY," +
                     DbContract.User.COLUMN_NAME_TOKEN + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_APPROVE_NUMBER + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + TEXT_TYPE + COMMA_SEP +
-                    DbContract.User.COLUMN_NAME_HISTORY_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_APPROVE_NUMBER + INTEGER_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + INTEGER_TYPE + COMMA_SEP +
+                    DbContract.User.COLUMN_NAME_HISTORY_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_LOAN_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
@@ -70,6 +70,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 case 2:
                     // 2018.4.29 删除表 product
                     db.execSQL("drop table product");
+                case 3:
+                    // 2018.5.11 修改 approve_number progress_number history_number 字段类型
+                    db.execSQL("alter table user rename to temp_user");
+                    db.execSQL(SQL_CREATE_USER);
+                    db.execSQL("insert into user SELECT * FROM temp_user");
+                    db.execSQL("drop table temp_user");
                 default:
                     break;
             }
