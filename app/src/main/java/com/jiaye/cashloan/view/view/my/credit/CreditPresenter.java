@@ -32,7 +32,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     private final CreditDataSource mDataSource;
 
-    private String mPasswordStatus = "0";
+    private String mPasswordStatus;
 
     private CreditBalance mBalance;
 
@@ -55,7 +55,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                     @Override
                     public CreditPasswordStatus apply(CreditPasswordStatus creditPasswordStatus) throws Exception {
                         if (creditPasswordStatus.getOpen().equals("0")) {
-                            mPasswordStatus = "0";
+                            mPasswordStatus = "-1";
                             mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
                         } else if (creditPasswordStatus.getOpen().equals("1")) {
                             if (creditPasswordStatus.getStatus().equals("0")) {
@@ -131,6 +131,9 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
     @Override
     public void password() {
         switch (mPasswordStatus) {
+            case "-1":
+                mView.showToastById(R.string.my_credit_password_error);
+                break;
             case "0":
                 passwordInit();
                 break;
