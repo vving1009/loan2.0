@@ -187,7 +187,6 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                         .subscribe(new Consumer<GongXinBao>() {
                             @Override
                             public void accept(GongXinBao response) throws Exception {
-                                mView.firstSubmit();
                                 polling();
                             }
                         }, new ThrowableConsumer(mView));
@@ -206,6 +205,7 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                             case "LOGIN_WAITING":
                                 break;
                             case "LOGIN_SUCCESS":
+                                mView.firstSubmit();
                                 break;
                             case "LOGIN_FAILED":
                                 mView.showToast(response.getExtra().getRemark());
