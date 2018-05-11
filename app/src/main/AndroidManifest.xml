@@ -41,7 +41,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.auth.ocr.LoanAuthOCRActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".view.view.loan.auth.visa.LoanAuthVisaActivity"
             android:screenOrientation="portrait" />
@@ -102,9 +103,10 @@
         <activity
             android:name=".view.view.my.credit.CreditActivity"
             android:screenOrientation="portrait" />
+
         <service
             android:name=".service.LocationService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 </manifest>
