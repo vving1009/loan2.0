@@ -45,18 +45,6 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                         String start = phone.substring(0, 3);
                         String end = phone.substring(7, 11);
                         mView.setPhone(start + "****" + end);
-                        // 银行卡
-                        switch (auth.getBankState()) {
-                            case 1:
-                                mView.setBankStatus("已绑定");
-                                break;
-                            case 0:
-                                mView.setBankStatus("未绑定");
-                                break;
-                            case 2:
-                                mView.setBankStatus("已解绑");
-                                break;
-                        }
                         // 身份认证
                         switch (auth.getCardState()) {
                             case 1:
@@ -96,13 +84,6 @@ public class CertificatePresenter extends BasePresenterImpl implements Certifica
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void bank() {
-        if (mDataSource.getAuth().getBankState() == 1) {
-            mView.showBankView();
-        }
     }
 
     @Override

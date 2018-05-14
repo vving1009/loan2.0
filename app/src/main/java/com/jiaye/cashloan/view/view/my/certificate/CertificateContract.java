@@ -19,11 +19,6 @@ public interface CertificateContract {
         void setPhone(String text);
 
         /**
-         * 设置银行卡状态
-         */
-        void setBankStatus(String text);
-
-        /**
          * 设置身份证状态
          */
         void setOCRStatus(String text);
@@ -44,11 +39,6 @@ public interface CertificateContract {
         void setTaoBaoStatus(String text);
 
         /**
-         * 显示银行卡信息页面
-         */
-        void showBankView();
-
-        /**
          * 显示身份证信息页面
          */
         void showIdCardView();
@@ -65,8 +55,6 @@ public interface CertificateContract {
     }
 
     interface Presenter extends BasePresenter {
-
-        void bank();
 
         void ocr();
 

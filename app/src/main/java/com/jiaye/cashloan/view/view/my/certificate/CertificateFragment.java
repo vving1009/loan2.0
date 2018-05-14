@@ -25,8 +25,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
 
     private TextView mTextPhone;
 
-    private TextView mTextBank;
-
     private TextView mTextIdCard;
 
     private TextView mTextInfo;
@@ -47,17 +45,10 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.certificate_fragment, container, false);
         mTextPhone = view.findViewById(R.id.text_phone);
-        mTextBank = view.findViewById(R.id.text_bank);
         mTextIdCard = view.findViewById(R.id.text_id_card);
         mTextInfo = view.findViewById(R.id.text_info);
         mTextOperator = view.findViewById(R.id.text_operator);
         mTextTaoBao = view.findViewById(R.id.text_taobao);
-        view.findViewById(R.id.layout_bank).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.bank();
-            }
-        });
         view.findViewById(R.id.layout_id_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,11 +84,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     }
 
     @Override
-    public void setBankStatus(String text) {
-        mTextBank.setText(text);
-    }
-
-    @Override
     public void setOCRStatus(String text) {
         mTextIdCard.setText(text);
     }
@@ -115,13 +101,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
     @Override
     public void setTaoBaoStatus(String text) {
         mTextTaoBao.setText(text);
-    }
-
-    @Override
-    public void showBankView() {
-        Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view", "certificate_bank");
-        getActivity().startActivity(intent);
     }
 
     @Override

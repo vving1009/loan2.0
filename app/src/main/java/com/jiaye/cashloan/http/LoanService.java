@@ -108,6 +108,12 @@ public interface LoanService {
     Flowable<Response<LoanBindBank>> loanBindBank(@Body Request<LoanBindBankRequest> request);
 
     /**
+     * 已开户绑定银行卡
+     */
+    @POST("bindBankCard/openAccountBindCard")
+    Flowable<Response<LoanBindBank>> bindBankAgain(@Body Request<LoanBindBankRequest> request);
+
+    /**
      * 解绑银行卡
      */
     @POST("unbind")
