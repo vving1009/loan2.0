@@ -21,5 +21,7 @@ public interface LoanAuthTaoBaoQRDataSource {
 
     Bitmap getBitmap();
 
+    String getRpc();
+
     Flowable<SaveTaoBao> requestSaveTaoBao(String token);
 }

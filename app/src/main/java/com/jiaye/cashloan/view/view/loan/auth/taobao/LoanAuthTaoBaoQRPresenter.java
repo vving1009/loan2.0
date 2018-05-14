@@ -46,10 +46,16 @@ public class LoanAuthTaoBaoQRPresenter extends BasePresenterImpl implements Loan
                     public void accept(Bitmap bitmap) throws Exception {
                         mView.dismissProgressDialog();
                         mView.setImg(bitmap);
+                        mView.showRpc();
                         polling();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public String getRpc() {
+        return mDataSource.getRpc();
     }
 
     private void polling() {

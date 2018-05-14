@@ -17,11 +17,15 @@ public interface LoanAuthTaoBaoQRContract {
 
         void setImg(Bitmap bitmap);
 
+        void showRpc();
+
         void result();
     }
 
     interface Presenter extends BasePresenter {
 
         void request();
+
+        String getRpc();
     }
 }

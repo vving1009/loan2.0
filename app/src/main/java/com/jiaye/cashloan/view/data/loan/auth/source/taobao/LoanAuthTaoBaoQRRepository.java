@@ -42,6 +42,8 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
 
     private Bitmap mBitmap;
 
+    private String mRpc;
+
     @Override
     public Flowable<Bitmap> requestQRCode() {
         return Flowable.just("")
@@ -105,6 +107,7 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
                     public Bitmap apply(GongXinBao gongXinBao) throws Exception {
                         URL url = new URL(gongXinBao.getExtra().getQrCode().getHttpQRCode());
                         mBitmap = BitmapFactory.decodeStream(url.openStream());
+                        mRpc = gongXinBao.getExtra().getQrCode().getRpcQRCode();
                         return mBitmap;
                     }
                 });
@@ -165,6 +168,11 @@ public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
     @Override
     public Bitmap getBitmap() {
         return mBitmap;
+    }
+
+    @Override
+    public String getRpc() {
+        return mRpc;
     }
 
     @Override
