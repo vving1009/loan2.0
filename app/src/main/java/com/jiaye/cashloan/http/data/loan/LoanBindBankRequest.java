@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.http.base.ChildRequest;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
@@ -9,7 +10,7 @@ import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
  * @author 贾博瑄
  */
 
-public class LoanBindBankRequest extends SatcatcheChildRequest {
+public class LoanBindBankRequest extends ChildRequest {
 
     @SerializedName("obligate_phone")
     private String phone;

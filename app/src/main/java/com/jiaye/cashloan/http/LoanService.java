@@ -3,6 +3,8 @@ package com.jiaye.cashloan.http;
 import com.jiaye.cashloan.http.base.Request;
 import com.jiaye.cashloan.http.base.Response;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
+import com.jiaye.cashloan.http.data.loan.LoanBindBank;
+import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
@@ -98,6 +100,12 @@ public interface LoanService {
      */
     @POST("balanceQuery")
     Flowable<Response<CreditBalance>> creditBalance(@Body Request<CreditBalanceRequest> request);
+
+    /**
+     * 绑定银行卡
+     */
+    @POST("bindBankCard")
+    Flowable<Response<LoanBindBank>> loanBindBank(@Body Request<LoanBindBankRequest> request);
 
     /**
      * 解绑银行卡

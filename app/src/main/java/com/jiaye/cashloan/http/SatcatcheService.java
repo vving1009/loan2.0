@@ -35,8 +35,6 @@ import com.jiaye.cashloan.http.data.loan.LoanApply;
 import com.jiaye.cashloan.http.data.loan.LoanApplyRequest;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.LoanAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanBindBank;
-import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
@@ -291,12 +289,6 @@ public interface SatcatcheService {
      */
     @POST("shjk/repaymentPlans")
     Flowable<SatcatcheResponse<LoanPlan>> loanPlan(@Body SatcatcheRequest<LoanPlanRequest> request);
-
-    /**
-     * 绑定银行卡
-     */
-    @POST("bindBankCard")
-    Flowable<SatcatcheResponse<LoanBindBank>> loanBindBank(@Body SatcatcheRequest<LoanBindBankRequest> request);
 
     /**
      * 查看合同列表
