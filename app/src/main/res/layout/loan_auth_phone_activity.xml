@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/loan_auth_phone_input_password"
                 android:inputType="numberPassword"
-                android:maxLength="6"
+                android:maxLength="20"
                 android:visibility="gone"
                 app:icon="@drawable/loan_auth_phone_ic_password" />
 
