@@ -54,6 +54,8 @@ import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
+import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
+import com.jiaye.cashloan.http.data.loan.QueryUploadPhotoRequest;
 import com.jiaye.cashloan.http.data.loan.RiskAppList;
 import com.jiaye.cashloan.http.data.loan.RiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
@@ -70,6 +72,8 @@ import com.jiaye.cashloan.http.data.loan.UploadFile;
 import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
+import com.jiaye.cashloan.http.data.loan.UploadPhoto;
+import com.jiaye.cashloan.http.data.loan.UploadPhotoRequest;
 import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
 import com.jiaye.cashloan.http.data.loan.UploadRiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.Visa;
@@ -325,4 +329,16 @@ public interface SatcatcheService {
      */
     @POST("phoneLocation")
     Flowable<SatcatcheResponse<UploadLocation>> uploadLocation(@Body SatcatcheRequest<UploadLocationRequest> request);
+
+    /**
+     * 上传相册查询接口
+     */
+    @POST("searchAlbumPic")
+    Flowable<SatcatcheResponse<QueryUploadPhoto>> queryUploadPhoto(@Body SatcatcheRequest<QueryUploadPhotoRequest> request);
+
+    /**
+     * 上传图片
+     */
+    @POST("uploadAlbumPic")
+    Flowable<SatcatcheResponse<UploadPhoto>> uploadPhoto(@Body SatcatcheRequest<UploadPhotoRequest> request);
 }
