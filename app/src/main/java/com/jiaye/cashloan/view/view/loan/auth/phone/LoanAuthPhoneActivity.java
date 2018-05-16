@@ -3,6 +3,7 @@ package com.jiaye.cashloan.view.view.loan.auth.phone;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -136,11 +137,15 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         mSmsArray.add(editSms);
         for (int i = 0; i <= mSmsIndex; i++) {
             if (i - 1 > 0) {
-                mSmsArray.get(i - 1).setEnabled(false);
+                if (!TextUtils.isEmpty(mSmsArray.get(i - 1).getText().toString())) {
+                    mSmsArray.get(i - 1).setEnabled(false);
+                }
             }
         }
         for (int i = 0; i <= mImgIndex; i++) {
-            mImgArray.get(i).setEnabled(false);
+            if (!TextUtils.isEmpty(mImgArray.get(i).getText().toString())) {
+                mImgArray.get(i).setEnabled(false);
+            }
         }
     }
 
@@ -159,11 +164,15 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         mImgArray.add(editImg);
         for (int i = 0; i <= mImgIndex; i++) {
             if (i - 1 > 0) {
-                mImgArray.get(i - 1).setEnabled(false);
+                if (!TextUtils.isEmpty(mImgArray.get(i - 1).getText().toString())) {
+                    mImgArray.get(i - 1).setEnabled(false);
+                }
             }
         }
         for (int i = 0; i <= mSmsIndex; i++) {
-            mSmsArray.get(i).setEnabled(false);
+            if (!TextUtils.isEmpty(mSmsArray.get(i).getText().toString())) {
+                mSmsArray.get(i).setEnabled(false);
+            }
         }
     }
 
