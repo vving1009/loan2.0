@@ -20,6 +20,8 @@ import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
+import org.reactivestreams.Publisher;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -139,7 +141,13 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
 
     @Override
     public void credit() {
-        Disposable disposable = mDataSource.remoteUser()
+        Disposable disposable = mDataSource.queryUser()
+                .flatMap(new Function<User, Publisher<User>>() {
+                    @Override
+                    public Publisher<User> apply(User user) throws Exception {
+                        return mDataSource.remoteUser();
+                    }
+                })
                 .compose(new ViewTransformer<User>())
                 .subscribe(new Consumer<User>() {
                     @Override
