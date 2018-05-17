@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.loan.auth.taobao;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
@@ -92,6 +93,17 @@ public class LoanAuthTaoBaoNormalPresenter extends BasePresenterImpl implements 
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void checkInput() {
+        if (TextUtils.isEmpty(mView.getAccount())) {/*检测账号*/
+            mView.setEnable(false);
+        } else if (TextUtils.isEmpty(mView.getPassword())) {/*检测密码*/
+            mView.setEnable(false);
+        } else {
+            mView.setEnable(true);
+        }
     }
 
     @Override

@@ -27,6 +27,8 @@ public interface LoanAuthTaoBaoNormalContract {
 
         String getImgCode();
 
+        void setEnable(boolean enable);
+
         void cleanImgVerificationCodeText();
 
         void setImgVerificationCodeVisibility();
@@ -45,6 +47,8 @@ public interface LoanAuthTaoBaoNormalContract {
         void requestSMS();
 
         void requestIMG();
+
+        void checkInput();
 
         void submit();
     }
