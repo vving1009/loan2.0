@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.view.my.credit;
 
+import android.text.TextUtils;
+
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
@@ -133,16 +135,18 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     @Override
     public void password() {
-        switch (mPasswordStatus) {
-            case "-1":
-                mView.showToastById(R.string.my_credit_password_error);
-                break;
-            case "0":
-                passwordInit();
-                break;
-            case "1":
-                passwordReset();
-                break;
+        if (!TextUtils.isEmpty(mPasswordStatus)) {
+            switch (mPasswordStatus) {
+                case "-1":
+                    mView.showToastById(R.string.my_credit_password_error);
+                    break;
+                case "0":
+                    passwordInit();
+                    break;
+                case "1":
+                    passwordReset();
+                    break;
+            }
         }
     }
 
