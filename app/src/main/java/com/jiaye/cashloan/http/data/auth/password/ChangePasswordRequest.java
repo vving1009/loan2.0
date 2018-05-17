@@ -19,7 +19,7 @@ public class ChangePasswordRequest extends SatcatcheChildRequest {
     @SerializedName("password")
     private String password;
 
-    /*类型 0 用户登录的情况下 1 用户未登录的情况下 */
+    /*类型 1 用户登录的情况下(修改) 2 用户未登录的情况下(忘记) */
     @SerializedName("status")
     private String status;
 

@@ -19,7 +19,7 @@ public class CheckForgetPasswordVerificationCodeRequest extends SatcatcheChildRe
     @SerializedName("sign_code")
     private String smsVerificationCode;
 
-    /*验证请求来源*/
+    /*验证请求来源, 修改密码=1, 忘记密码=2*/
     @SerializedName("sign_soure")
     private String source;
 

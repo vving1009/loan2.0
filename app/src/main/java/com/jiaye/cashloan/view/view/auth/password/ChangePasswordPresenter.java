@@ -63,11 +63,11 @@ public class ChangePasswordPresenter extends BasePresenterImpl implements Change
             switch (mType) {
                 case 0:
                     // 忘记密码
-                    request.setStatus("1");
+                    request.setStatus("2");
                     break;
                 case 1:
                     // 修改密码
-                    request.setStatus("0");
+                    request.setStatus("1");
                     break;
             }
             Disposable disposable = Flowable.just(request)
