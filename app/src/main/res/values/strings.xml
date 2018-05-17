@@ -115,6 +115,7 @@
     <string name="my_history">历史借款</string>
     <string name="my_credit">存管账户管理</string>
     <string name="my_credit_account">开户</string>
+    <string name="my_credit_account_error">已开户</string>
     <string name="my_credit_password">设置初始密码</string>
     <string name="my_credit_password_reset">重置密码</string>
     <string name="my_credit_password_error">未开户</string>

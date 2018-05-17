@@ -122,6 +122,9 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
                             case "01":
                                 mView.showBindBankView();
                                 break;
+                            default:
+                                mView.showToastById(R.string.my_credit_account_error);
+                                break;
                         }
                     }
                 }, new ThrowableConsumer(mView));
