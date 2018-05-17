@@ -1,10 +1,22 @@
 package com.jiaye.cashloan.view.view.loan;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.FaceDetector;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
+import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
+import com.jiaye.cashloan.http.data.loan.UploadPhoto;
+import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -12,11 +24,18 @@ import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthDataSource;
 import com.orhanobut.logger.Logger;
 
+import org.reactivestreams.Publisher;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.zelory.compressor.Compressor;
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * LoanAuthPresenter
@@ -31,6 +50,10 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     private final LoanAuthDataSource mDataSource;
 
     private int mStep;
+
+    private Context mContext = LoanApplication.getInstance();
+
+    private int uploadCount = 0;
 
     public LoanAuthPresenter(LoanAuthContract.View view, LoanAuthDataSource dataSource) {
         mView = view;
@@ -257,5 +280,89 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
             model.setVerify(false);
             model.setCanModify(true);
         }
+    }
+
+    @Override
+    public void uploadPhoto() {
+        uploadCount = 0;
+        FileUtils.deleteFile(new File(mContext.getCacheDir() + "/portrait/"));
+        Disposable disposable = mDataSource.queryUploadPhoto()
+                .flatMap(new Function<QueryUploadPhoto, Publisher<String>>() {
+                    @Override
+                    public Publisher<String> apply(QueryUploadPhoto queryUploadPhoto) throws Exception {
+                        if (queryUploadPhoto.getCount() < 1) {
+                            return Flowable.fromIterable(loadAllPicture());
+                        }
+                        return Flowable.just("");
+                    }
+                }).filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String path) throws Exception {
+                        if (path.equals("")) return false;
+                        Bitmap bmp = Glide.with(mContext)
+                                .load(path)
+                                .asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .fitCenter()
+                                .into(1500, 1500)
+                                .get();
+                        FaceDetector faceDetector = new FaceDetector(bmp.getWidth(), bmp.getHeight(), 5);
+                        FaceDetector.Face[] faces = new FaceDetector.Face[5];
+                        int realFaceNum = faceDetector.findFaces(bmp, faces);
+                        bmp.recycle();
+                        return realFaceNum > 0;
+                    }
+                }).take(20)
+                .map(new Function<String, File>() {
+                    @Override
+                    public File apply(String path) throws Exception {
+                        return new Compressor.Builder(mContext)
+                                .setMaxWidth(2000)
+                                .setMaxHeight(2000)
+                                .setQuality(75)
+                                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                .setDestinationDirectoryPath(mContext.getCacheDir() + "/portrait/")
+                                .build()
+                                .compressToFile(new File(path));
+                    }
+                })
+                .concatMap(new Function<File, Publisher<UploadPhoto>>() {
+                    @Override
+                    public Publisher<UploadPhoto> apply(File file) throws Exception {
+                        return mDataSource.uploadPhoto(file);
+                    }
+                })
+                .subscribe(new Consumer<UploadPhoto>() {
+                    @Override
+                    public void accept(UploadPhoto uploadPhoto) throws Exception {
+                        uploadCount++;
+                        if (uploadCount >= 20) {
+                            FileUtils.deleteFile(new File(mContext.getCacheDir() + "/portrait/"));
+                        }
+                    }
+                }, new ThrowableConsumer(mView));
+                mCompositeDisposable.add(disposable);
+    }
+
+    private List<String> loadAllPicture() {
+        String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE};
+        Cursor cursor = mContext.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                columns, null, null, MediaStore.Images.Media.SIZE + " DESC");
+        int fileColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        List<String> paths = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            if (cursor.getInt(sizeColumn) < 100000) continue;  //不使用小于100K的图片
+            String imageFilePath = cursor.getString(fileColumn);
+            BitmapFactory.decodeFile(imageFilePath, options);
+            int maxLength = Math.max(options.outWidth, options.outHeight);
+            if (maxLength >= 900 && maxLength < 10000) {
+                paths.add(imageFilePath);
+            }
+        }
+        cursor.close();
+        return paths;
     }
 }

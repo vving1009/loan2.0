@@ -1,7 +1,11 @@
 package com.jiaye.cashloan.view.data.loan.source;
 
 import com.jiaye.cashloan.http.data.loan.LoanAuth;
+import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
+import com.jiaye.cashloan.http.data.loan.UploadPhoto;
+
+import java.io.File;
 
 import io.reactivex.Flowable;
 
@@ -27,4 +31,14 @@ public interface LoanAuthDataSource {
      * 请求确认借款
      */
     Flowable<String> requestLoanConfirm();
+
+    /**
+     * 请求上传人像照片的数量
+     */
+    Flowable<QueryUploadPhoto> queryUploadPhoto();
+
+    /**
+     * 请求上传人像照片
+     */
+    Flowable<UploadPhoto> uploadPhoto(File file);
 }

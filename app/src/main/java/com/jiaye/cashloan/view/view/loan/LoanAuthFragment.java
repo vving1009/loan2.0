@@ -145,6 +145,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
         hasPermission();
+        mPresenter.uploadPhoto();
         return root;
     }
 

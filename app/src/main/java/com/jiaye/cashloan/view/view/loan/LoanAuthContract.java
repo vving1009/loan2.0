@@ -93,5 +93,10 @@ public class LoanAuthContract {
          * 确认
          */
         void confirm();
+
+        /**
+         * 上传人像照片
+         */
+        void uploadPhoto();
     }
 }
