@@ -16,7 +16,6 @@ import com.jiaye.cashloan.http.data.loan.LoanAuth;
 import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadPhoto;
-import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -36,6 +35,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * LoanAuthPresenter
@@ -52,8 +52,6 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     private int mStep;
 
     private Context mContext = LoanApplication.getInstance();
-
-    private int uploadCount = 0;
 
     public LoanAuthPresenter(LoanAuthContract.View view, LoanAuthDataSource dataSource) {
         mView = view;
@@ -284,21 +282,33 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
     @Override
     public void uploadPhoto() {
-        uploadCount = 0;
-        FileUtils.deleteFile(new File(mContext.getCacheDir() + "/portrait/"));
-        Disposable disposable = mDataSource.queryUploadPhoto()
+        // 清除照片缓存
+        Disposable disposable = mDataSource.clearPhotoCache()
+                .flatMap(new Function<Object, Publisher<QueryUploadPhoto>>() {
+                    @Override
+                    public Publisher<QueryUploadPhoto> apply(Object o) throws Exception {
+                        // 查询上传照片数量
+                        return mDataSource.queryUploadPhoto();
+                    }
+                })
+                .filter(new Predicate<QueryUploadPhoto>() {
+                    @Override
+                    public boolean test(QueryUploadPhoto queryUploadPhoto) throws Exception {
+                        // 当发现上传的照片数量大于1时不再上传
+                        return queryUploadPhoto.getCount() < 1;
+                    }
+                })
                 .flatMap(new Function<QueryUploadPhoto, Publisher<String>>() {
                     @Override
                     public Publisher<String> apply(QueryUploadPhoto queryUploadPhoto) throws Exception {
-                        if (queryUploadPhoto.getCount() < 1) {
-                            return Flowable.fromIterable(loadAllPicture());
-                        }
-                        return Flowable.just("");
+                        // 将照片转化为数据流分别发射
+                        return Flowable.fromIterable(loadAllPicture());
                     }
-                }).filter(new Predicate<String>() {
+                })
+                .filter(new Predicate<String>() {
                     @Override
                     public boolean test(String path) throws Exception {
-                        if (path.equals("")) return false;
+                        // 过滤没有人像的照片
                         Bitmap bmp = Glide.with(mContext)
                                 .load(path)
                                 .asBitmap()
@@ -312,10 +322,13 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         bmp.recycle();
                         return realFaceNum > 0;
                     }
-                }).take(20)
+                })
+                // 限制最大数量为20
+                .take(20)
                 .map(new Function<String, File>() {
                     @Override
                     public File apply(String path) throws Exception {
+                        // 进行图形压缩
                         return new Compressor.Builder(mContext)
                                 .setMaxWidth(2000)
                                 .setMaxHeight(2000)
@@ -329,19 +342,30 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                 .concatMap(new Function<File, Publisher<UploadPhoto>>() {
                     @Override
                     public Publisher<UploadPhoto> apply(File file) throws Exception {
+                        // 依次上传服务器
                         return mDataSource.uploadPhoto(file);
                     }
                 })
-                .subscribe(new Consumer<UploadPhoto>() {
+                // 将多个流处理为列表
+                .toList()
+                .map(new Function<List<UploadPhoto>, Object>() {
                     @Override
-                    public void accept(UploadPhoto uploadPhoto) throws Exception {
-                        uploadCount++;
-                        if (uploadCount >= 20) {
-                            FileUtils.deleteFile(new File(mContext.getCacheDir() + "/portrait/"));
-                        }
+                    public Object apply(List<UploadPhoto> uploadPhotos) throws Exception {
+                        // 清除照片缓存
+                        return mDataSource.clearPhotoCache();
+                    }
+                })
+                // 定义事件发生时的线程
+                .subscribeOn(Schedulers.io())
+                // 定义最终订阅时的线程
+                .observeOn(Schedulers.io())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+
                     }
                 }, new ThrowableConsumer(mView));
-                mCompositeDisposable.add(disposable);
+        mCompositeDisposable.add(disposable);
     }
 
     private List<String> loadAllPicture() {

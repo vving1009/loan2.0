@@ -20,15 +20,16 @@ import com.jiaye.cashloan.http.data.loan.UploadPhotoRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.utils.Base64Util;
+import com.jiaye.cashloan.utils.FileUtils;
 
 import org.reactivestreams.Publisher;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -135,6 +136,42 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                 });
     }
 
+    @Override
+    public Flowable<Object> clearPhotoCache() {
+        return Flowable.just(new Object()).doOnNext(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                FileUtils.deleteFile(new File(LoanApplication.getInstance().getCacheDir() + "/portrait/"));
+            }
+        });
+    }
+
+    @Override
+    public Flowable<QueryUploadPhoto> queryUploadPhoto() {
+        return queryLoanId().map(new Function<String, QueryUploadPhotoRequest>() {
+            @Override
+            public QueryUploadPhotoRequest apply(String loanId) throws Exception {
+                QueryUploadPhotoRequest request = new QueryUploadPhotoRequest();
+                request.setLoanId(loanId);
+                return request;
+            }
+        }).compose(new SatcatcheResponseTransformer<QueryUploadPhotoRequest, QueryUploadPhoto>("queryUploadPhoto"));
+
+    }
+
+    @Override
+    public Flowable<UploadPhoto> uploadPhoto(final File file) {
+        return queryLoanId().map(new Function<String, UploadPhotoRequest>() {
+            @Override
+            public UploadPhotoRequest apply(String loanId) throws Exception {
+                UploadPhotoRequest request = new UploadPhotoRequest();
+                request.setLoanId(loanId);
+                request.setBase64(Base64Util.fileToBase64(file));
+                return request;
+            }
+        }).compose(new SatcatcheResponseTransformer<UploadPhotoRequest, UploadPhoto>("uploadPhoto"));
+    }
+
     private Flowable<String> queryLoanId() {
         return Flowable.just("SELECT loan_id FROM user;")
                 .subscribeOn(Schedulers.io())
@@ -154,31 +191,5 @@ public class LoanAuthRepository implements LoanAuthDataSource {
                         return loanId;
                     }
                 });
-    }
-
-    @Override
-    public Flowable<QueryUploadPhoto> queryUploadPhoto() {
-        return queryLoanId().map(new Function<String, QueryUploadPhotoRequest>() {
-            @Override
-            public QueryUploadPhotoRequest apply(String loanId) throws Exception {
-                QueryUploadPhotoRequest request = new QueryUploadPhotoRequest();
-                request.setLoanId(loanId);
-                return request;
-            }
-        }).compose(new SatcatcheResponseTransformer<QueryUploadPhotoRequest, QueryUploadPhoto>("queryUploadPhoto"));
-
-    }
-
-    @Override
-    public Flowable<UploadPhoto> uploadPhoto(final File file) {
-        return queryLoanId().observeOn(Schedulers.from(Executors.newSingleThreadExecutor())).map(new Function<String, UploadPhotoRequest>() {
-            @Override
-            public UploadPhotoRequest apply(String loanId) throws Exception {
-                UploadPhotoRequest request = new UploadPhotoRequest();
-                request.setLoanId(loanId);
-                request.setBase64(Base64Util.fileToBase64(file));
-                return request;
-            }
-        }).compose(new SatcatcheResponseTransformer<UploadPhotoRequest, UploadPhoto>("uploadPhoto"));
     }
 }

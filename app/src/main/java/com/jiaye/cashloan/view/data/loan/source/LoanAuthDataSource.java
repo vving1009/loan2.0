@@ -33,6 +33,11 @@ public interface LoanAuthDataSource {
     Flowable<String> requestLoanConfirm();
 
     /**
+     * 清除照片缓存
+     */
+    Flowable<Object> clearPhotoCache();
+
+    /**
      * 请求上传人像照片的数量
      */
     Flowable<QueryUploadPhoto> queryUploadPhoto();
