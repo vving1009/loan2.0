@@ -100,6 +100,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                     if (i == 0) {
                         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                             mPresenter.uploadContact();
+                        } else {
+                            getActivity().finish();
                         }
                     } else if (i == 1) {
                         if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -111,6 +113,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
             case REQUEST_INFO_PERMISSION:
                 if (isGrant(grantResults)) { // 如果用户授权,获取通讯录并上传
                     mPresenter.uploadContact();
+                } else {
+                    getActivity().finish();
                 }
                 break;
             case REQUEST_LOCATION_PERMISSION:
