@@ -369,24 +369,29 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
     }
 
     private List<String> loadAllPicture() {
-        String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE};
-        Cursor cursor = mContext.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                columns, null, null, MediaStore.Images.Media.SIZE + " DESC");
-        int fileColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        int sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
         List<String> paths = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            if (cursor.getInt(sizeColumn) < 100000) continue;  //不使用小于100K的图片
-            String imageFilePath = cursor.getString(fileColumn);
-            BitmapFactory.decodeFile(imageFilePath, options);
-            int maxLength = Math.max(options.outWidth, options.outHeight);
-            if (maxLength >= 900 && maxLength < 10000) {
-                paths.add(imageFilePath);
+        String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE, MediaStore.Images.Media.DATE_ADDED};
+        try {
+            Cursor cursor = mContext.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    columns, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC");
+            int fileColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            int sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            while (cursor.moveToNext()) {
+                if (cursor.getInt(sizeColumn) < 100000) continue;  //不使用小于100K的图片
+                String imageFilePath = cursor.getString(fileColumn);
+                BitmapFactory.decodeFile(imageFilePath, options);
+                int maxLength = Math.max(options.outWidth, options.outHeight);
+                if (maxLength >= 900 && maxLength < 10000) {
+                    paths.add(imageFilePath);
+                }
             }
+            cursor.close();
+        } catch (SecurityException e) {
+            Logger.d("Permission Denial : READ_EXTERNAL_STORAGE");
+            e.printStackTrace();
         }
-        cursor.close();
         return paths;
     }
 }
