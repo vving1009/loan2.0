@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.service.LocationService;
+import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
@@ -55,6 +57,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static final int REQUEST_LOCATION_PERMISSION = 105;
 
+    private static final int REQUEST_STORAGE_PERMISSION = 106;
+    
     private static final int REQUEST = 200;
 
     private LoanAuthContract.Presenter mPresenter;
@@ -62,6 +66,8 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     private Adapter mAdapter;
 
     private Button btnNext;
+
+    private PermissionDialog mPermissionDialog;
 
     public static LoanAuthFragment newInstance() {
         Bundle args = new Bundle();
@@ -101,7 +107,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                             mPresenter.uploadContact();
                         } else {
-                            getActivity().finish();
+                            mPermissionDialog.show("读取联系人");
                         }
                     } else if (i == 1) {
                         if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -114,12 +120,19 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 if (isGrant(grantResults)) { // 如果用户授权,获取通讯录并上传
                     mPresenter.uploadContact();
                 } else {
-                    getActivity().finish();
+                    mPermissionDialog.show("读取联系人");
                 }
                 break;
             case REQUEST_LOCATION_PERMISSION:
                 if (isGrant(grantResults)) { // 如果用户授权,获取地理位置并上传
                     uploadLocation();
+                }
+                break;
+            case REQUEST_STORAGE_PERMISSION:
+                if (isGrant(grantResults)) { // 如果用户授权,上传人像照片
+                    mPresenter.uploadPhoto();
+                } else {
+                    mPermissionDialog.show("读存储设备");
                 }
                 break;
         }
@@ -146,12 +159,41 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
                 mPresenter.confirm();
             }
         });
+        mPermissionDialog = new PermissionDialog(getContext());
+        
         mPresenter = new LoanAuthPresenter(this, new LoanAuthRepository());
         mPresenter.subscribe();
+        
         hasPermission();
-        mPresenter.uploadPhoto();
+
         return root;
     }
+
+    private class PermissionDialog extends BaseDialog {
+
+        private TextView textDialogMessage;
+
+        public PermissionDialog(Context context) {
+            super(context);
+            View dialog = LayoutInflater.from(getActivity()).inflate(R.layout.permission_dialog_layout, null);
+            textDialogMessage = dialog.findViewById(R.id.message);
+            dialog.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PermissionDialog.this.dismiss();
+                    getActivity().finish();
+                }
+            });
+            setContentView(dialog);
+        }
+
+        void show(String message) {
+            textDialogMessage.setText("请确保打开" + message + "权限，否则不能使用该功能。");
+            dismissProgressDialog();
+            super.show();
+        }
+    }
+
 
     @Override
     public void onResume() {
@@ -278,7 +320,16 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         } else if (requestFine) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         }
-
+        requestStoragePermission();
+    }
+    
+    @TargetApi(16)
+    private void requestStoragePermission() {
+        if (checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            mPresenter.uploadPhoto();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
+        }
     }
 
     private void showLoanAuthOCRGranted() {
