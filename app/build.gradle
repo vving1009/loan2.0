@@ -62,6 +62,12 @@ android {
             storeFile file('../key')
             storePassword 'com.jiaye.cashloan'
         }
+        release {
+            keyAlias 'loan'
+            keyPassword 'com.jiaye.cashloan'
+            storeFile file('../key')
+            storePassword 'com.jiaye.cashloan'
+        }
     }
     android.applicationVariants.all { variant ->
         renameApk(variant)
