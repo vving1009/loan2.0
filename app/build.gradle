@@ -43,18 +43,6 @@ android {
             flavorBuildConfigField(urlProduct, loadFlavorProperties('product'))
         }
     }
-    buildTypes {
-        debug {
-            buildBuildConfigField(debug, loadBuildProperties('debug'))
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        release {
-            buildBuildConfigField(release, loadBuildProperties('release'))
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     signingConfigs {
         debug {
             keyAlias 'loan'
@@ -67,6 +55,20 @@ android {
             keyPassword 'com.jiaye.cashloan'
             storeFile file('../key')
             storePassword 'com.jiaye.cashloan'
+        }
+    }
+    buildTypes {
+        debug {
+            buildBuildConfigField(debug, loadBuildProperties('debug'))
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            buildBuildConfigField(release, loadBuildProperties('release'))
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     android.applicationVariants.all { variant ->
