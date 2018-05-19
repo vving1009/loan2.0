@@ -19,11 +19,23 @@ public class InfoContactContract {
 
         void setFamilyPhone(String text);
 
+        void setFamilyName2(String text);
+
+        void setFamily2(String text);
+
+        void setFamilyPhone2(String text);
+
         void setFriendName(String text);
 
         void setFriend(String text);
 
         void setFriendPhone(String text);
+
+        void setFriendName2(String text);
+
+        void setFriend2(String text);
+
+        void setFriendPhone2(String text);
     }
 
     interface Presenter extends BasePresenter {

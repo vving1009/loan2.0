@@ -46,9 +46,17 @@ public class InfoContactPresenter extends BasePresenterImpl implements InfoConta
                                 mView.setFamily(contact.getData()[i].getRelation());
                                 mView.setFamilyPhone(contact.getData()[i].getPhone());
                             } else if (i == 1) {
+                                mView.setFamilyName2(contact.getData()[i].getName());
+                                mView.setFamily2(contact.getData()[i].getRelation());
+                                mView.setFamilyPhone2(contact.getData()[i].getPhone());
+                            } else if (i == 2) {
                                 mView.setFriendName(contact.getData()[i].getName());
                                 mView.setFriend(contact.getData()[i].getRelation());
                                 mView.setFriendPhone(contact.getData()[i].getPhone());
+                            } else if (i == 3) {
+                                mView.setFriendName2(contact.getData()[i].getName());
+                                mView.setFriend2(contact.getData()[i].getRelation());
+                                mView.setFriendPhone2(contact.getData()[i].getPhone());
                             }
                             mView.dismissProgressDialog();
                         }
