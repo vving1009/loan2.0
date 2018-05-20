@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.service;
 
-import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +28,7 @@ public class LocationService extends Service {
 
     private UploadLocationRequest request = new UploadLocationRequest();
     private Disposable mDisposable;
+    LocationManager locationManager;
 
     public LocationService() {
     }
@@ -41,6 +41,7 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        locationManager = (LocationManager) LoanApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
         mDisposable = uploadLocation()
                 .subscribe(new Consumer<UploadLocation>() {
                     @Override
@@ -87,20 +88,22 @@ public class LocationService extends Service {
     }
 
     private UploadLocationRequest getLocationRequest() {
-        LocationManager locationManager = (LocationManager) LoanApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = locationManager.getProviders(true);
-        String locationProvider = null;
-        if (providers.contains(LocationManager.GPS_PROVIDER)) {
-            locationProvider = LocationManager.GPS_PROVIDER;
-        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
-            locationProvider = LocationManager.NETWORK_PROVIDER;
-        }
-        @SuppressLint("MissingPermission")
-        Location location = locationManager.getLastKnownLocation(locationProvider);
-        if (location != null) {
-            Logger.d("location= :" + location.getLatitude() + "," + location.getLongitude());
-            request.setLongitude(String.valueOf(location.getLongitude()));
-            request.setLatitude(String.valueOf(location.getLatitude()));
+        if (locationManager != null) {
+            List<String> providers = locationManager.getProviders(true);
+            Location location = null;
+            if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+                try {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                } catch (SecurityException e) {
+                    Logger.d("没有定位权限。");
+                    e.printStackTrace();
+                }
+            }
+            if (location != null) {
+                Logger.d("location= :" + location.getLatitude() + "," + location.getLongitude());
+                request.setLongitude(String.valueOf(location.getLongitude()));
+                request.setLatitude(String.valueOf(location.getLatitude()));
+            }
         }
         return request;
     }

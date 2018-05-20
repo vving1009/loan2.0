@@ -81,12 +81,15 @@ public class FileUtils {
         context.startActivity(intent);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void deleteFile(File file) {
         if (file.exists()) {
             if (file.isDirectory()) {
                 File[] files = file.listFiles();
-                for (File f : files) {
-                    deleteFile(f);
+                if (files != null) {
+                    for (File f : files) {
+                        deleteFile(f);
+                    }
                 }
                 file.delete();
             } else if (file.isFile()) {
