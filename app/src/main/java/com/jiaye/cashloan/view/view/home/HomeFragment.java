@@ -1,8 +1,11 @@
 package com.jiaye.cashloan.view.view.home;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +28,31 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+import pub.devrel.easypermissions.PermissionRequest;
+
 /**
  * HomeFragment
  *
  * @author 贾博瑄
  */
+public class HomeFragment extends BaseFragment implements HomeContract.View, EasyPermissions.PermissionCallbacks {
 
-public class HomeFragment extends BaseFragment implements HomeContract.View {
+    private final int CONTACTS_READ_STORAGE_REQUEST_CODE = 101;
+
+    @SuppressLint("InlinedApi")
+    private String[] permissions = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private HomePresenter mPresenter;
 
     private LinearLayout mLayoutProduct;
 
     private Banner mBanner;
+
+    private String loanId;
+
+    private PermissionRequest mPermissionRequest;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,6 +71,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mBanner.setImageLoader(new GlideImageLoader());
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
+        mPermissionRequest = new PermissionRequest.Builder(HomeFragment.this, CONTACTS_READ_STORAGE_REQUEST_CODE, permissions)
+                .setRationale("如需使用该功能，请打开权限")
+                .setPositiveButtonText(R.string.yes)
+                .setNegativeButtonText(R.string.no)
+                .build();
         return root;
     }
 
@@ -93,13 +113,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             Glide.with(this).load(product.getIcon()).into(icon);
             Glide.with(this).load(product.getUrl()).into(image);
             textTitle.setText(product.getName());
-            final String loanId = product.getId();
+            loanId = product.getId();
             final boolean isOpen = product.isOpen();
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (isOpen) {
-                        mPresenter.loan(loanId);
+                        EasyPermissions.requestPermissions(mPermissionRequest);
                     }
                 }
             });
@@ -116,5 +136,33 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void startAuthView() {
         Intent intent = new Intent(getActivity(), AuthActivity.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        if (perms.contains("android.permission.READ_EXTERNAL_STORAGE") && perms.contains("android.permission.READ_CONTACTS")) {
+            mPresenter.loan(loanId);
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog
+                    .Builder(this)
+                    .setTitle("权限申请")
+                    .setRationale("此功能需要" + "" + "权限，否则无法正常使用，是否打开设置")
+                    .setPositiveButton("好")
+                    .setNegativeButton("不行")
+                    .build()
+                    .show();
+        }
     }
 }

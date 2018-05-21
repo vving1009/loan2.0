@@ -233,4 +233,7 @@
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>
     <string name="error_9994">您已在另一台设备上登录</string>
+    <!--permission dialog-->
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
 </resources>
