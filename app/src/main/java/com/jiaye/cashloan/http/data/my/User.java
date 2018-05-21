@@ -26,12 +26,15 @@ public class User extends SatcatcheChildResponse implements Parcelable {
     private String phone;
 
     /*借贷审批次数*/
+    @SerializedName("loan_approval")
     private int approveNumber;
 
     /*放款还贷次数*/
+    @SerializedName("loan_repayment")
     private int progressNumber;
 
     /*历史借贷次数*/
+    @SerializedName("loan_history")
     private int historyNumber;
 
     /*前台实际显示的姓名信息
