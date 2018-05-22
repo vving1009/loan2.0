@@ -66,16 +66,8 @@
     <string name="loan_details_other">综合费率</string>
     <string name="loan_details_deadline">本期还款日</string>
     <string name="loan_details_status">还款状态</string>
-    <string name="loan_details_progress">查看借款进度</string>
+    <string name="loan_details_contract">查看借款合同</string>
     <string name="loan_details_plan">查看还款计划</string>
-    <string name="loan_progress_title">借款进度</string>
-    <string name="loan_progress_step">借款使用此步骤</string>
-    <string name="loan_progress_progress">我的借款进度</string>
-    <string name="loan_progress_phone">如有疑问请联系客服400–8780-777</string>
-    <string name="loan_progress_bind">绑定</string>
-    <string name="loan_progress_contract">签订</string>
-    <string name="loan_progress_watch">查看</string>
-    <string name="loan_progress_repayment">还款</string>
     <string name="loan_plan_title">还款计划</string>
     <string name="loan_plan_date">还款日</string>
     <string name="loan_plan_money">月还款额</string>
@@ -223,7 +215,6 @@
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <string name="error_my_credit">没有设置密码或签约，暂时无法提现</string>
-    <string name="error_my_credit_account">已开户</string>
     <string name="error_my_credit_un_account">请先完成身份认证</string>
     <string name="error_my_credit_cash">格式不正确，请重新输入</string>
     <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>

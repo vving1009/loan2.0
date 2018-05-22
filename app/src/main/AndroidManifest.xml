@@ -72,9 +72,6 @@
             android:name=".view.view.loan.LoanDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.LoanProgressActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.view.loan.LoanPlanActivity"
             android:screenOrientation="portrait" />
         <activity

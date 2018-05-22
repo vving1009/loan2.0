@@ -67,8 +67,8 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         mAdapter.setList(cards);
     }
 
-    private void showLoanProgressView(String loanId) {
-        Intent intent = new Intent(this, LoanProgressActivity.class);
+    private void showLoanContractView(String loanId) {
+        Intent intent = new Intent(this, LoanContractListActivity.class);
         intent.putExtra("loanId", loanId);
         startActivity(intent);
     }
@@ -88,9 +88,10 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             View view = LayoutInflater.from(LoanDetailsActivity.this).inflate(R.layout.loan_details_item, parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.setListener(new ViewHolder.OnClickViewHolderListener() {
+
                 @Override
-                public void onClickProgress(ViewHolder viewHolder) {
-                    showLoanProgressView(mCards[viewHolder.getLayoutPosition()].getId());
+                public void onClickContract(ViewHolder viewHolder) {
+                    showLoanContractView(mCards[viewHolder.getLayoutPosition()].getId());
                 }
 
                 @Override
@@ -104,7 +105,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setTitle(mCards[position].getId());
-            holder.setDate(mCards[position].getDate());
             holder.setName(mCards[position].getName());
             holder.setApprove(mCards[position].getApproveNum());
             holder.setTotal(mCards[position].getCompactNum());
@@ -112,7 +112,7 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             holder.setOther(mCards[position].getFee());
             holder.setDeadline(mCards[position].getReturnDate());
             holder.setStatus(mCards[position].getReturnState());
-            holder.setPlanEnabled(mCards[position].getPlan().equals("1"));
+            //holder.setPlanEnabled(mCards[position].getPlan().equals("1"));
         }
 
         @Override
@@ -134,7 +134,7 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         private interface OnClickViewHolderListener {
 
-            void onClickProgress(ViewHolder viewHolder);
+            void onClickContract(ViewHolder viewHolder);
 
             void onClickPlan(ViewHolder viewHolder);
         }
@@ -142,8 +142,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         private OnClickViewHolderListener mListener;
 
         private TextView mTextTitle;
-
-        private TextView mTextDate;
 
         private TextView mTextName;
 
@@ -164,7 +162,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
         public ViewHolder(View itemView) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.text_title);
-            mTextDate = itemView.findViewById(R.id.text_date);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextApprove = itemView.findViewById(R.id.text_approve);
             mTextTotal = itemView.findViewById(R.id.text_total);
@@ -173,11 +170,11 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextDeadline = itemView.findViewById(R.id.text_deadline);
             mTextStatus = itemView.findViewById(R.id.text_status);
             mBtnPlan = itemView.findViewById(R.id.btn_plan);
-            itemView.findViewById(R.id.btn_progress).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.btn_contract).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onClickProgress(ViewHolder.this);
+                        mListener.onClickContract(ViewHolder.this);
                     }
                 }
             });
@@ -197,10 +194,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         public void setTitle(String text) {
             mTextTitle.setText(text);
-        }
-
-        public void setDate(String text) {
-            mTextDate.setText(text);
         }
 
         public void setName(String text) {

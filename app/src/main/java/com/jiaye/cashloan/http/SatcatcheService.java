@@ -291,7 +291,7 @@ public interface SatcatcheService {
     /**
      * 还款列表
      */
-    @POST("shjk/repaymentPlans")
+    @POST("repaymentPlan")
     Flowable<SatcatcheResponse<LoanPlan>> loanPlan(@Body SatcatcheRequest<LoanPlanRequest> request);
 
     /**

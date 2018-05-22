@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.data.loan.auth.source.file.LoanAuthFileModel;
 import com.jiaye.cashloan.view.data.loan.auth.source.file.LoanAuthFileRepository;
-import com.jiaye.cashloan.view.view.loan.LoanProgressActivity;
 import com.jph.takephoto.app.TakePhotoAppCompatActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.TResult;

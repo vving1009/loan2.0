@@ -29,10 +29,6 @@ public class LoanApply extends SatcatcheChildResponse {
         @SerializedName("jla_id")
         private String id;
 
-        /*日期*/
-        @SerializedName("jla_enterDate")
-        private String date;
-
         /*产品名称*/
         @SerializedName("jpd_name")
         private String name;
@@ -71,14 +67,6 @@ public class LoanApply extends SatcatcheChildResponse {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
         }
 
         public String getName() {

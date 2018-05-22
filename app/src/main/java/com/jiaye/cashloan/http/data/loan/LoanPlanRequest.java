@@ -11,7 +11,7 @@ import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 public class LoanPlanRequest extends SatcatcheChildRequest {
 
-    @SerializedName("jla_id")
+    @SerializedName("zd_jla_id")
     private String loanId;
 
     public String getLoanId() {
