@@ -53,10 +53,6 @@ public class LoanApply extends SatcatcheChildResponse {
         @SerializedName("return_date")
         private String returnDate;
 
-        /*还款状态*/
-        @SerializedName("return_status")
-        private String returnState;
-
         /*是否查看还款计划 0 否 1 是*/
         @SerializedName("if_replayment")
         private String plan;
@@ -115,14 +111,6 @@ public class LoanApply extends SatcatcheChildResponse {
 
         public void setReturnDate(String returnDate) {
             this.returnDate = returnDate;
-        }
-
-        public String getReturnState() {
-            return returnState;
-        }
-
-        public void setReturnState(String returnState) {
-            this.returnState = returnState;
         }
 
         public String getPlan() {

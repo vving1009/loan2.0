@@ -111,8 +111,7 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             holder.setLoan(mCards[position].getLoanNum());
             holder.setOther(mCards[position].getFee());
             holder.setDeadline(mCards[position].getReturnDate());
-            holder.setStatus(mCards[position].getReturnState());
-            //holder.setPlanEnabled(mCards[position].getPlan().equals("1"));
+            holder.setPlanEnabled(mCards[position].getPlan().equals("1"));
         }
 
         @Override
@@ -155,8 +154,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         private TextView mTextDeadline;
 
-        private TextView mTextStatus;
-
         private Button mBtnPlan;
 
         public ViewHolder(View itemView) {
@@ -168,7 +165,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
             mTextLoan = itemView.findViewById(R.id.text_loan);
             mTextOther = itemView.findViewById(R.id.text_other);
             mTextDeadline = itemView.findViewById(R.id.text_deadline);
-            mTextStatus = itemView.findViewById(R.id.text_status);
             mBtnPlan = itemView.findViewById(R.id.btn_plan);
             itemView.findViewById(R.id.btn_contract).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -218,10 +214,6 @@ public class LoanDetailsActivity extends BaseActivity implements LoanDetailsCont
 
         public void setDeadline(String text) {
             mTextDeadline.setText(text);
-        }
-
-        public void setStatus(String text) {
-            mTextStatus.setText(text);
         }
 
         public void setPlanEnabled(boolean enabled) {

@@ -65,7 +65,6 @@
     <string name="loan_details_loan">借款金额</string>
     <string name="loan_details_other">综合费率</string>
     <string name="loan_details_deadline">本期还款日</string>
-    <string name="loan_details_status">还款状态</string>
     <string name="loan_details_contract">查看借款合同</string>
     <string name="loan_details_plan">查看还款计划</string>
     <string name="loan_plan_title">还款计划</string>
