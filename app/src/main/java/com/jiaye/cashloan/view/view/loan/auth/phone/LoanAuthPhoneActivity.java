@@ -14,6 +14,7 @@ import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneRepository;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
+import com.jiaye.cashloan.widget.CustomProgressDialog;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 import java.util.ArrayList;
@@ -44,9 +45,13 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
 
     private ArrayList<LoanEditText> mImgArray;
 
+    private CustomProgressDialog mCustomProgressDialog;
+
     private int mSmsIndex = -1;
 
     private int mImgIndex = -1;
+
+    private boolean showCustomDialog = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showCustomDialog = true;
                 mPresenter.submit();
             }
         });
@@ -227,5 +233,27 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
     @Override
     public void result() {
         finish();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (showCustomDialog) {
+            if (mCustomProgressDialog == null) {
+                mCustomProgressDialog = new CustomProgressDialog(this);
+            }
+            mCustomProgressDialog.show("认证中, 预计等待2-3分钟");
+        } else {
+            super.showProgressDialog();
+        }
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (mCustomProgressDialog != null && mCustomProgressDialog.isShowing()) {
+            mCustomProgressDialog.dismiss();
+            showCustomDialog = false;
+        } else {
+            super.dismissProgressDialog();
+        }
     }
 }
