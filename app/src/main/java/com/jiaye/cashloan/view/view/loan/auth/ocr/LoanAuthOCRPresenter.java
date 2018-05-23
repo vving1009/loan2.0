@@ -6,6 +6,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
+import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -109,6 +110,14 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
     public void submit() {
         if (TextUtils.isEmpty(mView.getName())) {
             mView.showToastById(R.string.error_loan_auth_ocr);
+            return;
+        }
+        if (!mView.getIdCard().matches(RegexUtil.idCard())) {
+            mView.showToastById(R.string.error_loan_auth_ocr_idcard);
+            return;
+        }
+        if (!mView.getIdCardDate().matches(RegexUtil.idCardDate())) {
+            mView.showToastById(R.string.error_loan_auth_ocr_date);
             return;
         }
         Disposable disposable = mDataSource.check(mId, mView.getName())

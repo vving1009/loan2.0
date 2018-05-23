@@ -199,6 +199,16 @@ public class LoanAuthOCRActivity extends TakePhotoAppCompatActivity implements L
     }
 
     @Override
+    public String getIdCard() {
+        return mTextId.getText().toString();
+    }
+
+    @Override
+    public String getIdCardDate() {
+        return mTextDate.getText().toString();
+    }
+
+    @Override
     public void result() {
         finish();
     }

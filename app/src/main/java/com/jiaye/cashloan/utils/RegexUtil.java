@@ -22,4 +22,18 @@ public class RegexUtil {
     public static String password() {
         return "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
     }
+
+    /**
+     * 身份证为18位数字(最后一位可能为X)
+     */
+    public static String idCard() {
+        return "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|x|X)$";
+    }
+
+    /**
+     * 身份证有效期20180101-20190101
+     */
+    public static String idCardDate() {
+        return "^\\d{8}-\\d{8}$";
+    }
 }

@@ -29,6 +29,10 @@ public interface LoanAuthOCRContract {
 
         String getName();
 
+        String getIdCard();
+
+        String getIdCardDate();
+
         void result();
     }
 
