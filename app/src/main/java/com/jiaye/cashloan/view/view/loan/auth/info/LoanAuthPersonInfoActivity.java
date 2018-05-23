@@ -193,7 +193,7 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                        mTextRegisterCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2));
+                        mTextRegisterCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3));
                     }
                 }).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
                     @Override
@@ -215,7 +215,7 @@ public class LoanAuthPersonInfoActivity extends BaseActivity implements LoanAuth
                         });
                     }
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
-        mOptionsRegisterCity.setPicker(areas, areas2);
+        mOptionsRegisterCity.setPicker(areas, areas2, areas3);
 
         mOptionsCity =
                 new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
