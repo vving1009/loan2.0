@@ -84,7 +84,7 @@ repositories {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     api 'com.android.support:appcompat-v7:26.1.0'
     api 'com.android.support:recyclerview-v7:26.1.0'
     api 'com.android.support:design:26.1.0'
@@ -116,12 +116,11 @@ dependencies {
     api 'com.tencent.bugly:crashreport:2.6.6.1'
     // https://github.com/zetbaitsu/Compressor
     api 'id.zelory:compressor:1.0.5'
-    //https://github.com/googlesamples/easypermissions
-    api 'pub.devrel:easypermissions:1.1.0'
     // module
     implementation project(':tongdun')
     implementation project(':gesturelock')
     implementation project(':takephoto')
+    implementation project(':easypermissions')
 }
 
 static def versionName(properties) {

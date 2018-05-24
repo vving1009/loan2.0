@@ -30,7 +30,6 @@ import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
-import pub.devrel.easypermissions.PermissionRequest;
 
 /**
  * HomeFragment
@@ -52,8 +51,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     private String loanId;
 
-    private PermissionRequest mPermissionRequest;
-
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -71,11 +68,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         mBanner.setImageLoader(new GlideImageLoader());
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
-        mPermissionRequest = new PermissionRequest.Builder(HomeFragment.this, CONTACTS_READ_STORAGE_REQUEST_CODE, permissions)
-                .setRationale("如需使用该功能，请打开权限")
-                .setPositiveButtonText(R.string.yes)
-                .setNegativeButtonText(R.string.no)
-                .build();
         return root;
     }
 
@@ -119,7 +111,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
                 @Override
                 public void onClick(View v) {
                     if (isOpen) {
-                        EasyPermissions.requestPermissions(mPermissionRequest);
+                        EasyPermissions.requestPermissions(HomeFragment.this, CONTACTS_READ_STORAGE_REQUEST_CODE, permissions);
                     }
                 }
             });
@@ -138,31 +130,39 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         startActivity(intent);
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if (perms.contains("android.permission.READ_EXTERNAL_STORAGE") && perms.contains("android.permission.READ_CONTACTS")) {
+        if (EasyPermissions.hasPermissions(getContext(), permissions)) {
             mPresenter.loan(loanId);
         }
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog
-                    .Builder(this)
-                    .setTitle("权限申请")
-                    .setRationale("此功能需要" + "" + "权限，否则无法正常使用，是否打开设置")
-                    .setPositiveButton("好")
-                    .setNegativeButton("不行")
-                    .build()
-                    .show();
+        StringBuilder sb = new StringBuilder();
+        String s;
+        for (String perm : perms) {
+            switch (perm) {
+                case Manifest.permission.READ_CONTACTS:
+                    s = "读取联系人";
+                    break;
+                case Manifest.permission.READ_EXTERNAL_STORAGE:
+                    s = "读存储设备";
+                    break;
+                default:
+                    s = "";
+                    break;
+            }
+            sb.append(s).append("，");
         }
+        sb.deleteCharAt(sb.lastIndexOf("，"));
+        new AppSettingsDialog
+                .Builder(this)
+                .setTitle("权限申请")
+                .setRationale("此功能需要" + sb.toString() + "权限，否则无法正常使用，是否打开设置？")
+                .setPositiveButton("好")
+                .setNegativeButton("不行")
+                .build()
+                .show();
     }
 }

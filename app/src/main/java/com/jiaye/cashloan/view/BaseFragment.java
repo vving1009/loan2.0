@@ -1,8 +1,11 @@
 package com.jiaye.cashloan.view;
 
 import android.app.ProgressDialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * BaseFragment
@@ -39,5 +42,11 @@ public abstract class BaseFragment extends Fragment implements BaseViewContract 
         if (mDialog != null) {
             mDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }
