@@ -97,6 +97,10 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         phone.setIcon(R.drawable.loan_auth_ic_phone);
                         phone.setName(R.string.loan_auth_phone);
                         setLoanAuthModel(loanAuth.getPhoneState(), phone, false);
+                        isVerify = isVerify && phone.isVerify();
+                        if (isVerify) {
+                            mStep = 3;
+                        }
                         list.add(phone);
 
                         LoanAuthModel face = new LoanAuthModel();
@@ -105,7 +109,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         setLoanAuthModel(loanAuth.getFaceState(), face, false);
                         isVerify = isVerify && face.isVerify();
                         if (isVerify) {
-                            mStep = 3;
+                            mStep = 4;
                         }
                         list.add(face);
 
@@ -115,7 +119,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         setLoanAuthModel(loanAuth.getPersonState(), person, true);
                         isVerify = isVerify && person.isVerify();
                         if (isVerify) {
-                            mStep = 4;
+                            mStep = 5;
                         }
                         list.add(person);
 
@@ -125,7 +129,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         setLoanAuthModel(loanAuth.getSignState(), visa, false);
                         isVerify = isVerify && visa.isVerify();
                         if (isVerify) {
-                            mStep = 5;
+                            mStep = 6;
                         }
                         list.add(visa);
 
@@ -172,21 +176,21 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     }
                     break;
                 case R.string.loan_auth_face:
-                    if (mStep < 2) {
+                    if (mStep < 3) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {
                         mView.showLoanAuthFaceView();
                     }
                     break;
                 case R.string.loan_auth_info:
-                    if (mStep < 3) {
+                    if (mStep < 4) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {
                         mView.showLoanAuthInfoView();
                     }
                     break;
                 case R.string.loan_auth_visa:
-                    if (mStep < 4) {
+                    if (mStep < 5) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {
                         mView.showLoanAuthVisaView();
@@ -196,7 +200,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                     mView.showLoanAuthVisaHistoryView();
                     break;
                 case R.string.loan_auth_taobao:
-                    if (mStep < 5) {
+                    if (mStep < 6) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {
                         mView.showLoanAuthTaoBaoView();
