@@ -84,7 +84,7 @@ repositories {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     api 'com.android.support:appcompat-v7:26.1.0'
     api 'com.android.support:recyclerview-v7:26.1.0'
     api 'com.android.support:design:26.1.0'
@@ -120,6 +120,7 @@ dependencies {
     implementation project(':tongdun')
     implementation project(':gesturelock')
     implementation project(':takephoto')
+    // https://github.com/googlesamples/easypermissions
     implementation project(':easypermissions')
 }
 

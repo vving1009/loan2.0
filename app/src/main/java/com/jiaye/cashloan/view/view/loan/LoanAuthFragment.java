@@ -37,6 +37,7 @@ import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
 import java.util.List;
 
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
@@ -53,20 +54,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     private static final int REQUEST_FACE_PERMISSION = 102;
 
-    private static final int REQUEST_LOCATION_PERMISSION = 103;
-    
     private static final int REQUEST = 200;
-
-    private static final int OPEN_GPS_REQUEST_CODE = 301;
 
     private LoanAuthContract.Presenter mPresenter;
 
     private Adapter mAdapter;
 
     private Button btnNext;
-
-    private String[] locationPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION};
 
     private String[] cameraPermissions = {Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -84,33 +78,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         if (requestCode == REQUEST && resultCode == RESULT_OK) {
             result();
         }
-        if (requestCode == OPEN_GPS_REQUEST_CODE){
-            if (checkGPSIsOpen()) {
-                startLocationService();
-            }
-        }
     }
-
-/*    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_OCR_PERMISSION:
-                if (isGrant(grantResults)) {
-                    showLoanAuthOCRGranted();
-                } else {
-                    showToastById(R.string.error_loan_auth_camera_and_write);
-                }
-                break;
-            case REQUEST_FACE_PERMISSION:
-                if (isGrant(grantResults)) {
-                    showLoanAuthFaceGranted();
-                } else {
-                    showToastById(R.string.error_loan_auth_camera_and_write);
-                }
-                break;
-        }
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }*/
 
     @Nullable
     @Override
@@ -166,9 +134,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthOCRView() {
-        /*if (hasCameraPermission(REQUEST_OCR_PERMISSION)) {
-            showLoanAuthOCRGranted();
-        }*/
         if (EasyPermissions.hasPermissions(getContext(), cameraPermissions)) {
             showLoanAuthOCRGranted();
         } else {
@@ -192,9 +157,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthFaceView() {
-        /*if (hasCameraPermission(REQUEST_FACE_PERMISSION)) {
-            showLoanAuthFaceGranted();
-        }*/
         if (EasyPermissions.hasPermissions(getContext(), cameraPermissions)) {
             showLoanAuthFaceGranted();
         } else {
@@ -235,44 +197,13 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
         getActivity().finish();
     }
 
-    private boolean isGrant(@NonNull int[] grantResults) {
-        boolean grant = true;
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                grant = false;
-            }
-        }
-        return grant;
-    }
-
-/*    private boolean hasCameraPermission(int requestCode) {
-        boolean hasPermission = false;
-        boolean requestCamera = checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
-        boolean requestWrite = checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
-        if (requestCamera && requestWrite) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-        } else if (requestCamera) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, requestCode);
-        } else if (requestWrite) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-        } else {
-            hasPermission = true;
-        }
-        return hasPermission;
-    }*/
-
     private void hasPermission() {
-        // READ_CONTACTS和READ_EXTERNAL_STORAGE权限已在HomeFragment申请
+        // READ_CONTACTS和READ_EXTERNAL_STORAGE和LOCATION权限已在HomeFragment申请
         if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_CONTACTS)) {
             mPresenter.uploadContact();
         }
         if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
             mPresenter.uploadPhoto();
-        }
-        if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            uploadLocation();
-        } else {
-            EasyPermissions.requestPermissions(this, REQUEST_LOCATION_PERMISSION, locationPermissions);
         }
     }
 
@@ -284,45 +215,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     private void showLoanAuthFaceGranted() {
         Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
         startActivity(intent);
-    }
-
-    private boolean checkGPSIsOpen() {
-        boolean isOpen = false;
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager != null) {
-            isOpen = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        }
-        return isOpen;
-    }
-
-    private void uploadLocation() {
-        if (checkGPSIsOpen()) {
-            startLocationService();
-        } else {
-            new AlertDialog.Builder(getContext())
-                    .setMessage("没打开定位功能，是否打开？")
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent();
-                            intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                            startActivityForResult(intent, OPEN_GPS_REQUEST_CODE);
-                        }
-                    })
-                    .setCancelable(true)
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    }).show();
-
-        }
-    }
-
-    private void startLocationService() {
-        Intent intent = new Intent(getContext(), LocationService.class);
-        getContext().startService(intent);
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -431,9 +323,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            uploadLocation();
-        }
         if (requestCode == REQUEST_FACE_PERMISSION &&
                 EasyPermissions.hasPermissions(getContext(), cameraPermissions)) {
             showLoanAuthFaceGranted();
@@ -446,14 +335,30 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            showToast("定位权限已关闭，请打开定位权限。");
+        StringBuilder sb = new StringBuilder();
+        String s;
+        for (String perm : perms) {
+            switch (perm) {
+                case Manifest.permission.CAMERA:
+                    s = "打开摄像头，";
+                    break;
+                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                    s = "写存储设备，";
+                    break;
+                default:
+                    s = "";
+                    break;
+            }
+            sb.append(s);
         }
-        if (requestCode == REQUEST_FACE_PERMISSION) {
-            showToastById(R.string.error_loan_auth_camera_and_write);
-        }
-        if (requestCode == REQUEST_OCR_PERMISSION) {
-            showToastById(R.string.error_loan_auth_camera_and_write);
-        }
+        sb.deleteCharAt(sb.lastIndexOf("，"));
+        new AppSettingsDialog
+                .Builder(this)
+                .setTitle("权限申请")
+                .setRationale("此功能需要" + sb.toString() + "权限，否则无法正常使用，是否打开设置？")
+                .setPositiveButton("好")
+                .setNegativeButton("不行")
+                .build()
+                .show();
     }
 }

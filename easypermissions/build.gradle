@@ -2,13 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '27.0.3'
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
     }
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -18,4 +17,3 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.robolectric:robolectric:3.5.1'
 }
-
