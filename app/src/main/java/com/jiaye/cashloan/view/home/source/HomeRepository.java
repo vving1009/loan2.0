@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.home;
+package com.jiaye.cashloan.view.home.source;
 
 import android.content.ContentValues;
 import android.content.pm.PackageInfo;

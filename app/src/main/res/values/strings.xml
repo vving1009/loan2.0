@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">嘉E贷</string>
     <string name="home">首页</string>
-    <string name="my">我的</string>
+    <string name="my">个人</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
     <!--loan auth-->

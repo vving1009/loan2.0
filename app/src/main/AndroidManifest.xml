@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.view.launch.LaunchActivity"
+            android:name=".view.launch.LaunchActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.view.launch.LaunchGestureActivity"
+            android:name=".view.launch.LaunchGestureActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.guide.GuideActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.main.MainActivity"
+            android:name=".view.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.LoanAuthActivity"

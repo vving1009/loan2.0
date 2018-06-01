@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.main;
+package com.jiaye.cashloan.view.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.view.home.HomeFragment;
+import com.jiaye.cashloan.view.home.HomeFragment;
 import com.jiaye.cashloan.view.view.my.MyFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 

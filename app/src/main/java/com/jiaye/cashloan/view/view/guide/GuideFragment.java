@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.guide.source.GuideRepository;
-import com.jiaye.cashloan.view.view.main.MainActivity;
+import com.jiaye.cashloan.view.main.MainActivity;
 
 /**
  * GuideFragment

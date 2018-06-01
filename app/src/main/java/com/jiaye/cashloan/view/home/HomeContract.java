@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.home;
+package com.jiaye.cashloan.view.home;
 
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.ProductList;

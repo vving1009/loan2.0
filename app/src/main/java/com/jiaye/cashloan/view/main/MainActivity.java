@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.main;
+package com.jiaye.cashloan.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;

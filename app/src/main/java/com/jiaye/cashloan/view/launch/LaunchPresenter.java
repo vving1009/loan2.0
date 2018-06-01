@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.launch;
+package com.jiaye.cashloan.view.launch;
 
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
@@ -7,7 +7,7 @@ import com.jiaye.cashloan.http.download.DownloadProgressListener;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.launch.source.LaunchDataSource;
+import com.jiaye.cashloan.view.launch.source.LaunchDataSource;
 import com.syd.oden.gesturelock.view.GesturePreference;
 
 import org.reactivestreams.Publisher;

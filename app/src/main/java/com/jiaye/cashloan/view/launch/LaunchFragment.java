@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.launch;
+package com.jiaye.cashloan.view.launch;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,9 +21,9 @@ import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.launch.source.LaunchRepository;
+import com.jiaye.cashloan.view.launch.source.LaunchRepository;
 import com.jiaye.cashloan.view.view.guide.GuideActivity;
-import com.jiaye.cashloan.view.view.main.MainActivity;
+import com.jiaye.cashloan.view.main.MainActivity;
 
 import java.io.File;
 

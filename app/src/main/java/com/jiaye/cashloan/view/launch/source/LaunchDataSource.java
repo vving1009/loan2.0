@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.launch.source;
+package com.jiaye.cashloan.view.launch.source;
 
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.http.download.DownloadProgressListener;
@@ -6,7 +6,6 @@ import com.jiaye.cashloan.http.download.DownloadProgressListener;
 import java.io.File;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 /**
  * LaunchDataSource

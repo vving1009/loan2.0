@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.launch;
+package com.jiaye.cashloan.view.launch;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.view.main.MainActivity;
+import com.jiaye.cashloan.view.main.MainActivity;
 import com.syd.oden.gesturelock.view.GestureLockViewGroup;
 import com.syd.oden.gesturelock.view.listener.GestureEventListener;
 import com.syd.oden.gesturelock.view.listener.GestureUnmatchedExceedListener;

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.launch;
+package com.jiaye.cashloan.view.launch;
 
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.view.BasePresenter;

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.home;
+package com.jiaye.cashloan.view.home;
 
 
 import android.Manifest;
@@ -26,7 +26,7 @@ import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.home.HomeRepository;
+import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 import com.youth.banner.Banner;
@@ -43,6 +43,13 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @author 贾博瑄
  */
 public class HomeFragment extends BaseFragment implements HomeContract.View, EasyPermissions.PermissionCallbacks {
+
+    // 申请地理位置权限
+        // 给
+            // 1.根据经纬度定位城市
+            // 2.用户可以自己更改城市
+        // 不给 退出应用
+    //
 
     private final int CONTACTS_STORAGE_LOCATION_REQUEST_CODE = 101;
 

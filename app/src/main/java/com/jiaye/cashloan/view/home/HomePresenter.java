@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.home;
+package com.jiaye.cashloan.view.home;
 
 import com.jiaye.cashloan.http.data.home.BannerList;
 import com.jiaye.cashloan.http.data.home.ProductList;
@@ -6,7 +6,7 @@ import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.home.HomeDataSource;
+import com.jiaye.cashloan.view.home.source.HomeDataSource;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;

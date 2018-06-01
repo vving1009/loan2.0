@@ -14,7 +14,7 @@ import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.utils.FileUtils;
-import com.jiaye.cashloan.view.view.main.MainActivity;
+import com.jiaye.cashloan.view.main.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;

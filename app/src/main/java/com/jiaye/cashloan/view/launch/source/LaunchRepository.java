@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.launch.source;
+package com.jiaye.cashloan.view.launch.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.config.FileConfig;

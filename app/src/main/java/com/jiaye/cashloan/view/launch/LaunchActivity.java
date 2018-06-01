@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.launch;
+package com.jiaye.cashloan.view.launch;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
