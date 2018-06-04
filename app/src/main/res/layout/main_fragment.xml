@@ -8,15 +8,22 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
-        android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="49dp"
         android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
         app:tabIndicatorHeight="0dp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/tab_layout"
+        android:background="@color/color_gray_dark_holo" />
 
     <com.jiaye.cashloan.widget.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tab_layout" />
+        android:layout_above="@id/line" />
 </RelativeLayout>
