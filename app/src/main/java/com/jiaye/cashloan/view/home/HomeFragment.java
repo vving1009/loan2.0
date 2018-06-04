@@ -15,23 +15,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.home.BannerList;
-import com.jiaye.cashloan.http.data.home.ProductList;
 import com.jiaye.cashloan.service.LocationService;
-import com.jiaye.cashloan.utils.GlideImageLoader;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
-import com.youth.banner.Banner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -45,10 +38,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class HomeFragment extends BaseFragment implements HomeContract.View, EasyPermissions.PermissionCallbacks {
 
     // 申请地理位置权限
-        // 给
-            // 1.根据经纬度定位城市
-            // 2.用户可以自己更改城市
-        // 不给 退出应用
+    // 给
+    // 1.根据经纬度定位城市
+    // 2.用户可以自己更改城市
+    // 不给 退出应用
     //
 
     private final int CONTACTS_STORAGE_LOCATION_REQUEST_CODE = 101;
@@ -63,8 +56,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     private LinearLayout mLayoutProduct;
 
-    private Banner mBanner;
-
     private String loanId;
 
     public static HomeFragment newInstance() {
@@ -78,10 +69,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        mLayoutProduct = root.findViewById(R.id.layout_product);
-        mBanner = root.findViewById(R.id.banner);
-        mBanner.setDelayTime(4000);
-        mBanner.setImageLoader(new GlideImageLoader());
+        root.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FunctionActivity.function(getActivity(), "Certification");
+            }
+        });
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
         return root;
@@ -90,48 +83,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     @Override
     public void onStart() {
         super.onStart();
-        mBanner.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mBanner.stopAutoPlay();
-    }
-
-    @Override
-    public void setBanners(BannerList.Banner[] banners) {
-        List<String> list = new ArrayList<>();
-        for (BannerList.Banner banner : banners) {
-            list.add(banner.getImgUrl());
-        }
-        mBanner.setImages(list);
-        mBanner.start();
-    }
-
-    @Override
-    public void setProduct(final ProductList.Product[] products) {
-        for (ProductList.Product product : products) {
-            View view = LayoutInflater.from(getActivity())
-                    .inflate(R.layout.include_home_product, null, false);
-            mLayoutProduct.addView(view);
-            ImageView icon = view.findViewById(R.id.img_icon);
-            ImageView image = view.findViewById(R.id.img_product);
-            TextView textTitle = view.findViewById(R.id.text_title);
-            Glide.with(this).load(product.getIcon()).into(icon);
-            Glide.with(this).load(product.getUrl()).into(image);
-            textTitle.setText(product.getName());
-            loanId = product.getId();
-            final boolean isOpen = product.isOpen();
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isOpen) {
-                        EasyPermissions.requestPermissions(HomeFragment.this, CONTACTS_STORAGE_LOCATION_REQUEST_CODE, permissions);
-                    }
-                }
-            });
-        }
     }
 
     @Override

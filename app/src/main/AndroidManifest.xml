@@ -34,6 +34,9 @@
             android:name=".view.launch.LaunchGestureActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.FunctionActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.view.guide.GuideActivity"
             android:screenOrientation="portrait" />
         <activity

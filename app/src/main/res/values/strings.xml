@@ -4,6 +4,9 @@
     <string name="my">我的</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
+    <!--certification-->
+    <string name="certification_title">认证中心</string>
+
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_ocr">身份认证</string>
