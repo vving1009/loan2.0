@@ -33,7 +33,7 @@ import java.util.Objects;
 /**
  * SearchFragment
  *
- * @author 贾博�?
+ * @author 贾博瑄
  */
 
 public class SearchFragment extends BaseFragment implements SearchContract.View {
@@ -88,7 +88,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         textView.setTextSize(14);
         textView.setHintTextColor(Color.GRAY);
         textView.setGravity(Gravity.CENTER_VERTICAL);
-        SpannableString spanText = new SpannableString("请输入分公司名、姓名、手机号");
+        SpannableString spanText = new SpannableString("请输入营业厅名称、姓名、工号");
         spanText.setSpan(new AbsoluteSizeSpan(14, true), 0, spanText.length(),
                 Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         mSearchView.setQueryHint(spanText);// 设置字体大小
@@ -153,6 +153,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     @Override
     public void setPersonListDataChanged(List<Salesman> list) {
+        setPersonListBlankContent();
         mPersonListAdapter.notifyListChange(list);
     }
 
