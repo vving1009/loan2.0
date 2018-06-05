@@ -1,5 +1,10 @@
 package com.jiaye.cashloan.view.certification.source;
 
+import com.jiaye.cashloan.http.data.certification.Recommend;
+import com.jiaye.cashloan.http.data.certification.Step;
+
+import io.reactivex.Flowable;
+
 /**
  * CertificationDataSource
  *
@@ -8,4 +13,7 @@ package com.jiaye.cashloan.view.certification.source;
 
 public interface CertificationDataSource {
 
+    Flowable<Recommend> requestRecommend();
+
+    Flowable<Step> requestStep();
 }

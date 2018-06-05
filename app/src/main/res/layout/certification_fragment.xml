@@ -11,6 +11,7 @@
         android:background="@android:color/white">
 
         <TextView
+            android:id="@+id/text_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -18,10 +19,10 @@
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/certification_ic_company"
             android:drawablePadding="8dp"
-            android:text="重庆分公司"
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/text_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -30,7 +31,6 @@
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/certification_ic_employee"
             android:drawablePadding="8dp"
-            android:text="18256963696"
             android:textSize="12sp" />
 
     </RelativeLayout>
@@ -42,6 +42,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/text_step_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
@@ -54,6 +55,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/text_step_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
@@ -66,6 +68,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/text_step_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
@@ -78,6 +81,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/text_step_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"

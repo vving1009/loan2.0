@@ -13,8 +13,15 @@ public interface CertificationContract {
 
     interface View extends BaseViewContract {
 
+        void setCompany(String company);
+
+        void setNumber(String number);
+
+        void setStep(int step);
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestStep();
     }
 }

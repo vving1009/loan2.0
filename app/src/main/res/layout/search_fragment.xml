@@ -17,18 +17,18 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center|start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:tint="#989898"
-                app:srcCompat="@drawable/ic_back" />
+                app:srcCompat="@drawable/search_ic_back" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="6dp"
-                android:gravity="center"
                 android:text="返回"
                 android:textColor="#989898"
                 android:textSize="14sp" />
