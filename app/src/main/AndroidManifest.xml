@@ -106,6 +106,9 @@
         <activity
             android:name=".view.view.my.credit.CreditActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.LocationService"

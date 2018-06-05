@@ -57,4 +57,16 @@ public class DbContract {
         public static final String COLUMN_NAME_OCR_DATE_END = "ocr_date_end";
         public static final String COLUMN_NAME_OCR_AGENCY = "ocr_agency";
     }
+
+    /**
+     * company 分公司名
+     * name 客户经理名
+     * work_id 工号
+     */
+    public static abstract class Salesman implements BaseColumns {
+        public static final String TABLE_NAME = "salesman";
+        public static final String COLUMN_COMPANY = "company";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_WORK_ID = "work_id";
+    }
 }

@@ -44,6 +44,13 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE +
                     " )";
 
+    private static final String SQL_CREATE_SALES =
+            "CREATE TABLE " + DbContract.Salesman.TABLE_NAME + " (" +
+                    DbContract.Salesman._ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT," +
+                    DbContract.Salesman.COLUMN_COMPANY + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Salesman.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
+                    DbContract.Salesman.COLUMN_WORK_ID + TEXT_TYPE + " )";
+
     public DbHelper(Context context) {
         super(context.getApplicationContext(), DATABASE_NAME, null, BuildConfig.DB_VERSION);
     }
@@ -51,34 +58,36 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USER);
+        db.execSQL(SQL_CREATE_SALES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        for (int i = oldVersion; i < newVersion; i++) {
-            switch (i) {
-                case 1:
-                    // 2018.2.5 user 表 删除 loan_approve_id;loan_progress_id;
-                    db.execSQL("create table temp_user as select " +
-                            "token, phone, " +
-                            "approve_number, progress_number, history_number, loan_id, " +
-                            "ocr_id, ocr_name, ocr_birthday, ocr_gender, ocr_nation, ocr_address, " +
-                            "ocr_date_begin, ocr_date_end, ocr_agency" +
-                            " from user");
-                    db.execSQL("drop table user");
-                    db.execSQL("alter table temp_user rename to user");
-                case 2:
-                    // 2018.4.29 删除表 product
-                    db.execSQL("drop table product");
-                case 3:
-                    // 2018.5.11 修改 approve_number progress_number history_number 字段类型
-                    db.execSQL("alter table user rename to temp_user");
-                    db.execSQL(SQL_CREATE_USER);
-                    db.execSQL("insert into user SELECT * FROM temp_user");
-                    db.execSQL("drop table temp_user");
-                default:
-                    break;
-            }
+        switch (oldVersion) {
+            case 1:
+                // 2018.2.5 user 表 删除 loan_approve_id;loan_progress_id;
+                db.execSQL("create table temp_user as select " +
+                        "token, phone, " +
+                        "approve_number, progress_number, history_number, loan_id, " +
+                        "ocr_id, ocr_name, ocr_birthday, ocr_gender, ocr_nation, ocr_address, " +
+                        "ocr_date_begin, ocr_date_end, ocr_agency" +
+                        " from user");
+                db.execSQL("drop table user");
+                db.execSQL("alter table temp_user rename to user");
+            case 2:
+                // 2018.4.29 删除表 product
+                db.execSQL("drop table product");
+            case 3:
+                // 2018.5.11 修改 approve_number progress_number history_number 字段类型
+                db.execSQL("alter table user rename to temp_user");
+                db.execSQL(SQL_CREATE_USER);
+                db.execSQL("insert into user SELECT * FROM temp_user");
+                db.execSQL("drop table temp_user");
+            case 4:
+                db.execSQL("drop table if exists salesperson");
+                db.execSQL(SQL_CREATE_SALES);
+            default:
+                break;
         }
     }
 }
