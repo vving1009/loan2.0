@@ -11,6 +11,8 @@
         <attr name="enable_verification" format="boolean" />
         <attr name="verification_type" format="integer" />
         <attr name="request_force" format="boolean" />
+        <attr name="underlineLength" format="integer" />
+        <attr name="underLineColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="VerificationCodeView">

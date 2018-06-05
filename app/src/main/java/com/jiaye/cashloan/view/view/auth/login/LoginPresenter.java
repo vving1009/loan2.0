@@ -36,11 +36,16 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
     @Override
     public void checkInput() {
         if (TextUtils.isEmpty(mView.getPhone())) {/*检测手机号*/
-            mView.setEnable(false);
+            mView.setLoginBtnEnable(false);
         } else if (TextUtils.isEmpty(mView.getPassword())) {/*检测密码规则*/
-            mView.setEnable(false);
+            mView.setLoginBtnEnable(false);
         } else {
-            mView.setEnable(true);
+            mView.setLoginBtnEnable(true);
+        }
+        if (mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
+            mView.setSmsBtnEnable(true);
+        } else {
+            mView.setSmsBtnEnable(false);
         }
     }
 

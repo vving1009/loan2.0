@@ -156,13 +156,14 @@
     <!--login-->
     <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>
-    <string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string><!--(-,&#8211;)-->
+    <!--<string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string>&lt;!&ndash;(-,&#8211;)&ndash;&gt;-->
+    <string name="input_login_verification">请输入验证码</string>
     <string name="send_verification_code">发送验证码</string>
     <string name="send_count_down">%s秒后重新发送</string>
     <string name="send_again">重新发送</string>
     <string name="register_now">马上注册</string>
     <string name="forget_password">忘记密码</string>
-    <string name="login_login">账号登录</string>
+    <string name="login_login">登录</string>
     <!--register-->
     <string name="register_title">注册</string>
     <string name="input_img_verification">请输入图片验证码</string>

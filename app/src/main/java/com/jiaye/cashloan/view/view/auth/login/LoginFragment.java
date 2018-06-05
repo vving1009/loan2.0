@@ -45,12 +45,14 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.login_fragment, container, false);
+        root.getBackground().setAlpha(26);
         mEditPhone = root.findViewById(R.id.edit_phone);
         mEditPhone.addTextChangedListener(this);
         mEditPassword = root.findViewById(R.id.edit_password);
         mEditPassword.addTextChangedListener(this);
+        mEditPassword.setEnabled(false);
         mBtnLogin = root.findViewById(R.id.btn_login);
-        root.findViewById(R.id.text_register).setOnClickListener(new View.OnClickListener() {
+        /*root.findViewById(R.id.text_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showRegisterView();
@@ -61,7 +63,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
             public void onClick(View v) {
                 showForgetPasswordView();
             }
-        });
+        });*/
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,8 +113,13 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     }
 
     @Override
-    public void setEnable(boolean enable) {
+    public void setLoginBtnEnable(boolean enable) {
         mBtnLogin.setEnabled(enable);
+    }
+
+    @Override
+    public void setSmsBtnEnable(boolean enable) {
+        mEditPassword.setEnabled(enable);
     }
 
     @Override

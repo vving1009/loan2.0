@@ -53,7 +53,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="-10dp"
-        android:hint="@string/input_password"
+        android:hint="@string/input_login_verification"
         android:inputType="textPassword"
         app:icon="@drawable/auth_ic_password" />
 

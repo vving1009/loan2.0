@@ -16,7 +16,12 @@ public class LoginContract {
         /**
          * 设置按钮状态
          */
-        void setEnable(boolean enable);
+        void setLoginBtnEnable(boolean enable);
+
+        /**
+         * 设置按钮状态
+         */
+        void setSmsBtnEnable(boolean enable);
 
         /**
          * 获取手机号
