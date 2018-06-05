@@ -20,24 +20,24 @@
         android:src="@drawable/certification_ic_into" />
 
     <TextView
+        android:id="@+id/text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/step_view"
         android:includeFontPadding="false"
-        android:text="人像对比"
         android:textColor="#989898"
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/text_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="9dp"
         android:layout_marginTop="16dp"
         android:layout_toLeftOf="@id/img_into"
         android:includeFontPadding="false"
-        android:text="待认证"
         android:textColor="#989898"
         android:textSize="15sp" />
 

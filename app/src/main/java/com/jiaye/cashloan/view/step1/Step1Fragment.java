@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.step1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,11 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
+
+import java.util.List;
 
 /**
  * Step1Fragment
@@ -51,7 +57,14 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
         mPresenter.unsubscribe();
     }
 
+    @Override
+    public void setList(List<Step1> list) {
+        mAdapter.setList(list);
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+
+        private List<Step1> mList;
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,11 +81,22 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
             } else {
                 holder.setType(1);
             }
+            holder.setName(mList.get(position).getName());
+            holder.setState(mList.get(position).getState());
         }
 
         @Override
         public int getItemCount() {
-            return 5;
+            if (mList == null || mList.size() == 0) {
+                return 0;
+            } else {
+                return mList.size();
+            }
+        }
+
+        public void setList(List<Step1> list) {
+            this.mList = list;
+            notifyDataSetChanged();
         }
     }
 
@@ -80,17 +104,43 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
 
         private StepView mStepView;
 
+        private TextView mTextName;
+
+        private TextView mTextState;
+
+        private ImageView mImageInto;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mStepView = itemView.findViewById(R.id.step_view);
-        }
-
-        public void setSelect(boolean select) {
-            mStepView.setSelect(select);
+            mTextName = itemView.findViewById(R.id.text_name);
+            mTextState = itemView.findViewById(R.id.text_state);
+            mImageInto = itemView.findViewById(R.id.img_into);
         }
 
         public void setType(int type) {
             mStepView.setType(type);
+        }
+
+        public void setName(String name) {
+            mTextName.setText(name);
+        }
+
+        public void setState(int state) {
+            switch (state) {
+                case 0:
+                    mTextState.setTextColor(Color.parseColor("#989898"));
+                    mTextState.setText("待认证");
+                    mImageInto.setVisibility(View.VISIBLE);
+                    mStepView.setSelect(false);
+                    break;
+                case 1:
+                    mTextState.setTextColor(Color.parseColor("#425FBB"));
+                    mTextState.setText("已认证");
+                    mImageInto.setVisibility(View.INVISIBLE);
+                    mStepView.setSelect(true);
+                    break;
+            }
         }
     }
 }

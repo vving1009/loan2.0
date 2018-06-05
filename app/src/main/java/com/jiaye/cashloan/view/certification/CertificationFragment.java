@@ -15,6 +15,7 @@ import com.jiaye.cashloan.view.step1.Step1Fragment;
 import com.jiaye.cashloan.view.step2.Step2Fragment;
 import com.jiaye.cashloan.view.step3.Step3Fragment;
 import com.jiaye.cashloan.view.step4.Step4Fragment;
+import com.jiaye.cashloan.widget.NoScrollViewPager;
 import com.jiaye.cashloan.widget.ScrollOffsetTransformer;
 import com.jiaye.cashloan.widget.ViewPagerScroller;
 
@@ -43,8 +44,9 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View view = inflater.inflate(R.layout.certification_fragment, frameLayout, true);
-        ViewPager viewPager = view.findViewById(R.id.view_pager);
+        NoScrollViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
+        viewPager.setLock(4);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
