@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.view.search;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,12 +15,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.search.source.Salesman;
 import com.jiaye.cashloan.view.search.source.SearchRepository;
 import com.orhanobut.logger.Logger;
@@ -70,6 +69,9 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             if (mSelectSalesman != null) {
                 Logger.d("Select salesman = " + mSelectSalesman.getCompany() + "," + mSelectSalesman.getName() +
                         mSelectSalesman.getWorkId());
+                FunctionActivity.function(getActivity(), "Certification", mSelectSalesman);
+            } else {
+                showToast("请先选择业务员");
             }
         });
         initList();

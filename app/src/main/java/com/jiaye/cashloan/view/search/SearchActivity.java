@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.search;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -17,5 +19,11 @@ public class SearchActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         SearchFragment fragment = SearchFragment.newInstance(city);
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
+    }
+
+    public static void startActivity(Context context, String city) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra("city", city);
+        context.startActivity(intent);
     }
 }

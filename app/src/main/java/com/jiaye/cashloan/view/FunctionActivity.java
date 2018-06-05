@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.search.source.Salesman;
 
 /**
  * FunctionActivity
@@ -17,10 +17,17 @@ import com.jiaye.cashloan.view.certification.CertificationFragment;
  */
 public class FunctionActivity extends AppCompatActivity {
 
-    public static void function(Activity activity, String function) {
+    public static void function(Activity activity, String function, Salesman person) {
         Intent intent = new Intent(activity, FunctionActivity.class);
         intent.putExtra("function", function);
+        if (person != null) {
+            intent.putExtra("salesman", person);
+        }
         activity.startActivity(intent);
+    }
+
+    public static void function(Activity activity, String function) {
+        function(activity, function, null);
     }
 
     @Override

@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
+import com.jiaye.cashloan.view.search.SearchActivity;
 import com.jiaye.cashloan.view.view.auth.AuthActivity;
 import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 
@@ -48,6 +48,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     private static final int OPEN_GPS_REQUEST_CODE = 201;
 
+    private String city = "北京";
+
     @SuppressLint("InlinedApi")
     private final String[] permissions = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -72,7 +74,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         root.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FunctionActivity.function(getActivity(), "Certification");
+                SearchActivity.startActivity(getContext(), city);
             }
         });
         mPresenter = new HomePresenter(this, new HomeRepository());
