@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp">
+
+    <com.jiaye.cashloan.widget.StepView
+        android:id="@+id/step_view"
+        android:layout_width="23dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp" />
+
+    <ImageView
+        android:id="@+id/img_into"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="43dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/certification_ic_into" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/step_view"
+        android:includeFontPadding="false"
+        android:text="人像对比"
+        android:textColor="#989898"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@id/img_into"
+        android:includeFontPadding="false"
+        android:text="待认证"
+        android:textColor="#989898"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#DFE6ED" />
+
+</RelativeLayout>

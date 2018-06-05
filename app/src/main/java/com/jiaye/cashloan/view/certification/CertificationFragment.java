@@ -13,6 +13,8 @@ import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.certification.source.CertificationRepository;
 import com.jiaye.cashloan.view.step1.Step1Fragment;
 import com.jiaye.cashloan.view.step2.Step2Fragment;
+import com.jiaye.cashloan.view.step3.Step3Fragment;
+import com.jiaye.cashloan.view.step4.Step4Fragment;
 import com.jiaye.cashloan.widget.ScrollOffsetTransformer;
 import com.jiaye.cashloan.widget.ViewPagerScroller;
 
@@ -42,6 +44,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View view = inflater.inflate(R.layout.certification_fragment, frameLayout, true);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -51,16 +54,16 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
                     case 1:
                         return Step2Fragment.newInstance();
                     case 2:
-                        break;
+                        return Step3Fragment.newInstance();
                     case 3:
-                        break;
+                        return Step4Fragment.newInstance();
                 }
                 return null;
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 4;
             }
         });
         viewPager.setPageTransformer(false, new ScrollOffsetTransformer());

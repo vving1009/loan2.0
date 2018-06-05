@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
 public class ScrollOffsetTransformer implements ViewPager.PageTransformer {
     /**
      * position参数指明给定页面相对于屏幕中心的位置。它是一个动态属性，会随着页面的滚动而改变。
@@ -15,6 +17,7 @@ public class ScrollOffsetTransformer implements ViewPager.PageTransformer {
 
     private static final String TAG = "ScrollOffsetTransformer";
     private static final float MIN_SCALE = 0.8325f;
+    //private static final float MIN_SCALE = 1.0f;
     private static final float MIN_ALPHA = 1.0f;
 
     @Override
@@ -49,7 +52,11 @@ public class ScrollOffsetTransformer implements ViewPager.PageTransformer {
         }
 
         int width = view.getResources().getDisplayMetrics().widthPixels;
+        Logger.d("width" + width);
         float density = view.getResources().getDisplayMetrics().density;
-        view.setTranslationX(-((width - 300 * density) / 2 - 22) * density * position);
+        Logger.d("density" + density);
+        float x = (width - 300 * MIN_SCALE * density) / 2 + (width - 300 * density) / 2 - 6 * density;
+        Logger.d("移动距离" + x);
+        view.setTranslationX(-x * position);
     }
 }

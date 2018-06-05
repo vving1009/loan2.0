@@ -14,11 +14,11 @@
     </declare-styleable>
 
     <declare-styleable name="VerificationCodeView">
-        <attr name="codeMode" format="integer"/>
-        <attr name="codeQuantity" format="integer"/>
-        <attr name="pointInterfere" format="boolean"/>
-        <attr name="pointInterfereQuantity" format="integer"/>
-        <attr name="lineInterfere" format="boolean"/>
-        <attr name="lineInterfereQuantity" format="integer"/>
+        <attr name="codeMode" format="integer" />
+        <attr name="codeQuantity" format="integer" />
+        <attr name="pointInterfere" format="boolean" />
+        <attr name="pointInterfereQuantity" format="integer" />
+        <attr name="lineInterfere" format="boolean" />
+        <attr name="lineInterfereQuantity" format="integer" />
     </declare-styleable>
 </resources>
