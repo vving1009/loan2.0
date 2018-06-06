@@ -34,6 +34,10 @@ android {
      */
     flavorDimensions "url"
     productFlavors {
+        urlDev {
+            dimension "url"
+            flavorBuildConfigField(urlDev, loadFlavorProperties('dev'))
+        }
         urlTest {
             dimension "url"
             flavorBuildConfigField(urlTest, loadFlavorProperties('test'))
