@@ -4,15 +4,10 @@
     <color name="colorPrimaryDark">@color/color_blue</color>
     <color name="colorAccent">#ff9600</color>
 
-    <color name="color_gray_light">#f6f6f6</color>
-    <color name="color_gray">#e4e4e4</color>
     <color name="color_gray_holo">#a5a5a5</color>
-    <color name="color_gray_dark">#cdcdcd</color>
     <color name="color_gray_dark_holo">#d1d1d1</color>
     <color name="color_black_light">#929292</color>
     <color name="color_black_hole">#626262</color>
-    <color name="color_black">#464646</color>
-    <color name="color_blue">#425FBB</color>
     <color name="color_blue_dark">#4cc1ec</color>
     <color name="color_red">#d50000</color>
     <color name="color_orange">#ff9600</color>
@@ -24,4 +19,22 @@
     <!--login-->
     <color name="send_sms_btn_text_disable">#CFCFCF</color>
     <color name="send_sms_btn_text_enable">#425FBB</color>
+
+    <!--主色-->
+    <color name="color_blue">#425FBB</color>
+    <!--主标题色-->
+    <color name="color_black">#282828</color>
+    <!--主要内容色-->
+    <color name="color_gray_dark">#656565</color>
+    <!--次要内容色-->
+    <color name="color_gray">#989898</color>
+    <!--背景色-->
+    <color name="color_gray_light">#F2F2F2</color>
+    <!--分割线色-->
+    <color name="color_gray_hole">#DFE6ED</color>
+    <!--浅蓝背景-->
+    <color name="color_blue_hole">#E2EBF3</color>
+    <!--白色-->
+    <color name="color_white">#FFFFFF</color>
+
 </resources>
