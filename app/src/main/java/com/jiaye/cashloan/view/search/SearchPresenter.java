@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.search;
 
+import android.text.TextUtils;
+
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.search.source.Salesman;
@@ -50,7 +52,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
     public void queryPeopleBySearchView(String newText) {
         List<Salesman> Salesmen = new ArrayList<>();
         step = 0;
-        if (newText != null && !newText.equals("")) {
+        if (TextUtils.isEmpty(newText)) {
             Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, newText)
                     .filter(list -> list != null && list.size() != 0)
                     .doOnNext(list -> {

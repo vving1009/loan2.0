@@ -48,9 +48,16 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
         root.getBackground().setAlpha(26);
         mEditPhone = root.findViewById(R.id.edit_phone);
         mEditPhone.addTextChangedListener(this);
+        mEditPhone.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
+            @Override
+            public void onClickVerificationCode() {
+                clearError();
+                mPresenter.verificationCode();
+            }
+        });
+        mEditPhone.setVerificationBtnEnabled(false);
         mEditPassword = root.findViewById(R.id.edit_password);
         mEditPassword.addTextChangedListener(this);
-        mEditPassword.setEnabled(false);
         mBtnLogin = root.findViewById(R.id.btn_login);
         /*root.findViewById(R.id.text_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +95,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
             case R.string.error_auth_phone:
                 mEditPhone.setError(getString(R.string.error_auth_phone));
                 break;
-            case R.string.error_auth_password:
-                mEditPassword.setError(getString(R.string.error_auth_password));
+            case R.string.error_auth_sms_verification:
+                mEditPassword.setError(getString(R.string.error_auth_sms_verification));
                 break;
             default:
                 super.showToastById(resId);
@@ -119,7 +126,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
 
     @Override
     public void setSmsBtnEnable(boolean enable) {
-        mEditPassword.setEnabled(enable);
+        mEditPhone.setVerificationBtnEnabled(enable);
     }
 
     @Override
@@ -155,5 +162,10 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     private void clearError() {
         mEditPhone.setError("");
         mEditPassword.setError("");
+    }
+
+    @Override
+    public void smsVerificationCodeCountDown() {
+        mEditPhone.startCountDown();
     }
 }

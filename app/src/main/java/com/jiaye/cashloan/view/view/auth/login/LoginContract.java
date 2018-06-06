@@ -14,12 +14,12 @@ public class LoginContract {
     interface View extends BaseViewContract {
 
         /**
-         * 设置按钮状态
+         * 设置登录按钮状态
          */
         void setLoginBtnEnable(boolean enable);
 
         /**
-         * 设置按钮状态
+         * 设置短信验证按钮状态
          */
         void setSmsBtnEnable(boolean enable);
 
@@ -37,6 +37,11 @@ public class LoginContract {
          * 关闭当前页面
          */
         void finish();
+
+        /**
+         * 验证码倒计时
+         */
+        void smsVerificationCodeCountDown();
     }
 
     interface Presenter extends BasePresenter {
@@ -50,5 +55,10 @@ public class LoginContract {
          * 登录
          */
         void login();
+
+        /**
+         * 发送验证码
+         */
+        void verificationCode();
     }
 }

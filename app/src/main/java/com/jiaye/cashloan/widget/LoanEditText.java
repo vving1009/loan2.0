@@ -89,6 +89,17 @@ public class LoanEditText extends RelativeLayout {
         }
     }
 
+    public void setVerificationBtnEnabled(boolean enabled) {
+        if (mTextVerification != null) {
+            mTextVerification.setEnabled(enabled);
+            if (mTextVerification.isEnabled()) {
+                mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_enable));
+            } else {
+                mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_disable));
+            }
+        }
+    }
+
     public void setOnClickVerificationCode(OnClickVerificationCode OnClickCaptchaListener) {
         mOnClickVerificationCode = OnClickCaptchaListener;
     }
@@ -127,14 +138,14 @@ public class LoanEditText extends RelativeLayout {
                 public void onTick(long millisUntilFinished) {
                     mTextVerification.setEnabled(false);
                     mTextVerification.setText(String.format(getResources().getString(R.string.send_count_down), String.valueOf(millisUntilFinished / 1000)));
-                    mTextVerification.setTextColor(getResources().getColor(R.color.color_gray_holo));
+                    mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_disable));
                 }
 
                 @Override
                 public void onFinish() {
                     mTextVerification.setEnabled(true);
                     mTextVerification.setText(getResources().getString(R.string.send_again));
-                    mTextVerification.setTextColor(getResources().getColor(R.color.color_blue_dark));
+                    mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_enable));
                 }
             };
         }
@@ -178,7 +189,6 @@ public class LoanEditText extends RelativeLayout {
 
         /*输入框布局*/
         mEditText = new EditText(context);
-        mEditText.setId(R.id.loan_edit_text);
         mEditText.setInputType(inputType);
         mEditText.setHint(hint);
         if (maxlength >= 0) {
@@ -205,7 +215,7 @@ public class LoanEditText extends RelativeLayout {
                 case 0:
                     mTextVerification = new TextView(context);
                     mTextVerification.setTextSize(12);
-                    mTextVerification.setTextColor(getResources().getColor(R.color.sms_btn_text_color));
+                    mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_enable));
                     mTextVerification.setText(getResources().getString(R.string.send_verification_code));
                     mTextVerification.setGravity(Gravity.CENTER);
                     mTextVerification.setBackgroundDrawable(getResources().getDrawable(R.drawable.loan_btn_verification));
@@ -256,7 +266,6 @@ public class LoanEditText extends RelativeLayout {
         addView(line);
         LayoutParams lLine = new LayoutParams((int) (underLineLength * density), 1);
         lLine.addRule(BELOW, R.id.loan_edit_layout);
-        lLine.addRule(ALIGN_LEFT, R.id.loan_edit_text);
         lLine.setMargins(iconMarginLeft, 0, 0, 0);
         line.setLayoutParams(lLine);
 

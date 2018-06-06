@@ -24,6 +24,13 @@ public class RegexUtil {
     }
 
     /**
+     * 短信验证码为6位数字
+     */
+    public static String smsVerification() {
+        return "^\\d{6}$";
+    }
+
+    /**
      * 身份证为18位数字(最后一位可能为X)
      */
     public static String idCard() {

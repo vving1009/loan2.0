@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.utils.RSAUtil;
@@ -42,7 +43,7 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
         } else {
             mView.setLoginBtnEnable(true);
         }
-        if (mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
+        if (!TextUtils.isEmpty(mView.getPhone()) && mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.setSmsBtnEnable(true);
         } else {
             mView.setSmsBtnEnable(false);
@@ -53,8 +54,8 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
     public void login() {
         if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);
-        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.password())) {/*检测密码规则*/
-            mView.showToastById(R.string.error_auth_password);
+        } else if (TextUtils.isEmpty(mView.getPassword()) || !mView.getPassword().matches(RegexUtil.smsVerification())) {/*检测密码规则*/
+            mView.showToastById(R.string.error_auth_sms_verification);
         } else {
             LoginRequest request = new LoginRequest();
             request.setPhone(mView.getPhone());
@@ -71,6 +72,30 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
                         public void accept(Login login) throws Exception {
                             mView.dismissProgressDialog();
                             mView.finish();
+                        }
+                    }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        }
+    }
+
+    @Override
+    public void verificationCode() {
+        if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
+            mView.showToastById(R.string.error_auth_phone);
+        } else {
+            Disposable disposable = mDataSource.requestVerificationCode(mView.getPhone())
+                    .compose(new ViewTransformer<VerificationCode>() {
+                        @Override
+                        public void accept() {
+                            super.accept();
+                            mView.showProgressDialog();
+                        }
+                    })
+                    .subscribe(new Consumer<VerificationCode>() {
+                        @Override
+                        public void accept(VerificationCode verificationCode) throws Exception {
+                            mView.smsVerificationCodeCountDown();
+                            mView.dismissProgressDialog();
                         }
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
