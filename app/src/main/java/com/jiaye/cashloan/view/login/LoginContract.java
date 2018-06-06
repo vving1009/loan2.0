@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.auth.login;
+package com.jiaye.cashloan.view.login;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;

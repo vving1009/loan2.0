@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.auth.login.source;
+package com.jiaye.cashloan.view.login.source;
 
 import android.content.ContentValues;
 

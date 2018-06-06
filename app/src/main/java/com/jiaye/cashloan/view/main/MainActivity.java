@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.login.LoginActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -21,7 +21,7 @@ public class MainActivity extends BaseActivity {
         if (bundle != null) {
             String type = bundle.getString("type","default");
             if (type.equals("reLogin")) {
-                Intent intent = new Intent(this, AuthActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
             }
         }

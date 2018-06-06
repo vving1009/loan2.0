@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.auth;
+package com.jiaye.cashloan.view.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,15 +6,15 @@ import android.support.v4.app.FragmentManager;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.view.auth.login.LoginFragment;
+import com.jiaye.cashloan.view.login.LoginFragment;
 
 /**
- * AuthActivity
+ * LoginActivity
  *
  * @author 贾博瑄
  */
 
-public class AuthActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

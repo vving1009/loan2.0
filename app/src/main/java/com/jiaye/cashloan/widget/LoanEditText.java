@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -162,15 +163,17 @@ public class LoanEditText extends RelativeLayout {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoanEditText, defStyleAttr, 0);
         int inputType = typedArray.getInt(R.styleable.LoanEditText_android_inputType, EditorInfo.TYPE_CLASS_TEXT);
         String hint = typedArray.getString(R.styleable.LoanEditText_android_hint);
-        int maxlength = typedArray.getInt(R.styleable.LoanEditText_android_maxLength, -1);
-        int editHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_editHeight, (int) (50 * density));
+        int maxLength = typedArray.getInt(R.styleable.LoanEditText_android_maxLength, -1);
+        int editHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_editHeight, (int) (28 * density));
         int errorHeight = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_errorHeight, LayoutParams.WRAP_CONTENT);
         Drawable icon = typedArray.getDrawable(R.styleable.LoanEditText_icon);
-        int iconMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_iconMarginLeft, (int) (25 * density));
+        int iconMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_iconMarginLeft, 0);
+        int inputMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_inputMarginLeft, (int) (34 * density));
         boolean isEnableVerification = typedArray.getBoolean(R.styleable.LoanEditText_enable_verification, false);
         int verificationType = typedArray.getInt(R.styleable.LoanEditText_verification_type, 0);
         boolean isRequestForce = typedArray.getBoolean(R.styleable.LoanEditText_request_force, false);
-        int underLineLength = typedArray.getInt(R.styleable.LoanEditText_underlineLength, 0);
+        int underLineLength = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineLength, 0);
+        int underLineMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineMarginLeft, (int) (34 * density));
         int underLineColor = typedArray.getColor(R.styleable.LoanEditText_underLineColor, getResources().getColor(R.color.color_blue));
 
         /*外层布局*/
@@ -185,28 +188,29 @@ public class LoanEditText extends RelativeLayout {
         editLayout.addView(imageView);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(CENTER_VERTICAL);
+        layoutParams.setMargins(iconMarginLeft, 0, 0, 0);
         imageView.setLayoutParams(layoutParams);
 
         /*输入框布局*/
         mEditText = new EditText(context);
         mEditText.setInputType(inputType);
         mEditText.setHint(hint);
-        if (maxlength >= 0) {
-            mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxlength)});
+        if (maxLength >= 0) {
+            mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         } else {
             mEditText.setFilters(new InputFilter[0]);
         }
         mEditText.setMaxLines(1);
-        mEditText.setTextSize(13);
-        mEditText.setTextColor(getResources().getColor(R.color.color_black));
-        mEditText.setHintTextColor(getResources().getColor(R.color.color_gray_holo));
+        mEditText.setTextSize(12);
+        mEditText.setTextColor(Color.parseColor("#282828"));
+        mEditText.setHintTextColor(Color.parseColor("#989898"));
         mEditText.setBackgroundResource(0);
         mEditText.setPadding(0, 0, 0, 0);
         editLayout.addView(mEditText);
         LayoutParams lInput = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         lInput.addRule(ALIGN_PARENT_LEFT);
         lInput.addRule(CENTER_VERTICAL);
-        lInput.setMargins(iconMarginLeft, 0, 0, 0);
+        lInput.setMargins(inputMarginLeft, 0, 0, 0);
         mEditText.setLayoutParams(lInput);
 
         /*验证码*/
@@ -214,23 +218,20 @@ public class LoanEditText extends RelativeLayout {
             switch (verificationType) {
                 case 0:
                     mTextVerification = new TextView(context);
-                    mTextVerification.setTextSize(12);
+                    mTextVerification.setTextSize(9);
                     mTextVerification.setTextColor(getResources().getColor(R.color.send_sms_btn_text_enable));
                     mTextVerification.setText(getResources().getString(R.string.send_verification_code));
                     mTextVerification.setGravity(Gravity.CENTER);
                     mTextVerification.setBackgroundDrawable(getResources().getDrawable(R.drawable.loan_btn_verification));
-                    mTextVerification.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mOnClickVerificationCode != null) {
-                                mOnClickVerificationCode.onClickVerificationCode();
-                            }
+                    mTextVerification.setOnClickListener(v -> {
+                        if (mOnClickVerificationCode != null) {
+                            mOnClickVerificationCode.onClickVerificationCode();
                         }
                     });
                     editLayout.addView(mTextVerification);
                     LayoutParams lText = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                     lText.addRule(ALIGN_PARENT_RIGHT);
-                    lText.addRule(CENTER_VERTICAL);
+                    lText.addRule(ALIGN_PARENT_TOP);
                     mTextVerification.setLayoutParams(lText);
                     break;
                 case 1:// 自生成图形验证码
@@ -263,10 +264,10 @@ public class LoanEditText extends RelativeLayout {
         /*直线*/
         View line = new View(context);
         line.setBackgroundColor(underLineColor);
-        addView(line);
-        LayoutParams lLine = new LayoutParams((int) (underLineLength * density), 1);
-        lLine.addRule(BELOW, R.id.loan_edit_layout);
-        lLine.setMargins(iconMarginLeft, 0, 0, 0);
+        editLayout.addView(line);
+        LayoutParams lLine = new LayoutParams(underLineLength, (int) (1 * density));
+        lLine.addRule(ALIGN_PARENT_BOTTOM);
+        lLine.setMargins(underLineMarginLeft, 0, 0, 0);
         line.setLayoutParams(lLine);
 
         /*错误提示*/

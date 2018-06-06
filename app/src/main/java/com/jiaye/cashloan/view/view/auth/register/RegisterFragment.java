@@ -18,10 +18,10 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.auth.login.source.LoginRepository;
+import com.jiaye.cashloan.view.login.source.LoginRepository;
 import com.jiaye.cashloan.view.data.auth.register.source.RegisterRepository;
-import com.jiaye.cashloan.view.view.auth.login.LoginFragment;
-import com.jiaye.cashloan.view.view.auth.login.LoginPresenter;
+import com.jiaye.cashloan.view.login.LoginFragment;
+import com.jiaye.cashloan.view.login.LoginPresenter;
 import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.widget.LoanEditText;

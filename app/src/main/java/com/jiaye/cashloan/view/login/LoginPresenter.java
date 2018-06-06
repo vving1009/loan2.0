@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.auth.login;
+package com.jiaye.cashloan.view.login;
 
 import android.text.TextUtils;
 
@@ -12,7 +12,7 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.auth.login.source.LoginDataSource;
+import com.jiaye.cashloan.view.login.source.LoginDataSource;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.auth.login;
+package com.jiaye.cashloan.view.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.auth.login.source.LoginRepository;
+import com.jiaye.cashloan.view.login.source.LoginRepository;
 import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.cashloan.view.view.auth.register.RegisterFragment;
 import com.jiaye.cashloan.widget.LoanEditText;

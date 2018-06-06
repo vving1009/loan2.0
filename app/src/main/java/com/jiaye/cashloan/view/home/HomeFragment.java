@@ -22,7 +22,7 @@ import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.jiaye.cashloan.view.search.SearchActivity;
-import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 
 import java.util.List;
@@ -100,7 +100,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     @Override
     public void startAuthView() {
-        Intent intent = new Intent(getActivity(), AuthActivity.class);
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }
 

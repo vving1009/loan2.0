@@ -19,7 +19,7 @@ import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.view.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
-import com.jiaye.cashloan.view.view.auth.AuthActivity;
+import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
 import com.jiaye.cashloan.view.view.loan.LoanDetailsActivity;
 
@@ -220,7 +220,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     @Override
     public void startAuthView() {
-        Intent intent = new Intent(getActivity(), AuthActivity.class);
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }
 

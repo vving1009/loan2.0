@@ -8,10 +8,12 @@
         <attr name="errorHeight" format="dimension" />
         <attr name="icon" format="reference" />
         <attr name="iconMarginLeft" format="dimension" />
+        <attr name="inputMarginLeft" format="dimension" />
         <attr name="enable_verification" format="boolean" />
         <attr name="verification_type" format="integer" />
         <attr name="request_force" format="boolean" />
-        <attr name="underlineLength" format="integer" />
+        <attr name="underlineLength" format="dimension" />
+        <attr name="underlineMarginLeft" format="dimension" />
         <attr name="underLineColor" format="color" />
     </declare-styleable>
 
