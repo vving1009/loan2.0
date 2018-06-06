@@ -24,10 +24,10 @@ public class RegexUtil {
     }
 
     /**
-     * 短信验证码为6位数字
+     * 短信验证码为4位数字
      */
     public static String smsVerification() {
-        return "^\\d{6}$";
+        return "^\\d{4}$";
     }
 
     /**

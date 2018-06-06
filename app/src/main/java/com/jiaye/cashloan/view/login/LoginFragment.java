@@ -1,9 +1,7 @@
 package com.jiaye.cashloan.view.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,8 +12,6 @@ import android.widget.Button;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.login.source.LoginRepository;
-import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
-import com.jiaye.cashloan.view.view.auth.register.RegisterFragment;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
@@ -30,7 +26,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
 
     private LoanEditText mEditPhone;
 
-    private LoanEditText mEditPassword;
+    private LoanEditText mEditCode;
 
     private Button mBtnLogin;
 
@@ -48,35 +44,17 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
         root.getBackground().setAlpha(26);
         mEditPhone = root.findViewById(R.id.edit_phone);
         mEditPhone.addTextChangedListener(this);
-        mEditPhone.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                clearError();
-                mPresenter.verificationCode();
-            }
-        });
         mEditPhone.setVerificationBtnEnabled(false);
-        mEditPassword = root.findViewById(R.id.edit_password);
-        mEditPassword.addTextChangedListener(this);
-        mBtnLogin = root.findViewById(R.id.btn_login);
-        /*root.findViewById(R.id.text_register).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRegisterView();
-            }
+        mEditPhone.setOnClickVerificationCode(() -> {
+            clearError();
+            mPresenter.verificationCode();
         });
-        root.findViewById(R.id.text_forget_password).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showForgetPasswordView();
-            }
-        });*/
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearError();
-                mPresenter.login();
-            }
+        mEditCode = root.findViewById(R.id.edit_code);
+        mEditCode.addTextChangedListener(this);
+        mBtnLogin = root.findViewById(R.id.btn_login);
+        mBtnLogin.setOnClickListener(v -> {
+            clearError();
+            mPresenter.login();
         });
         mPresenter = new LoginPresenter(this, new LoginRepository());
         mPresenter.subscribe();
@@ -96,7 +74,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
                 mEditPhone.setError(getString(R.string.error_auth_phone));
                 break;
             case R.string.error_auth_sms_verification:
-                mEditPassword.setError(getString(R.string.error_auth_sms_verification));
+                mEditCode.setError(getString(R.string.error_auth_sms_verification));
                 break;
             default:
                 super.showToastById(resId);
@@ -135,8 +113,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     }
 
     @Override
-    public String getPassword() {
-        return mEditPassword.getText().toString();
+    public String getCode() {
+        return mEditCode.getText().toString();
     }
 
     @Override
@@ -144,28 +122,14 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
         getActivity().finish();
     }
 
-    /*显示注册页面*/
-    private void showRegisterView() {
-        FragmentManager fragmentManager = getFragmentManager();
-        RegisterFragment fragment = RegisterFragment.newInstance();
-        fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();
-    }
-
-    /*显示忘记密码页面*/
-    private void showForgetPasswordView() {
-        Intent intent = new Intent(getContext(), PasswordActivity.class);
-        intent.putExtra("type",0);
-        startActivity(intent);
+    @Override
+    public void smsVerificationCodeCountDown() {
+        mEditPhone.startCountDown();
     }
 
     /*清除错误信息*/
     private void clearError() {
         mEditPhone.setError("");
-        mEditPassword.setError("");
-    }
-
-    @Override
-    public void smsVerificationCodeCountDown() {
-        mEditPhone.startCountDown();
+        mEditCode.setError("");
     }
 }

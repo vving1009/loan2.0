@@ -15,9 +15,9 @@ public class LoginRequest extends SatcatcheChildRequest {
     @SerializedName("phone")
     private String phone;
 
-    /*密码*/
-    @SerializedName("password")
-    private String password;
+    /*验证码*/
+    @SerializedName("sign_code")
+    private String code;
 
     public String getPhone() {
         return phone;
@@ -27,12 +27,12 @@ public class LoginRequest extends SatcatcheChildRequest {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
+    public String getCode() {
+        return code;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

@@ -29,9 +29,9 @@ public class LoginContract {
         String getPhone();
 
         /**
-         * 获取密码
+         * 获取验证码
          */
-        String getPassword();
+        String getCode();
 
         /**
          * 关闭当前页面

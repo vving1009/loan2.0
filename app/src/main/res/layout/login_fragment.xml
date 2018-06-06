@@ -34,13 +34,13 @@
         app:underlineLength="227dp" />
 
     <com.jiaye.cashloan.widget.LoanEditText
-        android:id="@+id/edit_password"
+        android:id="@+id/edit_code"
         android:layout_width="263dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="41dp"
         android:hint="@string/input_login_verification"
-        android:inputType="textPassword"
+        android:inputType="number"
         app:editHeight="28dp"
         app:icon="@drawable/auth_ic_password"
         app:underLineColor="@color/color_blue"

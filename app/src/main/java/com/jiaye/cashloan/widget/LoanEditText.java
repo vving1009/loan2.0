@@ -249,12 +249,9 @@ public class LoanEditText extends RelativeLayout {
                     lOutImg.addRule(ALIGN_PARENT_RIGHT);
                     lOutImg.addRule(CENTER_VERTICAL);
                     mImg.setLayoutParams(lOutImg);
-                    mImg.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mOnClickVerificationCode != null) {
-                                mOnClickVerificationCode.onClickVerificationCode();
-                            }
+                    mImg.setOnClickListener(v -> {
+                        if (mOnClickVerificationCode != null) {
+                            mOnClickVerificationCode.onClickVerificationCode();
                         }
                     });
                     break;

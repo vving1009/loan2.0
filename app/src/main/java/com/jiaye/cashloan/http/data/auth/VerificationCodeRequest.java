@@ -15,9 +15,9 @@ public class VerificationCodeRequest extends SatcatcheChildRequest {
     @SerializedName("phone")
     private String phone;
 
-    /*类型 0 注册页面获取验证码 1 修改密码页面获取验证码 2 忘记密码页面获取验证码*/
+    /*类型 验证码登录 3*/
     @SerializedName("status")
-    private String status;
+    private int status = 3;
 
     public String getPhone() {
         return phone;
@@ -27,11 +27,11 @@ public class VerificationCodeRequest extends SatcatcheChildRequest {
         this.phone = phone;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

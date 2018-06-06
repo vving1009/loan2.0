@@ -1,10 +1,10 @@
 package com.jiaye.cashloan.http;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
-import com.jiaye.cashloan.http.data.auth.VerificationCode;
 import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
@@ -12,8 +12,6 @@ import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
 import com.jiaye.cashloan.http.data.auth.password.ChangePasswordRequest;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCode;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
-import com.jiaye.cashloan.http.data.auth.register.Register;
-import com.jiaye.cashloan.http.data.auth.register.RegisterRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.home.BannerList;
@@ -111,19 +109,13 @@ public interface SatcatcheService {
     /**
      * 验证码
      */
-    @POST("sendMsg")
-    Flowable<SatcatcheResponse<VerificationCode>> verificationCode(@Body SatcatcheRequest<VerificationCodeRequest> request);
-
-    /**
-     * 注册
-     */
-    @POST("register")
-    Flowable<SatcatcheResponse<Register>> register(@Body SatcatcheRequest<RegisterRequest> request);
+    @POST("carSendMsg")
+    Flowable<SatcatcheResponse<EmptyResponse>> verificationCode(@Body SatcatcheRequest<VerificationCodeRequest> request);
 
     /**
      * 登录
      */
-    @POST("login")
+    @POST("carLogin")
     Flowable<SatcatcheResponse<Login>> login(@Body SatcatcheRequest<LoginRequest> request);
 
     /**

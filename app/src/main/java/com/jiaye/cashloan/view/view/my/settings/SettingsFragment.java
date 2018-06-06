@@ -12,7 +12,6 @@ import android.widget.CompoundButton;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.settings.source.SettingsRepository;
-import com.jiaye.cashloan.view.view.auth.password.PasswordActivity;
 import com.jiaye.cashloan.view.view.my.MyActivity;
 
 /**
@@ -96,8 +95,5 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.V
     }
 
     private void showPasswordView() {
-        Intent intent = new Intent(getActivity(), PasswordActivity.class);
-        intent.putExtra("type", 1);
-        getActivity().startActivity(intent);
     }
 }

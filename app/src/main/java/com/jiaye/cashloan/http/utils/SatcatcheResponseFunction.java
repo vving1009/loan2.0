@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.http.utils;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.base.ErrorCode;
 import com.jiaye.cashloan.http.base.NetworkException;
 import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
@@ -17,7 +18,11 @@ public class SatcatcheResponseFunction<T extends SatcatcheChildResponse> impleme
     @Override
     public T apply(SatcatcheResponse<T> baseResponse) throws Exception {
         if (baseResponse.getContent().getCode().equals(ErrorCode.SUCCESS.getCode())) {
-            return baseResponse.getContent().getBody();
+            if (baseResponse.getContent().getBody() != null) {
+                return baseResponse.getContent().getBody();
+            } else {
+                return (T) new EmptyResponse();
+            }
         } else {
             throw new NetworkException(baseResponse.getContent().getCode(), baseResponse.getContent().getMsg());
         }

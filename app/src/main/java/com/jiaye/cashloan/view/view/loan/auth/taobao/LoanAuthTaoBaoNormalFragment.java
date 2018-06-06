@@ -47,7 +47,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment implements LoanAu
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.loan_auth_taobao_normal_fragment, container, false);
         mEditAccount = root.findViewById(R.id.edit_account);
-        mEditPassword = root.findViewById(R.id.edit_password);
+        mEditPassword = root.findViewById(R.id.edit_code);
         mEditSMS = root.findViewById(R.id.edit_sms);
         mEditIMG = root.findViewById(R.id.edit_img);
         mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {

@@ -47,7 +47,7 @@
         app:verification_type="1" />
 
     <com.jiaye.cashloan.widget.LoanEditText
-        android:id="@+id/edit_password"
+        android:id="@+id/edit_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"

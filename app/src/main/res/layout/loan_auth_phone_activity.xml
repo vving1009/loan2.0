@@ -107,7 +107,7 @@
                 android:background="@color/color_gray_dark" />
 
             <com.jiaye.cashloan.widget.LoanEditText
-                android:id="@+id/edit_password"
+                android:id="@+id/edit_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/loan_auth_phone_input_password"

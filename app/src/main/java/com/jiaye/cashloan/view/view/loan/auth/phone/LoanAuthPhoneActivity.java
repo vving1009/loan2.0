@@ -59,7 +59,7 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         setContentView(R.layout.loan_auth_phone_activity);
         mTextPhone = findViewById(R.id.text_phone);
         mTextOperators = findViewById(R.id.text_operators);
-        mEditPassword = findViewById(R.id.edit_password);
+        mEditPassword = findViewById(R.id.edit_code);
         mLayoutEdit = findViewById(R.id.layout_edit);
         mTextForgetPassword = findViewById(R.id.text_forget_password);
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {

@@ -104,9 +104,6 @@
             android:name=".view.view.help.LoanAuthHelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.auth.password.PasswordActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.view.my.MyActivity"
             android:screenOrientation="portrait" />
         <activity
