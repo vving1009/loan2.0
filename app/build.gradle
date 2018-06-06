@@ -124,6 +124,8 @@ dependencies {
     api 'com.tencent.bugly:crashreport:2.6.6.1'
     // https://github.com/zetbaitsu/Compressor
     api 'id.zelory:compressor:1.0.5'
+    // http://lbs.amap.com/api/android-location-sdk/guide/android-location/getlocation
+    api 'com.amap.api:location:4.0.1'
     // module
     implementation project(':tongdun')
     implementation project(':gesturelock')

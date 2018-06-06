@@ -24,6 +24,7 @@
                 android:src="@drawable/home_ic_logo" />
 
             <TextView
+                android:id="@+id/location_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -33,7 +34,6 @@
                 android:drawableRight="@drawable/home_ic_down"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:text="天津"
                 android:textColor="@android:color/white"
                 android:textSize="17sp" />
         </RelativeLayout>
