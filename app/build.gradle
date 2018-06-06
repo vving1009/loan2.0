@@ -64,12 +64,14 @@ android {
     buildTypes {
         debug {
             buildBuildConfigField(debug, loadBuildProperties('debug'))
+            buildManifestPlaceholders(debug, loadBuildProperties('debug'))
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
         release {
             buildBuildConfigField(release, loadBuildProperties('release'))
+            buildManifestPlaceholders(release, loadBuildProperties('release'))
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -161,6 +163,10 @@ static def flavorBuildConfigField(flavor, properties) {
 
 static def buildBuildConfigField(build, properties) {
     build.buildConfigField("String", "BUGLY_APPID", properties.getProperty("BUGLY_APPID"))
+}
+
+static def buildManifestPlaceholders(build, properties) {
+    build.manifestPlaceholders = [AMAP_APIKEY_NAME: properties.getProperty("AMAP_APIKEY_NAME"), AMAP_APIKEY_VALUE: properties.getProperty("AMAP_APIKEY_VALUE")]
 }
 
 static def renameApk(variant) {
