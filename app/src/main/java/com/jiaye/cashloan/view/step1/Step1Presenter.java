@@ -22,6 +22,8 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     private final Step1DataSource mDataSource;
 
+    private List<Step1> mList;
+
     public Step1Presenter(Step1Contract.View view, Step1DataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -31,13 +33,20 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     public void subscribe() {
         super.subscribe();
         Disposable disposable = mDataSource.requestStep1()
-                .compose(new ViewTransformer<List<Step1>>())
-                .subscribe(new Consumer<List<Step1>>() {
-                    @Override
-                    public void accept(List<Step1> step1s) throws Exception {
-                        mView.setList(step1s);
-                    }
+                .compose(new ViewTransformer<>())
+                .subscribe(step1s -> {
+                    mList = step1s;
+                    mView.setList(mList);
                 });
         mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        switch (position) {
+            case 0:
+                mView.showIDView();
+                break;
+        }
     }
 }

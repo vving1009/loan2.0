@@ -6,10 +6,10 @@
     <string name="launch_gesture">手势密码</string>
     <!--certification-->
     <string name="certification_title">认证中心</string>
-
+    <!--id-->
+    <string name="id_title">身份认证</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
-    <string name="loan_auth_ocr">身份认证</string>
     <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
     <string name="loan_auth_ocr_validity_date">有效期限</string>

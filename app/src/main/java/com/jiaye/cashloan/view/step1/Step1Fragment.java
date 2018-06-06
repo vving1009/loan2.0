@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -60,6 +61,11 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     @Override
     public void setList(List<Step1> list) {
         mAdapter.setList(list);
+    }
+
+    @Override
+    public void showIDView() {
+        FunctionActivity.function(getActivity(), "ID");
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -112,10 +118,15 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(v -> mPresenter.onClickItem(getLayoutPosition()));
             mStepView = itemView.findViewById(R.id.step_view);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
             mImageInto = itemView.findViewById(R.id.img_into);
+        }
+
+        public void setOnClickListener() {
+
         }
 
         public void setType(int type) {

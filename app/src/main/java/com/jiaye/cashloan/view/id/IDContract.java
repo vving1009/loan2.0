@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.view.view.loan.auth.ocr;
+package com.jiaye.cashloan.view.id;
 
-import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
+import com.jiaye.cashloan.view.BasePresenter;
 
 /**
- * LoanAuthOCRContract
+ * IDContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthOCRContract {
+public interface IDContract {
 
     interface View extends BaseViewContract {
 

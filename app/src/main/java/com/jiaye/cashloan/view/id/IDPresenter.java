@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.ocr;
+package com.jiaye.cashloan.view.id;
 
 import android.text.TextUtils;
 
@@ -10,7 +10,7 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.ocr.LoanAuthOCRDataSource;
+import com.jiaye.cashloan.view.id.source.IDDataSource;
 
 import org.reactivestreams.Publisher;
 
@@ -19,16 +19,16 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
- * LoanAuthOCRPresenter
+ * IDPresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthOCRContract.Presenter {
+public class IDPresenter extends BasePresenterImpl implements IDContract.Presenter {
 
-    private final LoanAuthOCRContract.View mView;
+    private final IDContract.View mView;
 
-    private final LoanAuthOCRDataSource mDataSource;
+    private final IDDataSource mDataSource;
 
     private int mState;
 
@@ -42,7 +42,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
 
     private String mDate;
 
-    public LoanAuthOCRPresenter(LoanAuthOCRContract.View view, LoanAuthOCRDataSource dataSource) {
+    public IDPresenter(IDContract.View view, IDDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
@@ -121,12 +121,7 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
             return;
         }
         Disposable disposable = mDataSource.check(mId, mView.getName())
-                .flatMap(new Function<Object, Publisher<LoanIDCardAuth>>() {
-                    @Override
-                    public Publisher<LoanIDCardAuth> apply(Object object) throws Exception {
-                        return mDataSource.loanIDCardAuth();
-                    }
-                })
+                .flatMap((Function<Object, Publisher<LoanIDCardAuth>>) object -> mDataSource.loanIDCardAuth())
                 .compose(new ViewTransformer<LoanIDCardAuth>() {
                     @Override
                     public void accept() {
@@ -134,12 +129,9 @@ public class LoanAuthOCRPresenter extends BasePresenterImpl implements LoanAuthO
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<LoanIDCardAuth>() {
-                    @Override
-                    public void accept(LoanIDCardAuth loanIDCardAuth) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.result();
-                    }
+                .subscribe(loanIDCardAuth -> {
+                    mView.dismissProgressDialog();
+                    mView.result();
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

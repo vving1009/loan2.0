@@ -17,8 +17,12 @@ public interface Step1Contract {
     interface View extends BaseViewContract {
 
         void setList(List<Step1> list);
+
+        void showIDView();
     }
 
     interface Presenter extends BasePresenter {
+
+        void onClickItem(int position);
     }
 }

@@ -21,12 +21,7 @@ public abstract class BaseFunctionFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.base_function_fragment, container, false);
-        root.findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickBack();
-            }
-        });
+        root.findViewById(R.id.img_back).setOnClickListener(v -> onClickBack());
         TextView textTitle = root.findViewById(R.id.text_title);
         textTitle.setText(getTitleId());
         FrameLayout frameLayout = root.findViewById(R.id.layout_function);

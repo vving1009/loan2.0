@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.search.source.Salesman;
 
 /**
@@ -38,11 +39,13 @@ public class FunctionActivity extends AppCompatActivity {
         switch (function) {
             case "Certification":
                 // 认证中心
-                CertificationFragment fragment = CertificationFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, fragment).commit();
+                CertificationFragment certificationFragment = CertificationFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, certificationFragment).commit();
                 break;
             case "ID":
                 // 身份认证
+                IDFragment idFragment = IDFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, idFragment).commit();
                 break;
             case "Bioassay":
                 // 人像对比

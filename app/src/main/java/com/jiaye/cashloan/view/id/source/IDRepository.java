@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.ocr;
+package com.jiaye.cashloan.view.id.source;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -29,12 +29,12 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 /**
- * LoanAuthOCRRepository
+ * IDRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthOCRRepository implements LoanAuthOCRDataSource {
+public class IDRepository implements IDDataSource {
 
     private String mBase64Front;
 

@@ -30,7 +30,6 @@ import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
-import com.jiaye.cashloan.view.view.loan.auth.ocr.LoanAuthOCRActivity;
 import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
@@ -208,8 +207,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     private void showLoanAuthOCRGranted() {
-        Intent intent = new Intent(getActivity(), LoanAuthOCRActivity.class);
-        startActivity(intent);
     }
 
     private void showLoanAuthFaceGranted() {
