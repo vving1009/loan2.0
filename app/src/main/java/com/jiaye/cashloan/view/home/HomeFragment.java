@@ -3,6 +3,7 @@ package com.jiaye.cashloan.view.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -21,13 +22,12 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
-import com.jiaye.cashloan.view.search.SearchActivity;
 import com.jiaye.cashloan.view.login.LoginActivity;
+import com.jiaye.cashloan.view.search.SearchActivity;
 import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 
 import java.util.List;
 
-import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -141,13 +141,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
             sb.append(s);
         }
         sb.deleteCharAt(sb.lastIndexOf("，"));
-        new AppSettingsDialog
-                .Builder(this)
+        new AlertDialog.Builder(getContext())
                 .setTitle("权限申请")
-                .setRationale("此功能需要" + sb.toString() + "权限，否则无法正常使用，是否打开设置？")
-                .setPositiveButton("好")
-                .setNegativeButton("不行")
-                .build()
+                .setMessage("此应用需要" + sb.toString() + "权限，否则应用会关闭，是否打开设置？")
+                .setPositiveButton("好", (dialog, which) ->
+                        EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions))
+                .setNegativeButton("不行", (dialog, which) -> getActivity().finish())
                 .show();
     }
 }
