@@ -8,6 +8,8 @@
     <string name="certification_title">认证中心</string>
     <!--id-->
     <string name="id_title">身份认证</string>
+    <!--phone-->
+    <string name="phone_title">手机运营商</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_name">姓名</string>
@@ -185,10 +187,10 @@
     <string name="error_socket_timeout">网络请求超时</string>
     <string name="error_install_permission">请开启安装第三方应用的授权</string>
     <string name="error_auth_not_log_in">未登录</string>
-    <string name="error_auth_phone">*请输入正确的手机号</string>
+    <string name="error_auth_phone">请输入正确的手机号</string>
     <string name="error_auth_password">*请输入正确的密码</string>
     <string name="error_auth_img_verification">*请输入正确的验证码</string>
-    <string name="error_auth_sms_verification">*请输入正确的验证码</string>
+    <string name="error_auth_sms_verification">请输入正确的验证码</string>
     <string name="error_auth_agree">请阅读并同意注册协议</string>
     <string name="error_auth_referral">*请输入正确的推荐码</string>
     <string name="error_auth_password_different">*两次密码输入不一致，请重新输入</string>

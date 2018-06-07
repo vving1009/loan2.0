@@ -15,6 +15,7 @@
         <attr name="underlineLength" format="dimension" />
         <attr name="underlineMarginLeft" format="dimension" />
         <attr name="underLineColor" format="color" />
+        <attr name="textSize" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="VerificationCodeView">

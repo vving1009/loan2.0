@@ -1,10 +1,9 @@
-package com.jiaye.cashloan.view.view.loan.auth.phone;
+package com.jiaye.cashloan.view.phone;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.loan.SavePhone;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
@@ -13,7 +12,7 @@ import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneDataSource;
+import com.jiaye.cashloan.view.phone.source.PhoneDataSource;
 
 import org.reactivestreams.Publisher;
 
@@ -26,20 +25,20 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * LoanAuthPhonePresenter
+ * PhonePresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAuthPhoneContract.Presenter {
+public class PhonePresenter extends BasePresenterImpl implements PhoneContract.Presenter {
 
-    private final LoanAuthPhoneContract.View mView;
+    private final PhoneContract.View mView;
 
-    private final LoanAuthPhoneDataSource mDataSource;
+    private final PhoneDataSource mDataSource;
 
     private boolean isSecond;
 
-    public LoanAuthPhonePresenter(LoanAuthPhoneContract.View view, LoanAuthPhoneDataSource dataSource) {
+    public PhonePresenter(PhoneContract.View view, PhoneDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
@@ -53,8 +52,8 @@ public class LoanAuthPhonePresenter extends BasePresenterImpl implements LoanAut
                     @Override
                     public Boolean apply(GongXinBaoOperatorsConfig operators) throws Exception {
                         mView.dismissProgressDialog();
-                        mView.setPhone(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_phone), mDataSource.getPhone()));
-                        mView.setOperators(String.format(LoanApplication.getInstance().getString(R.string.loan_auth_phone_operators), operators.getOperatorType()));
+                        mView.setPhone(mDataSource.getPhone());
+                        mView.setOperators(operators.getOperatorType());
                         GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();
                         boolean isNeedRequestImgVerificationCode = false;
                         for (GongXinBaoOperatorsConfig.LoginForms.Fields field : fields) {

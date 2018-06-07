@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.phone;
+package com.jiaye.cashloan.view.phone.source;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,12 +28,12 @@ import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Function;
 
 /**
- * LoanAuthPhoneRepository
+ * PhoneRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPhoneRepository implements LoanAuthPhoneDataSource {
+public class PhoneRepository implements PhoneDataSource {
 
     private String mPhone;
 

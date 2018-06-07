@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.phone;
+package com.jiaye.cashloan.view.phone.source;
 
 import android.graphics.Bitmap;
 
@@ -9,12 +9,12 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBaoOperatorsConfig;
 import io.reactivex.Flowable;
 
 /**
- * LoanAuthPhoneDataSource
+ * PhoneDataSource
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthPhoneDataSource {
+public interface PhoneDataSource {
 
     Flowable<GongXinBaoOperatorsConfig> requestGongXinBaoOperatorsConfig();
 

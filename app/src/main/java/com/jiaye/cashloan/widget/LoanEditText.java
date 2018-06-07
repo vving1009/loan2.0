@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -175,6 +176,7 @@ public class LoanEditText extends RelativeLayout {
         int underLineLength = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineLength, 0);
         int underLineMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineMarginLeft, (int) (34 * density));
         int underLineColor = typedArray.getColor(R.styleable.LoanEditText_underLineColor, getResources().getColor(R.color.color_blue));
+        int textSize = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_textSize, sp2px(12));
 
         /*外层布局*/
         RelativeLayout editLayout = new RelativeLayout(context);
@@ -201,7 +203,7 @@ public class LoanEditText extends RelativeLayout {
             mEditText.setFilters(new InputFilter[0]);
         }
         mEditText.setMaxLines(1);
-        mEditText.setTextSize(12);
+        mEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mEditText.setTextColor(Color.parseColor("#282828"));
         mEditText.setHintTextColor(Color.parseColor("#989898"));
         mEditText.setBackgroundResource(0);
@@ -277,9 +279,15 @@ public class LoanEditText extends RelativeLayout {
         lError.addRule(ALIGN_PARENT_RIGHT);
         lError.addRule(BELOW, R.id.loan_edit_layout);
         mTextError.setLayoutParams(lError);
+        mTextError.setVisibility(GONE);
 
         if (isRequestForce) {
             mEditText.requestFocus();
         }
     }
+
+    public int sp2px(float spVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, getResources().getDisplayMetrics());
+    }
+
 }

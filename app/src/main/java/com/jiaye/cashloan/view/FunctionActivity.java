@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
+import com.jiaye.cashloan.view.phone.PhoneFragment;
 
 /**
  * FunctionActivity
@@ -47,6 +48,8 @@ public class FunctionActivity extends AppCompatActivity {
                 break;
             case "Mobile":
                 // 手机运营商
+                PhoneFragment phoneFragment = PhoneFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, phoneFragment).commit();
                 break;
             case "Vehicle":
                 // 车辆证件

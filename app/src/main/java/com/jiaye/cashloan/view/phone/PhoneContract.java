@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.phone;
+package com.jiaye.cashloan.view.phone;
 
 import android.graphics.Bitmap;
 
@@ -6,12 +6,12 @@ import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * LoanAuthPhoneContract
+ * PhoneContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthPhoneContract {
+public interface PhoneContract {
 
     interface View extends BaseViewContract {
 

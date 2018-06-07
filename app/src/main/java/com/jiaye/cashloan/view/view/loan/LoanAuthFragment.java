@@ -1,15 +1,9 @@
 package com.jiaye.cashloan.view.view.loan;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,14 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
-import com.jiaye.cashloan.view.view.loan.auth.phone.LoanAuthPhoneActivity;
 import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
@@ -171,8 +164,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthPhoneView() {
-        Intent intent = new Intent(getActivity(), LoanAuthPhoneActivity.class);
-        startActivity(intent);
+        FunctionActivity.function(getActivity(), "Mobile");
     }
 
     @Override

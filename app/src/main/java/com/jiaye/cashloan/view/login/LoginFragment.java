@@ -68,21 +68,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     }
 
     @Override
-    public void showToastById(int resId) {
-        switch (resId) {
-            case R.string.error_auth_phone:
-                mEditPhone.setError(getString(R.string.error_auth_phone));
-                break;
-            case R.string.error_auth_sms_verification:
-                mEditCode.setError(getString(R.string.error_auth_sms_verification));
-                break;
-            default:
-                super.showToastById(resId);
-                break;
-        }
-    }
-
-    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }

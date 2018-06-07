@@ -1,33 +1,32 @@
-package com.jiaye.cashloan.view.view.loan.auth.phone;
+package com.jiaye.cashloan.view.phone;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseActivity;
 import com.jiaye.cashloan.view.BaseDialog;
-import com.jiaye.cashloan.view.data.loan.auth.source.phone.LoanAuthPhoneRepository;
-import com.jiaye.cashloan.view.view.help.LoanAuthHelpActivity;
+import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.phone.source.PhoneRepository;
 import com.jiaye.cashloan.widget.CustomProgressDialog;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 import java.util.ArrayList;
 
 /**
- * LoanAuthPhoneActivity
+ * PhoneFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhoneContract.View {
+public class PhoneFragment extends BaseFunctionFragment implements PhoneContract.View {
 
-    private LoanAuthPhoneContract.Presenter mPresenter;
+    private PhoneContract.Presenter mPresenter;
 
     private TextView mTextPhone;
 
@@ -53,42 +52,36 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
 
     private boolean showCustomDialog = false;
 
+    public static PhoneFragment newInstance() {
+        Bundle args = new Bundle();
+        PhoneFragment fragment = new PhoneFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.loan_auth_phone_activity);
-        mTextPhone = findViewById(R.id.text_phone);
-        mTextOperators = findViewById(R.id.text_operators);
-        mEditPassword = findViewById(R.id.edit_code);
-        mLayoutEdit = findViewById(R.id.layout_edit);
-        mTextForgetPassword = findViewById(R.id.text_forget_password);
-        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        findViewById(R.id.img_help).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoanAuthHelpActivity.show(LoanAuthPhoneActivity.this, R.string.loan_auth_phone, "phoneOperator/operator");
-            }
-        });
+    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.phone_fragment, frameLayout, true);
+        mTextPhone = rootView.findViewById(R.id.text_phone);
+        mTextOperators = rootView.findViewById(R.id.text_operators);
+        mEditPassword = rootView.findViewById(R.id.edit_code);
+        mLayoutEdit = rootView.findViewById(R.id.layout_edit);
+        mTextForgetPassword = rootView.findViewById(R.id.text_forget_password);
         mTextForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mForgetPasswordDialog.show();
             }
         });
-        findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCustomDialog = true;
                 mPresenter.submit();
             }
         });
-        mForgetPasswordDialog = new BaseDialog(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.forget_password_dialog_layout, null);
+        mForgetPasswordDialog = new BaseDialog(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.forget_password_dialog_layout, null);
         view.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,12 +91,13 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         mForgetPasswordDialog.setContentView(view);
         mSmsArray = new ArrayList<>();
         mImgArray = new ArrayList<>();
-        mPresenter = new LoanAuthPhonePresenter(this, new LoanAuthPhoneRepository());
+        mPresenter = new PhonePresenter(this, new PhoneRepository());
         mPresenter.subscribe();
+        return rootView;
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mPresenter.unsubscribe();
     }
@@ -131,7 +125,7 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
     @Override
     public void addSms() {
         mSmsIndex++;
-        LoanEditText editSms = (LoanEditText) LayoutInflater.from(this)
+        LoanEditText editSms = (LoanEditText) LayoutInflater.from(getContext())
                 .inflate(R.layout.loan_auth_phone_sms, null, false);
         mLayoutEdit.addView(editSms);
         editSms.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
@@ -158,7 +152,7 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
     @Override
     public void addImg() {
         mImgIndex++;
-        LoanEditText editImg = (LoanEditText) LayoutInflater.from(this)
+        LoanEditText editImg = (LoanEditText) LayoutInflater.from(getContext())
                 .inflate(R.layout.loan_auth_phone_img, null, false);
         mLayoutEdit.addView(editImg);
         editImg.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
@@ -232,14 +226,14 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
 
     @Override
     public void result() {
-        finish();
+        getActivity().finish();
     }
 
     @Override
     public void showProgressDialog() {
         if (showCustomDialog) {
             if (mCustomProgressDialog == null) {
-                mCustomProgressDialog = new CustomProgressDialog(this);
+                mCustomProgressDialog = new CustomProgressDialog(getContext());
             }
             mCustomProgressDialog.show("认证中, 预计等待2-3分钟");
         } else {
@@ -255,5 +249,10 @@ public class LoanAuthPhoneActivity extends BaseActivity implements LoanAuthPhone
         } else {
             super.dismissProgressDialog();
         }
+    }
+
+    @Override
+    protected int getTitleId() {
+        return R.string.phone_title;
     }
 }
