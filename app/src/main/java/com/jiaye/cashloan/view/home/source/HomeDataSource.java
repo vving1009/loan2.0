@@ -1,8 +1,9 @@
 package com.jiaye.cashloan.view.home.source;
 
-import com.jiaye.cashloan.http.data.home.BannerList;
-import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
+import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.home.CheckCompany;
+import com.jiaye.cashloan.http.data.loan.Loan;
+import com.jiaye.cashloan.persistence.User;
 
 import io.reactivex.Flowable;
 
@@ -15,17 +16,27 @@ import io.reactivex.Flowable;
 public interface HomeDataSource {
 
     /**
-     * 请求广告列表
+     * 查询本地是否有用户数据
      */
-    Flowable<BannerList.Banner[]> requestBannerList();
+    Flowable<User> queryUser();
 
     /**
-     * 请求产品列表
+     * 检测是否可以申请借款
      */
-    Flowable<ProductList.Product[]> requestProductList();
+    Flowable<EmptyResponse> checkLoan();
 
     /**
-     * 我要借款
+     * 申请借款
      */
-    Flowable<UploadRiskAppList> requestLoan(String productId);
+    Flowable<Loan> requestLoan();
+
+    /**
+     * 上传危险应用列表
+     */
+    Flowable<EmptyResponse> uploadRiskAppList();
+
+    /**
+     * 用户是否需要选择分公司
+     */
+    Flowable<CheckCompany> checkCompany();
 }

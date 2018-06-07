@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.loan;
+package com.jiaye.cashloan.http.data.home;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
@@ -12,7 +12,7 @@ import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 public class CheckLoanRequest extends SatcatcheChildRequest {
 
     @SerializedName("jpd_id")
-    private String productId;
+    private String productId = "0001";
 
     public String getProductId() {
         return productId;

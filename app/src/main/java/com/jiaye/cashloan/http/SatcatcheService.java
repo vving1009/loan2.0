@@ -8,20 +8,16 @@ import com.jiaye.cashloan.http.data.auth.AuthRequest;
 import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
-import com.jiaye.cashloan.http.data.auth.password.ChangePassword;
-import com.jiaye.cashloan.http.data.auth.password.ChangePasswordRequest;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCode;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
-import com.jiaye.cashloan.http.data.home.BannerList;
-import com.jiaye.cashloan.http.data.home.BannerListRequest;
-import com.jiaye.cashloan.http.data.home.ProductList;
-import com.jiaye.cashloan.http.data.home.ProductListRequest;
+import com.jiaye.cashloan.http.data.home.CheckCompany;
+import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
+import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
+import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
-import com.jiaye.cashloan.http.data.loan.CheckLoan;
-import com.jiaye.cashloan.http.data.loan.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.ContractList;
@@ -47,7 +43,6 @@ import com.jiaye.cashloan.http.data.loan.LoanPlan;
 import com.jiaye.cashloan.http.data.loan.LoanPlanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
-import com.jiaye.cashloan.http.data.loan.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
 import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -72,7 +67,6 @@ import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.data.loan.UploadPhoto;
 import com.jiaye.cashloan.http.data.loan.UploadPhotoRequest;
-import com.jiaye.cashloan.http.data.loan.UploadRiskAppList;
 import com.jiaye.cashloan.http.data.loan.UploadRiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.http.data.loan.VisaRequest;
@@ -119,34 +113,10 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<Login>> login(@Body SatcatcheRequest<LoginRequest> request);
 
     /**
-     * 修改密码
-     */
-    @POST("changePwd")
-    Flowable<SatcatcheResponse<ChangePassword>> changePassword(@Body SatcatcheRequest<ChangePasswordRequest> request);
-
-    /**
-     * 我的
-     */
-    @POST("mine")
-    Flowable<SatcatcheResponse<User>> user(@Body SatcatcheRequest<UserRequest> request);
-
-    /**
-     * 首页商品轮播
-     */
-    @POST("carouselPicture")
-    Flowable<SatcatcheResponse<BannerList>> bannerList(@Body SatcatcheRequest<BannerListRequest> request);
-
-    /**
-     * 首页产品列表
-     */
-    @POST("pictureinfo")
-    Flowable<SatcatcheResponse<ProductList>> productList(@Body SatcatcheRequest<ProductListRequest> request);
-
-    /**
      * 是否可以借款
      */
     @POST("userApprove/ifAgainLend")
-    Flowable<SatcatcheResponse<CheckLoan>> checkLoan(@Body SatcatcheRequest<CheckLoanRequest> request);
+    Flowable<SatcatcheResponse<EmptyResponse>> checkLoan(@Body SatcatcheRequest<CheckLoanRequest> request);
 
     /**
      * 我要借款
@@ -164,7 +134,20 @@ public interface SatcatcheService {
      * 上传风险应用安装情况
      */
     @POST("saveAppList")
-    Flowable<SatcatcheResponse<UploadRiskAppList>> uploadRiskAppList(@Body SatcatcheRequest<UploadRiskAppListRequest> request);
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadRiskAppList(@Body SatcatcheRequest<UploadRiskAppListRequest> request);
+
+    /**
+     * 是否需要选择分公司
+     */
+    @POST("queryUserSourceStatus")
+    Flowable<SatcatcheResponse<CheckCompany>> checkCompany(@Body SatcatcheRequest<CheckCompanyRequest> request);
+
+    /**
+     * 我的
+     */
+    @POST("mine")
+    Flowable<SatcatcheResponse<User>> user(@Body SatcatcheRequest<UserRequest> request);
+
 
     /**
      * 借款认证状态

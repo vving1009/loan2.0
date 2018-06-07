@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,16 +14,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.search.SearchActivity;
-import com.jiaye.cashloan.view.view.loan.LoanAuthActivity;
 
 import java.util.List;
 
@@ -37,13 +35,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class HomeFragment extends BaseFragment implements HomeContract.View, EasyPermissions.PermissionCallbacks {
 
-    // 申请地理位置权限
-    // 给
-    // 1.根据经纬度定位城市
-    // 2.用户可以自己更改城市
-    // 不给 退出应用
-    //
-
     private final int LOCATION_PERMS_REQUEST_CODE = 101;
 
     private String city = "北京";
@@ -52,10 +43,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     private final String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     private HomePresenter mPresenter;
-
-    private LinearLayout mLayoutProduct;
-
-    private String loanId;
 
     private TextView mTextLocation;
 
@@ -86,29 +73,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
         root.findViewById(R.id.btn_apply).setOnClickListener(v -> {
-            SearchActivity.startActivity(getContext(), city);
+            mPresenter.loan();
         });
         mTextLocation = root.findViewById(R.id.location_text);
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
         EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions);
         return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void showLoanAuthView() {
-        Intent intent = new Intent(getActivity(), LoanAuthActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -148,5 +119,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
                         EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions))
                 .setNegativeButton("不行", (dialog, which) -> getActivity().finish())
                 .show();
+    }
+
+    @Override
+    public void showSearchView() {
+        SearchActivity.startActivity(getContext(), city);
+    }
+
+    @Override
+    public void showCertificationView() {
+        FunctionActivity.function(getActivity(), "Certification");
     }
 }

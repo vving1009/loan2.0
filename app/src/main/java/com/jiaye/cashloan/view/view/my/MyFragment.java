@@ -200,7 +200,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.requestUser();
+        //mPresenter.requestUser();
     }
 
     @Override

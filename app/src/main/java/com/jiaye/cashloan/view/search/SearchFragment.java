@@ -69,7 +69,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             if (mSelectSalesman != null) {
                 Logger.d("Select salesman = " + mSelectSalesman.getCompany() + "," + mSelectSalesman.getName() +
                         mSelectSalesman.getWorkId());
-                FunctionActivity.function(getActivity(), "Certification", mSelectSalesman);
+                FunctionActivity.function(getActivity(), "Certification");
             } else {
                 showToast("请先选择业务员");
             }

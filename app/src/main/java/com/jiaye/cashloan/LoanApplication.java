@@ -42,6 +42,8 @@ public class LoanApplication extends Application {
 
     private int mActivityNumber;
 
+    private DbHelper mDbHelper;
+
     private SQLiteDatabase mDatabase;
 
     private PreferencesHelper mPreferencesHelper;
@@ -63,8 +65,8 @@ public class LoanApplication extends Application {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 if (mActivityNumber == 0) {
-                    DbHelper dbHelper = new DbHelper(getApplicationContext());
-                    mDatabase = dbHelper.getWritableDatabase();
+                    mDbHelper = new DbHelper(getApplicationContext());
+                    mDatabase = mDbHelper.getWritableDatabase();
                     mPreferencesHelper = new PreferencesHelper(getApplicationContext());
                     setupBuglyUserId(null);
                 }
@@ -112,6 +114,15 @@ public class LoanApplication extends Application {
         setupLogger();
         setupWeChat();
         setupDict();
+    }
+
+    /**
+     * 获取数据库助手实例
+     *
+     * @return 数据库助手实例
+     */
+    public DbHelper getDbHelper() {
+        return mDbHelper;
     }
 
     /**

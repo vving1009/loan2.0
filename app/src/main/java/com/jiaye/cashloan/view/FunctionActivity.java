@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
-import com.jiaye.cashloan.view.search.source.Salesman;
 
 /**
  * FunctionActivity
@@ -18,17 +17,10 @@ import com.jiaye.cashloan.view.search.source.Salesman;
  */
 public class FunctionActivity extends AppCompatActivity {
 
-    public static void function(Activity activity, String function, Salesman person) {
+    public static void function(Activity activity, String function) {
         Intent intent = new Intent(activity, FunctionActivity.class);
         intent.putExtra("function", function);
-        if (person != null) {
-            intent.putExtra("salesman", person);
-        }
         activity.startActivity(intent);
-    }
-
-    public static void function(Activity activity, String function) {
-        function(activity, function, null);
     }
 
     @Override

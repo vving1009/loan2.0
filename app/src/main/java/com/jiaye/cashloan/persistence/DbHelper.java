@@ -1,10 +1,14 @@
 package com.jiaye.cashloan.persistence;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.LoanApplication;
 
 /**
  * DbHelper
@@ -89,5 +93,45 @@ public class DbHelper extends SQLiteOpenHelper {
             default:
                 break;
         }
+    }
+
+    /**
+     * 查询用户信息
+     *
+     * @return 用户信息
+     */
+    public com.jiaye.cashloan.persistence.User queryUser() {
+        com.jiaye.cashloan.persistence.User user = new com.jiaye.cashloan.persistence.User();
+        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM user", null);
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
+                user.setPhone(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE)));
+                user.setToken(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN)));
+                user.setLoanId(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID)));
+            }
+            cursor.close();
+        }
+        return user;
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param phone  手机号
+     * @param token  令牌
+     * @param loanId 借款编号
+     */
+    public void updateUser(String phone, String token, String loanId) {
+        ContentValues values = new ContentValues();
+        if (!TextUtils.isEmpty(phone)) {
+            values.put("phone", phone);
+        }
+        if (!TextUtils.isEmpty(token)) {
+            values.put("token", token);
+        }
+        if (!TextUtils.isEmpty(loanId)) {
+            values.put("loan_id", loanId);
+        }
+        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
     }
 }

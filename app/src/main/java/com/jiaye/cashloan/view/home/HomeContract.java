@@ -13,16 +13,21 @@ public interface HomeContract {
     interface View extends AuthView {
 
         /**
-         * 显示借款认证页面
+         * 显示搜索公司页面
          */
-        void showLoanAuthView();
+        void showSearchView();
+
+        /**
+         * 显示认证页面
+         */
+        void showCertificationView();
     }
 
     interface Presenter extends BasePresenter {
 
         /**
-         * 借款
+         * 申请借款
          */
-        void loan(String loanId);
+        void loan();
     }
 }
