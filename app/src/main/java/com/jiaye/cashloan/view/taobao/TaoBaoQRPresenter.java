@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.graphics.Bitmap;
 
@@ -7,7 +7,7 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.taobao.LoanAuthTaoBaoQRDataSource;
+import com.jiaye.cashloan.view.taobao.source.TaoBaoQRDataSource;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -15,18 +15,18 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**
- * LoanAuthTaoBaoQRPresenter
+ * TaoBaoQRPresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoQRPresenter extends BasePresenterImpl implements LoanAuthTaoBaoQRContract.Presenter {
+public class TaoBaoQRPresenter extends BasePresenterImpl implements TaoBaoQRContract.Presenter {
 
-    private final LoanAuthTaoBaoQRContract.View mView;
+    private final TaoBaoQRContract.View mView;
 
-    private final LoanAuthTaoBaoQRDataSource mDataSource;
+    private final TaoBaoQRDataSource mDataSource;
 
-    public LoanAuthTaoBaoQRPresenter(LoanAuthTaoBaoQRContract.View view, LoanAuthTaoBaoQRDataSource dataSource) {
+    public TaoBaoQRPresenter(TaoBaoQRContract.View view, TaoBaoQRDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }

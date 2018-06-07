@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -13,23 +13,23 @@ import android.widget.ImageView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.loan.auth.source.taobao.LoanAuthTaoBaoQRRepository;
+import com.jiaye.cashloan.view.taobao.source.TaoBaoQRRepository;
 
 import java.net.URISyntaxException;
 
 /**
- * LoanAuthTaoBaoQRFragment
+ * TaoBaoQRFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoQRFragment extends BaseFragment implements LoanAuthTaoBaoQRContract.View {
+public class TaoBaoQRFragment extends BaseFragment implements TaoBaoQRContract.View {
 
-    private LoanAuthTaoBaoQRContract.Presenter mPresenter;
+    private TaoBaoQRContract.Presenter mPresenter;
 
-    public static LoanAuthTaoBaoQRFragment newInstance() {
+    public static TaoBaoQRFragment newInstance() {
         Bundle args = new Bundle();
-        LoanAuthTaoBaoQRFragment fragment = new LoanAuthTaoBaoQRFragment();
+        TaoBaoQRFragment fragment = new TaoBaoQRFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,7 +41,7 @@ public class LoanAuthTaoBaoQRFragment extends BaseFragment implements LoanAuthTa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.loan_auth_taobao_qrcode_fragment, container, false);
+        View root = inflater.inflate(R.layout.taobao_qrcode_fragment, container, false);
         mImgQRCode = root.findViewById(R.id.img_qrcode);
         mRpc = root.findViewById(R.id.btn_commit);
         mRpc.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class LoanAuthTaoBaoQRFragment extends BaseFragment implements LoanAuthTa
                 }
             }
         });
-        mPresenter = new LoanAuthTaoBaoQRPresenter(this, new LoanAuthTaoBaoQRRepository());
+        mPresenter = new TaoBaoQRPresenter(this, new TaoBaoQRRepository());
         mPresenter.subscribe();
         return root;
     }

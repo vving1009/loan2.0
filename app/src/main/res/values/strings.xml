@@ -12,6 +12,8 @@
     <string name="id_title">身份认证</string>
     <!--phone-->
     <string name="phone_title">手机运营商</string>
+    <!--taobao-->
+    <string name="taobao_title">淘宝/支付宝认证</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_name">姓名</string>
@@ -51,8 +53,8 @@
     <string name="loan_auth_phone_bank">银行高级别加密 保障您的信息安全</string>
     <string name="loan_auth_taobao">淘宝认证</string>
     <string name="loan_auth_taobao_normal">帐号授权</string>
-    <string name="loan_auth_taobao_normal_account">请输入淘宝账号</string>
-    <string name="loan_auth_taobao_normal_input_password">请输入密码</string>
+    <string name="taobao_normal_account">请输入淘宝/支付宝账号</string>
+    <string name="taobao_normal_input_password">请输入淘宝/支付宝密码</string>
     <string name="loan_auth_taobao_normal_commit">立即授权</string>
     <string name="loan_auth_taobao_input_sms_verification">请输入短信验证码</string>
     <string name="loan_auth_taobao_input_img_verification">请输入图片验证码</string>

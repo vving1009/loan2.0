@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.taobao;
+package com.jiaye.cashloan.view.taobao.source;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,12 +29,12 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * LoanAuthTaoBaoQRRepository
+ * TaoBaoQRRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoQRRepository implements LoanAuthTaoBaoQRDataSource {
+public class TaoBaoQRRepository implements TaoBaoQRDataSource {
 
     private String mToken;
 

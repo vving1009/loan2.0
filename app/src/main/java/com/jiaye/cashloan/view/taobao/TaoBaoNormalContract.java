@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.graphics.Bitmap;
 
@@ -6,12 +6,12 @@ import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * LoanAuthTaoBaoNormalContract
+ * TaoBaoNormalContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthTaoBaoNormalContract {
+public interface TaoBaoNormalContract {
 
     interface View extends BaseViewContract {
 

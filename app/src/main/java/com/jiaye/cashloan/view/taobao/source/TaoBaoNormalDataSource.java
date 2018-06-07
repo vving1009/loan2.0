@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.taobao;
+package com.jiaye.cashloan.view.taobao.source;
 
 import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
@@ -6,12 +6,12 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
 import io.reactivex.Flowable;
 
 /**
- * LoanAuthTaoBaoNormalDataSource
+ * TaoBaoNormalDataSource
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthTaoBaoNormalDataSource {
+public interface TaoBaoNormalDataSource {
 
     Flowable<Object> requestGongXinBaoInit();
 

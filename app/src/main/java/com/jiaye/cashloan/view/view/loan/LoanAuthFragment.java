@@ -21,10 +21,10 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
+import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
 import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
 import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
-import com.jiaye.cashloan.view.view.loan.auth.taobao.LoanAuthTaoBaoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
 import java.util.List;
@@ -169,8 +169,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthTaoBaoView() {
-        Intent intent = new Intent(getActivity(), LoanAuthTaoBaoActivity.class);
-        startActivity(intent);
+        FunctionActivity.function(getActivity(), "Taobao");
     }
 
     @Override

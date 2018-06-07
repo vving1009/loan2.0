@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
@@ -9,7 +9,7 @@ import com.jiaye.cashloan.utils.Base64Util;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.taobao.LoanAuthTaoBaoNormalDataSource;
+import com.jiaye.cashloan.view.taobao.source.TaoBaoNormalDataSource;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -18,20 +18,20 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
- * LoanAuthTaoBaoNormalPresenter
+ * TaoBaoNormalPresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoNormalPresenter extends BasePresenterImpl implements LoanAuthTaoBaoNormalContract.Presenter {
+public class TaoBaoNormalPresenter extends BasePresenterImpl implements TaoBaoNormalContract.Presenter {
 
-    private final LoanAuthTaoBaoNormalContract.View mView;
+    private final TaoBaoNormalContract.View mView;
 
-    private final LoanAuthTaoBaoNormalDataSource mDataSource;
+    private final TaoBaoNormalDataSource mDataSource;
 
     private boolean isSecond;
 
-    public LoanAuthTaoBaoNormalPresenter(LoanAuthTaoBaoNormalContract.View view, LoanAuthTaoBaoNormalDataSource dataSource) {
+    public TaoBaoNormalPresenter(TaoBaoNormalContract.View view, TaoBaoNormalDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }

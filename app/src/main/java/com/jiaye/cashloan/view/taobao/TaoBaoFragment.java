@@ -1,37 +1,67 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseActivity;
+import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 /**
- * LoanAuthTaoBaoActivity
+ * TaoBaoFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoActivity extends BaseActivity {
+public class TaoBaoFragment extends BaseFunctionFragment {
 
     private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_taobao_normal, R.string.loan_auth_taobao_qr};
 
     private NoScrollViewPager mViewPager;
 
+    private TaoBaoNormalFragment normal() {
+        return TaoBaoNormalFragment.newInstance();
+    }
+
+    private TaoBaoQRFragment qr() {
+        return TaoBaoQRFragment.newInstance();
+    }
+
+    public static TaoBaoFragment newInstance() {
+        Bundle args = new Bundle();
+        TaoBaoFragment fragment = new TaoBaoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
+        for (int aText : text) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            View view = inflater.inflate(R.layout.loan_auth_taobao_tab, null);
+            tab.setCustomView(view);
+            TextView tvTitle = view.findViewById(R.id.text);
+            tvTitle.setText(aText);
+            tabLayout.addTab(tab);
+        }
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.loan_auth_taobao_activity);
-        mViewPager = findViewById(R.id.view_pager);
+    protected int getTitleId() {
+        return R.string.taobao_title;
+    }
+
+    @Override
+    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.taobao_fragment, frameLayout, true);
+        mViewPager = rootView.findViewById(R.id.view_pager);
         mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        mViewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
 
             @Override
             public Fragment getItem(int position) {
@@ -55,7 +85,7 @@ public class LoanAuthTaoBaoActivity extends BaseActivity {
                 return POSITION_NONE;
             }
         });
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
         setTabs(tabLayout, getLayoutInflater(), TAB_TEXT);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -64,7 +94,7 @@ public class LoanAuthTaoBaoActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 1) {
                     String name = "android:switcher:" + mViewPager.getId() + ":" + "1";
-                    LoanAuthTaoBaoQRFragment fragment = (LoanAuthTaoBaoQRFragment) getSupportFragmentManager().findFragmentByTag(name);
+                    TaoBaoQRFragment fragment = (TaoBaoQRFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
                     fragment.request();
                 }
             }
@@ -79,30 +109,6 @@ public class LoanAuthTaoBaoActivity extends BaseActivity {
 
             }
         });
-        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
-    private LoanAuthTaoBaoNormalFragment normal() {
-        return LoanAuthTaoBaoNormalFragment.newInstance();
-    }
-
-    private LoanAuthTaoBaoQRFragment qr() {
-        return LoanAuthTaoBaoQRFragment.newInstance();
-    }
-
-    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
-        for (int aText : text) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.loan_auth_taobao_tab, null);
-            tab.setCustomView(view);
-            TextView tvTitle = view.findViewById(R.id.text);
-            tvTitle.setText(aText);
-            tabLayout.addTab(tab);
-        }
+        return rootView;
     }
 }

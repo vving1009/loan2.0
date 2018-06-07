@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.taobao;
+package com.jiaye.cashloan.view.taobao;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,18 +12,18 @@ import android.widget.Button;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.data.loan.auth.source.taobao.LoanAuthTaoBaoNormalRepository;
+import com.jiaye.cashloan.view.taobao.source.TaoBaoNormalRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
 
 /**
- * LoanAuthTaoBaoNormalFragment
+ * TaoBaoNormalFragment
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthTaoBaoNormalFragment extends BaseFragment implements LoanAuthTaoBaoNormalContract.View, TextWatcher {
+public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalContract.View, TextWatcher {
 
-    private LoanAuthTaoBaoNormalContract.Presenter mPresenter;
+    private TaoBaoNormalContract.Presenter mPresenter;
 
     private LoanEditText mEditAccount;
 
@@ -35,9 +35,9 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment implements LoanAu
 
     private Button mBtnNext;
 
-    public static LoanAuthTaoBaoNormalFragment newInstance() {
+    public static TaoBaoNormalFragment newInstance() {
         Bundle args = new Bundle();
-        LoanAuthTaoBaoNormalFragment fragment = new LoanAuthTaoBaoNormalFragment();
+        TaoBaoNormalFragment fragment = new TaoBaoNormalFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,7 +45,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment implements LoanAu
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.loan_auth_taobao_normal_fragment, container, false);
+        View root = inflater.inflate(R.layout.taobao_normal_fragment, container, false);
         mEditAccount = root.findViewById(R.id.edit_account);
         mEditPassword = root.findViewById(R.id.edit_code);
         mEditSMS = root.findViewById(R.id.edit_sms);
@@ -73,7 +73,7 @@ public class LoanAuthTaoBaoNormalFragment extends BaseFragment implements LoanAu
         mEditPassword.addTextChangedListener(this);
         mEditSMS.addTextChangedListener(this);
         mEditIMG.addTextChangedListener(this);
-        mPresenter = new LoanAuthTaoBaoNormalPresenter(this, new LoanAuthTaoBaoNormalRepository());
+        mPresenter = new TaoBaoNormalPresenter(this, new TaoBaoNormalRepository());
         mPresenter.subscribe();
         return root;
     }

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.taobao;
+package com.jiaye.cashloan.view.taobao.source;
 
 import android.graphics.Bitmap;
 
@@ -8,12 +8,12 @@ import com.jiaye.cashloan.http.gongxinbao.GongXinBao;
 import io.reactivex.Flowable;
 
 /**
- * LoanAuthTaoBaoQRDataSource
+ * TaoBaoQRDataSource
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthTaoBaoQRDataSource {
+public interface TaoBaoQRDataSource {
 
     Flowable<Bitmap> requestQRCode();
 

@@ -10,6 +10,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
+import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
 
 /**
  * FunctionActivity
@@ -56,6 +57,8 @@ public class FunctionActivity extends AppCompatActivity {
                 break;
             case "Taobao":
                 // 淘宝
+                TaoBaoFragment taoBaoFragment = TaoBaoFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, taoBaoFragment).commit();
                 break;
             case "Other":
                 // 进件资料
