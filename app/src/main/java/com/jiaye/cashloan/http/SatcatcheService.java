@@ -10,6 +10,8 @@ import com.jiaye.cashloan.http.data.auth.login.Login;
 import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCode;
 import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
+import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
@@ -76,6 +78,8 @@ import com.jiaye.cashloan.http.data.my.Phone;
 import com.jiaye.cashloan.http.data.my.PhoneRequest;
 import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
+import com.jiaye.cashloan.http.data.step1.Step1;
+import com.jiaye.cashloan.http.data.step1.Step1Request;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -141,6 +145,18 @@ public interface SatcatcheService {
      */
     @POST("queryUserSourceStatus")
     Flowable<SatcatcheResponse<CheckCompany>> checkCompany(@Body SatcatcheRequest<CheckCompanyRequest> request);
+
+    /**
+     * 查询认证到第几步
+     */
+    @POST("queryOrderStatus")
+    Flowable<SatcatcheResponse<Step>> step(@Body SatcatcheRequest<StepRequest> request);
+
+    /**
+     * 查询认证第一步的具体状态
+     */
+    @POST("queryAuthenticationStatus")
+    Flowable<SatcatcheResponse<Step1>> step1(@Body SatcatcheRequest<Step1Request> request);
 
     /**
      * 我的

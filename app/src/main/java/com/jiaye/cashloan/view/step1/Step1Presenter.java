@@ -1,14 +1,15 @@
 package com.jiaye.cashloan.view.step1;
 
+import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step1.source.Step1DataSource;
 
-import java.util.List;
+import org.reactivestreams.Publisher;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Step1Presenter
@@ -22,7 +23,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     private final Step1DataSource mDataSource;
 
-    private List<Step1> mList;
+    private Step1 mStep1;
 
     public Step1Presenter(Step1Contract.View view, Step1DataSource dataSource) {
         mView = view;
@@ -32,11 +33,13 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     @Override
     public void subscribe() {
         super.subscribe();
-        Disposable disposable = mDataSource.requestStep1()
+        Disposable disposable = mDataSource.requestStep()
+                .filter(step -> step.getStep() >= 1)
+                .concatMap((Function<Step, Publisher<Step1>>) step -> mDataSource.requestStep1())
                 .compose(new ViewTransformer<>())
-                .subscribe(step1s -> {
-                    mList = step1s;
-                    mView.setList(mList);
+                .subscribe(step1 -> {
+                    mStep1 = step1;
+                    mView.setStep1(step1);
                 });
         mCompositeDisposable.add(disposable);
     }
@@ -45,7 +48,9 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     public void onClickItem(int position) {
         switch (position) {
             case 0:
-                mView.showIDView();
+                if (mStep1.getId() == 0) {
+                    mView.showIDView();
+                }
                 break;
         }
     }

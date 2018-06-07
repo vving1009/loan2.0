@@ -16,7 +16,7 @@ public interface Step1Contract {
 
     interface View extends BaseViewContract {
 
-        void setList(List<Step1> list);
+        void setStep1(Step1 step1);
 
         void showIDView();
     }

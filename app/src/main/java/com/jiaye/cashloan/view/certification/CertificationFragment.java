@@ -120,7 +120,19 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
 
     @Override
     public void setStep(int step) {
-        mViewPager.setLock(step);
+        if (step == 1) {
+            mViewPager.setLock(0);
+            mViewPager.setCurrentItem(0);
+        } else if (step == 2 || step == 3 || step == 4) {
+            mViewPager.setLock(1);
+            mViewPager.setCurrentItem(1);
+        } else if (step == 5) {
+            mViewPager.setLock(2);
+            mViewPager.setCurrentItem(2);
+        } else if (step == 6) {
+            mViewPager.setLock(3);
+            mViewPager.setCurrentItem(3);
+        }
         switch (step) {
             case 3:
                 mTextStep3.setCompoundDrawablesWithIntrinsicBounds(

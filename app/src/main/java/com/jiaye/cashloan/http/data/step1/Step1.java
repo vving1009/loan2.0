@@ -1,33 +1,67 @@
 package com.jiaye.cashloan.http.data.step1;
 
 import com.google.gson.annotations.SerializedName;
+import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
  * Step1
  *
  * @author 贾博瑄
  */
-public class Step1 {
+public class Step1 extends SatcatcheChildResponse {
 
-    @SerializedName("name")
-    private String name;
+    @SerializedName("idcard_auth")
+    private int id;
 
-    @SerializedName("state")
-    private int state;
+    @SerializedName("bioassay_auth")
+    private int bioassay;
 
-    public String getName() {
-        return name;
+    @SerializedName("user_info")
+    private int personal;
+
+    @SerializedName("operator_auth")
+    private int phone;
+
+    @SerializedName("car_papers")
+    private int car;
+
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getState() {
-        return state;
+    public int getBioassay() {
+        return bioassay;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setBioassay(int bioassay) {
+        this.bioassay = bioassay;
+    }
+
+    public int getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(int personal) {
+        this.personal = personal;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public int getCar() {
+        return car;
+    }
+
+    public void setCar(int car) {
+        this.car = car;
     }
 }

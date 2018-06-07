@@ -1,9 +1,11 @@
 package com.jiaye.cashloan.view.step1.source;
 
+import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.jiaye.cashloan.http.data.step1.Step1Request;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 
@@ -16,28 +18,24 @@ import io.reactivex.Flowable;
 public class Step1Repository implements Step1DataSource {
 
     @Override
-    public Flowable<List<Step1>> requestStep1() {
-        List<Step1> list = new ArrayList<>();
-        Step1 step1_1 = new Step1();
-        step1_1.setName("身份认证");
-        step1_1.setState(0);
-        Step1 step1_2 = new Step1();
-        step1_2.setName("人像对比");
-        step1_2.setState(0);
-        Step1 step1_3 = new Step1();
-        step1_3.setName("个人资料");
-        step1_3.setState(0);
-        Step1 step1_4 = new Step1();
-        step1_4.setName("手机运营商");
-        step1_4.setState(0);
-        Step1 step1_5 = new Step1();
-        step1_5.setName("车辆证件");
-        step1_5.setState(0);
-        list.add(step1_1);
-        list.add(step1_2);
-        list.add(step1_3);
-        list.add(step1_4);
-        list.add(step1_5);
-        return Flowable.just(list);
+    public Flowable<Step> requestStep() {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    StepRequest request = new StepRequest();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<StepRequest, Step>("step"));
+    }
+
+    @Override
+    public Flowable<Step1> requestStep1() {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    Step1Request request = new Step1Request();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<Step1Request, Step1>("step1"));
     }
 }

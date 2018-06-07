@@ -18,8 +18,6 @@ import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
 
-import java.util.List;
-
 /**
  * Step1Fragment
  *
@@ -29,6 +27,8 @@ import java.util.List;
 public class Step1Fragment extends BaseFragment implements Step1Contract.View {
 
     private Step1Contract.Presenter mPresenter;
+
+    private RecyclerView mRecyclerView;
 
     private Adapter mAdapter;
 
@@ -43,10 +43,10 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.step1_fragment, container, false);
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView = root.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         mPresenter = new Step1Presenter(this, new Step1Repository());
         mPresenter.subscribe();
         return root;
@@ -59,8 +59,9 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     }
 
     @Override
-    public void setList(List<Step1> list) {
-        mAdapter.setList(list);
+    public void setStep1(Step1 step1) {
+        mAdapter.setStep1(step1);
+        mRecyclerView.scrollToPosition(0);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private List<Step1> mList;
+        private Step1 mStep1;
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -87,21 +88,46 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
             } else {
                 holder.setType(1);
             }
-            holder.setName(mList.get(position).getName());
-            holder.setState(mList.get(position).getState());
+            switch (position) {
+                case 0:
+                    holder.setType(0);
+                    holder.setName("身份认证");
+                    holder.setState(mStep1.getId());
+                    break;
+                case 1:
+                    holder.setType(1);
+                    holder.setName("人像对比");
+                    holder.setState(mStep1.getBioassay());
+                    break;
+                case 2:
+                    holder.setType(1);
+                    holder.setName("个人资料 ");
+                    holder.setState(mStep1.getPersonal());
+                    break;
+                case 3:
+                    holder.setType(1);
+                    holder.setName("手机运营商");
+                    holder.setState(mStep1.getPhone());
+                    break;
+                case 4:
+                    holder.setType(2);
+                    holder.setName("车辆证件");
+                    holder.setState(mStep1.getCar());
+                    break;
+            }
         }
 
         @Override
         public int getItemCount() {
-            if (mList == null || mList.size() == 0) {
-                return 0;
+            if (mStep1 != null) {
+                return 5;
             } else {
-                return mList.size();
+                return 0;
             }
         }
 
-        public void setList(List<Step1> list) {
-            this.mList = list;
+        public void setStep1(Step1 step1) {
+            this.mStep1 = step1;
             notifyDataSetChanged();
         }
     }
