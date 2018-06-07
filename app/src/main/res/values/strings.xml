@@ -4,6 +4,8 @@
     <string name="my">我的</string>
     <!--launch-->
     <string name="launch_gesture">手势密码</string>
+    <!--search-->
+    <string name="search_error">请先选择业务员</string>
     <!--certification-->
     <string name="certification_title">认证中心</string>
     <!--id-->

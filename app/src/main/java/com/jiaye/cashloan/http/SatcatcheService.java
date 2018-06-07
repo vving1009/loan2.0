@@ -5,11 +5,9 @@ import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
-import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
-import com.jiaye.cashloan.http.data.auth.login.Login;
-import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
-import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCode;
-import com.jiaye.cashloan.http.data.auth.password.CheckForgetPasswordVerificationCodeRequest;
+import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
+import com.jiaye.cashloan.http.data.login.Login;
+import com.jiaye.cashloan.http.data.login.LoginRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
@@ -80,6 +78,10 @@ import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.http.data.step1.Step1Request;
+import com.jiaye.cashloan.http.search.Salesman;
+import com.jiaye.cashloan.http.search.SalesmanRequest;
+import com.jiaye.cashloan.http.search.SaveSalesman;
+import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -145,6 +147,18 @@ public interface SatcatcheService {
      */
     @POST("queryUserSourceStatus")
     Flowable<SatcatcheResponse<CheckCompany>> checkCompany(@Body SatcatcheRequest<CheckCompanyRequest> request);
+
+    /**
+     * 查询销售人员数据
+     */
+    @POST("querySourceData")
+    Flowable<SatcatcheResponse<Salesman>> salesman(@Body SatcatcheRequest<SalesmanRequest> request);
+
+    /**
+     * 保存销售人员
+     */
+    @POST("saveUserSource")
+    Flowable<SatcatcheResponse<SaveSalesman>> saveSalesman(@Body SatcatcheRequest<SaveSalesmanRequest> request);
 
     /**
      * 查询认证到第几步
@@ -290,12 +304,6 @@ public interface SatcatcheService {
      */
     @POST("shCompactShow")
     Flowable<SatcatcheResponse<ContractList>> contractList(@Body SatcatcheRequest<ContractListRequest> request);
-
-    /**
-     * 校验忘记密码验证码
-     */
-    @POST("sendMsg/juageCodeTime")
-    Flowable<SatcatcheResponse<CheckForgetPasswordVerificationCode>> checkForgetPasswordVerificationCode(@Body SatcatcheRequest<CheckForgetPasswordVerificationCodeRequest> request);
 
     /**
      * 认证材料查询

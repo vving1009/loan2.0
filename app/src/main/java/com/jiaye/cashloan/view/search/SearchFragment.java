@@ -19,11 +19,10 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.search.source.Salesman;
 import com.jiaye.cashloan.view.search.source.SearchRepository;
-import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private RecyclerView mPersonList;
     private CompanyListAdapter mCompanyListAdapter;
     private PersonListAdapter mPersonListAdapter;
-    private Salesman mSelectSalesman;
 
     public static SearchFragment newInstance(String city) {
         Bundle args = new Bundle();
@@ -58,28 +56,61 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.search_fragment, container, false);
-        mPresenter = new SearchPresenter(this, new SearchRepository(getContext()));
-        mPresenter.subscribe();
         mSearchView = root.findViewById(R.id.search_view);
         mCompanyList = root.findViewById(R.id.company_list);
         mPersonList = root.findViewById(R.id.person_list);
         root.findViewById(R.id.img_back).setOnClickListener(v ->
                 Objects.requireNonNull(getActivity()).finish());
         root.findViewById(R.id.ok_btn).setOnClickListener(v -> {
-            if (mSelectSalesman != null) {
-                Logger.d("Select salesman = " + mSelectSalesman.getCompany() + "," + mSelectSalesman.getName() +
-                        mSelectSalesman.getWorkId());
-                FunctionActivity.function(getActivity(), "Certification");
-            } else {
-                showToast("请先选择业务员");
-            }
+            mPresenter.saveSalesman();
         });
         initList();
         initSearchView();
         mCompanyList.requestFocus();
         new Handler().postDelayed(() ->
                 mSearchView.setQuery(getArguments().getString("city", ""), true), 200);
+        mPresenter = new SearchPresenter(this, new SearchRepository());
+        mPresenter.subscribe();
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void setCompanyListItemSelected(String company) {
+        mCompanyListAdapter.setItemSelected(company);
+    }
+
+    @Override
+    public void setCompanyListNoneSelected() {
+        mCompanyListAdapter.setNoneSelected();
+    }
+
+    @Override
+    public void setCompanyListDataChanged(List<String> list) {
+        mCompanyListAdapter.notifyListChange(list);
+    }
+
+    @Override
+    public void setPersonListBlankContent() {
+        mPersonListAdapter.setBlankContent();
+        mPresenter.selectSalesman(null);
+    }
+
+    @Override
+    public void showCertificationView() {
+        FunctionActivity.function(getActivity(), "Certification");
+        getActivity().finish();
+    }
+
+    @Override
+    public void setPersonListDataChanged(List<Salesman> list) {
+        setPersonListBlankContent();
+        mPersonListAdapter.notifyListChange(list);
     }
 
     private void initSearchView() {
@@ -127,34 +158,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         mPersonList.setLayoutManager(new LinearLayoutManager(getContext()));
         mCompanyList.setAdapter(mCompanyListAdapter);
         mPersonList.setAdapter(mPersonListAdapter);
-        mPresenter.queryCompany();
-    }
-
-    @Override
-    public void setCompanyListItemSelected(String company) {
-        mCompanyListAdapter.setItemSelected(company);
-    }
-
-    @Override
-    public void setCompanyListNoneSelected() {
-        mCompanyListAdapter.setNoneSelected();
-    }
-
-    @Override
-    public void setCompanyListDataChanged(List<String> list) {
-        mCompanyListAdapter.notifyListChange(list);
-    }
-
-    @Override
-    public void setPersonListBlankContent() {
-        mPersonListAdapter.setBlankContent();
-        mSelectSalesman = null;
-    }
-
-    @Override
-    public void setPersonListDataChanged(List<Salesman> list) {
-        setPersonListBlankContent();
-        mPersonListAdapter.notifyListChange(list);
     }
 
     private class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.ViewHolder> {
@@ -251,7 +254,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                mSelectSalesman = salesmen.get(selectPos);
+                mPresenter.selectSalesman(salesmen.get(selectPos));
             });
         }
 
@@ -286,12 +289,5 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
                 rootView = itemView.findViewById(R.id.root_view);
             }
         }
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mPresenter.unsubscribe();
     }
 }

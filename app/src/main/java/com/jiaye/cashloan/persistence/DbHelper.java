@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
-import com.jiaye.cashloan.LoanApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DbHelper
@@ -51,6 +53,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_SALES =
             "CREATE TABLE " + DbContract.Salesman.TABLE_NAME + " (" +
                     DbContract.Salesman._ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT," +
+                    DbContract.Salesman.COLUMN_COMPANY_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.Salesman.COLUMN_COMPANY + TEXT_TYPE + COMMA_SEP +
                     DbContract.Salesman.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                     DbContract.Salesman.COLUMN_WORK_ID + TEXT_TYPE + " )";
@@ -85,11 +88,14 @@ public class DbHelper extends SQLiteOpenHelper {
                 // 2018.5.11 修改 approve_number progress_number history_number 字段类型
                 db.execSQL("alter table user rename to temp_user");
                 db.execSQL(SQL_CREATE_USER);
-                db.execSQL("insert into user SELECT * FROM temp_user");
+                db.execSQL("insert into user select * from temp_user");
                 db.execSQL("drop table temp_user");
             case 4:
-                db.execSQL("drop table if exists salesperson");
+                db.execSQL("drop table if exists salesman");
                 db.execSQL(SQL_CREATE_SALES);
+            case 5:
+                // 2018.6.7 salesman 表 增加 company_id 字段
+                db.execSQL("alter table salesman add column company_id text");
             default:
                 break;
         }
@@ -102,7 +108,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public com.jiaye.cashloan.persistence.User queryUser() {
         com.jiaye.cashloan.persistence.User user = new com.jiaye.cashloan.persistence.User();
-        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM user", null);
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM user", null);
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 user.setPhone(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE)));
@@ -132,6 +138,79 @@ public class DbHelper extends SQLiteOpenHelper {
         if (!TextUtils.isEmpty(loanId)) {
             values.put("loan_id", loanId);
         }
-        LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
+        getWritableDatabase().update("user", values, null, null);
+    }
+
+    /**
+     * 删除所有销售人员信息
+     */
+    public void deleteSales() {
+        getWritableDatabase().execSQL("delete from salesman");
+    }
+
+    /**
+     * 插入销售人员信息
+     *
+     * @param companyId   分公司编号
+     * @param companyName 分公司名称
+     * @param name        员工名称
+     * @param number      员工工号
+     */
+    public void insertSales(String companyId, String companyName, String name, String number) {
+        ContentValues values = new ContentValues();
+        if (!TextUtils.isEmpty(companyId)) {
+            values.put("company_id", companyId);
+        }
+        if (!TextUtils.isEmpty(companyName)) {
+            values.put("company", companyName);
+        }
+        if (!TextUtils.isEmpty(name)) {
+            values.put("name", name);
+        }
+        if (!TextUtils.isEmpty(number)) {
+            values.put("work_id", number);
+        }
+        getWritableDatabase().insert("salesman", null, values);
+    }
+
+    /**
+     * 查询销售人员列表
+     *
+     * @param column 查询列(company, name, work_id)
+     * @param value  查询值
+     */
+    public List<Salesman> querySales(String column, String value) {
+        Cursor cursor = getReadableDatabase().rawQuery("select * from salesman where " + column + " like ?" +
+                "order by name", new String[]{"%" + value + "%"});
+        List<Salesman> salesmen = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Salesman sp = new Salesman();
+            sp.setCompanyId(cursor.getString(cursor.getColumnIndexOrThrow("company_id")));
+            sp.setCompany(cursor.getString(cursor.getColumnIndexOrThrow("company")));
+            sp.setName(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+            sp.setWorkId(cursor.getString(cursor.getColumnIndexOrThrow("work_id")));
+            salesmen.add(sp);
+        }
+        cursor.close();
+        return salesmen;
+    }
+
+    /**
+     * 查询公司列表
+     *
+     * @return 公司列表
+     */
+    public List<String> queryCompany() {
+        Cursor cursor = getReadableDatabase().rawQuery("select company from salesman order by company", null);
+        List<String> companies = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String company;
+            company = cursor.getString(cursor.getColumnIndexOrThrow("company"));
+            if (!companies.contains(company)) {
+                companies.add(company);
+            }
+        }
+        cursor.close();
+        return companies;
     }
 }

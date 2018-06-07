@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.auth.login;
+package com.jiaye.cashloan.http.data.login;
 
 import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 

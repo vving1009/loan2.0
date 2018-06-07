@@ -2,21 +2,29 @@ package com.jiaye.cashloan.view.search;
 
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.search.SaveSalesman;
+import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
-import com.jiaye.cashloan.view.search.source.Salesman;
+import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.search.source.SearchDataSource;
+
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * SearchPresenter
  *
- * @author 贾博�?
+ * @author 贾博瑄
  */
 
 public class SearchPresenter extends BasePresenterImpl implements SearchContract.Presenter {
@@ -27,15 +35,19 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
 
     private int step;
 
+    private Salesman mSalesman;
+
     public SearchPresenter(SearchContract.View view, SearchDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
-    public void queryCompany() {
-        Disposable disposable = mDataSource.queryCompany()
-                .observeOn(AndroidSchedulers.mainThread())
+    public void subscribe() {
+        super.subscribe();
+        Disposable disposable = mDataSource.salesman()
+                .concatMap((Function<com.jiaye.cashloan.http.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
+                .compose(new ViewTransformer<>())
                 .subscribe(mView::setCompanyListDataChanged);
         mCompositeDisposable.add(disposable);
     }
@@ -50,7 +62,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
 
     @Override
     public void queryPeopleBySearchView(String newText) {
-        List<Salesman> Salesmen = new ArrayList<>();
+        List<com.jiaye.cashloan.persistence.Salesman> Salesmen = new ArrayList<>();
         step = 0;
         if (!TextUtils.isEmpty(newText)) {
             Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, newText)
@@ -97,6 +109,40 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
         } else {
             mView.setCompanyListNoneSelected();
             mView.setPersonListBlankContent();
+        }
+    }
+
+    @Override
+    public void selectSalesman(Salesman salesman) {
+        mSalesman = salesman;
+    }
+
+    @Override
+    public void saveSalesman() {
+        if (mSalesman == null) {
+            mView.showToastById(R.string.search_error);
+        } else {
+            Disposable disposable = Flowable.just(mSalesman)
+                    .flatMap((Function<Salesman, Publisher<SaveSalesman>>) salesman -> {
+                        SaveSalesmanRequest request = new SaveSalesmanRequest();
+                        request.setCompanyId(mSalesman.getCompanyId());
+                        request.setCompanyName(mSalesman.getCompany());
+                        request.setName(mSalesman.getName());
+                        request.setNumber(mSalesman.getWorkId());
+                        return mDataSource.saveSalesman(request);
+                    })
+                    .compose(new ViewTransformer<SaveSalesman>() {
+                        @Override
+                        public void accept() {
+                            super.accept();
+                            mView.showProgressDialog();
+                        }
+                    })
+                    .subscribe(saveSalesman -> {
+                        mView.dismissProgressDialog();
+                        mView.showCertificationView();
+                    });
+            mCompositeDisposable.add(disposable);
         }
     }
 }

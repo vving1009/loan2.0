@@ -4,9 +4,9 @@ import android.content.ContentValues;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.auth.VerificationCodeRequest;
-import com.jiaye.cashloan.http.data.auth.login.Login;
-import com.jiaye.cashloan.http.data.auth.login.LoginRequest;
+import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
+import com.jiaye.cashloan.http.data.login.Login;
+import com.jiaye.cashloan.http.data.login.LoginRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;

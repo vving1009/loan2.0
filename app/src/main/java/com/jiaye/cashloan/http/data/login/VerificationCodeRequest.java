@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.auth;
+package com.jiaye.cashloan.http.data.login;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;

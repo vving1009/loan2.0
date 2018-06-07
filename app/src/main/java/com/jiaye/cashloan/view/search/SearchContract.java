@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.search;
 
 import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.view.search.source.Salesman;
+import com.jiaye.cashloan.persistence.Salesman;
 
 import java.util.List;
 
@@ -25,14 +25,18 @@ public interface SearchContract {
         void setPersonListDataChanged(List<Salesman> list);
 
         void setPersonListBlankContent();
+
+        void showCertificationView();
     }
 
     interface Presenter extends BasePresenter {
 
-        void queryCompany();
-
         void queryPeopleByCompanyList(String column, String word);
 
         void queryPeopleBySearchView(String newText);
+
+        void selectSalesman(Salesman salesman);
+
+        void saveSalesman();
     }
 }
