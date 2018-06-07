@@ -30,8 +30,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="19dp"
                 android:layout_marginTop="8dp"
-                android:drawablePadding="4dp"
-                android:drawableRight="@drawable/home_ic_down"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
                 android:textColor="@android:color/white"

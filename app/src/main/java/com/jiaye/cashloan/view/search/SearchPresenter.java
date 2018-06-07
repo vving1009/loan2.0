@@ -52,7 +52,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
     public void queryPeopleBySearchView(String newText) {
         List<Salesman> Salesmen = new ArrayList<>();
         step = 0;
-        if (TextUtils.isEmpty(newText)) {
+        if (!TextUtils.isEmpty(newText)) {
             Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, newText)
                     .filter(list -> list != null && list.size() != 0)
                     .doOnNext(list -> {

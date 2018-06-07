@@ -2,6 +2,7 @@ package com.jiaye.cashloan;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,7 +13,6 @@ import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
-import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.main.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -105,8 +105,6 @@ public class LoanApplication extends Application {
                 mActivityNumber--;
                 if (mActivityNumber == 0) {
                     mDatabase.close();
-                    Intent intent = new Intent(LoanApplication.this, LocationService.class);
-                    stopService(intent);
                 }
             }
         });

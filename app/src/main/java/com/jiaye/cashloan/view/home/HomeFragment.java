@@ -38,8 +38,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     private final int LOCATION_PERMS_REQUEST_CODE = 101;
 
-    private String city = "北京";
-
     @SuppressLint("InlinedApi")
     private final String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -52,6 +50,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         public void onServiceConnected(ComponentName name, IBinder service) {
             LocationService locationService = ((LocationService.LocationBinder) service).getService();
             locationService.setOnLocationChangeListener(location -> {
+                if (location.contains("市")) {
+                    location = location.substring(0, location.lastIndexOf("市"));
+                }
                 mTextLocation.setText(location);
             });
         }
@@ -124,11 +125,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
 
     @Override
     public void showSearchView() {
-        SearchActivity.startActivity(getContext(), city);
+        SearchActivity.startActivity(getContext(), mTextLocation.getText().toString());
     }
 
     @Override
     public void showCertificationView() {
         FunctionActivity.function(getActivity(), "Certification");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unbindService(mServiceConnection);
     }
 }
