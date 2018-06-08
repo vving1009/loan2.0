@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.info;
+package com.jiaye.cashloan.view.info;
 
 import android.text.TextUtils;
 
@@ -16,7 +16,7 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthPersonInfoDataSource;
+import com.jiaye.cashloan.view.info.source.PersonalDataSource;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,22 +31,22 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
- * LoanAuthPersonInfoPresenter
+ * PersonalPresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements LoanAuthPersonInfoContract.Presenter {
+public class PersonalPresenter extends BasePresenterImpl implements PersonalContract.Presenter {
 
-    private final LoanAuthPersonInfoContract.View mView;
+    private final PersonalContract.View mView;
 
-    private final LoanAuthPersonInfoDataSource mDataSource;
+    private final PersonalDataSource mDataSource;
 
     private ArrayList<Education> mEducations;
 
     private ArrayList<Marriage> mMarriages;
 
-    public LoanAuthPersonInfoPresenter(LoanAuthPersonInfoContract.View view, LoanAuthPersonInfoDataSource dataSource) {
+    public PersonalPresenter(PersonalContract.View view, PersonalDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
@@ -85,27 +85,24 @@ public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements Lo
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<Person>() {
-                    @Override
-                    public void accept(Person person) throws Exception {
-                        for (int i = 0; i < mEducations.size(); i++) {
-                            if (mEducations.get(i).getKey().equals(person.getEducation())) {
-                                mEducations.get(i).setSelect(true);
-                                mView.setEducation(mEducations.get(i).getValue());
-                            }
+                .subscribe(person -> {
+                    for (int i = 0; i < mEducations.size(); i++) {
+                        if (mEducations.get(i).getKey().equals(person.getEducation())) {
+                            mEducations.get(i).setSelect(true);
+                            mView.setEducation(mEducations.get(i).getValue());
                         }
-                        for (int i = 0; i < mMarriages.size(); i++) {
-                            if (mMarriages.get(i).getKey().equals(person.getMarriage())) {
-                                mMarriages.get(i).setSelect(true);
-                                mView.setMarriage(mMarriages.get(i).getValue());
-                            }
-                        }
-                        mView.setRegisterCity(person.getRegisterCity());
-                        mView.setCity(person.getCity());
-                        mView.setAddress(person.getAddress());
-                        mView.setEmail(person.getEmail());
-                        mView.dismissProgressDialog();
                     }
+                    for (int i = 0; i < mMarriages.size(); i++) {
+                        if (mMarriages.get(i).getKey().equals(person.getMarriage())) {
+                            mMarriages.get(i).setSelect(true);
+                            mView.setMarriage(mMarriages.get(i).getValue());
+                        }
+                    }
+                    mView.setRegisterCity(person.getRegisterCity());
+                    mView.setCity(person.getCity());
+                    mView.setAddress(person.getAddress());
+                    mView.setEmail(person.getEmail());
+                    mView.dismissProgressDialog();
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
@@ -150,12 +147,9 @@ public class LoanAuthPersonInfoPresenter extends BasePresenterImpl implements Lo
                             mView.showProgressDialog();
                         }
                     })
-                    .subscribe(new Consumer<SavePerson>() {
-                        @Override
-                        public void accept(SavePerson savePerson) throws Exception {
-                            mView.dismissProgressDialog();
-                            mView.result();
-                        }
+                    .subscribe(savePerson -> {
+                        mView.dismissProgressDialog();
+                        mView.result();
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         }

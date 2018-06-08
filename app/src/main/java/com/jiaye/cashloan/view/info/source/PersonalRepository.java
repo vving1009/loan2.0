@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.info;
+package com.jiaye.cashloan.view.info.source;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,25 +12,21 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 
 /**
- * LoanAuthPersonInfoRepository
+ * PersonalRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthPersonInfoRepository implements LoanAuthPersonInfoDataSource {
+public class PersonalRepository implements PersonalDataSource {
 
     @Override
     public Flowable<Person> requestPerson() {
         return Flowable.just(new PersonRequest())
-                .map(new Function<PersonRequest, PersonRequest>() {
-                    @Override
-                    public PersonRequest apply(PersonRequest request) throws Exception {
-                        request.setLoanId(getLoanId());
-                        return request;
-                    }
+                .map(request -> {
+                    request.setLoanId(getLoanId());
+                    return request;
                 })
                 .compose(new SatcatcheResponseTransformer<PersonRequest, Person>("person"));
     }
@@ -38,12 +34,9 @@ public class LoanAuthPersonInfoRepository implements LoanAuthPersonInfoDataSourc
     @Override
     public Flowable<SavePerson> requestSavePerson(SavePersonRequest request) {
         return Flowable.just(request)
-                .map(new Function<SavePersonRequest, SavePersonRequest>() {
-                    @Override
-                    public SavePersonRequest apply(SavePersonRequest request) throws Exception {
-                        request.setLoanId(getLoanId());
-                        return request;
-                    }
+                .map(request1 -> {
+                    request1.setLoanId(getLoanId());
+                    return request1;
                 })
                 .compose(new SatcatcheResponseTransformer<SavePersonRequest, SavePerson>("savePerson"));
     }

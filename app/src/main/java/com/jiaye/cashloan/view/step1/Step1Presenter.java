@@ -58,7 +58,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                 break;
             case 2:
                 if (mStep1.getId() == 1 && mStep1.getBioassay() == 1 && mStep1.getPersonal() == 0) {
-                    mView.showPersonalView();
+                    mView.showInfoView();
                 }
                 break;
             case 3:

@@ -84,8 +84,8 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     }
 
     @Override
-    public void showPersonalView() {
-
+    public void showInfoView() {
+        FunctionActivity.function(getActivity(),"Info");
     }
 
     @Override

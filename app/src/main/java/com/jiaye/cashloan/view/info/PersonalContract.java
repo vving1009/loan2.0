@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.info;
+package com.jiaye.cashloan.view.info;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
@@ -9,12 +9,12 @@ import com.jiaye.cashloan.http.data.dictionary.Marriage;
 import java.util.ArrayList;
 
 /**
- * LoanAuthPersonInfoContract
+ * PersonalContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthPersonInfoContract {
+public interface PersonalContract {
 
     interface View extends BaseViewContract {
 

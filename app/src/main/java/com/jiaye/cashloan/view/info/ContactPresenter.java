@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan.auth.info;
+package com.jiaye.cashloan.view.info;
 
 import android.text.TextUtils;
 
@@ -15,7 +15,7 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.auth.source.info.LoanAuthContactInfoDataSource;
+import com.jiaye.cashloan.view.info.source.ContactDataSource;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,20 +27,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 
 /**
- * LoanAuthContactInfoPresenter
+ * ContactPresenter
  *
  * @author 贾博瑄
  */
+public class ContactPresenter extends BasePresenterImpl implements ContactContract.Presenter {
 
-public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements LoanAuthContactInfoContract.Presenter {
+    private final ContactContract.View mView;
 
-    private final LoanAuthContactInfoContract.View mView;
-
-    private final LoanAuthContactInfoDataSource mDataSource;
+    private final ContactDataSource mDataSource;
 
     private ArrayList<Relation> mRelationFamily;
 
@@ -50,14 +47,14 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
 
     private ArrayList<Relation> mRelationFriend2;
 
-    public LoanAuthContactInfoPresenter(LoanAuthContactInfoContract.View view, LoanAuthContactInfoDataSource dataSource) {
+    public ContactPresenter(ContactContract.View view, ContactDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
-    public void subscribe() {
-        super.subscribe();
+    public void request() {
+
         File file = new File(FileConfig.RELATION_PATH);
         try {
             InputStream input = new FileInputStream(file);
@@ -115,56 +112,48 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<Contact>() {
-                    @Override
-                    public void accept(Contact contact) throws Exception {
-                        for (int i = 0; i < contact.getData().length; i++) {
-                            if (i == 0) {
-                                for (int j = 0; j < mRelationFamily.size(); j++) {
-                                    if (mRelationFamily.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                        mRelationFamily.get(j).setSelect(true);
-                                        mView.setFamily(mRelationFamily.get(j).getValue());
-                                    }
+                .subscribe(contact -> {
+                    for (int i = 0; i < contact.getData().length; i++) {
+                        if (i == 0) {
+                            for (int j = 0; j < mRelationFamily.size(); j++) {
+                                if (mRelationFamily.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                    mRelationFamily.get(j).setSelect(true);
+                                    mView.setFamily(mRelationFamily.get(j).getValue());
                                 }
-                                mView.setFamilyName(contact.getData()[i].getName());
-                                mView.setFamilyPhone(contact.getData()[i].getPhone());
-                            } else if (i == 1) {
-                                for (int j = 0; j < mRelationFamily2.size(); j++) {
-                                    if (mRelationFamily2.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                        mRelationFamily2.get(j).setSelect(true);
-                                        mView.setFamily2(mRelationFamily2.get(j).getValue());
-                                    }
-                                }
-                                mView.setFamilyName2(contact.getData()[i].getName());
-                                mView.setFamilyPhone2(contact.getData()[i].getPhone());
-                            } else if (i == 2) {
-                                for (int j = 0; j < mRelationFriend.size(); j++) {
-                                    if (mRelationFriend.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                        mRelationFriend.get(j).setSelect(true);
-                                        mView.setFriend(mRelationFriend.get(j).getValue());
-                                    }
-                                }
-                                mView.setFriendName(contact.getData()[i].getName());
-                                mView.setFriendPhone(contact.getData()[i].getPhone());
-                            } else if (i == 3) {
-                                for (int j = 0; j < mRelationFriend2.size(); j++) {
-                                    if (mRelationFriend2.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                        mRelationFriend2.get(j).setSelect(true);
-                                        mView.setFriend2(mRelationFriend2.get(j).getValue());
-                                    }
-                                }
-                                mView.setFriendName2(contact.getData()[i].getName());
-                                mView.setFriendPhone2(contact.getData()[i].getPhone());
                             }
-                            mView.dismissProgressDialog();
+                            mView.setFamilyName(contact.getData()[i].getName());
+                            mView.setFamilyPhone(contact.getData()[i].getPhone());
+                        } else if (i == 1) {
+                            for (int j = 0; j < mRelationFamily2.size(); j++) {
+                                if (mRelationFamily2.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                    mRelationFamily2.get(j).setSelect(true);
+                                    mView.setFamily2(mRelationFamily2.get(j).getValue());
+                                }
+                            }
+                            mView.setFamilyName2(contact.getData()[i].getName());
+                            mView.setFamilyPhone2(contact.getData()[i].getPhone());
+                        } else if (i == 2) {
+                            for (int j = 0; j < mRelationFriend.size(); j++) {
+                                if (mRelationFriend.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                    mRelationFriend.get(j).setSelect(true);
+                                    mView.setFriend(mRelationFriend.get(j).getValue());
+                                }
+                            }
+                            mView.setFriendName(contact.getData()[i].getName());
+                            mView.setFriendPhone(contact.getData()[i].getPhone());
+                        } else if (i == 3) {
+                            for (int j = 0; j < mRelationFriend2.size(); j++) {
+                                if (mRelationFriend2.get(j).getKey().equals(contact.getData()[i].getType())) {
+                                    mRelationFriend2.get(j).setSelect(true);
+                                    mView.setFriend2(mRelationFriend2.get(j).getValue());
+                                }
+                            }
+                            mView.setFriendName2(contact.getData()[i].getName());
+                            mView.setFriendPhone2(contact.getData()[i].getPhone());
                         }
-                    }
-                }, new ThrowableConsumer(mView), new Action() {
-                    @Override
-                    public void run() throws Exception {
                         mView.dismissProgressDialog();
                     }
-                });
+                }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
         mCompositeDisposable.add(disposable);
     }
 
@@ -242,12 +231,9 @@ public class LoanAuthContactInfoPresenter extends BasePresenterImpl implements L
                             mView.showProgressDialog();
                         }
                     })
-                    .subscribe(new Consumer<SaveContact>() {
-                        @Override
-                        public void accept(SaveContact saveContact) throws Exception {
-                            mView.dismissProgressDialog();
-                            mView.result();
-                        }
+                    .subscribe(saveContact -> {
+                        mView.dismissProgressDialog();
+                        mView.result();
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         }

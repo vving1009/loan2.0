@@ -1,18 +1,17 @@
-package com.jiaye.cashloan.view.view.loan.auth.info;
+package com.jiaye.cashloan.view.info;
 
+import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
-import com.jiaye.cashloan.http.data.dictionary.Relation;
 
 import java.util.ArrayList;
 
 /**
- * LoanAuthContactInfoContract
+ * ContactContract
  *
  * @author 贾博瑄
  */
-
-public interface LoanAuthContactInfoContract {
+public class ContactContract {
 
     interface View extends BaseViewContract {
 
@@ -76,6 +75,8 @@ public interface LoanAuthContactInfoContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void request();
 
         void submit();
     }

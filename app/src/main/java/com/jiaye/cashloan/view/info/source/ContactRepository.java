@@ -1,11 +1,10 @@
-package com.jiaye.cashloan.view.data.loan.auth.source.info;
+package com.jiaye.cashloan.view.info.source;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.data.loan.Contact;
-import com.jiaye.cashloan.http.data.loan.ContactData;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
@@ -13,50 +12,39 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 
 /**
- * LoanAuthContactInfoRepository
+ * ContactRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthContactInfoRepository implements LoanAuthContactInfoDataSource {
+public class ContactRepository implements ContactDataSource {
 
     @Override
     public Flowable<Contact> requestContact() {
         return Flowable.just(new ContactRequest())
-                .map(new Function<ContactRequest, ContactRequest>() {
-                    @Override
-                    public ContactRequest apply(ContactRequest request) throws Exception {
-                        request.setLoanId(getLoanId());
-                        return request;
-                    }
+                .map(request -> {
+                    request.setLoanId(getLoanId());
+                    return request;
                 })
                 .compose(new SatcatcheResponseTransformer<ContactRequest, Contact>
                         ("contact"))
-                .filter(new Predicate<Contact>() {
-                    @Override
-                    public boolean test(Contact contact) throws Exception {
-                        boolean pass = true;
-                        if (contact.getData() == null) {
-                            pass = false;
-                        }
-                        return pass;
+                .filter(contact -> {
+                    boolean pass = true;
+                    if (contact.getData() == null) {
+                        pass = false;
                     }
+                    return pass;
                 });
     }
 
     @Override
     public Flowable<SaveContact> requestSaveContact(SaveContactRequest request) {
         return Flowable.just(request)
-                .map(new Function<SaveContactRequest, SaveContactRequest>() {
-                    @Override
-                    public SaveContactRequest apply(SaveContactRequest request) throws Exception {
-                        request.setLoanId(getLoanId());
-                        return request;
-                    }
+                .map(request1 -> {
+                    request1.setLoanId(getLoanId());
+                    return request1;
                 })
                 .compose(new SatcatcheResponseTransformer<SaveContactRequest, SaveContact>
                         ("saveContact"));

@@ -20,7 +20,7 @@ public interface Step1Contract {
 
         void showBioassayView();
 
-        void showPersonalView();
+        void showInfoView();
 
         void showPhoneView();
     }

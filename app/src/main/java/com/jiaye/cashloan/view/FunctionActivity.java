@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
+import com.jiaye.cashloan.view.info.InfoFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
 import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
 
@@ -41,11 +42,10 @@ public class FunctionActivity extends AppCompatActivity {
                 IDFragment idFragment = IDFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, idFragment).commit();
                 break;
-            case "Bioassay":
-                // 人像对比
-                break;
-            case "Personal":
+            case "Info":
                 // 个人资料
+                InfoFragment infoFragment = InfoFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, infoFragment).commit();
                 break;
             case "Phone":
                 // 手机运营商
