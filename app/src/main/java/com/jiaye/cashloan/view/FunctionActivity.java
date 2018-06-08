@@ -47,7 +47,7 @@ public class FunctionActivity extends AppCompatActivity {
             case "Personal":
                 // 个人资料
                 break;
-            case "Mobile":
+            case "Phone":
                 // 手机运营商
                 PhoneFragment phoneFragment = PhoneFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, phoneFragment).commit();

@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.widget;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -19,6 +20,17 @@ public class ScrollOffsetTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.8325f;
     //private static final float MIN_SCALE = 1.0f;
     private static final float MIN_ALPHA = 1.0f;
+
+    private float x;
+
+    public ScrollOffsetTransformer(Resources resources) {
+        int width = resources.getDisplayMetrics().widthPixels;
+        Logger.d("width" + width);
+        float density = resources.getDisplayMetrics().density;
+        Logger.d("density" + density);
+        x = (width - 300 * MIN_SCALE * density) / 2 + (width - 300 * density) / 2 - 6 * density;
+        Logger.d("移动距离" + x);
+    }
 
     @Override
     public void transformPage(@NonNull View view, float position) {
@@ -50,13 +62,6 @@ public class ScrollOffsetTransformer implements ViewPager.PageTransformer {
             view.setScaleY(MIN_SCALE);
             view.setAlpha(MIN_ALPHA);
         }
-
-        int width = view.getResources().getDisplayMetrics().widthPixels;
-        Logger.d("width" + width);
-        float density = view.getResources().getDisplayMetrics().density;
-        Logger.d("density" + density);
-        float x = (width - 300 * MIN_SCALE * density) / 2 + (width - 300 * density) / 2 - 6 * density;
-        Logger.d("移动距离" + x);
         view.setTranslationX(-x * position);
     }
 }

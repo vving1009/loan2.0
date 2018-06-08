@@ -1,10 +1,8 @@
 package com.jiaye.cashloan.view.step1;
 
 import com.jiaye.cashloan.http.data.step1.Step1;
-import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
-
-import java.util.List;
+import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
  * Step1Contract
@@ -19,9 +17,17 @@ public interface Step1Contract {
         void setStep1(Step1 step1);
 
         void showIDView();
+
+        void showBioassayView();
+
+        void showPersonalView();
+
+        void showPhoneView();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestStep();
 
         void onClickItem(int position);
     }

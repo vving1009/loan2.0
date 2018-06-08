@@ -87,7 +87,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
                 return 4;
             }
         });
-        mViewPager.setPageTransformer(false, new ScrollOffsetTransformer());
+        mViewPager.setPageTransformer(false, new ScrollOffsetTransformer(getResources()));
         ViewPagerScroller pagerScroller = new ViewPagerScroller(getActivity());
         pagerScroller.setScrollDuration(600);
         pagerScroller.initViewPagerScroll(mViewPager);

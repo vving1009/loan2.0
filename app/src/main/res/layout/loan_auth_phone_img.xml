@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:hint="@string/loan_auth_phone_input_img_verification"
     android:maxLength="6"
+    app:editHeight="28dp"
     app:enable_verification="true"
-    app:icon="@drawable/loan_auth_phone_ic_sms_verification"
+    app:icon="@drawable/auth_ic_password"
+    app:underLineColor="@color/color_blue"
     app:verification_type="2" />

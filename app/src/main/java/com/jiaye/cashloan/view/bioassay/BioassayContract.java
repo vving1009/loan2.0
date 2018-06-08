@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.view.view.loan.auth.face;
+package com.jiaye.cashloan.view.bioassay;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * LoanAuthFaceContract
+ * BioassayContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanAuthFaceContract {
+public interface BioassayContract {
 
     interface View extends BaseViewContract {
 

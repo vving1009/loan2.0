@@ -5,8 +5,11 @@ import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
+import com.jiaye.cashloan.http.data.bioassay.Bioassay;
+import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
 import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
+import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginRequest;
@@ -35,18 +38,14 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
-import com.jiaye.cashloan.http.data.loan.LoanFaceAuth;
-import com.jiaye.cashloan.http.data.loan.LoanFaceAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
-import com.jiaye.cashloan.http.data.loan.LoanIDCardAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanPlan;
 import com.jiaye.cashloan.http.data.loan.LoanPlanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
-import com.jiaye.cashloan.http.data.loan.LoanUploadPicture;
-import com.jiaye.cashloan.http.data.loan.LoanUploadPictureRequest;
+import com.jiaye.cashloan.http.data.id.IDUploadPicture;
+import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
 import com.jiaye.cashloan.http.data.loan.PersonRequest;
 import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
@@ -197,13 +196,13 @@ public interface SatcatcheService {
      * 上传图片
      */
     @POST("uploadPic")
-    Flowable<SatcatcheResponse<LoanUploadPicture>> uploadPicture(@Body SatcatcheRequest<LoanUploadPictureRequest> request);
+    Flowable<SatcatcheResponse<IDUploadPicture>> uploadPicture(@Body SatcatcheRequest<IDUploadPictureRequest> request);
 
     /**
      * 借款身份证认证
      */
     @POST("cardAuth")
-    Flowable<SatcatcheResponse<LoanIDCardAuth>> loanIDCardAuth(@Body SatcatcheRequest<LoanIDCardAuthRequest> request);
+    Flowable<SatcatcheResponse<EmptyResponse>> loanIDCardAuth(@Body SatcatcheRequest<IDRequest> request);
 
     /**
      * 身份证认证
@@ -215,7 +214,7 @@ public interface SatcatcheService {
      * 借款活体检测认证
      */
     @POST("bioAssay")
-    Flowable<SatcatcheResponse<LoanFaceAuth>> loanFaceAuth(@Body SatcatcheRequest<LoanFaceAuthRequest> request);
+    Flowable<SatcatcheResponse<Bioassay>> loanFaceAuth(@Body SatcatcheRequest<BioassayRequest> request);
 
     /**
      * 个人认证状态

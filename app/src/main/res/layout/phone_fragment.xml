@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:text="您的手机号"
                 android:textColor="@color/color_black"
                 android:textSize="15sp" />
 
@@ -52,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:text="所属运营商"
                 android:textColor="@color/color_black"
                 android:textSize="15sp" />
 
@@ -83,7 +85,8 @@
             app:editHeight="44dp"
             app:iconMarginLeft="0dp"
             app:inputMarginLeft="0dp"
-            app:textSize="15sp" />
+            app:textSize="15sp"
+            app:underlineLength="0dp" />
 
         <View
             android:layout_width="match_parent"

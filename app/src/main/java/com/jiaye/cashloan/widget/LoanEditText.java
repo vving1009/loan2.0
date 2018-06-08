@@ -173,7 +173,7 @@ public class LoanEditText extends RelativeLayout {
         boolean isEnableVerification = typedArray.getBoolean(R.styleable.LoanEditText_enable_verification, false);
         int verificationType = typedArray.getInt(R.styleable.LoanEditText_verification_type, 0);
         boolean isRequestForce = typedArray.getBoolean(R.styleable.LoanEditText_request_force, false);
-        int underLineLength = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineLength, 0);
+        int underLineLength = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineLength, LayoutParams.MATCH_PARENT);
         int underLineMarginLeft = typedArray.getLayoutDimension(R.styleable.LoanEditText_underlineMarginLeft, (int) (34 * density));
         int underLineColor = typedArray.getColor(R.styleable.LoanEditText_underLineColor, getResources().getColor(R.color.color_blue));
         int textSize = typedArray.getDimensionPixelOffset(R.styleable.LoanEditText_textSize, sp2px(12));

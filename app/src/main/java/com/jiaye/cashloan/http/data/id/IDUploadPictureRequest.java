@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.http.data.loan;
+package com.jiaye.cashloan.http.data.id;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
- * LoanUploadPictureRequest
+ * IDUploadPictureRequest
  *
  * @author 贾博瑄
  */
 
-public class LoanUploadPictureRequest extends SatcatcheChildRequest {
+public class IDUploadPictureRequest extends SatcatcheChildRequest {
 
     @SerializedName("phone")
     private String phone;

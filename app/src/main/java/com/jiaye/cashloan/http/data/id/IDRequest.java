@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.http.data.loan;
+package com.jiaye.cashloan.http.data.id;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
- * LoanIDCardAuthRequest
+ * IDRequest
  *
  * @author 贾博瑄
  */
 
-public class LoanIDCardAuthRequest extends SatcatcheChildRequest {
+public class IDRequest extends SatcatcheChildRequest {
 
     @SerializedName("jla_id")
     private String loanId;

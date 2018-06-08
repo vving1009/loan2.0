@@ -67,27 +67,14 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
         mEditPassword = rootView.findViewById(R.id.edit_code);
         mLayoutEdit = rootView.findViewById(R.id.layout_edit);
         mTextForgetPassword = rootView.findViewById(R.id.text_forget_password);
-        mTextForgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mForgetPasswordDialog.show();
-            }
-        });
-        rootView.findViewById(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCustomDialog = true;
-                mPresenter.submit();
-            }
+        mTextForgetPassword.setOnClickListener(v -> mForgetPasswordDialog.show());
+        rootView.findViewById(R.id.btn_commit).setOnClickListener(v -> {
+            showCustomDialog = true;
+            mPresenter.submit();
         });
         mForgetPasswordDialog = new BaseDialog(getContext());
         View view = LayoutInflater.from(getContext()).inflate(R.layout.forget_password_dialog_layout, null);
-        view.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mForgetPasswordDialog.dismiss();
-            }
-        });
+        view.findViewById(R.id.text).setOnClickListener(v -> mForgetPasswordDialog.dismiss());
         mForgetPasswordDialog.setContentView(view);
         mSmsArray = new ArrayList<>();
         mImgArray = new ArrayList<>();
@@ -127,13 +114,16 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
         mSmsIndex++;
         LoanEditText editSms = (LoanEditText) LayoutInflater.from(getContext())
                 .inflate(R.layout.loan_auth_phone_sms, null, false);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,
+                (int) (16 * getResources().getDisplayMetrics().density),
+                0,
+                0);
+        editSms.setLayoutParams(layoutParams);
         mLayoutEdit.addView(editSms);
-        editSms.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                mPresenter.requestSMSVerification();
-            }
-        });
+        editSms.setOnClickVerificationCode(() -> mPresenter.requestSMSVerification());
         mSmsArray.add(editSms);
         for (int i = 0; i <= mSmsIndex; i++) {
             if (i - 1 > 0) {
@@ -154,13 +144,16 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
         mImgIndex++;
         LoanEditText editImg = (LoanEditText) LayoutInflater.from(getContext())
                 .inflate(R.layout.loan_auth_phone_img, null, false);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,
+                (int) (16 * getResources().getDisplayMetrics().density),
+                0,
+                0);
+        editImg.setLayoutParams(layoutParams);
         mLayoutEdit.addView(editImg);
-        editImg.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                mPresenter.requestIMGVerification();
-            }
-        });
+        editImg.setOnClickVerificationCode(() -> mPresenter.requestIMGVerification());
         mImgArray.add(editImg);
         for (int i = 0; i <= mImgIndex; i++) {
             if (i - 1 > 0) {

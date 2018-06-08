@@ -31,8 +31,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     }
 
     @Override
-    public void subscribe() {
-        super.subscribe();
+    public void requestStep() {
         Disposable disposable = mDataSource.requestStep()
                 .filter(step -> step.getStep() >= 1)
                 .concatMap((Function<Step, Publisher<Step1>>) step -> mDataSource.requestStep1())
@@ -50,6 +49,22 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
             case 0:
                 if (mStep1.getId() == 0) {
                     mView.showIDView();
+                }
+                break;
+            case 1:
+                if (mStep1.getId() == 1 && mStep1.getBioassay() == 0) {
+                    mView.showBioassayView();
+                }
+                break;
+            case 2:
+                if (mStep1.getId() == 1 && mStep1.getBioassay() == 1 && mStep1.getPersonal() == 0) {
+                    mView.showPersonalView();
+                }
+                break;
+            case 3:
+                if (mStep1.getId() == 1 && mStep1.getBioassay() == 1 && mStep1.getPersonal() == 1
+                        && mStep1.getPhone() == 0) {
+                    mView.showPhoneView();
                 }
                 break;
         }

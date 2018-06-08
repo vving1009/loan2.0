@@ -21,8 +21,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
-import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
-import com.jiaye.cashloan.view.view.loan.auth.face.LoanAuthFaceActivity;
+import com.jiaye.cashloan.view.bioassay.BioassayActivity;
 import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
 import com.jiaye.cashloan.view.view.loan.auth.info.LoanAuthInfoActivity;
 import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
@@ -201,7 +200,7 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
     }
 
     private void showLoanAuthFaceGranted() {
-        Intent intent = new Intent(getActivity(), LoanAuthFaceActivity.class);
+        Intent intent = new Intent(getActivity(), BioassayActivity.class);
         startActivity(intent);
     }
 

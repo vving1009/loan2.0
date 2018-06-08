@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.step1;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.bioassay.BioassayActivity;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -53,6 +55,12 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.requestStep();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
@@ -67,6 +75,22 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     @Override
     public void showIDView() {
         FunctionActivity.function(getActivity(), "ID");
+    }
+
+    @Override
+    public void showBioassayView() {
+        Intent intent = new Intent(getActivity(), BioassayActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showPersonalView() {
+
+    }
+
+    @Override
+    public void showPhoneView() {
+        FunctionActivity.function(getActivity(),"Phone");
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

@@ -48,49 +48,36 @@ public class PhonePresenter extends BasePresenterImpl implements PhoneContract.P
         super.subscribe();
         Disposable disposable = mDataSource.requestGongXinBaoOperatorsConfig()
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<GongXinBaoOperatorsConfig, Boolean>() {
-                    @Override
-                    public Boolean apply(GongXinBaoOperatorsConfig operators) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.setPhone(mDataSource.getPhone());
-                        mView.setOperators(operators.getOperatorType());
-                        GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();
-                        boolean isNeedRequestImgVerificationCode = false;
-                        for (GongXinBaoOperatorsConfig.LoginForms.Fields field : fields) {
-                            switch (field.getField()) {
-                                case "password":
-                                    mView.setPasswordVisibility(View.VISIBLE);
-                                    mView.setForgetPasswordVisibility(View.VISIBLE);
-                                    break;
-                                case "code":
-                                    if (field.getFieldExtraConfig().getFieldExtraType().equals("PIC")) {
-                                        mView.addImg();
-                                        isNeedRequestImgVerificationCode = true;
-                                    }
-                                    break;
-                                case "randomPassword":
-                                    if (field.getFieldExtraConfig().getFieldExtraType().equals("SMS")) {
-                                        mView.addSms();
-                                    }
-                                    break;
-                            }
+                .map(operators -> {
+                    mView.dismissProgressDialog();
+                    mView.setPhone(mDataSource.getPhone());
+                    mView.setOperators(operators.getOperatorType());
+                    GongXinBaoOperatorsConfig.LoginForms.Fields[] fields = operators.getLoginForms()[0].getFields();
+                    boolean isNeedRequestImgVerificationCode = false;
+                    for (GongXinBaoOperatorsConfig.LoginForms.Fields field : fields) {
+                        switch (field.getField()) {
+                            case "password":
+                                mView.setPasswordVisibility(View.VISIBLE);
+                                mView.setForgetPasswordVisibility(View.VISIBLE);
+                                break;
+                            case "code":
+                                if (field.getFieldExtraConfig().getFieldExtraType().equals("PIC")) {
+                                    mView.addImg();
+                                    isNeedRequestImgVerificationCode = true;
+                                }
+                                break;
+                            case "randomPassword":
+                                if (field.getFieldExtraConfig().getFieldExtraType().equals("SMS")) {
+                                    mView.addSms();
+                                }
+                                break;
                         }
-                        return isNeedRequestImgVerificationCode;
                     }
+                    return isNeedRequestImgVerificationCode;
                 })
-                .filter(new Predicate<Boolean>() {
-                    @Override
-                    public boolean test(Boolean isNeedRequestImgVerificationCode) throws Exception {
-                        return isNeedRequestImgVerificationCode;
-                    }
-                })
+                .filter(isNeedRequestImgVerificationCode -> isNeedRequestImgVerificationCode)
                 .observeOn(Schedulers.io())
-                .flatMap(new Function<Boolean, Publisher<Bitmap>>() {
-                    @Override
-                    public Publisher<Bitmap> apply(Boolean aBoolean) throws Exception {
-                        return mDataSource.requestImgVerificationCode();
-                    }
-                })
+                .flatMap((Function<Boolean, Publisher<Bitmap>>) aBoolean -> mDataSource.requestImgVerificationCode())
                 .compose(new ViewTransformer<Bitmap>() {
                     @Override
                     public void accept() {
@@ -98,12 +85,9 @@ public class PhonePresenter extends BasePresenterImpl implements PhoneContract.P
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<Bitmap>() {
-                    @Override
-                    public void accept(Bitmap bitmap) throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.setImgVerificationCode(bitmap);
-                    }
+                .subscribe(bitmap -> {
+                    mView.dismissProgressDialog();
+                    mView.setImgVerificationCode(bitmap);
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

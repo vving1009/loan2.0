@@ -6,5 +6,7 @@
     android:hint="@string/loan_auth_phone_input_sms_verification"
     android:inputType="number"
     android:maxLength="6"
+    app:editHeight="28dp"
     app:enable_verification="true"
-    app:icon="@drawable/loan_auth_phone_ic_sms_verification" />
+    app:icon="@drawable/auth_ic_password"
+    app:underLineColor="@color/color_blue" />

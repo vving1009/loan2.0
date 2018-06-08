@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.view.id.source;
 
-import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.tongdun.TongDunAntifraudRealName;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
@@ -33,5 +33,5 @@ public interface IDDataSource {
     /**
      * 身份证认证
      */
-    Flowable<LoanIDCardAuth> loanIDCardAuth();
+    Flowable<EmptyResponse> loanIDCardAuth();
 }

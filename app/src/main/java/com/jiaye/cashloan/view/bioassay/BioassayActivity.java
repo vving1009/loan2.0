@@ -1,31 +1,31 @@
-package com.jiaye.cashloan.view.view.loan.auth.face;
+package com.jiaye.cashloan.view.bioassay;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.data.loan.auth.source.face.LoanAuthFaceRepository;
+import com.jiaye.cashloan.view.bioassay.source.BioassayRepository;
 import com.oliveapp.face.livenessdetectorsdk.livenessdetector.datatype.LivenessDetectionFrames;
 
 import cn.tongdun.android.liveness.view_controller.LivenessDetectionMainActivity;
 
 /**
- * LoanAuthFaceActivity
+ * BioassayActivity
  *
  * @author 贾博瑄
  */
 
-public class LoanAuthFaceActivity extends LivenessDetectionMainActivity implements LoanAuthFaceContract.View {
+public class BioassayActivity extends LivenessDetectionMainActivity implements BioassayContract.View {
 
-    private LoanAuthFaceContract.Presenter mPresenter;
+    private BioassayContract.Presenter mPresenter;
 
     private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new LoanAuthFacePresenter(this, new LoanAuthFaceRepository());
+        mPresenter = new BioassayPresenter(this, new BioassayRepository());
         mPresenter.subscribe();
     }
 

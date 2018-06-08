@@ -3,7 +3,7 @@ package com.jiaye.cashloan.view.id;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.LoanIDCardAuth;
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRBack;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.utils.RegexUtil;
@@ -121,8 +121,8 @@ public class IDPresenter extends BasePresenterImpl implements IDContract.Present
             return;
         }
         Disposable disposable = mDataSource.check(mId, mView.getName())
-                .flatMap((Function<Object, Publisher<LoanIDCardAuth>>) object -> mDataSource.loanIDCardAuth())
-                .compose(new ViewTransformer<LoanIDCardAuth>() {
+                .flatMap((Function<Object, Publisher<EmptyResponse>>) object -> mDataSource.loanIDCardAuth())
+                .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
                         super.accept();
