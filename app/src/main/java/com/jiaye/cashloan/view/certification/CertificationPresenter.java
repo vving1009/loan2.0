@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.certification;
 
+import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.certification.source.CertificationDataSource;
@@ -38,8 +39,15 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.requestStep()
-                .compose(new ViewTransformer<>())
+                .compose(new ViewTransformer<Step>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
                 .subscribe(step -> {
+                    mView.dismissProgressDialog();
                     mView.setStep(step.getStep());
                 });
         mCompositeDisposable.add(disposable);

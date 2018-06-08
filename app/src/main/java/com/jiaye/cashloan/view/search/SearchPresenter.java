@@ -3,8 +3,8 @@ package com.jiaye.cashloan.view.search;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.search.SaveSalesman;
-import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.search.SaveSalesman;
+import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
@@ -46,7 +46,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
     public void subscribe() {
         super.subscribe();
         Disposable disposable = mDataSource.salesman()
-                .concatMap((Function<com.jiaye.cashloan.http.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
+                .concatMap((Function<com.jiaye.cashloan.http.data.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
                 .compose(new ViewTransformer<>())
                 .subscribe(mView::setCompanyListDataChanged);
         mCompositeDisposable.add(disposable);

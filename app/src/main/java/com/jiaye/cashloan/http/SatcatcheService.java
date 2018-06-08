@@ -5,6 +5,8 @@ import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
 import com.jiaye.cashloan.http.data.auth.Auth;
 import com.jiaye.cashloan.http.data.auth.AuthRequest;
+import com.jiaye.cashloan.http.data.certification.Recommend;
+import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginRequest;
@@ -78,10 +80,10 @@ import com.jiaye.cashloan.http.data.my.User;
 import com.jiaye.cashloan.http.data.my.UserRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.http.data.step1.Step1Request;
-import com.jiaye.cashloan.http.search.Salesman;
-import com.jiaye.cashloan.http.search.SalesmanRequest;
-import com.jiaye.cashloan.http.search.SaveSalesman;
-import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.search.Salesman;
+import com.jiaye.cashloan.http.data.search.SalesmanRequest;
+import com.jiaye.cashloan.http.data.search.SaveSalesman;
+import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -159,6 +161,12 @@ public interface SatcatcheService {
      */
     @POST("saveUserSource")
     Flowable<SatcatcheResponse<SaveSalesman>> saveSalesman(@Body SatcatcheRequest<SaveSalesmanRequest> request);
+
+    /**
+     * 查询推荐人
+     */
+    @POST("queryUserSourceData")
+    Flowable<SatcatcheResponse<Recommend>> recommend(@Body SatcatcheRequest<RecommendRequest> request);
 
     /**
      * 查询认证到第几步

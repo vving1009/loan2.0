@@ -1,10 +1,10 @@
 package com.jiaye.cashloan.view.search.source;
 
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.search.Salesman;
-import com.jiaye.cashloan.http.search.SalesmanRequest;
-import com.jiaye.cashloan.http.search.SaveSalesman;
-import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.search.Salesman;
+import com.jiaye.cashloan.http.data.search.SalesmanRequest;
+import com.jiaye.cashloan.http.data.search.SaveSalesman;
+import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import java.util.List;

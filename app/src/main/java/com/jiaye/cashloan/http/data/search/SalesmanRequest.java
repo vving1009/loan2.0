@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.search;
+package com.jiaye.cashloan.http.data.search;
 
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 

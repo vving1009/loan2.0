@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.certification.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.data.certification.Recommend;
+import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
@@ -18,10 +19,13 @@ public class CertificationRepository implements CertificationDataSource {
 
     @Override
     public Flowable<Recommend> requestRecommend() {
-        Recommend recommend = new Recommend();
-        recommend.setCompany("天津");
-        recommend.setNumber("000011");
-        return Flowable.just(recommend);
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    RecommendRequest request = new RecommendRequest();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<RecommendRequest, Recommend>("recommend"));
     }
 
     @Override

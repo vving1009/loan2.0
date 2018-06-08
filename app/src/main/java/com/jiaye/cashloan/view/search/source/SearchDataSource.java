@@ -1,8 +1,8 @@
 package com.jiaye.cashloan.view.search.source;
 
-import com.jiaye.cashloan.http.search.SaveSalesman;
-import com.jiaye.cashloan.http.search.Salesman;
-import com.jiaye.cashloan.http.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.search.SaveSalesman;
+import com.jiaye.cashloan.http.data.search.Salesman;
+import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 
 import java.util.List;
 
