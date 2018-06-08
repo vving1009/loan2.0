@@ -13,6 +13,9 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TaoBaoFragment
  *
@@ -24,6 +27,8 @@ public class TaoBaoFragment extends BaseFunctionFragment {
     private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_taobao_normal, R.string.loan_auth_taobao_qr};
 
     private NoScrollViewPager mViewPager;
+
+    private List<View> indicators = new ArrayList<>();
 
     private TaoBaoNormalFragment normal() {
         return TaoBaoNormalFragment.newInstance();
@@ -43,10 +48,12 @@ public class TaoBaoFragment extends BaseFunctionFragment {
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
         for (int aText : text) {
             TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.loan_auth_taobao_tab, null);
+            View view = inflater.inflate(R.layout.taobao_tab, null);
             tab.setCustomView(view);
             TextView tvTitle = view.findViewById(R.id.text);
+            View indicator = view.findViewById(R.id.indicator);
             tvTitle.setText(aText);
+            indicators.add(indicator);
             tabLayout.addTab(tab);
         }
     }
@@ -87,6 +94,7 @@ public class TaoBaoFragment extends BaseFunctionFragment {
         });
         TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
         setTabs(tabLayout, getLayoutInflater(), TAB_TEXT);
+        indicators.get(0).setVisibility(View.VISIBLE);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -97,6 +105,10 @@ public class TaoBaoFragment extends BaseFunctionFragment {
                     TaoBaoQRFragment fragment = (TaoBaoQRFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
                     fragment.request();
                 }
+                for (View indicator : indicators) {
+                    indicator.setVisibility(View.INVISIBLE);
+                }
+                indicators.get(tab.getPosition()).setVisibility(View.VISIBLE);
             }
 
             @Override
