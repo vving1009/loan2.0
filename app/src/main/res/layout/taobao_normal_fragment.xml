@@ -17,7 +17,8 @@
         app:iconMarginLeft="0dp"
         app:inputMarginLeft="0dp"
         app:request_force="true"
-        app:textSize="15sp" />
+        app:textSize="15sp"
+        app:underlineLength="0dp" />
 
     <View
         android:layout_width="match_parent"
@@ -33,7 +34,8 @@
         app:editHeight="44dp"
         app:iconMarginLeft="0dp"
         app:inputMarginLeft="0dp"
-        app:textSize="15sp" />
+        app:textSize="15sp"
+        app:underlineLength="0dp" />
 
     <View
         android:layout_width="match_parent"
@@ -44,26 +46,26 @@
         android:id="@+id/edit_sms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/loan_auth_taobao_input_sms_verification"
         android:inputType="number"
         android:maxLength="6"
         android:visibility="gone"
+        app:editHeight="28dp"
         app:enable_verification="true"
-        app:icon="@drawable/loan_auth_phone_ic_sms_verification" />
+        app:icon="@drawable/auth_ic_password" />
 
     <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/loan_auth_taobao_input_img_verification"
         android:maxLength="6"
         android:visibility="gone"
+        app:editHeight="28dp"
         app:enable_verification="true"
-        app:icon="@drawable/loan_auth_phone_ic_sms_verification"
+        app:icon="@drawable/auth_ic_password"
         app:verification_type="2" />
 
     <Button
