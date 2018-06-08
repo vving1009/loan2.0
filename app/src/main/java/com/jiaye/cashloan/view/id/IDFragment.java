@@ -1,11 +1,9 @@
 package com.jiaye.cashloan.view.id;
 
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,17 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.PhotoFunctionFragment;
 import com.jiaye.cashloan.view.id.source.IDRepository;
 import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
 
@@ -35,11 +28,7 @@ import java.io.File;
  * @author 贾博瑄
  */
 
-public class IDFragment extends BaseFunctionFragment implements IDContract.View, TakePhoto.TakeResultListener, InvokeListener {
-
-    private TakePhoto takePhoto;
-
-    private InvokeParam invokeParam;
+public class IDFragment extends PhotoFunctionFragment implements IDContract.View, TakePhoto.TakeResultListener, InvokeListener {
 
     private IDContract.Presenter mPresenter;
 
@@ -62,31 +51,6 @@ public class IDFragment extends BaseFunctionFragment implements IDContract.View,
         IDFragment fragment = new IDFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        getTakePhoto().onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        getTakePhoto().onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(getActivity(), type, invokeParam, this);
     }
 
     @Override
@@ -132,15 +96,6 @@ public class IDFragment extends BaseFunctionFragment implements IDContract.View,
     @Override
     public void takeCancel() {
 
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
     }
 
     @Override
@@ -218,12 +173,5 @@ public class IDFragment extends BaseFunctionFragment implements IDContract.View,
     @Override
     public void result() {
         getActivity().finish();
-    }
-
-    private TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
     }
 }
