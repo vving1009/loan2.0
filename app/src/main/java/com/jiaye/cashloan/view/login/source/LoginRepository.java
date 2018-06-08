@@ -1,12 +1,10 @@
 package com.jiaye.cashloan.view.login.source;
 
-import android.content.ContentValues;
-
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginRequest;
+import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
@@ -27,10 +25,7 @@ public class LoginRepository implements LoginDataSource {
         return Flowable.just(request)
                 .compose(new SatcatcheResponseTransformer<LoginRequest, Login>("login"))
                 .map(login -> {
-                    ContentValues values = new ContentValues();
-                    values.put("token", login.getToken());
-                    values.put("phone", phone);
-                    LoanApplication.getInstance().getSQLiteDatabase().insert("user", null, values);
+                    LoanApplication.getInstance().getDbHelper().insertUser(phone, login.getToken(), login.getId());
                     LoanApplication.getInstance().setupBuglyUserId(phone);
                     return login;
                 });
