@@ -49,6 +49,8 @@ public class ContactRepository implements ContactDataSource {
                             if (phone != null && phone.moveToNext()) {
                                 int index = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                                 phoneNumber = phone.getString(index);
+                                phoneNumber = phoneNumber.replaceAll("-", "")
+                                        .replace(" ", "");
                                 phone.close();
                             }
                         }
