@@ -93,6 +93,11 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
         FunctionActivity.function(getActivity(),"Phone");
     }
 
+    @Override
+    public void showVehicleView() {
+        FunctionActivity.function(getActivity(),"Vehicle");
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private Step1 mStep1;

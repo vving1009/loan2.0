@@ -67,6 +67,12 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                     mView.showPhoneView();
                 }
                 break;
+            case 4:
+                if (mStep1.getId() == 1 && mStep1.getBioassay() == 1 && mStep1.getPersonal() == 1
+                        && mStep1.getPhone() == 1 && mStep1.getCar() == 0) {
+                    mView.showVehicleView();
+                }
+                break;
         }
     }
 }

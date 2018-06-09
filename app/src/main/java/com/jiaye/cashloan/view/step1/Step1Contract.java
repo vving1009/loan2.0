@@ -23,6 +23,8 @@ public interface Step1Contract {
         void showInfoView();
 
         void showPhoneView();
+
+        void showVehicleView();
     }
 
     interface Presenter extends BasePresenter {
