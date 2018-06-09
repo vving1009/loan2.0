@@ -17,6 +17,7 @@ import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bioassay.BioassayActivity;
+import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -49,6 +50,7 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
+        root.findViewById(R.id.btn_next).setOnClickListener(v -> mPresenter.onClickNext());
         mPresenter = new Step1Presenter(this, new Step1Repository());
         mPresenter.subscribe();
         return root;
@@ -85,17 +87,22 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
 
     @Override
     public void showInfoView() {
-        FunctionActivity.function(getActivity(),"Info");
+        FunctionActivity.function(getActivity(), "Info");
     }
 
     @Override
     public void showPhoneView() {
-        FunctionActivity.function(getActivity(),"Phone");
+        FunctionActivity.function(getActivity(), "Phone");
     }
 
     @Override
     public void showVehicleView() {
-        FunctionActivity.function(getActivity(),"Vehicle");
+        FunctionActivity.function(getActivity(), "Vehicle");
+    }
+
+    @Override
+    public void sendBroadcast() {
+        CertificationFragment.refresh(getActivity());
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -178,10 +185,6 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
             mImageInto = itemView.findViewById(R.id.img_into);
-        }
-
-        public void setOnClickListener() {
-
         }
 
         public void setType(int type) {

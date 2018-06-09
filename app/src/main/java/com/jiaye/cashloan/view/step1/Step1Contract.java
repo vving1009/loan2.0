@@ -25,6 +25,8 @@ public interface Step1Contract {
         void showPhoneView();
 
         void showVehicleView();
+
+        void sendBroadcast();
     }
 
     interface Presenter extends BasePresenter {
@@ -32,5 +34,7 @@ public interface Step1Contract {
         void requestStep();
 
         void onClickItem(int position);
+
+        void onClickNext();
     }
 }

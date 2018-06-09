@@ -13,8 +13,15 @@ public interface Step2Contract {
 
     interface View extends BaseViewContract {
 
+        void setText(String msg);
+
+        void sendBroadcast();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestStep();
+
+        void onClickNext();
     }
 }

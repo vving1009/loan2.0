@@ -1,8 +1,13 @@
 package com.jiaye.cashloan.view.certification;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -29,6 +34,18 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
 
     private CertificationContract.Presenter mPresenter;
 
+    private LocalBroadcastManager mLocalBroadcastManager;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if ("refresh".equals(action)) {
+                mPresenter.requestStep();
+            }
+        }
+    };
+
     private TextView mTextCompany;
 
     private TextView mTextNumber;
@@ -43,11 +60,20 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
 
     private NoScrollViewPager mViewPager;
 
+    public CertificationFragment() {
+    }
+
     public static CertificationFragment newInstance() {
         Bundle args = new Bundle();
         CertificationFragment fragment = new CertificationFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void refresh(Context context) {
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+        Intent intent = new Intent("refresh");
+        localBroadcastManager.sendBroadcast(intent);
     }
 
     @Override
@@ -93,6 +119,9 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         pagerScroller.initViewPagerScroll(mViewPager);
         mPresenter = new CertificationPresenter(this, new CertificationRepository());
         mPresenter.subscribe();
+        IntentFilter intentFilter = new IntentFilter("refresh");
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        mLocalBroadcastManager.registerReceiver(mReceiver, intentFilter);
         return view;
     }
 
@@ -106,6 +135,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+        mLocalBroadcastManager.unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -121,16 +151,12 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     @Override
     public void setStep(int step) {
         if (step == 1) {
-            mViewPager.setLock(0);
             mViewPager.setCurrentItem(0);
         } else if (step == 2 || step == 3 || step == 4) {
-            mViewPager.setLock(1);
             mViewPager.setCurrentItem(1);
         } else if (step == 5) {
-            mViewPager.setLock(2);
             mViewPager.setCurrentItem(2);
         } else if (step == 6) {
-            mViewPager.setLock(3);
             mViewPager.setCurrentItem(3);
         }
         switch (step) {

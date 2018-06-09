@@ -9,6 +9,7 @@ import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
+import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
@@ -139,7 +140,12 @@ public interface SatcatcheService {
     @POST("queryAuthenticationStatus")
     Flowable<SatcatcheResponse<Step1>> step1(@Body SatcatcheRequest<Step1Request> request);
 
-    /*updateOrderStatus 8 修改订单状态*/
+    /**
+     * 修改认证到第几步 8
+     */
+    @POST("updateOrderStatus")
+    Flowable<SatcatcheResponse<EmptyResponse>> updateStep(@Body SatcatcheRequest<UpdateStepRequest> request);
+
     /*querySecAuthStatus 9 提交信息认证状态查询*/
 
     /**

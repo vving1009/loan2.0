@@ -1,8 +1,10 @@
 package com.jiaye.cashloan.view.step1;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step1.source.Step1DataSource;
 
@@ -74,5 +76,22 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onClickNext() {
+        Disposable disposable = mDataSource.requestUpdateStep()
+                .compose(new ViewTransformer<EmptyResponse>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(emptyResponse -> {
+                    mView.dismissProgressDialog();
+                    mView.sendBroadcast();
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 }

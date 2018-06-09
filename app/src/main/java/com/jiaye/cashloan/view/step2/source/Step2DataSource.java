@@ -1,5 +1,10 @@
 package com.jiaye.cashloan.view.step2.source;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.certification.Step;
+
+import io.reactivex.Flowable;
+
 /**
  * Step2DataSource
  *
@@ -8,4 +13,7 @@ package com.jiaye.cashloan.view.step2.source;
 
 public interface Step2DataSource {
 
+    Flowable<Step> requestStep();
+
+    Flowable<EmptyResponse> requestUpdateStep();
 }
