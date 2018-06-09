@@ -14,6 +14,11 @@
     <string name="phone_title">手机运营商</string>
     <!--taobao-->
     <string name="taobao_title">淘宝/支付宝认证</string>
+    <!--vehicle-->
+    <string name="Vehicle_title">车辆证件</string>
+    <string name="Vehicle_message">请拍摄或上传您的行驶证主副页面和车辆产权证页面</string>
+    <string name="Vehicle_drive_licence_message">行驶证照片（正副页、车照页）</string>
+    <string name="Vehicle_ownership_message">车辆产权证（全部页）</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_name">姓名</string>

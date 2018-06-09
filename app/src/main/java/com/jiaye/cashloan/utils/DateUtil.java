@@ -11,6 +11,11 @@ import java.util.Locale;
 
 public class DateUtil {
 
+    public static String formatDateTimeMillis(long millis) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyMMddHHmmssSS", Locale.CHINA);
+        return formatter.format(millis);
+    }
+
     public static String formatDateTime(long millis) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
         return formatter.format(millis);

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ContentDescription,RtlHardcoded,RelativeOverlap,SmallSp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="11dp"
+            android:text="@string/Vehicle_message"
+            android:textColor="@color/color_gray"
+            android:textSize="9sp" />
+
+        <RelativeLayout
+            android:id="@+id/drive_Licence"
+            android:layout_width="244dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/capture_vehicle_bg">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="37dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/ic_capture" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:text="@string/Vehicle_drive_licence_message"
+                android:textColor="@color/color_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/vehicle_ownership"
+            android:layout_width="244dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/capture_vehicle_bg">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="37dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/ic_capture" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:text="@string/Vehicle_ownership_message"
+                android:textColor="@color/color_gray" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:background="@drawable/loan_btn"
+        android:enabled="true"
+        android:text="@string/commit"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

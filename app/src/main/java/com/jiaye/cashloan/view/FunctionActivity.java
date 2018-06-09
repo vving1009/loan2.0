@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.vehicle.VehicleFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
@@ -54,6 +55,8 @@ public class FunctionActivity extends AppCompatActivity {
                 break;
             case "Vehicle":
                 // 车辆证件
+                VehicleFragment vehicleFragment = VehicleFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, vehicleFragment).commit();
                 break;
             case "Taobao":
                 // 淘宝

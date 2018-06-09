@@ -83,6 +83,10 @@ import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
+import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
+import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
+import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -347,4 +351,16 @@ public interface SatcatcheService {
      */
     @POST("uploadAlbumPic")
     Flowable<SatcatcheResponse<UploadPhoto>> uploadPhoto(@Body SatcatcheRequest<UploadPhotoRequest> request);
+
+    /**
+     * 上传车辆认证图片
+     */
+    @POST("carPapers/save")
+    Flowable<SatcatcheResponse<UploadCarPapers>> uploadCarPapers(@Body SatcatcheRequest<UploadCarPapersRequest> request);
+
+    /**
+     * 提交车辆认证状态
+     */
+    @POST("carPapers/state")
+    Flowable<SatcatcheResponse<CarPapersState>> carPapersState(@Body SatcatcheRequest<CarPapersStateRequest> request);
 }

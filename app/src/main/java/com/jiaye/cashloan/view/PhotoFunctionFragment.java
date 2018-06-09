@@ -8,7 +8,6 @@ import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
@@ -47,21 +46,6 @@ public abstract class PhotoFunctionFragment extends BaseFunctionFragment impleme
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.handlePermissionsResult(getActivity(), type, invokeParam, this);
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-
-    }
-
-    @Override
-    public void takeCancel() {
-
     }
 
     @Override

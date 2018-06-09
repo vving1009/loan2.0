@@ -28,6 +28,11 @@ android {
         buildConfigField("String", "GONGXINBAO_URL", properties.getProperty("GONGXINBAO_URL"))
         buildConfigField("String", "GONGXINBAO_APPID", properties.getProperty("GONGXINBAO_APPID"))
         buildConfigField("String", "GONGXINBAO_APPSECURITY", properties.getProperty("GONGXINBAO_APPSECURITY"))
+        buildConfigField("String", "OSS_ENDPOINT", properties.getProperty("OSS_ENDPOINT"))
+        buildConfigField("String", "OSS_ACCESS_KEY_ID", properties.getProperty("OSS_ACCESS_KEY_ID"))
+        buildConfigField("String", "OSS_ACCESS_KEY_SECRET", properties.getProperty("OSS_ACCESS_KEY_SECRET"))
+        buildConfigField("String", "OSS_BUCKET_NAME", properties.getProperty("OSS_BUCKET_NAME"))
+        buildConfigField("String", "OSS_BASE_URL", properties.getProperty("OSS_BASE_URL"))
     }
     /**
      * url  对应服务器地址
@@ -128,6 +133,9 @@ dependencies {
     api 'id.zelory:compressor:1.0.5'
     // http://lbs.amap.com/api/android-location-sdk/guide/android-location/getlocation
     api 'com.amap.api:location:4.0.1'
+    // https://help.aliyun.com/document_detail/32043.html
+    api 'com.aliyun.dpa:oss-android-sdk:2.8.3'
+    api 'com.squareup.okio:okio:1.13.0'
     // module
     implementation project(':tongdun')
     implementation project(':gesturelock')
