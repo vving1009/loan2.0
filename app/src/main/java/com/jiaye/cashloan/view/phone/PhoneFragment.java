@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseDialog;
+import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.phone.source.PhoneRepository;
 import com.jiaye.cashloan.widget.CustomProgressDialog;

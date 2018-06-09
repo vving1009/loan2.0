@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view;
+package com.jiaye.cashloan.widget;
 
 import android.content.Context;
 import android.os.Build;

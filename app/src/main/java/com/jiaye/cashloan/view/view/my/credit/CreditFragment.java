@@ -16,7 +16,7 @@ import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
-import com.jiaye.cashloan.view.BaseDialog;
+import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
 import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;

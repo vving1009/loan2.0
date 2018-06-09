@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.BaseDialog;
+import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.data.loan.auth.source.visa.LoanAuthVisaRepository;
 
 /**

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.utils.FileUtils;
-import com.jiaye.cashloan.view.BaseDialog;
+import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.launch.source.LaunchRepository;
 import com.jiaye.cashloan.view.view.guide.GuideActivity;

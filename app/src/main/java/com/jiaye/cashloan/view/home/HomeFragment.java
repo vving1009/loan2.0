@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +24,7 @@ import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.search.SearchActivity;
+import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class HomeFragment extends BaseFragment implements HomeContract.View, EasyPermissions.PermissionCallbacks {
 
     private final int LOCATION_PERMS_REQUEST_CODE = 101;
+
+    private boolean locationServiceStart = false;
 
     @SuppressLint("InlinedApi")
     private final String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -95,6 +98,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         if (EasyPermissions.hasPermissions(getContext(), permissions)) {
             Intent intent = new Intent(getContext(), LocationService.class);
             getContext().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+            locationServiceStart = true;
         }
     }
 
@@ -114,12 +118,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
             sb.append(s);
         }
         sb.deleteCharAt(sb.lastIndexOf("，"));
-        new AlertDialog.Builder(getContext())
+        new SatcatcheDialog.Builder(getContext())
                 .setTitle("权限申请")
                 .setMessage("此应用需要" + sb.toString() + "权限，否则应用会关闭，是否打开设置？")
                 .setPositiveButton("好", (dialog, which) ->
                         EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions))
                 .setNegativeButton("不行", (dialog, which) -> getActivity().finish())
+                .build()
                 .show();
     }
 
@@ -136,6 +141,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getContext().unbindService(mServiceConnection);
+        if (locationServiceStart) {
+            getContext().unbindService(mServiceConnection);
+        }
     }
 }

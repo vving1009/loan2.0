@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.User;
-import com.jiaye.cashloan.view.BaseDialog;
+import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.data.my.source.MyRepository;
 import com.jiaye.cashloan.view.login.LoginActivity;

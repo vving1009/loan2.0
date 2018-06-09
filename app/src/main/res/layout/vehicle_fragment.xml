@@ -24,7 +24,7 @@
             android:layout_width="244dp"
             android:layout_height="144dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="11dp"
             android:background="@drawable/capture_vehicle_bg">
 
             <ImageView
@@ -41,7 +41,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="125dp"
                 android:text="@string/Vehicle_drive_licence_message"
-                android:textColor="@color/color_gray" />
+                android:textColor="@color/color_gray"
+                android:textSize="12sp"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -49,7 +50,7 @@
             android:layout_width="244dp"
             android:layout_height="144dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="22dp"
             android:background="@drawable/capture_vehicle_bg">
 
             <ImageView
@@ -66,7 +67,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="125dp"
                 android:text="@string/Vehicle_ownership_message"
-                android:textColor="@color/color_gray" />
+                android:textColor="@color/color_gray"
+                android:textSize="12sp"/>
         </RelativeLayout>
     </LinearLayout>
 
