@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.info;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -7,12 +8,12 @@ import com.google.gson.reflect.TypeToken;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.http.data.dictionary.Relation;
-import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactData;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.info.source.ContactDataSource;
@@ -26,6 +27,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -43,18 +45,14 @@ public class ContactPresenter extends BasePresenterImpl implements ContactContra
 
     private ArrayList<Relation> mRelationFriend;
 
-    private ArrayList<Relation> mRelationFamily2;
-
-    private ArrayList<Relation> mRelationFriend2;
-
     public ContactPresenter(ContactContract.View view, ContactDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
-    public void request() {
-
+    public void subscribe() {
+        super.subscribe();
         File file = new File(FileConfig.RELATION_PATH);
         try {
             InputStream input = new FileInputStream(file);
@@ -74,192 +72,85 @@ public class ContactPresenter extends BasePresenterImpl implements ContactContra
             Gson gson = new Gson();
             switch (file.getName()) {
                 case "relation.json":
-                    transformRelationFamily2(br, gson);
-                    break;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            InputStream input = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(input));
-            Gson gson = new Gson();
-            switch (file.getName()) {
-                case "relation.json":
                     transformRelationFriend(br, gson);
                     break;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        try {
-            InputStream input = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(input));
-            Gson gson = new Gson();
-            switch (file.getName()) {
-                case "relation.json":
-                    transformRelationFriend2(br, gson);
-                    break;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Disposable disposable = mDataSource.requestContact()
-                .compose(new ViewTransformer<Contact>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(contact -> {
-                    for (int i = 0; i < contact.getData().length; i++) {
-                        if (i == 0) {
-                            for (int j = 0; j < mRelationFamily.size(); j++) {
-                                if (mRelationFamily.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                    mRelationFamily.get(j).setSelect(true);
-                                    mView.setFamily(mRelationFamily.get(j).getValue());
-                                }
-                            }
-                            mView.setFamilyName(contact.getData()[i].getName());
-                            mView.setFamilyPhone(contact.getData()[i].getPhone());
-                        } else if (i == 1) {
-                            for (int j = 0; j < mRelationFamily2.size(); j++) {
-                                if (mRelationFamily2.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                    mRelationFamily2.get(j).setSelect(true);
-                                    mView.setFamily2(mRelationFamily2.get(j).getValue());
-                                }
-                            }
-                            mView.setFamilyName2(contact.getData()[i].getName());
-                            mView.setFamilyPhone2(contact.getData()[i].getPhone());
-                        } else if (i == 2) {
-                            for (int j = 0; j < mRelationFriend.size(); j++) {
-                                if (mRelationFriend.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                    mRelationFriend.get(j).setSelect(true);
-                                    mView.setFriend(mRelationFriend.get(j).getValue());
-                                }
-                            }
-                            mView.setFriendName(contact.getData()[i].getName());
-                            mView.setFriendPhone(contact.getData()[i].getPhone());
-                        } else if (i == 3) {
-                            for (int j = 0; j < mRelationFriend2.size(); j++) {
-                                if (mRelationFriend2.get(j).getKey().equals(contact.getData()[i].getType())) {
-                                    mRelationFriend2.get(j).setSelect(true);
-                                    mView.setFriend2(mRelationFriend2.get(j).getValue());
-                                }
-                            }
-                            mView.setFriendName2(contact.getData()[i].getName());
-                            mView.setFriendPhone2(contact.getData()[i].getPhone());
-                        }
-                        mView.dismissProgressDialog();
-                    }
-                }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
+    }
+
+    @Override
+    public void selectPhone(Uri uri, int requestCode) {
+        Disposable disposable = mDataSource.selectPhone(uri)
+                .compose(new ViewTransformer<>())
+                .subscribe(phone -> mView.setPhone(requestCode, phone), new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
     @Override
-    public void submit() {
-        if (TextUtils.isEmpty(mView.getFamilyName()) || mView.getFamilyName().length() > 5) {
-            mView.showToastById(R.string.error_loan_contact_family_name);
-        } else if (TextUtils.isEmpty(mView.getFamily())) {
-            mView.showToastById(R.string.error_loan_contact_family);
-        } else if (TextUtils.isEmpty(mView.getFamilyPhone()) || !mView.getFamilyPhone().matches(RegexUtil.phone())) {
-            mView.showToastById(R.string.error_loan_contact_family_phone);
-        } else if (TextUtils.isEmpty(mView.getFriendName()) || mView.getFriendName().length() > 5) {
-            mView.showToastById(R.string.error_loan_contact_friend_name);
-        } else if (TextUtils.isEmpty(mView.getFriend())) {
-            mView.showToastById(R.string.error_loan_contact_friend);
-        } else if (TextUtils.isEmpty(mView.getFriendPhone()) || !mView.getFriendPhone().matches(RegexUtil.phone())) {
-            mView.showToastById(R.string.error_loan_contact_friend_phone);
-        } else if (TextUtils.isEmpty(mView.getFamilyName2()) || mView.getFamilyName2().length() > 5) {
-            mView.showToastById(R.string.error_loan_contact_family_name);
-        } else if (TextUtils.isEmpty(mView.getFamily2())) {
-            mView.showToastById(R.string.error_loan_contact_family);
-        } else if (TextUtils.isEmpty(mView.getFamilyPhone2()) || !mView.getFamilyPhone2().matches(RegexUtil.phone())) {
-            mView.showToastById(R.string.error_loan_contact_family_phone);
-        } else if (TextUtils.isEmpty(mView.getFriendName2()) || mView.getFriendName2().length() > 5) {
-            mView.showToastById(R.string.error_loan_contact_friend_name);
-        } else if (TextUtils.isEmpty(mView.getFriend2())) {
-            mView.showToastById(R.string.error_loan_contact_friend);
-        } else if (TextUtils.isEmpty(mView.getFriendPhone2()) || !mView.getFriendPhone2().matches(RegexUtil.phone())) {
-            mView.showToastById(R.string.error_loan_contact_friend_phone);
+    public void upLoadContact() {
+        Disposable disposable = mDataSource.uploadContact()
+                .compose(new ViewTransformer<>())
+                .subscribe(uploadContact -> {
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public Flowable<Boolean> canSubmit() {
+        if (TextUtils.isEmpty(mView.get1Name()) || mView.get1Name().length() > 5) {
+            return Flowable.error(new LocalException(R.string.error_contact_1_name));
+        } else if (TextUtils.isEmpty(mView.get1Relation())) {
+            return Flowable.error(new LocalException(R.string.error_contact_1_relation));
+        } else if (TextUtils.isEmpty(mView.get1Phone()) || !mView.get1Phone().matches(RegexUtil.phone())) {
+            return Flowable.error(new LocalException(R.string.error_contact_1_phone));
+        } else if (TextUtils.isEmpty(mView.get2Name()) || mView.get2Name().length() > 5) {
+            return Flowable.error(new LocalException(R.string.error_contact_2_name));
+        } else if (TextUtils.isEmpty(mView.get2Relation())) {
+            return Flowable.error(new LocalException(R.string.error_contact_2_relation));
+        } else if (TextUtils.isEmpty(mView.get2Phone()) || !mView.get2Phone().matches(RegexUtil.phone())) {
+            return Flowable.error(new LocalException(R.string.error_contact_2_phone));
         } else {
-            SaveContactRequest request = new SaveContactRequest();
-            ContactData[] data = new ContactData[4];
-            data[0] = new ContactData();
-            data[0].setName(mView.getFamilyName());
-            data[0].setPhone(mView.getFamilyPhone());
-            for (int i = 0; i < mRelationFamily.size(); i++) {
-                if (mRelationFamily.get(i).isSelect()) {
-                    data[0].setType(mRelationFamily.get(i).getKey());
-                    data[0].setRelation(mRelationFamily.get(i).getValue());
-                }
-            }
-            data[1] = new ContactData();
-            data[1].setName(mView.getFamilyName2());
-            data[1].setPhone(mView.getFamilyPhone2());
-            for (int i = 0; i < mRelationFamily2.size(); i++) {
-                if (mRelationFamily2.get(i).isSelect()) {
-                    data[1].setType(mRelationFamily2.get(i).getKey());
-                    data[1].setRelation(mRelationFamily2.get(i).getValue());
-                }
-            }
-            data[2] = new ContactData();
-            data[2].setName(mView.getFriendName());
-            data[2].setPhone(mView.getFriendPhone());
-            for (int i = 0; i < mRelationFriend.size(); i++) {
-                if (mRelationFriend.get(i).isSelect()) {
-                    data[2].setType(mRelationFriend.get(i).getKey());
-                    data[2].setRelation(mRelationFriend.get(i).getValue());
-                }
-            }
-            data[3] = new ContactData();
-            data[3].setName(mView.getFriendName2());
-            data[3].setPhone(mView.getFriendPhone2());
-            for (int i = 0; i < mRelationFriend2.size(); i++) {
-                if (mRelationFriend2.get(i).isSelect()) {
-                    data[3].setType(mRelationFriend2.get(i).getKey());
-                    data[3].setRelation(mRelationFriend2.get(i).getValue());
-                }
-            }
-            request.setData(data);
-            Disposable disposable = mDataSource.requestSaveContact(request)
-                    .compose(new ViewTransformer<SaveContact>() {
-                        @Override
-                        public void accept() {
-                            super.accept();
-                            mView.showProgressDialog();
-                        }
-                    })
-                    .subscribe(saveContact -> {
-                        mView.dismissProgressDialog();
-                        mView.result();
-                    }, new ThrowableConsumer(mView));
-            mCompositeDisposable.add(disposable);
+            return Flowable.just(true);
         }
+    }
+
+    @Override
+    public Flowable<SaveContact> submit() {
+        SaveContactRequest request = new SaveContactRequest();
+        ContactData[] data = new ContactData[2];
+        data[0] = new ContactData();
+        data[0].setName(mView.get1Name());
+        data[0].setPhone(mView.get1Phone());
+        for (int i = 0; i < mRelationFamily.size(); i++) {
+            if (mRelationFamily.get(i).isSelect()) {
+                data[0].setType(mRelationFamily.get(i).getKey());
+                data[0].setRelation(mRelationFamily.get(i).getValue());
+            }
+        }
+        data[1] = new ContactData();
+        data[1].setName(mView.get2Name());
+        data[1].setPhone(mView.get2Phone());
+        for (int i = 0; i < mRelationFriend.size(); i++) {
+            if (mRelationFriend.get(i).isSelect()) {
+                data[1].setType(mRelationFriend.get(i).getKey());
+                data[1].setRelation(mRelationFriend.get(i).getValue());
+            }
+        }
+        request.setData(data);
+        return mDataSource.requestSaveContact(request);
     }
 
     private void transformRelationFamily(BufferedReader br, Gson gson) {
         mRelationFamily = gson.fromJson(br, new TypeToken<List<Relation>>() {
         }.getType());
-        mView.initFamily(mRelationFamily);
-    }
-
-    private void transformRelationFamily2(BufferedReader br, Gson gson) {
-        mRelationFamily2 = gson.fromJson(br, new TypeToken<List<Relation>>() {
-        }.getType());
-        mView.initFamily2(mRelationFamily2);
+        mView.init1Relation(mRelationFamily);
     }
 
     private void transformRelationFriend(BufferedReader br, Gson gson) {
         mRelationFriend = gson.fromJson(br, new TypeToken<List<Relation>>() {
         }.getType());
-        mView.initFriend(mRelationFriend);
-    }
-
-    private void transformRelationFriend2(BufferedReader br, Gson gson) {
-        mRelationFriend2 = gson.fromJson(br, new TypeToken<List<Relation>>() {
-        }.getType());
-        mView.initFriend2(mRelationFriend2);
+        mView.init2Relation(mRelationFriend);
     }
 }

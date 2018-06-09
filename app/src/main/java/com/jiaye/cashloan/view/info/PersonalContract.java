@@ -1,12 +1,13 @@
 package com.jiaye.cashloan.view.info;
 
+import com.jiaye.cashloan.http.data.dictionary.Area;
+import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
-import com.jiaye.cashloan.http.data.dictionary.Area;
-import com.jiaye.cashloan.http.data.dictionary.Education;
-import com.jiaye.cashloan.http.data.dictionary.Marriage;
 
 import java.util.ArrayList;
+
+import io.reactivex.Flowable;
 
 /**
  * PersonalContract
@@ -18,22 +19,6 @@ public interface PersonalContract {
 
     interface View extends BaseViewContract {
 
-        void setEducation(String education);
-
-        void setMarriage(String marriage);
-
-        void setRegisterCity(String registerCity);
-
-        void setCity(String city);
-
-        void setAddress(String address);
-
-        void setEmail(String email);
-
-        String getEducation();
-
-        String getMarriage();
-
         String getRegisterCity();
 
         String getCity();
@@ -44,15 +29,13 @@ public interface PersonalContract {
 
         void initArea(ArrayList<Area> areas, final ArrayList<ArrayList<String>> areas2, final ArrayList<ArrayList<ArrayList<String>>> areas3);
 
-        void initEducation(final ArrayList<Education> educations);
-
-        void initMarriage(final ArrayList<Marriage> marriages);
-
         void result();
     }
 
     interface Presenter extends BasePresenter {
 
-        void submit();
+        Flowable<Boolean> canSubmit();
+
+        Flowable<SavePerson> submit();
     }
 }

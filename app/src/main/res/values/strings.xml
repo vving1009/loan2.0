@@ -12,6 +12,9 @@
     <string name="id_title">身份认证</string>
     <!--phone-->
     <string name="phone_title">手机运营商</string>
+    <!--info-->
+    <string name="info_submit">提交</string>
+    <string name="error_auth_unknown_contact">获取手机通讯录失败</string>
     <!--taobao-->
     <string name="taobao_title">淘宝/支付宝认证</string>
     <!--vehicle-->
@@ -43,7 +46,7 @@
     <string name="loan_auth_person_address">现居住地址</string>
     <string name="loan_auth_person_email">电子邮箱</string>
     <string name="loan_auth_contact_info">联系人信息</string>
-    <string name="loan_auth_contact_family">直系亲属</string>
+    <string name="loan_auth_contact_family">关系</string>
     <string name="loan_auth_contact_friend">亲属/朋友</string>
     <string name="loan_auth_contact_phone">手机号码</string>
     <string name="loan_auth_submit">已提交</string>
@@ -217,12 +220,12 @@
     <string name="error_loan_person_city">请选择现居住城市</string>
     <string name="error_loan_person_address">请输入现居住地址</string>
     <string name="error_loan_person_email">请输入正确的电子邮箱</string>
-    <string name="error_loan_contact_family_name">请输入正确的直系亲属姓名</string>
-    <string name="error_loan_contact_family">请选择直系亲属关系</string>
-    <string name="error_loan_contact_family_phone">请输入正确的直系亲属手机号码</string>
-    <string name="error_loan_contact_friend_name">请输入正确的亲属/朋友姓名</string>
-    <string name="error_loan_contact_friend">请选择亲属/朋友关系</string>
-    <string name="error_loan_contact_friend_phone">请输入正确的亲属/朋友手机号码</string>
+    <string name="error_contact_1_name">请输入姓名</string>
+    <string name="error_contact_1_relation">请选择关系</string>
+    <string name="error_contact_1_phone">请选择手机号码</string>
+    <string name="error_contact_2_name">请输入姓名</string>
+    <string name="error_contact_2_relation">请选择关系</string>
+    <string name="error_contact_2_phone">请选择手机号码</string>
     <string name="error_loan_phone_password">请输入服务密码</string>
     <string name="error_loan_phone_sms">请输入短信验证码</string>
     <string name="error_loan_phone_img">请输入图片验证码</string>

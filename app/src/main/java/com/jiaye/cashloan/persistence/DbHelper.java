@@ -107,12 +107,14 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param phone  手机号
      * @param token  令牌
      * @param ocr_id 身份证
+     * @param ocr_name 身份证
      */
-    public void insertUser(String phone, String token, String ocr_id) {
+    public void insertUser(String phone, String token, String ocr_id, String ocr_name) {
         ContentValues values = new ContentValues();
         values.put("phone", phone);
         values.put("token", token);
         values.put("ocr_id", ocr_id);
+        values.put("ocr_name", ocr_name);
         getWritableDatabase().insert("user", "", values);
     }
 

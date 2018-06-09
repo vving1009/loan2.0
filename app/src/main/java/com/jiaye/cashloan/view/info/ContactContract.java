@@ -1,83 +1,54 @@
 package com.jiaye.cashloan.view.info;
 
+import android.net.Uri;
+
 import com.jiaye.cashloan.http.data.dictionary.Relation;
+import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 import java.util.ArrayList;
+
+import io.reactivex.Flowable;
 
 /**
  * ContactContract
  *
  * @author 贾博瑄
  */
-public class ContactContract {
+public interface ContactContract {
 
     interface View extends BaseViewContract {
 
-        void setFamilyName(String text);
+        void setPhone(int requestCode, String phone);
 
-        void setFamily(String text);
+        String get1Name();
 
-        void setFamilyPhone(String text);
+        String get1Relation();
 
-        void setFriendName(String text);
+        String get1Phone();
 
-        void setFriend(String text);
+        String get2Name();
 
-        void setFriendPhone(String text);
+        String get2Relation();
 
-        String getFamilyName();
+        String get2Phone();
 
-        String getFamily();
+        void init1Relation(final ArrayList<Relation> relations);
 
-        String getFamilyPhone();
-
-        String getFriendName();
-
-        String getFriend();
-
-        String getFriendPhone();
-
-        void setFamilyName2(String text);
-
-        void setFamily2(String text);
-
-        void setFamilyPhone2(String text);
-
-        void setFriendName2(String text);
-
-        void setFriend2(String text);
-
-        void setFriendPhone2(String text);
-
-        String getFamilyName2();
-
-        String getFamily2();
-
-        String getFamilyPhone2();
-
-        String getFriendName2();
-
-        String getFriend2();
-
-        String getFriendPhone2();
-
-        void initFamily(final ArrayList<Relation> relations);
-
-        void initFriend(final ArrayList<Relation> relations);
-
-        void initFamily2(final ArrayList<Relation> relations);
-
-        void initFriend2(final ArrayList<Relation> relations);
+        void init2Relation(final ArrayList<Relation> relations);
 
         void result();
     }
 
     interface Presenter extends BasePresenter {
 
-        void request();
+        void selectPhone(Uri uri, int requestCode);
 
-        void submit();
+        void upLoadContact();
+
+        Flowable<Boolean> canSubmit();
+
+        Flowable<SaveContact> submit();
     }
 }

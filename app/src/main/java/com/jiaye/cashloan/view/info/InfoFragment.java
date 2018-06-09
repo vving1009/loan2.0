@@ -22,9 +22,11 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class InfoFragment extends BaseFunctionFragment {
+public class InfoFragment extends BaseFunctionFragment implements InfoContact.View {
 
     private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_person_info, R.string.loan_auth_contact_info};
+
+    private InfoContact.Presenter mPresenter;
 
     private NoScrollViewPager mViewPager;
 
@@ -65,6 +67,8 @@ public class InfoFragment extends BaseFunctionFragment {
 
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
+        mText.setVisibility(View.VISIBLE);
+        mText.setText(R.string.info_submit);
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.taobao_fragment, frameLayout, true);
         mViewPager = rootView.findViewById(R.id.view_pager);
         mViewPager.setOffscreenPageLimit(1);
@@ -100,11 +104,6 @@ public class InfoFragment extends BaseFunctionFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 1) {
-                    String name = "android:switcher:" + mViewPager.getId() + ":" + "1";
-                    ContactFragment fragment = (ContactFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
-                    fragment.request();
-                }
                 for (View indicator : indicators) {
                     indicator.setVisibility(View.INVISIBLE);
                 }
@@ -121,6 +120,28 @@ public class InfoFragment extends BaseFunctionFragment {
 
             }
         });
+        mPresenter = new InfoPresenter(this);
+        mPresenter.subscribe();
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void onClickText() {
+        String name1 = "android:switcher:" + mViewPager.getId() + ":" + "0";
+        PersonalFragment personalFragment = (PersonalFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name1);
+        String name2 = "android:switcher:" + mViewPager.getId() + ":" + "1";
+        ContactFragment contactFragment = (ContactFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name2);
+        mPresenter.submit(personalFragment.canSubmit(), contactFragment.canSubmit(), personalFragment.submit(), contactFragment.submit());
+    }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
     }
 }

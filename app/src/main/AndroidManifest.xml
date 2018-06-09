@@ -64,15 +64,6 @@
             android:name=".view.bioassay.BioassayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.loan.auth.info.LoanAuthInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.view.loan.auth.info.LoanAuthPersonInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.view.loan.auth.info.LoanAuthContactInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.view.loan.auth.file.LoanAuthFileActivity"
             android:screenOrientation="portrait" />
         <activity

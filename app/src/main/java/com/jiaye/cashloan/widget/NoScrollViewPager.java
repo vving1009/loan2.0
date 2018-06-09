@@ -26,6 +26,16 @@ public class NoScrollViewPager extends ViewPager {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent arg0) {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent arg0) {
+        return false;
+    }
+
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentItem() < mLock) {
             return super.dispatchTouchEvent(ev);
@@ -46,7 +56,7 @@ public class NoScrollViewPager extends ViewPager {
             }
             return super.dispatchTouchEvent(ev);
         }
-    }
+    }*/
 
     public void setLock(int lock) {
         mLock = lock;

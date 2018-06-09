@@ -56,15 +56,15 @@ public class InfoContactFragment extends BaseFragment implements InfoContactCont
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.info_contact_fragment,container,false);
-        mTextFamilyName = view.findViewById(R.id.text_family_name);
-        mTextFamily = view.findViewById(R.id.text_family);
-        mTextFamilyPhone = view.findViewById(R.id.text_family_phone);
+        mTextFamilyName = view.findViewById(R.id.text_1_name);
+        mTextFamily = view.findViewById(R.id.text_1_relation);
+        mTextFamilyPhone = view.findViewById(R.id.text_1_phone);
         mTextFamilyName2 = view.findViewById(R.id.text_family_name_2);
         mTextFamily2 = view.findViewById(R.id.text_family_2);
         mTextFamilyPhone2 = view.findViewById(R.id.text_family_phone_2);
-        mTextFriendName = view.findViewById(R.id.text_friend_name);
-        mTextFriend = view.findViewById(R.id.text_friend);
-        mTextFriendPhone = view.findViewById(R.id.text_friend_phone);
+        mTextFriendName = view.findViewById(R.id.text_2_name);
+        mTextFriend = view.findViewById(R.id.text_2_relation);
+        mTextFriendPhone = view.findViewById(R.id.text_2_phone);
         mTextFriendName2 = view.findViewById(R.id.text_friend_name_2);
         mTextFriend2 = view.findViewById(R.id.text_friend_2);
         mTextFriendPhone2 = view.findViewById(R.id.text_friend_phone_2);

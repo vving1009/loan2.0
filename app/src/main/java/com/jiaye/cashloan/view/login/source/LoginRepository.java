@@ -25,7 +25,8 @@ public class LoginRepository implements LoginDataSource {
         return Flowable.just(request)
                 .compose(new SatcatcheResponseTransformer<LoginRequest, Login>("login"))
                 .map(login -> {
-                    LoanApplication.getInstance().getDbHelper().insertUser(phone, login.getToken(), login.getId());
+                    LoanApplication.getInstance().getDbHelper().insertUser(phone, login.getToken(),
+                            login.getId(), login.getName());
                     LoanApplication.getInstance().setupBuglyUserId(phone);
                     return login;
                 });
