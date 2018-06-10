@@ -20,17 +20,6 @@ import io.reactivex.Flowable;
 public class Step1Repository implements Step1DataSource {
 
     @Override
-    public Flowable<Step> requestStep() {
-        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
-                .map(user -> {
-                    StepRequest request = new StepRequest();
-                    request.setLoanId(user.getLoanId());
-                    return request;
-                })
-                .compose(new SatcatcheResponseTransformer<StepRequest, Step>("step"));
-    }
-
-    @Override
     public Flowable<Step1> requestStep1() {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
                 .map(user -> {

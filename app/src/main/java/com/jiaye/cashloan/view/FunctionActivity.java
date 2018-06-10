@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.file.FileFragment;
+import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.vehicle.VehicleFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
@@ -63,8 +65,15 @@ public class FunctionActivity extends AppCompatActivity {
                 TaoBaoFragment taoBaoFragment = TaoBaoFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, taoBaoFragment).commit();
                 break;
-            case "Other":
+            case "File":
                 // 进件资料
+                FileFragment fileFragment = FileFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, fileFragment).commit();
+                break;
+            case "Sign":
+                // 电子签章
+                SignFragment signFragment = SignFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, signFragment).commit();
                 break;
         }
     }

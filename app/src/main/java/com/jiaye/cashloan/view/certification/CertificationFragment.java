@@ -160,17 +160,20 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
             mViewPager.setCurrentItem(3);
         }
         switch (step) {
-            case 3:
-                mTextStep3.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        getResources().getDrawable(R.drawable.certification_ic_step_3_end),
-                        null,
-                        null);
+            case 6:
                 mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
                         null,
                         getResources().getDrawable(R.drawable.certification_ic_step_4_end),
                         null,
                         null);
+            case 5:
+                mTextStep3.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        getResources().getDrawable(R.drawable.certification_ic_step_3_end),
+                        null,
+                        null);
+            case 4:
+            case 3:
             case 2:
                 mTextStep2.setCompoundDrawablesWithIntrinsicBounds(
                         null,

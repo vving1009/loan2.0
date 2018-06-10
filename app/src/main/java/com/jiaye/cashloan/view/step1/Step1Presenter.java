@@ -1,17 +1,14 @@
 package com.jiaye.cashloan.view.step1;
 
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step1.source.Step1DataSource;
 
-import org.reactivestreams.Publisher;
-
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Step1Presenter
@@ -34,9 +31,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     @Override
     public void requestStep() {
-        Disposable disposable = mDataSource.requestStep()
-                .filter(step -> step.getStep() >= 1)
-                .concatMap((Function<Step, Publisher<Step1>>) step -> mDataSource.requestStep1())
+        Disposable disposable = mDataSource.requestStep1()
                 .compose(new ViewTransformer<>())
                 .subscribe(step1 -> {
                     mStep1 = step1;
@@ -80,18 +75,23 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     @Override
     public void onClickNext() {
-        Disposable disposable = mDataSource.requestUpdateStep()
-                .compose(new ViewTransformer<EmptyResponse>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(emptyResponse -> {
-                    mView.dismissProgressDialog();
-                    mView.sendBroadcast();
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        if (mStep1.getId() == 1 && mStep1.getBioassay() == 1 && mStep1.getPersonal() == 1
+                && mStep1.getPhone() == 1 && mStep1.getCar() == 1) {
+            Disposable disposable = mDataSource.requestUpdateStep()
+                    .compose(new ViewTransformer<EmptyResponse>() {
+                        @Override
+                        public void accept() {
+                            super.accept();
+                            mView.showProgressDialog();
+                        }
+                    })
+                    .subscribe(emptyResponse -> {
+                        mView.dismissProgressDialog();
+                        mView.sendBroadcast();
+                    }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        } else {
+            mView.showToastById(R.string.step1_error);
+        }
     }
 }

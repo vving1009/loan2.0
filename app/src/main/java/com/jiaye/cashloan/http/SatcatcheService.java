@@ -12,6 +12,7 @@ import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
+import com.jiaye.cashloan.http.data.file.SubmitUploadFileRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
 import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
@@ -56,8 +57,7 @@ import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.loan.UploadFile;
-import com.jiaye.cashloan.http.data.loan.UploadFileRequest;
+import com.jiaye.cashloan.http.data.file.UploadFileRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.data.loan.UploadPhoto;
@@ -78,6 +78,8 @@ import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.step3.Step3;
+import com.jiaye.cashloan.http.data.step3.Step3Request;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
@@ -146,7 +148,11 @@ public interface SatcatcheService {
     @POST("updateOrderStatus")
     Flowable<SatcatcheResponse<EmptyResponse>> updateStep(@Body SatcatcheRequest<UpdateStepRequest> request);
 
-    /*querySecAuthStatus 9 提交信息认证状态查询*/
+    /**
+     * 查询认证第三步的具体状态 9
+     */
+    @POST("querySecAuthStatus")
+    Flowable<SatcatcheResponse<Step3>> step3(@Body SatcatcheRequest<Step3Request> request);
 
     /**
      * 查询推荐人 10
@@ -183,6 +189,38 @@ public interface SatcatcheService {
      */
     @POST("phoneOperator/save")
     Flowable<SatcatcheResponse<SavePhone>> savePhone(@Body SatcatcheRequest<SavePhoneRequest> request);
+
+    /**
+     * 上传车辆认证图片 16
+     */
+    @POST("carPapers/save")
+    Flowable<SatcatcheResponse<UploadCarPapers>> uploadCarPapers(@Body SatcatcheRequest<UploadCarPapersRequest> request);
+
+    /**
+     * 提交车辆认证状态 17
+     */
+    @POST("carPapers/state")
+    Flowable<SatcatcheResponse<CarPapersState>> carPapersState(@Body SatcatcheRequest<CarPapersStateRequest> request);
+
+    /**
+     * 保存淘宝信息 18
+     */
+    @POST("taoBaoZhiFuBao/save")
+    Flowable<SatcatcheResponse<SaveTaoBao>> saveTaoBao(@Body SatcatcheRequest<SaveTaoBaoRequest> request);
+
+    /**
+     * 上传认证材料 19
+     */
+    @POST("intoInfo/save")
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
+
+    /*queryExamineResult 审批状态查询接口(CL020) */
+
+    /**
+     * 提交认证材料 21
+     */
+    @POST("intoInfo/state")
+    Flowable<SatcatcheResponse<EmptyResponse>> submitUploadFile(@Body SatcatcheRequest<SubmitUploadFileRequest> request);
 
     /*旧的接口*/
 
@@ -271,12 +309,6 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<Visa>> visa(@Body SatcatcheRequest<VisaRequest> request);
 
     /**
-     * 保存淘宝信息
-     */
-    @POST("taobao")
-    Flowable<SatcatcheResponse<SaveTaoBao>> saveTaoBao(@Body SatcatcheRequest<SaveTaoBaoRequest> request);
-
-    /**
      * 借款确认信息
      */
     @POST("loanConfirm")
@@ -319,12 +351,6 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<FileState>> fileState(@Body SatcatcheRequest<FileStateRequest> request);
 
     /**
-     * 上传认证材料
-     */
-    @POST("uploadMaterialPic")
-    Flowable<SatcatcheResponse<UploadFile>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
-
-    /**
      * 上传通讯录
      */
     @POST("phoneContacts")
@@ -347,16 +373,4 @@ public interface SatcatcheService {
      */
     @POST("uploadAlbumPic")
     Flowable<SatcatcheResponse<UploadPhoto>> uploadPhoto(@Body SatcatcheRequest<UploadPhotoRequest> request);
-
-    /**
-     * 上传车辆认证图片
-     */
-    @POST("carPapers/save")
-    Flowable<SatcatcheResponse<UploadCarPapers>> uploadCarPapers(@Body SatcatcheRequest<UploadCarPapersRequest> request);
-
-    /**
-     * 提交车辆认证状态
-     */
-    @POST("carPapers/state")
-    Flowable<SatcatcheResponse<CarPapersState>> carPapersState(@Body SatcatcheRequest<CarPapersStateRequest> request);
 }

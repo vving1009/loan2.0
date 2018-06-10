@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.step3;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.bioassay.BioassayActivity;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -38,14 +42,21 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.step3_fragment,container,false);
+        View root = inflater.inflate(R.layout.step3_fragment, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
         recyclerView.setAdapter(mAdapter);
+        root.findViewById(R.id.btn_next).setOnClickListener(v -> mPresenter.onClickNext());
         mPresenter = new Step3Presenter(this, new Step3Repository());
         mPresenter.subscribe();
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.requestStep();
     }
 
     @Override
@@ -54,7 +65,35 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
         mPresenter.unsubscribe();
     }
 
+    @Override
+    public void setStep3(Step3 step3) {
+        mAdapter.setStep3(step3);
+    }
+
+    @Override
+    public void showTaoBaoView() {
+        FunctionActivity.function(getActivity(), "Taobao");
+    }
+
+    @Override
+    public void showFileView() {
+        FunctionActivity.function(getActivity(), "File");
+    }
+
+    @Override
+    public void showSignView() {
+        FunctionActivity.function(getActivity(), "Sign");
+    }
+
+    @Override
+    public void sendBroadcast() {
+        Intent intent = new Intent(getActivity(), BioassayActivity.class);
+        startActivity(intent);
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+
+        private Step3 mStep3;
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,17 +106,45 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
             if (position == 0) {
                 holder.setType(0);
                 holder.setName("淘宝/支付宝");
-                holder.setState(0);
+                holder.setState(mStep3.getTaobao());
+                if (mStep3.getTaobao() == 0) {
+                    holder.setStateText("待提交");
+                } else if (mStep3.getTaobao() == 1) {
+                    holder.setStateText("已认证");
+                }
             } else if (position == 1) {
-                holder.setType(2);
+                holder.setType(1);
                 holder.setName("进件资料");
-                holder.setState(0);
+                holder.setState(mStep3.getFile());
+                if (mStep3.getFile() == 0) {
+                    holder.setStateText("待提交");
+                } else if (mStep3.getFile() == 1) {
+                    holder.setStateText("已认证");
+                }
+            } else if (position == 2) {
+                holder.setType(2);
+                holder.setName("电子签章授权");
+                holder.setState(mStep3.getSign());
+                if (mStep3.getSign() == 0) {
+                    holder.setStateText("待授权");
+                } else if (mStep3.getSign() == 1) {
+                    holder.setStateText("已授权");
+                }
             }
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            if (mStep3 != null) {
+                return 3;
+            } else {
+                return 0;
+            }
+        }
+
+        public void setStep3(Step3 step3) {
+            mStep3 = step3;
+            notifyDataSetChanged();
         }
     }
 
@@ -93,6 +160,7 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(v -> mPresenter.onClickItem(getLayoutPosition()));
             mStepView = itemView.findViewById(R.id.step_view);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
@@ -111,17 +179,19 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
             switch (state) {
                 case 0:
                     mTextState.setTextColor(Color.parseColor("#989898"));
-                    mTextState.setText("待提交");
                     mImageInto.setVisibility(View.VISIBLE);
                     mStepView.setSelect(false);
                     break;
                 case 1:
                     mTextState.setTextColor(Color.parseColor("#425FBB"));
-                    mTextState.setText("已提交");
                     mImageInto.setVisibility(View.INVISIBLE);
                     mStepView.setSelect(true);
                     break;
             }
+        }
+
+        public void setStateText(String text) {
+            mTextState.setText(text);
         }
     }
 }

@@ -16,6 +16,8 @@ public interface Step2Contract {
         void setText(String msg);
 
         void sendBroadcast();
+
+        void finish();
     }
 
     interface Presenter extends BasePresenter {

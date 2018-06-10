@@ -14,8 +14,6 @@ import io.reactivex.Flowable;
 
 public interface Step1DataSource {
 
-    Flowable<Step> requestStep();
-
     Flowable<Step1> requestStep1();
 
     Flowable<EmptyResponse> requestUpdateStep();

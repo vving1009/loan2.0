@@ -125,7 +125,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
 
                         LoanAuthModel visa = new LoanAuthModel();
                         visa.setIcon(R.drawable.loan_auth_ic_visa);
-                        visa.setName(R.string.loan_auth_visa);
+                        visa.setName(R.string.sign_title);
                         setLoanAuthModel(loanAuth.getSignState(), visa, false);
                         isVerify = isVerify && visa.isVerify();
                         if (isVerify) {
@@ -189,7 +189,7 @@ public class LoanAuthPresenter extends BasePresenterImpl implements LoanAuthCont
                         mView.showLoanAuthInfoView();
                     }
                     break;
-                case R.string.loan_auth_visa:
+                case R.string.sign_title:
                     if (mStep < 5) {
                         mView.showToastById(R.string.error_loan_auth_step);
                     } else {

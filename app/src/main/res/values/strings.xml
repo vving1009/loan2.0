@@ -8,6 +8,12 @@
     <string name="search_error">请先选择业务员</string>
     <!--certification-->
     <string name="certification_title">认证中心</string>
+    <!--step1-->
+    <string name="step1_error">请填写认证资料</string>
+    <!--step2-->
+    <string name="step2_progress">车辆正在评估,请耐心等待</string>
+    <!--step3-->
+    <string name="step3_error">请填写提交信息</string>
     <!--id-->
     <string name="id_title">身份认证</string>
     <!--phone-->
@@ -17,6 +23,7 @@
     <string name="error_auth_unknown_contact">获取手机通讯录失败</string>
     <!--taobao-->
     <string name="taobao_title">淘宝/支付宝认证</string>
+    <!--file-->
     <!--vehicle-->
     <string name="Vehicle_title">车辆证件</string>
     <string name="Vehicle_message">请拍摄或上传您的行驶证主副页面和车辆产权证页面</string>
@@ -32,7 +39,7 @@
     <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="loan_auth_ocr_check">校验身份信息</string>
     <string name="commit">提交</string>
-    <string name="loan_auth_visa">电子签章授权</string>
+    <string name="sign_title">电子签章授权</string>
     <string name="loan_auth_visa_history">历史签章授权</string>
     <string name="loan_auth_visa_confirm">确认电子签章授权</string>
     <string name="loan_auth_face">人像比对</string>

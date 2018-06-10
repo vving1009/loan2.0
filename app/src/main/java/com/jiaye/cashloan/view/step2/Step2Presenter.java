@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.step2;
 
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.view.BasePresenterImpl;
@@ -21,6 +22,8 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
 
     private final Step2DataSource mDataSource;
 
+    private Step mStep;
+
     public Step2Presenter(Step2Contract.View view, Step2DataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -39,24 +42,31 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                 .subscribe(step -> {
                     mView.dismissProgressDialog();
                     mView.setText(step.getMsg());
+                    mStep = step;
                 });
         mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void onClickNext() {
-        Disposable disposable = mDataSource.requestUpdateStep()
-                .compose(new ViewTransformer<EmptyResponse>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(emptyResponse -> {
-                    mView.dismissProgressDialog();
-                    mView.sendBroadcast();
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        if (mStep.getStep() == 2) {
+            mView.showToastById(R.string.step2_progress);
+        } else if (mStep.getStep() == 3) {
+            mView.finish();
+        } else if (mStep.getStep() == 4) {
+            Disposable disposable = mDataSource.requestUpdateStep()
+                    .compose(new ViewTransformer<EmptyResponse>() {
+                        @Override
+                        public void accept() {
+                            super.accept();
+                            mView.showProgressDialog();
+                        }
+                    })
+                    .subscribe(emptyResponse -> {
+                        mView.dismissProgressDialog();
+                        mView.sendBroadcast();
+                    }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        }
     }
 }

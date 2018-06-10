@@ -63,4 +63,9 @@ public class Step2Fragment extends BaseFragment implements Step2Contract.View {
     public void sendBroadcast() {
         CertificationFragment.refresh(getActivity());
     }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
+    }
 }

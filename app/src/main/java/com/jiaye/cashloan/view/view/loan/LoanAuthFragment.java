@@ -22,8 +22,6 @@ import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.data.loan.LoanAuthModel;
 import com.jiaye.cashloan.view.data.loan.source.LoanAuthRepository;
 import com.jiaye.cashloan.view.bioassay.BioassayActivity;
-import com.jiaye.cashloan.view.view.loan.auth.file.LoanAuthFileActivity;
-import com.jiaye.cashloan.view.view.loan.auth.visa.LoanAuthVisaActivity;
 
 import java.util.List;
 
@@ -133,16 +131,10 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanAuthVisaView() {
-        Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
-        intent.putExtra("type", "visa");
-        startActivity(intent);
     }
 
     @Override
     public void showLoanAuthVisaHistoryView() {
-        Intent intent = new Intent(getActivity(), LoanAuthVisaActivity.class);
-        intent.putExtra("type", "visa_history");
-        startActivity(intent);
     }
 
     @Override
@@ -170,8 +162,6 @@ public class LoanAuthFragment extends BaseFragment implements LoanAuthContract.V
 
     @Override
     public void showLoanFileView() {
-        Intent intent = new Intent(getActivity(), LoanAuthFileActivity.class);
-        startActivityForResult(intent, REQUEST);
     }
 
     @Override
