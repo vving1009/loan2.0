@@ -7,19 +7,22 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.about.AboutFragment;
 import com.jiaye.cashloan.view.bankcard.BankCardFragment;
-import com.jiaye.cashloan.view.file.FileFragment;
-import com.jiaye.cashloan.view.plan.PlanFragment;
-import com.jiaye.cashloan.view.sign.SignFragment;
-import com.jiaye.cashloan.view.vehicle.VehicleFragment;
+import com.jiaye.cashloan.view.bindbank.BindBankFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
+import com.jiaye.cashloan.view.plan.PlanFragment;
+import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
-import com.jiaye.cashloan.view.view.my.credit.AccountFragment;
+import com.jiaye.cashloan.view.vehicle.VehicleFragment;
+import com.jiaye.cashloan.view.account.AccountFragment;
+import com.jiaye.cashloan.view.cash.CashFragment;
 
 /**
  * FunctionActivity
@@ -48,6 +51,7 @@ public class FunctionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.function_activity);
         String function = getIntent().getStringExtra("function");
+        Bundle bundle;
         switch (function) {
             case "Certification":
                 // 认证中心
@@ -105,12 +109,22 @@ public class FunctionActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, accountFragment).commit();
                 break;
             case "BankCard":
-                // 银行卡绑定
-                Bundle bundle = getIntent().getBundleExtra(BUNDLE);
+                // 银行卡管理
+                bundle = getIntent().getBundleExtra(BUNDLE);
                 CreditInfo info = bundle.getParcelable("creditInfo");
                 Boolean isBind = bundle.getBoolean("isBind", true);
                 BankCardFragment bankCardFragment = BankCardFragment.newInstance(isBind, info);
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, bankCardFragment).commit();
+                break;
+            case "BindBank":
+                // 绑定银行卡
+                BindBankFragment bindBankFragment = BindBankFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, bindBankFragment).commit();
+                break;
+            case "Cash":
+                // 提现
+                CashFragment cashFragment = CashFragment.newInstance((CreditBalance) getIntent().getParcelableExtra("balance"));
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, cashFragment).commit();
                 break;
         }
     }

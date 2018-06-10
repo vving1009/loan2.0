@@ -34,6 +34,10 @@
     <string name="bank_card_bind">添加银行卡</string>
     <!--account-->
     <string name="account_title">存管账户管理</string>
+    <!--bind bank-->
+    <string name="bind_bank_title">开通存管账户</string>
+    <!--cash-->
+    <string name="cash_title">提现</string>
     <!--loan auth-->
     <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_name">姓名</string>
@@ -153,9 +157,9 @@
     <string name="my_credit_cash_available">可用余额：</string>
     <string name="my_credit_cash_available_unit">%1$s元</string>
     <string name="my_credit_cash_cash">提现金额：</string>
-    <string name="my_credit_cash_cash_hint">最低提现1元</string>
-    <string name="my_credit_cash_bank">银行联行号：</string>
-    <string name="my_credit_cash_bank_hint">请填写银行联行号</string>
+    <string name="my_credit_cash_cash_hint">提现金额需要大于1元</string>
+    <string name="my_credit_cash_bank">银行银联号：</string>
+    <string name="my_credit_cash_bank_hint">提现金额大于5000请输入银联号</string>
     <string name="my_credit_cash_submit">确认提交</string>
     <string name="my_credit_cash_description_title">提现说明</string>
     <string name="my_credit_cash_description">1.快速提现单笔限额5万元，大额提现单笔限额50万元，每日最多可提现10次。\n\n2.提现手续费：1元/笔。\n\n3.提现时间：7×24小时。快速提现2小时左右到账，大额提现T+1工作日到账。节假日可能出现延迟。\n\n4.银行联行号：\n银行联行号就是一个地区银行的唯一识别标志。用于人民银行所组织的大额支付系统等跨区域支付结算业务，由12位组成。\n为了您的资金安全，提现金额大于5万需要填写银行联行号，联行号可以通过第三方网站或对应银行客服进行获取，银行联行号输入错误可能会导致提现失败，但不会影响资金安全。\n首次大额提现，系统会保存银行联行号，第二次大额提现，系统会自动为您填写银行联行号，不需要重新查询和输入(重新绑卡后需要重新输入)</string>

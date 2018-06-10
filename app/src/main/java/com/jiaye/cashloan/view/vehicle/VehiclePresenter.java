@@ -75,7 +75,6 @@ public class VehiclePresenter extends BasePresenterImpl implements VehicleContra
 
     @Override
     public void submit() {
-        Log.d("liwei", "submit: licenceCount = " + licenceCount + ", ownershipCount= " + ownershipCount);
         if (licenceCount >= 3 && ownershipCount >= 2) {
             Disposable disposable = mDataSource.submit()
                     .compose(new ViewTransformer<CarPapersState>() {

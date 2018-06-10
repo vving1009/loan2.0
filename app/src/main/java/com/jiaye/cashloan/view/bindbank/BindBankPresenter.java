@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.loan;
+package com.jiaye.cashloan.view.bindbank;
 
 import android.text.TextUtils;
 
@@ -10,27 +10,27 @@ import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.loan.source.LoanBindBankDataSource;
+import com.jiaye.cashloan.view.bindbank.source.BindBankDataSource;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
- * LoanBindBankPresenter
+ * BindBankPresenter
  *
  * @author 贾博瑄
  */
 
-public class LoanBindBankPresenter extends BasePresenterImpl implements LoanBindBankContract.Presenter {
+public class BindBankPresenter extends BasePresenterImpl implements BindBankContract.Presenter {
 
-    private final LoanBindBankContract.View mView;
+    private final BindBankContract.View mView;
 
-    private final LoanBindBankDataSource mDataSource;
+    private final BindBankDataSource mDataSource;
 
     private String mSource;
 
-    public LoanBindBankPresenter(LoanBindBankContract.View view, LoanBindBankDataSource dataSource) {
+    public BindBankPresenter(BindBankContract.View view, BindBankDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }

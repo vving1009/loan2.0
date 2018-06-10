@@ -15,9 +15,9 @@ import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
-import com.jiaye.cashloan.view.view.my.credit.AccountFragment;
+import com.jiaye.cashloan.view.account.AccountFragment;
 import com.jiaye.cashloan.view.bankcard.BankCardFragment;
-import com.jiaye.cashloan.view.view.my.credit.cash.CreditCashFragment;
+import com.jiaye.cashloan.view.cash.CashFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
 
@@ -90,8 +90,8 @@ public class MyActivity extends BaseActivity {
                 break;
             case "credit_cash":
                 textView.setText(R.string.my_credit_cash);
-                CreditCashFragment creditCashFragment = CreditCashFragment.newInstance((CreditBalance) getIntent().getParcelableExtra("balance"));
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditCashFragment).commit();
+                CashFragment cashFragment = CashFragment.newInstance((CreditBalance) getIntent().getParcelableExtra("balance"));
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, cashFragment).commit();
                 break;
             case "bank_card":
                 textView.setText(R.string.my_credit_bank);

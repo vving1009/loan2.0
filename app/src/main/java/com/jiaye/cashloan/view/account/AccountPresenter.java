@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.my.credit;
+package com.jiaye.cashloan.view.account;
 
 import android.text.TextUtils;
 
@@ -12,7 +12,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.my.credit.source.CreditDataSource;
+import com.jiaye.cashloan.view.account.source.CreditDataSource;
 
 import org.reactivestreams.Publisher;
 

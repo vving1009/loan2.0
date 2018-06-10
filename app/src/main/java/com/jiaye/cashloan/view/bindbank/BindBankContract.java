@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.view.view.loan;
+package com.jiaye.cashloan.view.bindbank;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * LoanBindBankContract
+ * BindBankContract
  *
  * @author 贾博瑄
  */
 
-public interface LoanBindBankContract {
+public interface BindBankContract {
 
     interface View extends BaseViewContract {
 

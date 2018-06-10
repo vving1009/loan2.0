@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.loan.source;
+package com.jiaye.cashloan.view.bindbank.source;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,12 +17,12 @@ import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
 /**
- * LoanBindBankRepository
+ * BindBankRepository
  *
  * @author 贾博瑄
  */
 
-public class LoanBindBankRepository implements LoanBindBankDataSource {
+public class BindBankRepository implements BindBankDataSource {
 
     private String mCode;
 

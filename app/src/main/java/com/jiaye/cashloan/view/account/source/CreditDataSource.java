@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.my.credit.source;
+package com.jiaye.cashloan.view.account.source;
 
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;

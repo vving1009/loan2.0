@@ -233,7 +233,7 @@ public class LoanEditText extends RelativeLayout {
                     editLayout.addView(mTextVerification);
                     LayoutParams lText = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                     lText.addRule(ALIGN_PARENT_RIGHT);
-                    lText.addRule(ALIGN_PARENT_TOP);
+                    lText.addRule(CENTER_VERTICAL);
                     mTextVerification.setLayoutParams(lText);
                     break;
                 case 1:// 自生成图形验证码

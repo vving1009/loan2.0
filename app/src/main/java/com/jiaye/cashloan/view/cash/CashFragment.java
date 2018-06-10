@@ -1,48 +1,65 @@
-package com.jiaye.cashloan.view.view.my.credit.cash;
+package com.jiaye.cashloan.view.cash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
-import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.view.my.credit.AccountWebActivity;
+import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.account.AccountWebActivity;
 
 /**
- * CreditCashFragment
+ * CashFragment
  *
  * @author 贾博瑄
  */
 
-public class CreditCashFragment extends BaseFragment implements CreditCashContract.View {
+public class CashFragment extends BaseFunctionFragment implements CashContract.View {
 
-    private CreditCashContract.Presenter mPresenter;
+    private CashContract.Presenter mPresenter;
 
     private EditText mEditCash;
 
     private EditText mEditBank;
 
-    public static CreditCashFragment newInstance(CreditBalance balance) {
+    public static CashFragment newInstance(CreditBalance balance) {
         Bundle args = new Bundle();
         args.putParcelable("balance", balance);
-        CreditCashFragment fragment = new CreditCashFragment();
+        CashFragment fragment = new CashFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void showCashView(String cash, String bank) {
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "cash");
+        intent.putExtra("cash", cash);
+        intent.putExtra("bank", bank);
+        startActivity(intent);
+    }
+
+    @Override
+    protected int getTitleId() {
+        return R.string.cash_title;
+    }
+
+    @Override
+    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         final CreditBalance balance = getArguments().getParcelable("balance");
-        View view = inflater.inflate(R.layout.credit_cash_fragment, container, false);
+        View view = inflater.inflate(R.layout.cash_fragment, frameLayout, true);
         TextView textTitle = view.findViewById(R.id.text_title);
         TextView textCash = view.findViewById(R.id.text_cash);
         //预防服务器返回的数据不正确的情况
@@ -72,23 +89,8 @@ public class CreditCashFragment extends BaseFragment implements CreditCashContra
                 mPresenter.cash(mEditCash.getText().toString(), balance.getAvailBal(), mEditBank.getText().toString());
             }
         });
-        mPresenter = new CreditCashPresenter(this);
+        mPresenter = new CashPresenter(this);
         mPresenter.subscribe();
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void showCashView(String cash, String bank) {
-        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-        intent.putExtra("type", "cash");
-        intent.putExtra("cash", cash);
-        intent.putExtra("bank", bank);
-        startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.my.credit;
+package com.jiaye.cashloan.view.account;
 
 import android.annotation.SuppressLint;
 import android.net.http.SslError;

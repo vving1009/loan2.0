@@ -1,15 +1,15 @@
-package com.jiaye.cashloan.view.view.my.credit.cash;
+package com.jiaye.cashloan.view.cash;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * CreditCashContract
+ * CashContract
  *
  * @author 贾博瑄
  */
 
-public interface CreditCashContract {
+public interface CashContract {
 
     interface View extends BaseViewContract {
 

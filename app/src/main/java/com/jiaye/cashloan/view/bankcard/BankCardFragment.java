@@ -13,13 +13,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bankcard.source.BankCardRepository;
-import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;
 import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 /**
@@ -49,7 +48,6 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_BANK && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), getString(R.string.my_bank_bind_complete), Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
     }
@@ -83,8 +81,9 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     }
 
     private void showBindBankView() {
-        Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
+        Intent intent = new Intent(getActivity(), FunctionActivity.class);
         intent.putExtra("source", "");
+        intent.putExtra("function", "BindBank");
         startActivityForResult(intent, REQUEST_CODE_BANK);
     }
 

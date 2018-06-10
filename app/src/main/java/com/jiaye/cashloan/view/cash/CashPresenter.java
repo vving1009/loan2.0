@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.my.credit.cash;
+package com.jiaye.cashloan.view.cash;
 
 import android.text.TextUtils;
 
@@ -6,16 +6,16 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 
 /**
- * CreditCashPresenter
+ * CashPresenter
  *
  * @author 贾博瑄
  */
 
-public class CreditCashPresenter extends BasePresenterImpl implements CreditCashContract.Presenter {
+public class CashPresenter extends BasePresenterImpl implements CashContract.Presenter {
 
-    private CreditCashContract.View mView;
+    private CashContract.View mView;
 
-    public CreditCashPresenter(CreditCashContract.View view) {
+    public CashPresenter(CashContract.View view) {
         mView = view;
     }
 

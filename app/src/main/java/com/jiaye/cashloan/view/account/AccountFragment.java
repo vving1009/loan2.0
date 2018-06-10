@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.view.my.credit;
+package com.jiaye.cashloan.view.account;
 
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,9 +17,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.data.my.credit.source.CreditRepository;
-import com.jiaye.cashloan.view.view.loan.LoanBindBankActivity;
-import com.jiaye.cashloan.view.view.my.MyActivity;
+import com.jiaye.cashloan.view.account.source.CreditRepository;
 import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 /**
@@ -66,8 +64,9 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showBindBankView() {
-        Intent intent = new Intent(getActivity(), LoanBindBankActivity.class);
+        Intent intent = new Intent(getActivity(), FunctionActivity.class);
         intent.putExtra("source", "01");
+        intent.putExtra("function", "BindBank");
         startActivity(intent);
     }
 
@@ -89,9 +88,9 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showCashView(CreditBalance balance) {
-        Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view", "credit_cash");
+        Intent intent = new Intent(getActivity(), FunctionActivity.class);
         intent.putExtra("balance", balance);
+        intent.putExtra("function", "Cash");
         startActivity(intent);
     }
 
