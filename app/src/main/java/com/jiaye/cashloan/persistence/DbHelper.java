@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.LoanApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +157,13 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put("loan_id", loanId);
         }
         getWritableDatabase().update("user", values, null, null);
+    }
+
+    /**
+     * 删除用户信息
+     */
+    public void deleteUser() {
+        getWritableDatabase().delete("user", null, null);
     }
 
     /**

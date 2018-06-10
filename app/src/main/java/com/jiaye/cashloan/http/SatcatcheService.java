@@ -72,8 +72,6 @@ import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
 import com.jiaye.cashloan.http.data.my.PhoneRequest;
-import com.jiaye.cashloan.http.data.my.User;
-import com.jiaye.cashloan.http.data.my.UserRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
@@ -259,12 +257,6 @@ public interface SatcatcheService {
      */
     @POST("saveAppList")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadRiskAppList(@Body SatcatcheRequest<UploadRiskAppListRequest> request);
-
-    /**
-     * 我的
-     */
-    @POST("mine")
-    Flowable<SatcatcheResponse<User>> user(@Body SatcatcheRequest<UserRequest> request);
 
     /**
      * 上传图片

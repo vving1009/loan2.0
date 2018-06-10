@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.about.AboutFragment;
 import com.jiaye.cashloan.view.file.FileFragment;
+import com.jiaye.cashloan.view.plan.PlanFragment;
 import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.vehicle.VehicleFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
@@ -74,6 +76,16 @@ public class FunctionActivity extends AppCompatActivity {
                 // 电子签章
                 SignFragment signFragment = SignFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, signFragment).commit();
+                break;
+            case "Plan":
+                // 还款计划
+                PlanFragment planFragment = PlanFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, planFragment).commit();
+                break;
+            case "About":
+                // 关于我们
+                AboutFragment aboutFragment = AboutFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, aboutFragment).commit();
                 break;
         }
     }

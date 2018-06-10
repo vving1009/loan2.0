@@ -1,210 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_light"
+    android:background="#F2F2F2"
+    android:orientation="vertical"
     tools:ignore="RtlHardcoded,ContentDescription,RelativeOverlap,SmallSp,UselessParent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/my_ic_logo" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="174dp">
+    <Button
+        android:id="@+id/btn_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/my_btn"
+        android:text="@string/login_login"
+        android:textColor="@color/color_white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="bottom|center_horizontal"
-                android:text="@string/my_tourist"
-                android:textColor="@color/color_black"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/img_head"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_above="@id/text_name"
-                android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/me_ic_head_default" />
-
-            <RelativeLayout
-                android:id="@+id/layout_my_certificate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/img_head"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@id/img_head"
-                android:layout_toRightOf="@id/img_head">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="14dp"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/ic_angle_gray"
-                    android:text="@string/my_certificate"
-                    android:textColor="@color/color_black"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_approve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableLeft="@drawable/me_ic_approve"
-                        android:drawablePadding="10dp"
-                        android:text="@string/my_approve"
-                        android:textColor="@color/color_black"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/text_approve_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_black"
-                        android:textSize="21sp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableLeft="@drawable/me_ic_loan"
-                        android:drawablePadding="10dp"
-                        android:text="@string/my_loan"
-                        android:textColor="@color/color_black"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/text_loan_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_black"
-                        android:textSize="21sp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableLeft="@drawable/me_ic_history"
-                        android:drawablePadding="10dp"
-                        android:text="@string/my_history"
-                        android:textColor="@color/color_black"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/text_history_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_black"
-                        android:textSize="21sp" />
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/color_gray_light" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="36dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/layout_credit"
+                android:id="@+id/layout_bank"
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="44dp"
+                android:background="@color/color_white"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_bank"
-                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/my_ic_bank"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="@string/my_credit"
                     android:textColor="@color/color_black"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -216,24 +67,27 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
+                android:layout_height="1dp"
+                android:background="@color/color_gray_hole" />
 
             <RelativeLayout
-                android:id="@+id/layout_help"
+                android:id="@+id/layout_plan"
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="44dp"
+                android:background="@color/color_white"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_help"
-                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/my_ic_plan"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
-                    android:text="@string/my_help"
+                    android:text="@string/loan_plan_title"
                     android:textColor="@color/color_black"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -242,56 +96,26 @@
                     android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_angle_gray" />
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:id="@+id/layout_qrcode"
-                android:layout_width="match_parent"
-                android:layout_height="45dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_qrcode"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="@string/my_qrcode"
-                    android:textColor="@color/color_black"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_angle_gray" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
 
             <RelativeLayout
                 android:id="@+id/layout_about"
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_white"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_about"
-                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/my_ic_about"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="@string/my_about"
                     android:textColor="@color/color_black"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -303,24 +127,27 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
+                android:layout_height="1dp"
+                android:background="@color/color_gray_hole" />
 
             <RelativeLayout
-                android:id="@+id/layout_contact"
+                android:id="@+id/layout_phone"
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="44dp"
+                android:background="@color/color_white"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_contact"
-                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/my_ic_phone"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="@string/my_contact"
                     android:textColor="@color/color_black"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -329,72 +156,9 @@
                     android:layout_centerVertical="true"
                     android:text="@string/my_contact_phone"
                     android:textColor="@color/color_blue"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:id="@+id/layout_settings"
-                android:layout_width="match_parent"
-                android:layout_height="45dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_settings"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="@string/my_settings"
-                    android:textColor="@color/color_black"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_angle_gray" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
-
-            <RelativeLayout
-                android:id="@+id/layout_share"
-                android:layout_width="match_parent"
-                android:layout_height="45dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/me_ic_share"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="@string/my_share"
-                    android:textColor="@color/color_black"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_angle_gray" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_dark" />
-
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>
+

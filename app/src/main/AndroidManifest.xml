@@ -53,7 +53,7 @@
         <activity
             android:name=".view.FunctionActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".view.view.loan.LoanAuthActivity"
             android:screenOrientation="portrait" />
@@ -77,9 +77,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.loan.LoanContractActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.view.help.LoanAuthHelpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.view.my.MyActivity"

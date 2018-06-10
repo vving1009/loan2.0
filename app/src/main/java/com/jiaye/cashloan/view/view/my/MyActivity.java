@@ -9,7 +9,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseActivity;
-import com.jiaye.cashloan.view.view.my.about.AboutFragment;
+import com.jiaye.cashloan.view.about.AboutFragment;
 import com.jiaye.cashloan.view.view.my.certificate.CertificateFragment;
 import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
@@ -83,7 +83,7 @@ public class MyActivity extends BaseActivity {
                 GestureFragment gestureFragment = GestureFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, gestureFragment).commit();
                 break;
-            case "credit":
+            case "bank":
                 textView.setText(R.string.my_credit);
                 CreditFragment creditFragment = CreditFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditFragment).commit();

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.home.HomeFragment;
-import com.jiaye.cashloan.view.view.my.MyFragment;
+import com.jiaye.cashloan.view.my.MyFragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 /**
