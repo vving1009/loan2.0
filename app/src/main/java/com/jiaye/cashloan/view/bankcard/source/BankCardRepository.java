@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.data.my.credit.bank.source;
+package com.jiaye.cashloan.view.bankcard.source;
 
 import com.jiaye.cashloan.http.data.my.CreditUnBindBank;
 import com.jiaye.cashloan.http.data.my.CreditUnBindBankRequest;
@@ -7,12 +7,12 @@ import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import io.reactivex.Flowable;
 
 /**
- * CreditBankRepository
+ * BankCardRepository
  *
  * @author 贾博瑄
  */
 
-public class CreditBankRepository implements CreditBankDataSource {
+public class BankCardRepository implements BankCardDataSource {
 
     @Override
     public Flowable<CreditUnBindBank> unBind() {

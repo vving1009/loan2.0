@@ -23,14 +23,14 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * CreditPresenter
+ * AccountPresenter
  *
  * @author 贾博瑄
  */
 
-public class CreditPresenter extends BasePresenterImpl implements CreditContract.Presenter {
+public class AccountPresenter extends BasePresenterImpl implements AccountContract.Presenter {
 
-    private final CreditContract.View mView;
+    private final AccountContract.View mView;
 
     private final CreditDataSource mDataSource;
 
@@ -38,7 +38,7 @@ public class CreditPresenter extends BasePresenterImpl implements CreditContract
 
     private CreditBalance mBalance;
 
-    public CreditPresenter(CreditContract.View view, CreditDataSource dataSource) {
+    public AccountPresenter(AccountContract.View view, CreditDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }

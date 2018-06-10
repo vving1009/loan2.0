@@ -15,7 +15,7 @@ public class MyContract {
 
         void setBtnText(String text);
 
-        void showBankView();
+        void showAccountView();
 
         void showPlanView();
     }

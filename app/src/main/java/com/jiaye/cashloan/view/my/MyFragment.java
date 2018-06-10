@@ -75,10 +75,8 @@ public class MyFragment extends BaseFragment implements MyContract.View {
     }
 
     @Override
-    public void showBankView() {
-        Intent intent = new Intent(getActivity(), MyActivity.class);
-        intent.putExtra("view", "bank");
-        startActivity(intent);
+    public void showAccountView() {
+        FunctionActivity.function(getActivity(), "Account");
     }
 
     @Override

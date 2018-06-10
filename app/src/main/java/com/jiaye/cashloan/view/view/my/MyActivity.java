@@ -15,8 +15,8 @@ import com.jiaye.cashloan.view.view.my.certificate.bank.BankFragment;
 import com.jiaye.cashloan.view.view.my.certificate.idcard.IdCardFragment;
 import com.jiaye.cashloan.view.view.my.certificate.info.InfoFragment;
 import com.jiaye.cashloan.view.view.my.certificate.operator.OperatorFragment;
-import com.jiaye.cashloan.view.view.my.credit.CreditFragment;
-import com.jiaye.cashloan.view.view.my.credit.bank.CreditBankFragment;
+import com.jiaye.cashloan.view.view.my.credit.AccountFragment;
+import com.jiaye.cashloan.view.bankcard.BankCardFragment;
 import com.jiaye.cashloan.view.view.my.credit.cash.CreditCashFragment;
 import com.jiaye.cashloan.view.view.my.settings.SettingsFragment;
 import com.jiaye.cashloan.view.view.my.settings.gesture.GestureFragment;
@@ -85,18 +85,18 @@ public class MyActivity extends BaseActivity {
                 break;
             case "bank":
                 textView.setText(R.string.my_credit);
-                CreditFragment creditFragment = CreditFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditFragment).commit();
+                AccountFragment accountFragment = AccountFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, accountFragment).commit();
                 break;
             case "credit_cash":
                 textView.setText(R.string.my_credit_cash);
                 CreditCashFragment creditCashFragment = CreditCashFragment.newInstance((CreditBalance) getIntent().getParcelableExtra("balance"));
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditCashFragment).commit();
                 break;
-            case "credit_bank":
+            case "bank_card":
                 textView.setText(R.string.my_credit_bank);
-                CreditBankFragment creditBankFragment = CreditBankFragment.newInstance(getIntent().getBooleanExtra("bind", true), (CreditInfo) getIntent().getParcelableExtra("creditInfo"));
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, creditBankFragment).commit();
+                BankCardFragment bankCardFragment = BankCardFragment.newInstance(getIntent().getBooleanExtra("bind", true), (CreditInfo) getIntent().getParcelableExtra("creditInfo"));
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, bankCardFragment).commit();
                 break;
         }
     }

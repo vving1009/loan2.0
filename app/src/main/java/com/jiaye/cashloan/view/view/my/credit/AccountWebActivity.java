@@ -26,12 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CreditActivity
+ * AccountWebActivity
  *
  * @author 贾博瑄
  */
 
-public class CreditActivity extends BaseActivity {
+public class AccountWebActivity extends BaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

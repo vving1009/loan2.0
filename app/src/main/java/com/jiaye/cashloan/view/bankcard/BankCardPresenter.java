@@ -1,27 +1,27 @@
-package com.jiaye.cashloan.view.view.my.credit.bank;
+package com.jiaye.cashloan.view.bankcard;
 
 import com.jiaye.cashloan.http.data.my.CreditUnBindBank;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.data.my.credit.bank.source.CreditBankDataSource;
+import com.jiaye.cashloan.view.bankcard.source.BankCardDataSource;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
- * CreditBankPresenter
+ * BankCardPresenter
  *
  * @author 贾博瑄
  */
 
-public class CreditBankPresenter extends BasePresenterImpl implements CreditBankContract.Presenter {
+public class BankCardPresenter extends BasePresenterImpl implements BankCardContract.Presenter {
 
-    private CreditBankContract.View mView;
+    private BankCardContract.View mView;
 
-    private CreditBankDataSource mDataSource;
+    private BankCardDataSource mDataSource;
 
-    public CreditBankPresenter(CreditBankContract.View view, CreditBankDataSource dataSource) {
+    public BankCardPresenter(BankCardContract.View view, BankCardDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }

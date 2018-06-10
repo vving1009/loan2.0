@@ -1,16 +1,16 @@
-package com.jiaye.cashloan.view.data.my.credit.bank.source;
+package com.jiaye.cashloan.view.bankcard.source;
 
 import com.jiaye.cashloan.http.data.my.CreditUnBindBank;
 
 import io.reactivex.Flowable;
 
 /**
- * CreditBankDataSource
+ * BankCardDataSource
  *
  * @author 贾博瑄
  */
 
-public interface CreditBankDataSource {
+public interface BankCardDataSource {
 
     Flowable<CreditUnBindBank> unBind();
 }

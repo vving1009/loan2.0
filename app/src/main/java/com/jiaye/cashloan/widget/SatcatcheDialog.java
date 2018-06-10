@@ -22,11 +22,13 @@ public class SatcatcheDialog extends BaseDialog {
     private String mMessage;
     private String mPositiveButtonText, mNegativeButtonText;
     private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
+    private OnDismissListener mOnDismissListener;
 
     private SatcatcheDialog(Context context, @StyleRes int themeResId, int buttonNum, String title,
                             String message, String positiveButtonText, String negativeButtonText,
                             DialogInterface.OnClickListener positiveButtonListener,
-                            DialogInterface.OnClickListener negativeButtonListener) {
+                            DialogInterface.OnClickListener negativeButtonListener,
+                            OnDismissListener onDismissListener) {
         super(context, themeResId);
         mContext = context;
         mButtonNum = buttonNum;
@@ -36,7 +38,7 @@ public class SatcatcheDialog extends BaseDialog {
         mNegativeButtonText = negativeButtonText;
         mPositiveButtonListener = positiveButtonListener;
         mNegativeButtonListener = negativeButtonListener;
-
+        mOnDismissListener = onDismissListener;
     }
 
     private void init() {
@@ -74,9 +76,7 @@ public class SatcatcheDialog extends BaseDialog {
             dismiss();
         });
 
-        switch (mButtonNum)
-
-        {
+        switch (mButtonNum) {
             case 0:
                 buttonArea.setVisibility(View.INVISIBLE);
                 setCancelable(true);
@@ -91,7 +91,7 @@ public class SatcatcheDialog extends BaseDialog {
                 negativeBtn.setVisibility(View.VISIBLE);
                 break;
         }
-
+        setOnDismissListener(mOnDismissListener);
         setContentView(rootView);
     }
 
@@ -110,6 +110,7 @@ public class SatcatcheDialog extends BaseDialog {
         private String mMessage;
         private String mPositiveButtonText, mNegativeButtonText;
         private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
+        private DialogInterface.OnDismissListener mOnDismissListener;
 
         public Builder(Context context) {
             mContext = context;
@@ -149,10 +150,15 @@ public class SatcatcheDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setOnDismissListener(OnDismissListener listener) {
+            mOnDismissListener = listener;
+            return this;
+        }
+
         public SatcatcheDialog build() {
             return new SatcatcheDialog(mContext, mThemeResId, mButtonNum, mTitle, mMessage,
                     mPositiveButtonText, mNegativeButtonText, mPositiveButtonListener,
-                    mNegativeButtonListener);
+                    mNegativeButtonListener, mOnDismissListener);
         }
     }
 }

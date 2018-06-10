@@ -8,12 +8,12 @@ import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * CreditContract
+ * AccountContract
  *
  * @author 贾博瑄
  */
 
-public interface CreditContract {
+public interface AccountContract {
 
     interface View extends BaseViewContract {
 

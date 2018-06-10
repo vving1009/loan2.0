@@ -82,7 +82,7 @@
             android:name=".view.view.my.MyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.view.my.credit.CreditActivity"
+            android:name=".view.view.my.credit.AccountWebActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.search.SearchActivity"

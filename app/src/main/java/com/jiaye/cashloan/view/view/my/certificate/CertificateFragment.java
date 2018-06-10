@@ -2,14 +2,13 @@ package com.jiaye.cashloan.view.view.my.certificate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.data.my.certificate.source.CertificateRepository;
 import com.jiaye.cashloan.view.view.my.MyActivity;
 
@@ -19,7 +18,7 @@ import com.jiaye.cashloan.view.view.my.MyActivity;
  * @author 贾博瑄
  */
 
-public class CertificateFragment extends BaseFragment implements CertificateContract.View {
+public class CertificateFragment extends BaseFunctionFragment implements CertificateContract.View {
 
     private CertificateContract.Presenter mPresenter;
 
@@ -38,38 +37,6 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
         CertificateFragment fragment = new CertificateFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.certificate_fragment, container, false);
-        mTextPhone = view.findViewById(R.id.text_phone);
-        mTextIdCard = view.findViewById(R.id.text_id_card);
-        mTextInfo = view.findViewById(R.id.text_info);
-        mTextOperator = view.findViewById(R.id.text_operator);
-        mTextTaoBao = view.findViewById(R.id.text_taobao);
-        view.findViewById(R.id.layout_id_card).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.ocr();
-            }
-        });
-        view.findViewById(R.id.layout_info).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.info();
-            }
-        });
-        view.findViewById(R.id.layout_operator).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.phone();
-            }
-        });
-        mPresenter = new CertificatePresenter(this, new CertificateRepository());
-        mPresenter.subscribe();
-        return view;
     }
 
     @Override
@@ -122,5 +89,26 @@ public class CertificateFragment extends BaseFragment implements CertificateCont
         Intent intent = new Intent(getActivity(), MyActivity.class);
         intent.putExtra("view", "certificate_operator");
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    protected int getTitleId() {
+        return R.string.account_title;
+    }
+
+    @Override
+    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
+        View view = inflater.inflate(R.layout.certificate_fragment, frameLayout, true);
+        mTextPhone = view.findViewById(R.id.text_phone);
+        mTextIdCard = view.findViewById(R.id.text_id_card);
+        mTextInfo = view.findViewById(R.id.text_info);
+        mTextOperator = view.findViewById(R.id.text_operator);
+        mTextTaoBao = view.findViewById(R.id.text_taobao);
+        view.findViewById(R.id.layout_id_card).setOnClickListener(v -> mPresenter.ocr());
+        view.findViewById(R.id.layout_info).setOnClickListener(v -> mPresenter.info());
+        view.findViewById(R.id.layout_operator).setOnClickListener(v -> mPresenter.phone());
+        mPresenter = new CertificatePresenter(this, new CertificateRepository());
+        mPresenter.subscribe();
+        return view;
     }
 }

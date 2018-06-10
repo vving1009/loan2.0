@@ -64,7 +64,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
                 .compose(new ViewTransformer<>())
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
-                        mView.showBankView();
+                        mView.showAccountView();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

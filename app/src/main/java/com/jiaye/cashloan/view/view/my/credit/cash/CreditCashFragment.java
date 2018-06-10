@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.view.my.credit.CreditActivity;
+import com.jiaye.cashloan.view.view.my.credit.AccountWebActivity;
 
 /**
  * CreditCashFragment
@@ -85,7 +85,7 @@ public class CreditCashFragment extends BaseFragment implements CreditCashContra
 
     @Override
     public void showCashView(String cash, String bank) {
-        Intent intent = new Intent(getActivity(), CreditActivity.class);
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
         intent.putExtra("type", "cash");
         intent.putExtra("cash", cash);
         intent.putExtra("bank", bank);
