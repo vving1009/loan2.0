@@ -7,11 +7,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +123,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
                 .setTitle("权限申请")
                 .setMessage("此应用需要" + sb.toString() + "权限，否则应用会关闭，是否打开设置？")
                 .setPositiveButton("好", (dialog, which) ->
-                        EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions))
+                        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                        .setData(Uri.fromParts("package", getContext().getPackageName(), null)),
+                                LOCATION_PERMS_REQUEST_CODE))
                 .setNegativeButton("不行", (dialog, which) -> getActivity().finish())
                 .build()
                 .show();
@@ -144,5 +147,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         if (locationServiceStart) {
             getContext().unbindService(mServiceConnection);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        EasyPermissions.requestPermissions(HomeFragment.this, LOCATION_PERMS_REQUEST_CODE, permissions);
     }
 }
