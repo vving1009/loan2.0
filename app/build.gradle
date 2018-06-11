@@ -138,7 +138,6 @@ dependencies {
     api 'com.squareup.okio:okio:1.13.0'
     // module
     implementation project(':tongdun')
-    implementation project(':gesturelock')
     implementation project(':takephoto')
     // https://github.com/googlesamples/easypermissions
     implementation project(':easypermissions')

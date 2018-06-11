@@ -11,12 +11,17 @@ import com.jiaye.cashloan.view.plan.source.PlanDataSource;
 
 public class PlanPresenter extends BasePresenterImpl implements PlanContract.Presenter {
 
-    private final PlanContract.View mView;
+    private PlanContract.View mView;
 
-    private final PlanDataSource mDataSource;
+    private PlanDataSource mDataSource;
 
     public PlanPresenter(PlanContract.View view, PlanDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
+    }
+
+    @Override
+    public void subscribe() {
+        super.subscribe();
     }
 }

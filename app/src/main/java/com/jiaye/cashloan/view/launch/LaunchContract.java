@@ -27,11 +27,6 @@ public interface LaunchContract {
         void showMainView();
 
         /**
-         * 显示手势识别页面
-         */
-        void showGestureView();
-
-        /**
          * 显示升级页面
          */
         void showUpdateView(CheckUpdate data);

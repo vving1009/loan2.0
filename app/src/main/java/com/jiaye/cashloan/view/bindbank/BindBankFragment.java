@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.view.bindbank;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bindbank.source.BindBankRepository;
-import com.jiaye.cashloan.view.view.loan.LoanSupportBankActivity;
 import com.jiaye.cashloan.widget.LoanEditText;
 import com.jiaye.cashloan.widget.SatcatcheDialog;
 
@@ -138,7 +137,6 @@ public class BindBankFragment extends BaseFunctionFragment implements BindBankCo
     }
 
     private void showSupportBankView() {
-        Intent intent = new Intent(getContext(), LoanSupportBankActivity.class);
-        startActivity(intent);
+        FunctionActivity.function(getActivity(), "Support");
     }
 }
