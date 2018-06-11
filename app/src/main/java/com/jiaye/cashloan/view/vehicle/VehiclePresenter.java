@@ -64,9 +64,11 @@ public class VehiclePresenter extends BasePresenterImpl implements VehicleContra
                     switch (mFolder) {
                         case VehicleContract.FOLDER_DRIVE_LICENCE:
                             licenceCount++;
+                            mView.showLicenceCount(licenceCount);
                             break;
                         case VehicleContract.FOLDER_VEHICLE_OWNERSHIP:
                             ownershipCount++;
+                            mView.showOwnershipCount(ownershipCount);
                             break;
                     }
                 }, new ThrowableConsumer(mView));

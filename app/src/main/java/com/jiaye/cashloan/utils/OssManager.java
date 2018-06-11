@@ -21,8 +21,6 @@ public class OssManager {
 
     private OSS oss;
 
-    private OSSAsyncTask task;
-
     private String bucketName = BuildConfig.OSS_BUCKET_NAME;
 
     private String accessKeyId = BuildConfig.OSS_ACCESS_KEY_ID;

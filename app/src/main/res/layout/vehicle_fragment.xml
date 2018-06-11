@@ -15,12 +15,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11dp"
-            android:text="@string/Vehicle_message"
+            android:text="@string/vehicle_message"
             android:textColor="@color/color_gray"
             android:textSize="9sp" />
 
         <RelativeLayout
-            android:id="@+id/drive_Licence"
+            android:id="@+id/drive_licence"
             android:layout_width="244dp"
             android:layout_height="144dp"
             android:layout_gravity="center_horizontal"
@@ -28,6 +28,7 @@
             android:background="@drawable/capture_vehicle_bg">
 
             <ImageView
+                android:id="@+id/drive_Licence_ic"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_centerHorizontal="true"
@@ -36,13 +37,15 @@
                 android:background="@drawable/ic_capture" />
 
             <TextView
+                android:id="@+id/drive_Licence_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="125dp"
-                android:text="@string/Vehicle_drive_licence_message"
+                android:text="@string/vehicle_drive_licence_message"
                 android:textColor="@color/color_gray"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -54,6 +57,7 @@
             android:background="@drawable/capture_vehicle_bg">
 
             <ImageView
+                android:id="@+id/vehicle_ownership_ic"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_centerHorizontal="true"
@@ -62,13 +66,15 @@
                 android:background="@drawable/ic_capture" />
 
             <TextView
+                android:id="@+id/vehicle_ownership_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="125dp"
-                android:text="@string/Vehicle_ownership_message"
+                android:text="@string/vehicle_ownership_message"
                 android:textColor="@color/color_gray"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -85,5 +91,6 @@
         android:enabled="true"
         android:text="@string/commit"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

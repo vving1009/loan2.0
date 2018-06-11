@@ -21,6 +21,11 @@ public interface VehicleContract {
     String FOLDER_VEHICLE_OWNERSHIP = "vehicleOwnership";
 
     interface View extends BaseViewContract {
+
+        void showLicenceCount(int count);
+
+        void showOwnershipCount(int count);
+
         void finish();
     }
 
