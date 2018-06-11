@@ -12,6 +12,7 @@ import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
+import com.jiaye.cashloan.service.UploadFaceService;
 import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.main.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -99,6 +100,8 @@ public class LoanApplication extends Application {
                 mActivityNumber--;
                 if (mActivityNumber == 0) {
                     mDatabase.close();
+                    Intent intent = new Intent(getApplicationContext(), UploadFaceService.class);
+                    stopService(intent);
                 }
             }
         });

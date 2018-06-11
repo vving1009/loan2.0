@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step1.Step1;
+import com.jiaye.cashloan.service.UploadFaceService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bioassay.BioassayActivity;
@@ -98,6 +99,7 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     @Override
     public void showVehicleView() {
         FunctionActivity.function(getActivity(), "Vehicle");
+        UploadFaceService.startUploadFaceService(getContext());
     }
 
     @Override

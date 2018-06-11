@@ -66,6 +66,11 @@
             android:enabled="true"
             android:exported="false" />
 
+        <service
+            android:name=".service.UploadFaceService"
+            android:enabled="true"
+            android:exported="false" />
+
         <service android:name="com.amap.api.location.APSService" />
 
         <meta-data
