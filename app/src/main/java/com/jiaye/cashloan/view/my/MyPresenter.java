@@ -40,7 +40,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
                         mView.setBtnText("退出");
                         mIsLogin = true;
                     }
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 

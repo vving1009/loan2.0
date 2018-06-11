@@ -121,12 +121,6 @@ dependencies {
     api 'com.orhanobut:logger:2.2.0'
     // https://github.com/Bigkoo/Android-PickerView
     api 'com.contrarywind:Android-PickerView:3.2.7'
-    // https://github.com/youth5201314/banner
-    api 'com.youth.banner:banner:1.4.10'
-    // https://github.com/lzyzsd/JsBridge
-    api 'com.github.lzyzsd:jsbridge:1.0.4'
-    // wechat
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0'
     // bugly
     api 'com.tencent.bugly:crashreport:2.6.6.1'
     // https://github.com/zetbaitsu/Compressor
@@ -138,6 +132,7 @@ dependencies {
     api 'com.squareup.okio:okio:1.13.0'
     // module
     implementation project(':tongdun')
+    // https://github.com/crazycodeboy/TakePhoto
     implementation project(':takephoto')
     // https://github.com/googlesamples/easypermissions
     implementation project(':easypermissions')

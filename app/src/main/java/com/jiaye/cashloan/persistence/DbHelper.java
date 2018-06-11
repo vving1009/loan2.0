@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.BuildConfig;
-import com.jiaye.cashloan.LoanApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,9 +104,9 @@ public class DbHelper extends SQLiteOpenHelper {
     /**
      * 插入用户信息
      *
-     * @param phone  手机号
-     * @param token  令牌
-     * @param ocr_id 身份证
+     * @param phone    手机号
+     * @param token    令牌
+     * @param ocr_id   身份证
      * @param ocr_name 身份证
      */
     public void insertUser(String phone, String token, String ocr_id, String ocr_name) {

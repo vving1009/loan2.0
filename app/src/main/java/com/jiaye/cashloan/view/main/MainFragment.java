@@ -42,7 +42,6 @@ public class MainFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.main_fragment, container, false);
         NoScrollViewPager viewPager = root.findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
 
             @Override
