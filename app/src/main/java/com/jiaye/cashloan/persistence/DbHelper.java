@@ -87,12 +87,33 @@ public class DbHelper extends SQLiteOpenHelper {
             case 3:
                 // 2018.5.11 修改 approve_number progress_number history_number 字段类型
                 db.execSQL("alter table user rename to temp_user");
-                db.execSQL(SQL_CREATE_USER);
+                db.execSQL("create table " + DbContract.User.TABLE_NAME + " (" +
+                        DbContract.User._ID + INTEGER_TYPE + " primary key," +
+                        DbContract.User.COLUMN_NAME_TOKEN + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_APPROVE_NUMBER + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_HISTORY_NUMBER + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_LOAN_ID + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_ID + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_BIRTHDAY + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_GENDER + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_NATION + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_ADDRESS + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_DATE_BEGIN + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_DATE_END + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_OCR_AGENCY + TEXT_TYPE +
+                        " )");
                 db.execSQL("insert into user select * from temp_user");
                 db.execSQL("drop table temp_user");
             case 4:
                 db.execSQL("drop table if exists salesman");
-                db.execSQL(SQL_CREATE_SALES);
+                db.execSQL("create table " + DbContract.Salesman.TABLE_NAME + " (" +
+                        DbContract.Salesman._ID + INTEGER_TYPE + " primary key autoincrement," +
+                        DbContract.Salesman.COLUMN_COMPANY + TEXT_TYPE + COMMA_SEP +
+                        DbContract.Salesman.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
+                        DbContract.Salesman.COLUMN_WORK_ID + TEXT_TYPE + " )");
             case 5:
                 // 2018.6.7 salesman 表 增加 company_id 字段
                 db.execSQL("alter table salesman add column company_id text");
