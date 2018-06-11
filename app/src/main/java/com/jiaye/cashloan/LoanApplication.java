@@ -2,7 +2,6 @@ package com.jiaye.cashloan;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +18,6 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
-import com.syd.oden.gesturelock.view.GesturePreference;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -159,7 +157,6 @@ public class LoanApplication extends Application {
             activity.finish();
         }
         activityList.clear();
-        new GesturePreference(LoanApplication.getInstance(), -1).WriteStringPreference("null");
         getSQLiteDatabase().delete("user", null, null);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

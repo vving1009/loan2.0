@@ -6,11 +6,7 @@
 
     <color name="color_gray_holo">#a5a5a5</color>
     <color name="color_gray_dark_holo">#d1d1d1</color>
-    <color name="color_black_light">#929292</color>
-    <color name="color_black_hole">#626262</color>
-    <color name="color_blue_dark">#4cc1ec</color>
     <color name="color_red">#d50000</color>
-    <color name="color_orange">#ff9600</color>
 
     <color name="salesman_list_item_bg">#F2F2F2</color>
     <color name="salesman_list_text">#989898</color>

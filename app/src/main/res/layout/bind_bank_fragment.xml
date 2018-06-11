@@ -112,7 +112,6 @@
             android:background="@color/color_gray_hole" />
 
         <RelativeLayout
-            android:id="@+id/layout_person_info"
             android:layout_width="match_parent"
             android:layout_height="44dp">
 

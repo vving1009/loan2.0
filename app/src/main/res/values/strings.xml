@@ -3,7 +3,6 @@
     <string name="home">首页</string>
     <string name="my">我的</string>
     <!--launch-->
-    <string name="launch_gesture">手势密码</string>
     <!--search-->
     <string name="search_error">请先选择业务员</string>
     <!--certification-->
@@ -39,24 +38,16 @@
     <!--cash-->
     <string name="cash_title">提现</string>
     <!--loan auth-->
-    <string name="loan_auth_title">申请材料</string>
     <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
     <string name="loan_auth_ocr_validity_date">有效期限</string>
-    <string name="loan_auth_ocr_front">身份证正面扫描上传</string>
-    <string name="loan_auth_ocr_back">身份证反面扫描上传</string>
-    <string name="loan_auth_ocr_prompt">温馨提示：扫描时请保证光线充足，扫描无阴影</string>
     <string name="loan_auth_ocr_check">校验身份信息</string>
     <string name="commit">提交</string>
     <string name="sign_title">电子签章授权</string>
-    <string name="loan_auth_visa_history">历史签章授权</string>
     <string name="loan_auth_visa_confirm">确认电子签章授权</string>
-    <string name="loan_auth_face">人像比对</string>
     <string name="loan_auth_face_fail">活体检测失败</string>
     <string name="loan_auth_info">个人资料</string>
     <string name="loan_auth_person_info">个人信息</string>
-    <string name="loan_auth_person_education">最高学历</string>
-    <string name="loan_auth_person_marriage">婚姻状况</string>
     <string name="loan_auth_person_register_city">户籍所在城市</string>
     <string name="loan_auth_person_city">现居住城市</string>
     <string name="loan_auth_person_address">现居住地址</string>
@@ -65,17 +56,10 @@
     <string name="loan_auth_contact_family">关系</string>
     <string name="loan_auth_contact_friend">亲属/朋友</string>
     <string name="loan_auth_contact_phone">手机号码</string>
-    <string name="loan_auth_submit">已提交</string>
-    <string name="loan_auth_un_submit">未提交</string>
-    <string name="loan_auth_phone">手机运营商</string>
-    <string name="loan_auth_phone_phone">您的手机号：%1$s</string>
-    <string name="loan_auth_phone_operators">所属运营商：%1$s</string>
     <string name="loan_auth_phone_input_password">请输入服务密码</string>
     <string name="loan_auth_phone_forget_password">忘记服务密码？</string>
     <string name="loan_auth_phone_input_sms_verification">请输入短信验证码</string>
     <string name="loan_auth_phone_input_img_verification">请输入图片验证码</string>
-    <string name="loan_auth_phone_bank">银行高级别加密 保障您的信息安全</string>
-    <string name="loan_auth_taobao">淘宝认证</string>
     <string name="loan_auth_taobao_normal">帐号授权</string>
     <string name="taobao_normal_account">请输入淘宝/支付宝账号</string>
     <string name="taobao_normal_input_password">请输入淘宝/支付宝密码</string>
@@ -85,29 +69,12 @@
     <string name="loan_auth_taobao_qr">二维码授权</string>
     <string name="loan_auth_taobao_qr_error">未安装淘宝</string>
     <string name="loan_auth_file">进件上传</string>
-    <string name="loan_auth_file_count">%1$d张</string>
     <string name="loan_auth_file_camera">拍照</string>
     <string name="loan_auth_file_photo">相册</string>
-    <string name="loan_details_approve_title">借款审批</string>
-    <string name="loan_details_progress_title">放款还款</string>
-    <string name="loan_details_history_title">历史借款</string>
-    <string name="loan_details_id">申请编号：</string>
-    <string name="loan_details_product">产品名</string>
-    <string name="loan_details_approve">审批金额</string>
-    <string name="loan_details_total">总还款额</string>
-    <string name="loan_details_loan">借款金额</string>
-    <string name="loan_details_other">综合费率</string>
-    <string name="loan_details_deadline">本期还款日</string>
-    <string name="loan_details_contract">查看借款合同</string>
-    <string name="loan_details_plan">查看还款计划</string>
     <string name="loan_plan_title">还款计划</string>
     <string name="loan_plan_date">还款日</string>
     <string name="loan_plan_money">月还款额</string>
     <string name="loan_plan_state">还款状态</string>
-    <string name="loan_contract_list">合同列表</string>
-    <string name="loan_contract_list_id">申请编号：%1$s</string>
-    <string name="loan_contract">借款合同</string>
-    <string name="loan_bank_title">银行卡</string>
     <string name="loan_bank_person">持卡人</string>
     <string name="loan_bank_phone">预留手机号</string>
     <string name="loan_bank_phone_hint">输入银行预留手机号</string>
@@ -123,20 +90,6 @@
     <string name="loan_support_day">单日限额</string>
     <string name="loan_support_month">单月限额</string>
     <!--my-->
-    <string name="my_certificate">我的认证</string>
-    <string name="my_certificate_basics">基本信息</string>
-    <string name="my_certificate_head">头像</string>
-    <string name="my_certificate_phone">手机号</string>
-    <string name="my_certificate_bank">银行卡</string>
-    <string name="my_certificate_certificate">认证信息</string>
-    <string name="my_certificate_id_card">身份证</string>
-    <string name="my_certificate_info">个人资料</string>
-    <string name="my_certificate_operator">手机运营商</string>
-    <string name="my_certificate_taobao">淘宝认证</string>
-    <string name="my_tourist">游客</string>
-    <string name="my_approve">借款审批</string>
-    <string name="my_loan">放款还款</string>
-    <string name="my_history">历史借款</string>
     <string name="my_credit">存管账户管理</string>
     <string name="my_credit_account">开户</string>
     <string name="my_credit_account_error">已开户</string>
@@ -161,53 +114,28 @@
     <string name="my_credit_cash_bank">银行银联号：</string>
     <string name="my_credit_cash_bank_hint">提现金额大于5000请输入银联号</string>
     <string name="my_credit_cash_submit">确认提交</string>
-    <string name="my_credit_cash_description_title">提现说明</string>
     <string name="my_credit_cash_description">1.快速提现单笔限额5万元，大额提现单笔限额50万元，每日最多可提现10次。\n\n2.提现手续费：1元/笔。\n\n3.提现时间：7×24小时。快速提现2小时左右到账，大额提现T+1工作日到账。节假日可能出现延迟。\n\n4.银行联行号：\n银行联行号就是一个地区银行的唯一识别标志。用于人民银行所组织的大额支付系统等跨区域支付结算业务，由12位组成。\n为了您的资金安全，提现金额大于5万需要填写银行联行号，联行号可以通过第三方网站或对应银行客服进行获取，银行联行号输入错误可能会导致提现失败，但不会影响资金安全。\n首次大额提现，系统会保存银行联行号，第二次大额提现，系统会自动为您填写银行联行号，不需要重新查询和输入(重新绑卡后需要重新输入)</string>
     <string name="my_credit_balance">余额</string>
-    <string name="my_bank_bind_complete">绑定银行卡成功</string>
     <string name="my_bank_un_bind_complete">解绑成功</string>
-    <string name="my_help">帮助中心</string>
-    <string name="my_qrcode">关注公众号</string>
-    <string name="my_qrcode_success">保存成功</string>
     <string name="my_about">关于我们</string>
     <string name="my_about_title">公司简介</string>
     <string name="my_about_text">嘉业（前身）成立于2003年，业务范围涵盖出借咨询管理、旅游、信用评估咨询、财富管理、物业、资产管理等领域。\n嘉业投资及嘉业财富注册资本各5000万元，是国内较早的集借款、出借信息管理,信用风险评估管理,信用数据整合与交易促成等业务于一体的专业性现代化互联网金融信息服务企业。公司秉承“嘉惠於民 业兴於信”的企业宗旨，以互联网金融信息服务为主导，凭借具有专业金融服务背景管理团队和风险管理思维，迅速成长为国内知名的专注专业化发展的互联网金融信息服务平台之一。\n嘉业服务网点遍布北京、上海、广州、苏州、南京、哈尔滨等全国50多个城市。嘉业现有专业领域员工近2500人，资深专业出借顾问五百余名，风险管理团队五百多人，利用互联网金融核心决策及大数据分析系统，为客户提供全方位、个性化的金融信息管理服务。\n嘉业致力于以专业的服务团队和良好的资源优势创造信用、传递信用、创新价值，帮助更多的人提升信用价值，帮助全民实现稳定、安全的财富增值，以真诚与专业回报客户。</string>
     <string name="my_contact">联系我们</string>
     <string name="my_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
-    <string name="my_settings">个人设置</string>
-    <string name="my_settings_gesture">手势密码</string>
-    <string name="my_share">分享给朋友</string>
-    <string name="my_wechat">微信好友</string>
-    <string name="my_wechat_title">年轻人的互联网钱包</string>
-    <string name="my_wechat_description">随时随地想借就借</string>
-    <string name="my_moments">朋友圈</string>
     <string name="my_cancel">取消</string>
     <!--login-->
-    <string name="login_title">登录</string>
     <string name="input_phone">请输入手机号码</string>
     <!--<string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string>&lt;!&ndash;(-,&#8211;)&ndash;&gt;-->
     <string name="input_login_verification">请输入验证码</string>
     <string name="send_verification_code">发送验证码</string>
     <string name="send_count_down">%s秒后重新发送</string>
     <string name="send_again">重新发送</string>
-    <string name="register_now">马上注册</string>
-    <string name="forget_password">忘记密码</string>
     <string name="login_login">登录</string>
     <!--register-->
-    <string name="register_title">注册</string>
-    <string name="input_img_verification">请输入图片验证码</string>
     <string name="input_sms_verification">请输入手机验证码</string>
-    <string name="input_referral">请输入推荐码（如有填写）</string>
-    <string name="read_protocol">我已阅读并同意《授权委托书》</string>
-    <string name="protocol">授权委托书</string>
     <!--password-->
-    <string name="forget_password_title">忘记密码</string>
-    <string name="settings_password_title">修改密码</string>
-    <string name="next">下一步</string>
-    <string name="change_password_title">重置密码</string>
-    <string name="input_new_password">请设置新密码（6&#8211;12位）</string><!--(-,&#8211;)-->
-    <string name="input_new_password_second">请确认新密码</string><!--(-,&#8211;)-->
-    <string name="save">保存</string>
+    <!--(-,&#8211;)-->
+    <!--(-,&#8211;)-->
     <!--error-->
     <string name="error_connect">网络连接不可用</string>
     <string name="error_http">网络请求失败</string>
@@ -215,22 +143,12 @@
     <string name="error_install_permission">请开启安装第三方应用的授权</string>
     <string name="error_auth_not_log_in">未登录</string>
     <string name="error_auth_phone">请输入正确的手机号</string>
-    <string name="error_auth_password">*请输入正确的密码</string>
-    <string name="error_auth_img_verification">*请输入正确的验证码</string>
     <string name="error_auth_sms_verification">请输入正确的验证码</string>
-    <string name="error_auth_agree">请阅读并同意注册协议</string>
-    <string name="error_auth_referral">*请输入正确的推荐码</string>
-    <string name="error_auth_password_different">*两次密码输入不一致，请重新输入</string>
-    <string name="error_loan_auth_camera_and_write">请在应用管理中打开“相机及读写”访问权限！</string>
     <string name="error_loan_auth_ocr">请填写正确的姓名</string>
     <string name="error_loan_auth_ocr_idcard">身份证号错误，请重新扫描上传</string>
     <string name="error_loan_auth_ocr_date">身份证有效期错误，请重新扫描上传</string>
-    <string name="error_loan_auth_step">请先完成之前的验证</string>
-    <string name="error_loan_auth_card_failure">认证失败</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>
     <string name="error_loan_visa_sms">请输入正确的验证码</string>
-    <string name="error_loan_person_education">请选择最高学历</string>
-    <string name="error_loan_person_marriage">请选择婚姻状况</string>
     <string name="error_loan_person_register_city">请选择户籍所在城市</string>
     <string name="error_loan_person_city">请选择现居住城市</string>
     <string name="error_loan_person_address">请输入现居住地址</string>
@@ -249,7 +167,6 @@
     <string name="error_loan_bank_number">请输入正确的银行卡号</string>
     <string name="error_loan_bank_sms">请输入正确的验证码</string>
     <string name="error_my_credit">没有设置密码或签约，暂时无法提现</string>
-    <string name="error_my_credit_un_account">请先完成身份认证</string>
     <string name="error_my_credit_cash">格式不正确，请重新输入</string>
     <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>
     <string name="error_my_credit_cash_max_limit">提现金额不能大于可用余额</string>
@@ -259,6 +176,4 @@
     <string name="error_9990">无有效记录</string>
     <string name="error_9994">您已在另一台设备上登录</string>
     <!--permission dialog-->
-    <string name="yes">确定</string>
-    <string name="no">取消</string>
 </resources>

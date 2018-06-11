@@ -15,7 +15,6 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.my.source.MyRepository;
-import com.jiaye.cashloan.view.view.my.MyActivity;
 
 /**
  * MyFragment
