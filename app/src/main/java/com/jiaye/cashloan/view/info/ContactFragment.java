@@ -3,8 +3,10 @@ package com.jiaye.cashloan.view.info;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.info.source.ContactRepository;
+import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +71,16 @@ public class ContactFragment extends BaseFragment implements ContactContract.Vie
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        showToastById(R.string.error_contact);
+        new SatcatcheDialog.Builder(getContext())
+                .setTitle("权限申请")
+                .setMessage("此应用需要" + "通讯录" + "权限，否则应用会关闭，是否打开设置？")
+                .setPositiveButton("好", (dialog, which) ->
+                        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                        .setData(Uri.fromParts("package", getContext().getPackageName(), null)),
+                                REQUEST_CODE_CONTACT))
+                .setNegativeButton("不行", (dialog, which) -> getActivity().finish())
+                .build()
+                .show();
     }
 
     @Override
