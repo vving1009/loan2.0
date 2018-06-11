@@ -68,7 +68,7 @@ public class ContactFragment extends BaseFragment implements ContactContract.Vie
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-
+        showToastById(R.string.error_contact);
     }
 
     @Override

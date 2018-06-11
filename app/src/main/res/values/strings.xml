@@ -155,6 +155,7 @@
     <string name="error_loan_person_city">请选择现居住城市</string>
     <string name="error_loan_person_address">请输入现居住地址</string>
     <string name="error_loan_person_email">请输入正确的电子邮箱</string>
+    <string name="error_contact">请授权读取通讯录的权限</string>
     <string name="error_contact_1_name">请输入姓名</string>
     <string name="error_contact_1_relation">请选择关系</string>
     <string name="error_contact_1_phone">请选择手机号码</string>
