@@ -68,6 +68,8 @@ import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
+import com.jiaye.cashloan.http.data.my.CheckAccount;
+import com.jiaye.cashloan.http.data.my.CheckAccountRequest;
 import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
@@ -212,10 +214,11 @@ public interface SatcatcheService {
     @POST("intoInfo/save")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
 
-    /*queryExamineResult 审批状态查询接口(CL020) */
+    @POST("queryAccountStatus")
+    Flowable<SatcatcheResponse<CheckAccount>> checkAccount(@Body SatcatcheRequest<CheckAccountRequest> request);
 
     /**
-     * 提交认证材料 21
+     * 提交认证材料
      */
     @POST("intoInfo/state")
     Flowable<SatcatcheResponse<EmptyResponse>> submitUploadFile(@Body SatcatcheRequest<SubmitUploadFileRequest> request);

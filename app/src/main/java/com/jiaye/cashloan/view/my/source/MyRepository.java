@@ -4,6 +4,9 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.my.CheckAccount;
+import com.jiaye.cashloan.http.data.my.CheckAccountRequest;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
 import com.jiaye.cashloan.view.LocalException;
 
@@ -35,15 +38,16 @@ public class MyRepository implements MyDataSource {
     }
 
     @Override
-    public Flowable<Boolean> checkBank() {
-        // todo 存管账户管理接口
+    public Flowable<CheckAccount> checkBank() {
         return queryUser().map(user -> {
             if (TextUtils.isEmpty(user.getToken())) {
                 throw new LocalException(R.string.error_auth_not_log_in);
             } else {
                 return user;
             }
-        }).flatMap((Function<User, Publisher<Boolean>>) user -> Flowable.just(false));
+        }).map(user -> new CheckAccountRequest())
+                .compose(new SatcatcheResponseTransformer<CheckAccountRequest, CheckAccount>
+                        ("checkAccount"));
     }
 
     @Override

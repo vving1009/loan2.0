@@ -39,6 +39,8 @@
     <string name="bind_bank_title">开通存管账户</string>
     <!--cash-->
     <string name="cash_title">提现</string>
+    <!--my-->
+    <string name="my_error_account">暂时无法进入存管账户管理</string>
     <!--loan auth-->
     <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
