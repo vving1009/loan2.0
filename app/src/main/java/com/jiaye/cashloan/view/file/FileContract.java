@@ -19,7 +19,7 @@ public interface FileContract {
 
     String FOLDER_WAGE = "wage";
 
-    String FOLDER_CREDIT = "bank";
+    String FOLDER_CREDIT = "credit";
 
     String FOLDER_ADDRESS = "address";
 
