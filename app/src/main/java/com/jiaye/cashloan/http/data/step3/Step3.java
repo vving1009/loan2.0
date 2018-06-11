@@ -16,7 +16,7 @@ public class Step3 extends SatcatcheChildResponse {
     @SerializedName("material_state")
     private int file;
 
-    @SerializedName("sign")
+    @SerializedName("eSign_state")
     private int sign;
 
     public int getTaobao() {
