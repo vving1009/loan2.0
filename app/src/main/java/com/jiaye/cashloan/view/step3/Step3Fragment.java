@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.view.step3;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.bioassay.BioassayActivity;
+import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -87,8 +86,7 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
 
     @Override
     public void sendBroadcast() {
-        Intent intent = new Intent(getActivity(), BioassayActivity.class);
-        startActivity(intent);
+        CertificationFragment.refresh(getActivity());
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
