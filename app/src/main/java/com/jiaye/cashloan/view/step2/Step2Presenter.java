@@ -43,7 +43,7 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                     mView.dismissProgressDialog();
                     mView.setText(step.getMsg());
                     mStep = step;
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 

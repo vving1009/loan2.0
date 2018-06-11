@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.certification;
 
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.certification.source.CertificationDataSource;
 
@@ -32,7 +33,7 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
                 .subscribe(recommend -> {
                     mView.setCompany(recommend.getCompany());
                     mView.setNumber(recommend.getNumber());
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
@@ -49,7 +50,7 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
                 .subscribe(step -> {
                     mView.dismissProgressDialog();
                     mView.setStep(step.getStep());
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }

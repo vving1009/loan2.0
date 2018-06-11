@@ -36,7 +36,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                 .subscribe(step1 -> {
                     mStep1 = step1;
                     mView.setStep1(step1);
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 

@@ -8,6 +8,7 @@ import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.search.source.SearchDataSource;
 
@@ -48,7 +49,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
         Disposable disposable = mDataSource.salesman()
                 .concatMap((Function<com.jiaye.cashloan.http.data.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
                 .compose(new ViewTransformer<>())
-                .subscribe(mView::setCompanyListDataChanged);
+                .subscribe(mView::setCompanyListDataChanged, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
@@ -56,7 +57,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
     public void queryPeopleByCompanyList(String column, String word) {
         Disposable disposable = mDataSource.queryPeople(column, word)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mView::setPersonListDataChanged);
+                .subscribe(mView::setPersonListDataChanged, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
@@ -104,7 +105,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
                                 mView.setPersonListDataChanged(list);
                                 break;
                         }
-                    });
+                    }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         } else {
             mView.setCompanyListNoneSelected();
@@ -141,7 +142,7 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
                     .subscribe(saveSalesman -> {
                         mView.dismissProgressDialog();
                         mView.showCertificationView();
-                    });
+                    }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         }
     }
