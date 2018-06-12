@@ -13,11 +13,11 @@ import android.support.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.loan.QueryUploadPhoto;
 import com.jiaye.cashloan.http.data.loan.QueryUploadPhotoRequest;
-import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
+import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
 import com.jiaye.cashloan.utils.DateUtil;
@@ -107,20 +107,24 @@ public class UploadFaceService extends Service {
                     OssManager.getInstance().upload(ossPath, file.getAbsolutePath());
                     return ossPath;
                 })
+                .toList()
                 //把OSS路径传给服务器
-                .map(ossPath -> {
-                    UploadCarPapersRequest request = new UploadCarPapersRequest();
+                .map(list -> {
+                    UploadFaceRequest request = new UploadFaceRequest();
                     request.setLoanId(user.getLoanId());
-                    request.setPicName(picName);
-                    request.setPicType("11");
-                    request.setPicUrl(BuildConfig.OSS_BASE_URL + ossPath);
+                    List<UploadFaceRequest.Data> dataList = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        UploadFaceRequest.Data data = new UploadFaceRequest.Data();
+                        data.setUrl(list.get(i));
+                        dataList.add(data);
+                    }
+                    request.setList(dataList);
                     return request;
                 })
-                //.compose(new SatcatcheResponseTransformer<UploadCarPapersRequest, UploadCarPapers>("uploadCarPapers"));
-                // 将多个流处理为列表
-                .toList()
+                .flatMapPublisher((Function<UploadFaceRequest, Publisher<UploadFaceRequest>>) Flowable::just)
+                .compose(new SatcatcheResponseTransformer<UploadFaceRequest, EmptyResponse>("uploadFace"))
                 // 清除照片缓存
-                .map((Function<List<UploadCarPapersRequest>, Object>) uploadPhotos -> clearPhotoCache())
+                .map((Function<EmptyResponse, Object>) uploadPhotos -> clearPhotoCache())
                 // 定义事件发生时的线程
                 .subscribeOn(Schedulers.io())
                 // 定义最终订阅时的线程

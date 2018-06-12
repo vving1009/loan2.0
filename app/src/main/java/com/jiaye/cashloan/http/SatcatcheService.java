@@ -88,6 +88,7 @@ import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.http.data.step1.Step1Request;
+import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -233,6 +234,13 @@ public interface SatcatcheService {
      */
     @POST("queryAccountStatus")
     Flowable<SatcatcheResponse<CheckAccount>> checkAccount(@Body SatcatcheRequest<CheckAccountRequest> request);
+
+    /**
+     * 上传人像照片 23
+     */
+    @POST("saveAlbumUrl")
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadFace(@Body SatcatcheRequest<UploadFaceRequest> request);
+
 
     /*旧的接口*/
 
