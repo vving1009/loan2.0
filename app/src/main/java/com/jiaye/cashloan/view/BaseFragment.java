@@ -1,9 +1,10 @@
 package com.jiaye.cashloan.view;
 
-import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
+
+import com.jiaye.cashloan.widget.CustomProgressDialog;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -15,7 +16,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseFragment extends Fragment implements BaseViewContract {
 
-    protected ProgressDialog mDialog;
+    protected CustomProgressDialog mDialog;
 
     @Override
     public void showToast(String string) {
@@ -30,7 +31,7 @@ public abstract class BaseFragment extends Fragment implements BaseViewContract 
     @Override
     public void showProgressDialog() {
         if (mDialog == null) {
-            mDialog = new ProgressDialog(getActivity());
+            mDialog = new CustomProgressDialog(getActivity());
             mDialog.setCancelable(false);
             mDialog.setCanceledOnTouchOutside(false);
         }

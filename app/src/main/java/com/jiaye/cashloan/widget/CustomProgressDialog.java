@@ -28,4 +28,10 @@ public class CustomProgressDialog extends BaseDialog {
         textDialogMessage.setText(message);
         super.show();
     }
+
+    @Override
+    public void show() {
+        super.show();
+        textDialogMessage.setVisibility(View.GONE);
+    }
 }
