@@ -179,5 +179,7 @@
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>
     <string name="error_9994">您已在另一台设备上登录</string>
-    <!--permission dialog-->
+    <!--satcatche dialog-->
+    <string name="dialog_confirm">确定</string>
+    <string name="dialog_cancel">取消</string>
 </resources>

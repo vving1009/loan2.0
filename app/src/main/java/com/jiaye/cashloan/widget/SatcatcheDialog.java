@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,20 +21,23 @@ public class SatcatcheDialog extends BaseDialog {
     private int mButtonNum;
     private String mTitle;
     private String mMessage;
+    private boolean mEnableEditText;
     private String mPositiveButtonText, mNegativeButtonText;
     private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
     private OnDismissListener mOnDismissListener;
+    private EditText mEditText;
 
     private SatcatcheDialog(Context context, @StyleRes int themeResId, int buttonNum, String title,
                             String message, String positiveButtonText, String negativeButtonText,
                             DialogInterface.OnClickListener positiveButtonListener,
                             DialogInterface.OnClickListener negativeButtonListener,
-                            OnDismissListener onDismissListener) {
+                            OnDismissListener onDismissListener, boolean enableEditText) {
         super(context, themeResId);
         mContext = context;
         mButtonNum = buttonNum;
         mTitle = title;
         mMessage = message;
+        mEnableEditText = enableEditText;
         mPositiveButtonText = positiveButtonText;
         mNegativeButtonText = negativeButtonText;
         mPositiveButtonListener = positiveButtonListener;
@@ -45,6 +49,7 @@ public class SatcatcheDialog extends BaseDialog {
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.satcatche_dialog, null, false);
         TextView title = rootView.findViewById(R.id.title);
         TextView message = rootView.findViewById(R.id.message);
+        mEditText = rootView.findViewById(R.id.edit_sms);
         LinearLayout buttonArea = rootView.findViewById(R.id.button_area);
         Button negativeBtn = rootView.findViewById(R.id.negative);
         Button positiveBtn = rootView.findViewById(R.id.positive);
@@ -52,11 +57,12 @@ public class SatcatcheDialog extends BaseDialog {
         if (!TextUtils.isEmpty(mTitle)) {
             title.setText(mTitle);
         }
-
         if (!TextUtils.isEmpty(mMessage)) {
             message.setText(mMessage);
         }
-
+        if (mEnableEditText) {
+            mEditText.setVisibility(View.VISIBLE);
+        }
         if (!TextUtils.isEmpty(mPositiveButtonText)) {
             positiveBtn.setText(mPositiveButtonText);
         }
@@ -101,13 +107,18 @@ public class SatcatcheDialog extends BaseDialog {
         init();
     }
 
+    public String getInputText() {
+        return mEditText.getText().toString();
+    }
+
     public static class Builder {
 
         private Context mContext;
         private int mThemeResId;
-        private int mButtonNum;
-        private String mTitle;
-        private String mMessage;
+        private int mButtonNum;  //下方按钮数量max = 2
+        private String mTitle;   //dialog标题
+        private String mMessage;  //dialog信息
+        private boolean mEnableEditText;  //dialog含有输入框
         private String mPositiveButtonText, mNegativeButtonText;
         private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
         private DialogInterface.OnDismissListener mOnDismissListener;
@@ -136,6 +147,11 @@ public class SatcatcheDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setEnableEditText(boolean enableEditText) {
+            mEnableEditText = enableEditText;
+            return this;
+        }
+
         public Builder setPositiveButton(String text, DialogInterface.OnClickListener listener) {
             mPositiveButtonText = text;
             mPositiveButtonListener = listener;
@@ -158,7 +174,7 @@ public class SatcatcheDialog extends BaseDialog {
         public SatcatcheDialog build() {
             return new SatcatcheDialog(mContext, mThemeResId, mButtonNum, mTitle, mMessage,
                     mPositiveButtonText, mNegativeButtonText, mPositiveButtonListener,
-                    mNegativeButtonListener, mOnDismissListener);
+                    mNegativeButtonListener, mOnDismissListener, mEnableEditText);
         }
     }
 }

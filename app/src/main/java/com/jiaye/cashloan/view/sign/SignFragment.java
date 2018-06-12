@@ -10,13 +10,12 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.sign.source.SignRepository;
-import com.jiaye.cashloan.widget.BaseDialog;
+import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 /**
  * SignFragment
@@ -29,11 +28,9 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
 
     private WebView mWebView;
 
-    private BaseDialog mSMSDialog;
+    private SatcatcheDialog mSMSDialog;
 
     private Button mBtnVisa;
-
-    private EditText mEditSMS;
 
     public static SignFragment newInstance() {
         Bundle args = new Bundle();
@@ -72,12 +69,14 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
                 handler.proceed();
             }
         });
-        mSMSDialog = new BaseDialog(getActivity());
-        View smsView = LayoutInflater.from(getActivity()).inflate(R.layout.sms_dialog_layout, null);
-        mEditSMS = smsView.findViewById(R.id.edit_sms);
-        smsView.findViewById(R.id.text_cancel).setOnClickListener(v -> mSMSDialog.dismiss());
-        smsView.findViewById(R.id.text_confirm).setOnClickListener(v -> mPresenter.sign(mEditSMS.getText().toString()));
-        mSMSDialog.setContentView(smsView);
+        mSMSDialog = new SatcatcheDialog.Builder(getContext())
+                .setTitle("提示")
+                .setMessage("请输入您收到的验证码")
+                .setEnableEditText(true)
+                .setPositiveButton("确定", ((dialog, which) -> mPresenter.sign(mSMSDialog.getInputText())))
+                .setNegativeButton("取消", ((dialog, which) -> mSMSDialog.dismiss()))
+                .build();
+        showSMSDialog();
         mPresenter = new SignPresenter(this, new SignRepository());
         mPresenter.subscribe();
         return root;
