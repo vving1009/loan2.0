@@ -133,7 +133,7 @@ public class UploadFaceService extends Service {
                         new ThrowableConsumer() {
                             @Override
                             public void accept(Throwable t) throws Exception {
-                                super.accept(t);
+                                Logger.d(t.getMessage());
                                 stopSelf();
                             }
                         });

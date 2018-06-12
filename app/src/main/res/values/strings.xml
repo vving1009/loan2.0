@@ -144,6 +144,8 @@
     <string name="error_connect">网络连接不可用</string>
     <string name="error_http">网络请求失败</string>
     <string name="error_socket_timeout">网络请求超时</string>
+    <string name="error_upload_client_timeout">客户端上传超时</string>
+    <string name="error_upload_server_timeout">上传至服务器超时</string>
     <string name="error_install_permission">请开启安装第三方应用的授权</string>
     <string name="error_auth_not_log_in">未登录</string>
     <string name="error_auth_phone">请输入正确的手机号</string>

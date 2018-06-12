@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.ServiceException;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.ErrorCode;
@@ -64,6 +66,10 @@ public class ThrowableConsumer implements Consumer<Throwable> {
             mContract.showToastById(R.string.error_http);
         } else if (t instanceof SocketTimeoutException) {
             mContract.showToastById(R.string.error_socket_timeout);
+        } else if (t instanceof ClientException) {
+            mContract.showToastById(R.string.error_upload_client_timeout);
+        } else if (t instanceof ServiceException) {
+            mContract.showToastById(R.string.error_upload_server_timeout);
         } else {
             if (t.getMessage() != null) {
                 mContract.showToast(t.getMessage());
