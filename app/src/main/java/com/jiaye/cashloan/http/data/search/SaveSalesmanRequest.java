@@ -67,6 +67,6 @@ public class SaveSalesmanRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL004";
     }
 }

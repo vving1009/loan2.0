@@ -23,6 +23,6 @@ public class RecommendRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL010";
     }
 }

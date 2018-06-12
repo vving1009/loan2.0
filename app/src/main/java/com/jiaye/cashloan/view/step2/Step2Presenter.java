@@ -1,14 +1,21 @@
 package com.jiaye.cashloan.view.step2;
 
+import android.text.TextUtils;
+
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step2.source.Step2DataSource;
 
+import org.reactivestreams.Publisher;
+
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * Step2Presenter
@@ -32,17 +39,31 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.requestStep()
-                .compose(new ViewTransformer<Step>() {
+                .filter(step -> step.getStep() == 2 || step.getStep() == 3 || step.getStep() == 4)
+                .flatMap((Function<Step, Publisher<Step2>>) step -> {
+                    mStep = step;
+                    if (step.getStep() == 2) {
+                        return Flowable.just(new Step2());
+                    } else {
+                        return mDataSource.requestStep2();
+                    }
+                })
+                .compose(new ViewTransformer<Step2>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(step -> {
+                .subscribe(step2 -> {
                     mView.dismissProgressDialog();
-                    mView.setText(step.getMsg());
-                    mStep = step;
+                    if (!TextUtils.isEmpty(step2.getAmount())) {
+                        mView.setText("您的爱车估值" + step2.getAmount());
+                    } else {
+                        if (!TextUtils.isEmpty(step2.getMsg())) {
+                            mView.setText(step2.getMsg());
+                        }
+                    }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

@@ -45,6 +45,6 @@ public class UpdateStepRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL008";
     }
 }

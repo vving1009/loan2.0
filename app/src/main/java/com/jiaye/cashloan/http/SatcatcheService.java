@@ -78,6 +78,8 @@ import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.step2.Step2;
+import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
@@ -214,14 +216,23 @@ public interface SatcatcheService {
     @POST("intoInfo/save")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadFile(@Body SatcatcheRequest<UploadFileRequest> request);
 
-    @POST("queryAccountStatus")
-    Flowable<SatcatcheResponse<CheckAccount>> checkAccount(@Body SatcatcheRequest<CheckAccountRequest> request);
-
     /**
-     * 提交认证材料
+     * 提交认证材料 20
      */
     @POST("intoInfo/state")
     Flowable<SatcatcheResponse<EmptyResponse>> submitUploadFile(@Body SatcatcheRequest<SubmitUploadFileRequest> request);
+
+    /**
+     * 车辆审批结果查询 21
+     */
+    @POST("queryExamineResult")
+    Flowable<SatcatcheResponse<Step2>> step2(@Body SatcatcheRequest<Step2Request> request);
+
+    /**
+     * 是否可以进入存管账户 22
+     */
+    @POST("queryAccountStatus")
+    Flowable<SatcatcheResponse<CheckAccount>> checkAccount(@Body SatcatcheRequest<CheckAccountRequest> request);
 
     /*旧的接口*/
 

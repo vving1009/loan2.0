@@ -35,6 +35,6 @@ public class SaveTaoBaoRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL019";
+        return "CL018";
     }
 }

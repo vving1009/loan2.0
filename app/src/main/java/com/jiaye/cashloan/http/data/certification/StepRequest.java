@@ -23,6 +23,6 @@ public class StepRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL006";
     }
 }

@@ -1,14 +1,14 @@
-package com.jiaye.cashloan.http.data.home;
+package com.jiaye.cashloan.http.data.step2;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
- * CheckCompanyRequest
+ * Step2Request
  *
  * @author 贾博瑄
  */
-public class CheckCompanyRequest extends SatcatcheChildRequest {
+public class Step2Request extends SatcatcheChildRequest {
 
     @SerializedName("jla_id")
     private String loanId;
@@ -23,6 +23,6 @@ public class CheckCompanyRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL003";
+        return "CL021";
     }
 }

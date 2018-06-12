@@ -56,6 +56,6 @@ public class UploadFileRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL019";
     }
 }

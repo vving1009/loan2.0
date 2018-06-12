@@ -37,6 +37,6 @@ public class LoginRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL002";
+        return "CL001";
     }
 }

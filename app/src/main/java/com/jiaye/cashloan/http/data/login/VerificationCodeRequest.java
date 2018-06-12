@@ -37,6 +37,6 @@ public class VerificationCodeRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL003";
+        return "CL002";
     }
 }

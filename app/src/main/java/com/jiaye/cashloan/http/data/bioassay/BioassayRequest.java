@@ -58,6 +58,6 @@ public class BioassayRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL021";
+        return "CL012";
     }
 }

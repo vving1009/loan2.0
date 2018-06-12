@@ -23,6 +23,6 @@ public class SubmitUploadFileRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "";
+        return "CL020";
     }
 }
