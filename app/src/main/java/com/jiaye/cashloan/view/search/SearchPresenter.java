@@ -48,8 +48,17 @@ public class SearchPresenter extends BasePresenterImpl implements SearchContract
         super.subscribe();
         Disposable disposable = mDataSource.salesman()
                 .concatMap((Function<com.jiaye.cashloan.http.data.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
-                .compose(new ViewTransformer<>())
-                .subscribe(mView::setCompanyListDataChanged, new ThrowableConsumer(mView));
+                .compose(new ViewTransformer<List<String>>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(list -> {
+                    mView.dismissProgressDialog();
+                    mView.setCompanyListDataChanged(list);
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 

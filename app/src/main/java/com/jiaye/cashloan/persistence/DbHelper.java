@@ -52,7 +52,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_SALES =
             "CREATE TABLE " + DbContract.Salesman.TABLE_NAME + " (" +
-                    DbContract.Salesman._ID + INTEGER_TYPE + " PRIMARY KEY AUTOINCREMENT," +
+                    DbContract.Salesman._ID + INTEGER_TYPE + " PRIMARY KEY," +
                     DbContract.Salesman.COLUMN_COMPANY_ID + TEXT_TYPE + COMMA_SEP +
                     DbContract.Salesman.COLUMN_COMPANY + TEXT_TYPE + COMMA_SEP +
                     DbContract.Salesman.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
@@ -110,7 +110,7 @@ public class DbHelper extends SQLiteOpenHelper {
             case 4:
                 db.execSQL("drop table if exists salesman");
                 db.execSQL("create table " + DbContract.Salesman.TABLE_NAME + " (" +
-                        DbContract.Salesman._ID + INTEGER_TYPE + " primary key autoincrement," +
+                        DbContract.Salesman._ID + INTEGER_TYPE + " primary key," +
                         DbContract.Salesman.COLUMN_COMPANY + TEXT_TYPE + COMMA_SEP +
                         DbContract.Salesman.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                         DbContract.Salesman.COLUMN_WORK_ID + TEXT_TYPE + " )");
@@ -183,7 +183,8 @@ public class DbHelper extends SQLiteOpenHelper {
      * 删除用户信息
      */
     public void deleteUser() {
-        getWritableDatabase().delete("user", null, null);
+        getWritableDatabase().execSQL("delete from user");
+        //getWritableDatabase().delete("sqlite_sequence", "name = ?", new String[]{"user"});
     }
 
     /**
@@ -191,6 +192,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public void deleteSales() {
         getWritableDatabase().execSQL("delete from salesman");
+        //getWritableDatabase().delete("sqlite_sequence", "name = ?", new String[]{"salesman"});
     }
 
     /**
