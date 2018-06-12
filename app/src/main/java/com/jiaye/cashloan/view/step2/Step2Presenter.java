@@ -39,9 +39,9 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.requestStep()
+                .doOnNext(step -> mStep = step)
                 .filter(step -> step.getStep() == 2 || step.getStep() == 3 || step.getStep() == 4)
                 .flatMap((Function<Step, Publisher<Step2>>) step -> {
-                    mStep = step;
                     if (step.getStep() == 2) {
                         return Flowable.just(new Step2());
                     } else {
@@ -70,24 +70,26 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
 
     @Override
     public void onClickNext() {
-        if (mStep.getStep() == 2) {
-            mView.showToastById(R.string.step2_progress);
-        } else if (mStep.getStep() == 3) {
-            mView.finish();
-        } else if (mStep.getStep() == 4) {
-            Disposable disposable = mDataSource.requestUpdateStep()
-                    .compose(new ViewTransformer<EmptyResponse>() {
-                        @Override
-                        public void accept() {
-                            super.accept();
-                            mView.showProgressDialog();
-                        }
-                    })
-                    .subscribe(emptyResponse -> {
-                        mView.dismissProgressDialog();
-                        mView.sendBroadcast();
-                    }, new ThrowableConsumer(mView));
-            mCompositeDisposable.add(disposable);
+        if (mStep != null) {
+            if (mStep.getStep() == 2) {
+                mView.showToastById(R.string.step2_progress);
+            } else if (mStep.getStep() == 3) {
+                mView.finish();
+            } else if (mStep.getStep() == 4) {
+                Disposable disposable = mDataSource.requestUpdateStep()
+                        .compose(new ViewTransformer<EmptyResponse>() {
+                            @Override
+                            public void accept() {
+                                super.accept();
+                                mView.showProgressDialog();
+                            }
+                        })
+                        .subscribe(emptyResponse -> {
+                            mView.dismissProgressDialog();
+                            mView.sendBroadcast();
+                        }, new ThrowableConsumer(mView));
+                mCompositeDisposable.add(disposable);
+            }
         }
     }
 }
