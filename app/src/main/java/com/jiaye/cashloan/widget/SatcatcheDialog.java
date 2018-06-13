@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.StyleRes;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,7 @@ public class SatcatcheDialog extends BaseDialog {
     private int mButtonNum;
     private String mTitle;
     private String mMessage;
+    private SpannableString mMessageSpannable;
     private boolean mEnableEditText;
     private String mPositiveButtonText, mNegativeButtonText;
     private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
@@ -42,7 +45,8 @@ public class SatcatcheDialog extends BaseDialog {
     private Button mPositiveBtn, mNegativeBtn;
 
     private SatcatcheDialog(Context context, @StyleRes int themeResId, int buttonNum, String title,
-                            String message, String positiveButtonText, String negativeButtonText,
+                            String message, SpannableString messageSpannable,
+                            String positiveButtonText, String negativeButtonText,
                             DialogInterface.OnClickListener positiveButtonListener,
                             DialogInterface.OnClickListener negativeButtonListener,
                             OnDismissListener onDismissListener, boolean enableEditText) {
@@ -51,6 +55,7 @@ public class SatcatcheDialog extends BaseDialog {
         mButtonNum = buttonNum;
         mTitle = title;
         mMessage = message;
+        mMessageSpannable = messageSpannable;
         mEnableEditText = enableEditText;
         mPositiveButtonText = positiveButtonText;
         mNegativeButtonText = negativeButtonText;
@@ -75,6 +80,10 @@ public class SatcatcheDialog extends BaseDialog {
         }
         if (!TextUtils.isEmpty(mMessage)) {
             mMessageText.setText(mMessage);
+        }
+        if (!TextUtils.isEmpty(mMessageSpannable)) {
+            mMessageText.setText(mMessageSpannable);
+            mMessageText.setMovementMethod(LinkMovementMethod.getInstance());
         }
         if (mEnableEditText) {
             mEditText.setVisibility(VISIBLE);
@@ -127,14 +136,15 @@ public class SatcatcheDialog extends BaseDialog {
             mMessageText.setText(message);
         }
     }
-    
+
     public String getInputText() {
         return mEditText.getText().toString();
     }
 
     @IntDef({VISIBLE, INVISIBLE, GONE})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Visibility {}
+    public @interface Visibility {
+    }
 
     public void setProgressVisibility(@Visibility int visibility) {
         mProgressBar.setVisibility(visibility);
@@ -163,6 +173,7 @@ public class SatcatcheDialog extends BaseDialog {
         private int mButtonNum;  //下方按钮数量max = 2
         private String mTitle;   //dialog标题
         private String mMessage;  //dialog信息
+        private SpannableString mMessageSpannable;  //dialog信息
         private boolean mEnableEditText;  //dialog含有输入框
         private String mPositiveButtonText, mNegativeButtonText;
         private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
@@ -192,6 +203,11 @@ public class SatcatcheDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setMessage(SpannableString message) {
+            mMessageSpannable = message;
+            return this;
+        }
+
         public Builder setEnableEditText(boolean enableEditText) {
             mEnableEditText = enableEditText;
             return this;
@@ -217,7 +233,7 @@ public class SatcatcheDialog extends BaseDialog {
         }
 
         public SatcatcheDialog build() {
-            return new SatcatcheDialog(mContext, mThemeResId, mButtonNum, mTitle, mMessage,
+            return new SatcatcheDialog(mContext, mThemeResId, mButtonNum, mTitle, mMessage, mMessageSpannable,
                     mPositiveButtonText, mNegativeButtonText, mPositiveButtonListener,
                     mNegativeButtonListener, mOnDismissListener, mEnableEditText);
         }

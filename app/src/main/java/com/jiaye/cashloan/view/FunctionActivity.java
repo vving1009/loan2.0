@@ -34,15 +34,8 @@ public class FunctionActivity extends AppCompatActivity {
     private static final String BUNDLE = "bundle";
 
     public static void function(Activity activity, String function) {
-        function(activity, function, null);
-    }
-
-    public static void function(Activity activity, String function, Bundle bundle) {
         Intent intent = new Intent(activity, FunctionActivity.class);
         intent.putExtra("function", function);
-        if (bundle != null) {
-            intent.putExtra(BUNDLE, bundle);
-        }
         activity.startActivity(intent);
     }
 
@@ -110,10 +103,7 @@ public class FunctionActivity extends AppCompatActivity {
                 break;
             case "BankCard":
                 // 银行卡管理
-                bundle = getIntent().getBundleExtra(BUNDLE);
-                CreditInfo info = bundle.getParcelable("creditInfo");
-                Boolean isBind = bundle.getBoolean("isBind", true);
-                BankCardFragment bankCardFragment = BankCardFragment.newInstance(isBind, info);
+                BankCardFragment bankCardFragment = BankCardFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, bankCardFragment).commit();
                 break;
             case "BindBank":

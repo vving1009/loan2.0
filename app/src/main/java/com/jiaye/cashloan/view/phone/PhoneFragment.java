@@ -1,8 +1,14 @@
 package com.jiaye.cashloan.view.phone;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,11 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.widget.BaseDialog;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.phone.source.PhoneRepository;
 import com.jiaye.cashloan.widget.CustomProgressDialog;
 import com.jiaye.cashloan.widget.LoanEditText;
+import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 import java.util.ArrayList;
 
@@ -38,7 +44,7 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
 
     private TextView mTextForgetPassword;
 
-    private BaseDialog mForgetPasswordDialog;
+    private SatcatcheDialog mForgetPasswordDialog;
 
     private ArrayList<LoanEditText> mSmsArray;
 
@@ -72,10 +78,7 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
             showCustomDialog = true;
             mPresenter.submit();
         });
-        mForgetPasswordDialog = new BaseDialog(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.forget_password_dialog_layout, null);
-        view.findViewById(R.id.text).setOnClickListener(v -> mForgetPasswordDialog.dismiss());
-        mForgetPasswordDialog.setContentView(view);
+        initForgetPasswordDialog();
         mSmsArray = new ArrayList<>();
         mImgArray = new ArrayList<>();
         mPresenter = new PhonePresenter(this, new PhoneRepository());
@@ -247,5 +250,43 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
     @Override
     protected int getTitleId() {
         return R.string.phone_title;
+    }
+
+    private void initForgetPasswordDialog() {
+        SpannableString spanText = new SpannableString("移动用户请拨打 10086\n\n联通用户请拨打 10010\n\n电信用户请拨打 10000");
+        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
+                8, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                dial("10086");
+            }
+        }, 8, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
+                23, 28, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                dial("10010");
+            }
+        }, 23, 28, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
+                38, 43, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                dial("10000");
+            }
+        }, 38, 43, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mForgetPasswordDialog = new SatcatcheDialog.Builder(getContext())
+                .setTitle("提示")
+                .setMessage(spanText)
+                .setPositiveButton("我知道了", ((dialog, which) -> mForgetPasswordDialog.dismiss()))
+                .build();
+    }
+
+    private void dial(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNum));
+        startActivity(intent);
     }
 }

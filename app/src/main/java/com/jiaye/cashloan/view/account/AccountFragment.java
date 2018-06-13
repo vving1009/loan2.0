@@ -111,10 +111,11 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showBankView(boolean bind, CreditInfo creditInfo) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isBind", bind);
-        bundle.putParcelable("creditInfo", creditInfo);
-        FunctionActivity.function(getActivity(), "BankCard", bundle);
+        Intent intent = new Intent(getContext(), FunctionActivity.class);
+        intent.putExtra("isBind", bind);
+        intent.putExtra("creditInfo", creditInfo);
+        intent.putExtra("function", "BankCard");
+        startActivity(intent);
     }
 
     private void copy() {

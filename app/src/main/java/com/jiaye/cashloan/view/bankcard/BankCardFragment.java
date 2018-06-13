@@ -2,9 +2,12 @@ package com.jiaye.cashloan.view.bankcard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,10 +38,8 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
 
     private SatcatcheDialog.Builder mDialogBuilder;
 
-    public static BankCardFragment newInstance(boolean bind, CreditInfo creditInfo) {
+    public static BankCardFragment newInstance() {
         Bundle args = new Bundle();
-        args.putBoolean("bind", bind);
-        args.putParcelable("creditInfo", creditInfo);
         BankCardFragment fragment = new BankCardFragment();
         fragment.setArguments(args);
         return fragment;
@@ -99,7 +100,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         RelativeLayout unBindLayout = view.findViewById(R.id.layout_un_bind);
         Button unBindBtn = view.findViewById(R.id.btn_un_bind);
         TextView textTips = view.findViewById(R.id.text_tips);
-        boolean bind = getArguments().getBoolean("bind");
+        boolean bind = getActivity().getIntent().getExtras().getBoolean("bind");
         if (bind) {
             bindLayout.setVisibility(View.VISIBLE);
             unBindLayout.setVisibility(View.GONE);
@@ -111,7 +112,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
             TextView textBank = view.findViewById(R.id.text_bank);
             TextView textName = view.findViewById(R.id.text_name);
             TextView textNumber = view.findViewById(R.id.text_number);
-            CreditInfo creditInfo = getArguments().getParcelable("creditInfo");
+            CreditInfo creditInfo = getActivity().getIntent().getExtras().getParcelable("creditInfo");
             //noinspection ConstantConditions
             textBank.setText(creditInfo.getAccountName());
             String name = creditInfo.getName();
@@ -141,7 +142,15 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         SpannableString string = new SpannableString(textTips.getText());
         string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
                 textTips.getText().length() - 12, textTips.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        string.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:400–8780–777"));
+                startActivity(intent);
+            }
+        }, textTips.getText().length() - 12, textTips.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textTips.setText(string);
+        textTips.setMovementMethod(LinkMovementMethod.getInstance());
         mDialogBuilder = new SatcatcheDialog.Builder(getContext()).setTitle("提示");
         mPresenter = new BankCardPresenter(this, new BankCardRepository());
         mPresenter.subscribe();
