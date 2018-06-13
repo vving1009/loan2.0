@@ -199,6 +199,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         private void setItemSelected(String company) {
             selectPos = companys.indexOf(company);
             notifyDataSetChanged();
+            mCompanyList.scrollToPosition(selectPos);
         }
 
         private void notifyListChange(List<String> list) {
