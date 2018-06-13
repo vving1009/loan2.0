@@ -184,7 +184,6 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public void deleteUser() {
         getWritableDatabase().execSQL("delete from user");
-        //getWritableDatabase().delete("sqlite_sequence", "name = ?", new String[]{"user"});
     }
 
     /**
@@ -192,32 +191,26 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public void deleteSales() {
         getWritableDatabase().execSQL("delete from salesman");
-        //getWritableDatabase().delete("sqlite_sequence", "name = ?", new String[]{"salesman"});
     }
 
     /**
      * 插入销售人员信息
-     *
-     * @param companyId   分公司编号
-     * @param companyName 分公司名称
-     * @param name        员工名称
-     * @param number      员工工号
      */
-    public void insertSales(String companyId, String companyName, String name, String number) {
-        ContentValues values = new ContentValues();
-        if (!TextUtils.isEmpty(companyId)) {
-            values.put("company_id", companyId);
+    public void insertSales(List<com.jiaye.cashloan.http.data.search.Salesman.Company> list) {
+        getWritableDatabase().beginTransaction();
+        for (com.jiaye.cashloan.http.data.search.Salesman.Company company : list) {
+            for (com.jiaye.cashloan.http.data.search.Salesman.Employee employee : company.getList()) {
+                String sql = "insert into salesman" + " (company_id, company, name, work_id) values" +
+                        " ('" + company.getId() +
+                        "','" + company.getName() +
+                        "','" + employee.getName() +
+                        "','" + employee.getNumber() +
+                        "');";
+                getWritableDatabase().execSQL(sql);
+            }
         }
-        if (!TextUtils.isEmpty(companyName)) {
-            values.put("company", companyName);
-        }
-        if (!TextUtils.isEmpty(name)) {
-            values.put("name", name);
-        }
-        if (!TextUtils.isEmpty(number)) {
-            values.put("work_id", number);
-        }
-        getWritableDatabase().insert("salesman", null, values);
+        getWritableDatabase().setTransactionSuccessful();
+        getWritableDatabase().endTransaction();
     }
 
     /**

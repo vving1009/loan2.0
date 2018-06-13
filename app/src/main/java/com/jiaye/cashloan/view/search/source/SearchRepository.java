@@ -25,15 +25,7 @@ public class SearchRepository implements SearchDataSource {
                 .compose(new SatcatcheResponseTransformer<SalesmanRequest, Salesman>("salesman"))
                 .map(search -> {
                     LoanApplication.getInstance().getDbHelper().deleteSales();
-                    for (Salesman.Company company : search.getList()) {
-                        for (Salesman.Employee employee : company.getList()) {
-                            LoanApplication.getInstance().getDbHelper().insertSales(
-                                    company.getId(),
-                                    company.getName(),
-                                    employee.getName(),
-                                    employee.getNumber());
-                        }
-                    }
+                    LoanApplication.getInstance().getDbHelper().insertSales(search.getList());
                     return search;
                 });
     }
