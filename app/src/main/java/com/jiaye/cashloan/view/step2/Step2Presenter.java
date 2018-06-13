@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.step2;
 
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
@@ -43,7 +44,9 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                 .filter(step -> step.getStep() == 2 || step.getStep() == 3 || step.getStep() == 4)
                 .flatMap((Function<Step, Publisher<Step2>>) step -> {
                     if (step.getStep() == 2) {
-                        return Flowable.just(new Step2());
+                        Step2 step2 = new Step2();
+                        step2.setMsg(LoanApplication.getInstance().getResources().getString(R.string.step2_progress));
+                        return Flowable.just(step2);
                     } else {
                         return mDataSource.requestStep2();
                     }
