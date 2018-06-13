@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,9 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class SatcatcheDialog extends BaseDialog {
 
@@ -25,7 +34,12 @@ public class SatcatcheDialog extends BaseDialog {
     private String mPositiveButtonText, mNegativeButtonText;
     private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
     private OnDismissListener mOnDismissListener;
+    private TextView mTitleText;
+    private TextView mMessageText;
     private EditText mEditText;
+    private ProgressBar mProgressBar;
+    private LinearLayout mButtonArea;
+    private Button mPositiveBtn, mNegativeBtn;
 
     private SatcatcheDialog(Context context, @StyleRes int themeResId, int buttonNum, String title,
                             String message, String positiveButtonText, String negativeButtonText,
@@ -43,39 +57,41 @@ public class SatcatcheDialog extends BaseDialog {
         mPositiveButtonListener = positiveButtonListener;
         mNegativeButtonListener = negativeButtonListener;
         mOnDismissListener = onDismissListener;
+        init();
     }
 
     private void init() {
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.satcatche_dialog, null, false);
-        TextView title = rootView.findViewById(R.id.title);
-        TextView message = rootView.findViewById(R.id.message);
+        mTitleText = rootView.findViewById(R.id.title);
+        mMessageText = rootView.findViewById(R.id.message);
         mEditText = rootView.findViewById(R.id.edit_sms);
-        LinearLayout buttonArea = rootView.findViewById(R.id.button_area);
-        Button negativeBtn = rootView.findViewById(R.id.negative);
-        Button positiveBtn = rootView.findViewById(R.id.positive);
+        mButtonArea = rootView.findViewById(R.id.button_area);
+        mNegativeBtn = rootView.findViewById(R.id.negative);
+        mPositiveBtn = rootView.findViewById(R.id.positive);
+        mProgressBar = rootView.findViewById(R.id.progress_bar);
 
         if (!TextUtils.isEmpty(mTitle)) {
-            title.setText(mTitle);
+            mTitleText.setText(mTitle);
         }
         if (!TextUtils.isEmpty(mMessage)) {
-            message.setText(mMessage);
+            mMessageText.setText(mMessage);
         }
         if (mEnableEditText) {
-            mEditText.setVisibility(View.VISIBLE);
+            mEditText.setVisibility(VISIBLE);
         }
         if (!TextUtils.isEmpty(mPositiveButtonText)) {
-            positiveBtn.setText(mPositiveButtonText);
+            mPositiveBtn.setText(mPositiveButtonText);
         }
         if (!TextUtils.isEmpty(mNegativeButtonText)) {
-            negativeBtn.setText(mNegativeButtonText);
+            mNegativeBtn.setText(mNegativeButtonText);
         }
-        positiveBtn.setOnClickListener(v -> {
+        mPositiveBtn.setOnClickListener(v -> {
             if (mPositiveButtonListener != null) {
                 mPositiveButtonListener.onClick(SatcatcheDialog.this, Dialog.BUTTON_POSITIVE);
             }
             dismiss();
         });
-        negativeBtn.setOnClickListener(v -> {
+        mNegativeBtn.setOnClickListener(v -> {
             if (mNegativeButtonListener != null) {
                 mNegativeButtonListener.onClick(SatcatcheDialog.this, Dialog.BUTTON_NEGATIVE);
             }
@@ -84,17 +100,17 @@ public class SatcatcheDialog extends BaseDialog {
 
         switch (mButtonNum) {
             case 0:
-                buttonArea.setVisibility(View.INVISIBLE);
+                mButtonArea.setVisibility(INVISIBLE);
                 setCancelable(true);
                 setCanceledOnTouchOutside(true);
                 break;
             case 1:
-                positiveBtn.setVisibility(View.VISIBLE);
-                negativeBtn.setVisibility(View.GONE);
+                mPositiveBtn.setVisibility(VISIBLE);
+                mNegativeBtn.setVisibility(GONE);
                 break;
             case 2:
-                positiveBtn.setVisibility(View.VISIBLE);
-                negativeBtn.setVisibility(View.VISIBLE);
+                mPositiveBtn.setVisibility(VISIBLE);
+                mNegativeBtn.setVisibility(VISIBLE);
                 break;
         }
         setOnDismissListener(mOnDismissListener);
@@ -104,11 +120,40 @@ public class SatcatcheDialog extends BaseDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
     }
 
+    public void setMessage(String message) {
+        if (!TextUtils.isEmpty(message)) {
+            mMessageText.setText(message);
+        }
+    }
+    
     public String getInputText() {
         return mEditText.getText().toString();
+    }
+
+    @IntDef({VISIBLE, INVISIBLE, GONE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Visibility {}
+
+    public void setProgressVisibility(@Visibility int visibility) {
+        mProgressBar.setVisibility(visibility);
+    }
+
+    public void setPositiveBtnVisibility(@Visibility int visibility) {
+        mPositiveBtn.setVisibility(visibility);
+    }
+
+    public void setNegativeBtnVisibility(@Visibility int visibility) {
+        mNegativeBtn.setVisibility(visibility);
+    }
+
+    public void setAllBtnVisibility(@Visibility int visibility) {
+        mButtonArea.setVisibility(visibility);
+    }
+
+    public void setProgress(int progress) {
+        mProgressBar.setProgress(progress);
     }
 
     public static class Builder {

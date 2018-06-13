@@ -42,6 +42,15 @@
             android:textSize="14sp"
             android:visibility="gone" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/button_area"
             android:layout_width="match_parent"
