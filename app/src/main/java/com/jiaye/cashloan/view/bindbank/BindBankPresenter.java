@@ -3,6 +3,7 @@ package com.jiaye.cashloan.view.bindbank;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
@@ -115,36 +116,30 @@ public class BindBankPresenter extends BasePresenterImpl implements BindBankCont
             if (!TextUtils.isEmpty(mSource)) {
                 bankRequest.setSource(mSource);
                 Disposable disposable = mDataSource.requestBindBank(bankRequest)
-                        .compose(new ViewTransformer<Object>() {
+                        .compose(new ViewTransformer<EmptyResponse>() {
                             @Override
                             public void accept() {
                                 super.accept();
                                 mView.showProgressDialog();
                             }
                         })
-                        .subscribe(new Consumer<Object>() {
-                            @Override
-                            public void accept(Object o) throws Exception {
-                                mView.dismissProgressDialog();
-                                mView.result();
-                            }
+                        .subscribe(o -> {
+                            mView.dismissProgressDialog();
+                            mView.result();
                         }, new ThrowableConsumer(mView));
                 mCompositeDisposable.add(disposable);
             } else {
                 Disposable disposable = mDataSource.requestBindBankAgain(bankRequest)
-                        .compose(new ViewTransformer<Object>() {
+                        .compose(new ViewTransformer<EmptyResponse>() {
                             @Override
                             public void accept() {
                                 super.accept();
                                 mView.showProgressDialog();
                             }
                         })
-                        .subscribe(new Consumer<Object>() {
-                            @Override
-                            public void accept(Object o) throws Exception {
-                                mView.dismissProgressDialog();
-                                mView.complete();
-                            }
+                        .subscribe(o -> {
+                            mView.dismissProgressDialog();
+                            mView.complete();
                         }, new ThrowableConsumer(mView));
                 mCompositeDisposable.add(disposable);
             }

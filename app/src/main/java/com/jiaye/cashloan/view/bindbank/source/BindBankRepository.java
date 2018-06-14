@@ -1,15 +1,14 @@
 package com.jiaye.cashloan.view.bindbank.source;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
-import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import org.reactivestreams.Publisher;
 
@@ -26,53 +25,45 @@ public class BindBankRepository implements BindBankDataSource {
 
     private String mCode;
 
+    private LoanBindBankRequest mRequest;
+
     @Override
     public Flowable<String> queryName() {
-        return Flowable.just("SELECT ocr_name FROM user;")
-                .map(new Function<String, String>() {
-                    @Override
-                    public String apply(String sql) throws Exception {
-                        String name = "";
-                        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-                        Cursor cursor = database.rawQuery(sql, null);
-                        if (cursor != null) {
-                            if (cursor.moveToNext()) {
-                                name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
-                            }
-                            cursor.close();
-                        }
-                        return name;
-                    }
-                });
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser().getName());
     }
 
     @Override
     public Flowable<LoanOpenSMS> requestBindBankSMS(LoanOpenSMSRequest request) {
-        return Flowable.just(request).flatMap(new Function<LoanOpenSMSRequest, Publisher<LoanOpenSMS>>() {
-            @Override
-            public Publisher<LoanOpenSMS> apply(LoanOpenSMSRequest request) throws Exception {
-                return Flowable.just(request).compose(new ResponseTransformer<LoanOpenSMSRequest, LoanOpenSMS>("loanOpenSMS"));
-            }
-        }).map(new Function<LoanOpenSMS, LoanOpenSMS>() {
-            @Override
-            public LoanOpenSMS apply(LoanOpenSMS loanBindBankSMS) throws Exception {
-                mCode = loanBindBankSMS.getCode();
-                return loanBindBankSMS;
-            }
+        return Flowable.just(request).flatMap((Function<LoanOpenSMSRequest, Publisher<LoanOpenSMS>>) request1 -> Flowable.just(request1).compose(new ResponseTransformer<LoanOpenSMSRequest, LoanOpenSMS>("loanOpenSMS"))).map(loanBindBankSMS -> {
+            mCode = loanBindBankSMS.getCode();
+            return loanBindBankSMS;
         });
     }
 
     @Override
-    public Flowable<LoanBindBank> requestBindBank(LoanBindBankRequest request) {
+    public Flowable<EmptyResponse> requestBindBank(LoanBindBankRequest request) {
         request.setCode(mCode);
+        mRequest = request;
         return Flowable.just(request)
-                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("loanBindBank"));
+                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("loanBindBank"))
+                .flatMap((Function<LoanBindBank, Publisher<EmptyResponse>>) loanBindBank -> saveBankCard());
     }
 
     @Override
-    public Flowable<LoanBindBank> requestBindBankAgain(LoanBindBankRequest request) {
+    public Flowable<EmptyResponse> requestBindBankAgain(LoanBindBankRequest request) {
         request.setCode(mCode);
+        mRequest = request;
         return Flowable.just(request)
-                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("bindBankAgain"));
+                .compose(new ResponseTransformer<LoanBindBankRequest, LoanBindBank>("bindBankAgain"))
+                .flatMap((Function<LoanBindBank, Publisher<EmptyResponse>>) loanBindBank -> saveBankCard());
+    }
+
+    private Flowable<EmptyResponse> saveBankCard() {
+        SaveBankCardRequest request = new SaveBankCardRequest();
+        request.setName(mRequest.getBank());
+        request.setNumber(mRequest.getNumber());
+        request.setPhone(mRequest.getPhone());
+        return Flowable.just(request)
+                .compose(new SatcatcheResponseTransformer<SaveBankCardRequest, EmptyResponse>("saveBankCard"));
     }
 }

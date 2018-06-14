@@ -22,6 +22,16 @@ public class User {
      */
     private String loanId;
 
+    /**
+     * 身份证
+     */
+    private String id;
+
+    /**
+     * 名字
+     */
+    private String name;
+
     public String getPhone() {
         return phone;
     }
@@ -44,5 +54,21 @@ public class User {
 
     public void setLoanId(String loanId) {
         this.loanId = loanId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -152,6 +152,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 user.setPhone(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE)));
                 user.setToken(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_TOKEN)));
                 user.setLoanId(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_LOAN_ID)));
+                user.setId(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID)));
+                user.setName(cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME)));
             }
             cursor.close();
         }

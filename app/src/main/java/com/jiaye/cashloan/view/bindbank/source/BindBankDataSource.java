@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.bindbank.source;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
@@ -19,7 +20,7 @@ public interface BindBankDataSource {
 
     Flowable<LoanOpenSMS> requestBindBankSMS(LoanOpenSMSRequest request);
 
-    Flowable<LoanBindBank> requestBindBank(LoanBindBankRequest request);
+    Flowable<EmptyResponse> requestBindBank(LoanBindBankRequest request);
 
-    Flowable<LoanBindBank> requestBindBankAgain(LoanBindBankRequest request);
+    Flowable<EmptyResponse> requestBindBankAgain(LoanBindBankRequest request);
 }

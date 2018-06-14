@@ -3,6 +3,7 @@ package com.jiaye.cashloan.http;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
+import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
 import com.jiaye.cashloan.http.data.certification.Recommend;
@@ -13,6 +14,7 @@ import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.file.SubmitUploadFileRequest;
+import com.jiaye.cashloan.http.data.file.UploadFileRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
 import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
@@ -57,7 +59,6 @@ import com.jiaye.cashloan.http.data.loan.SaveTaoBao;
 import com.jiaye.cashloan.http.data.loan.SaveTaoBaoRequest;
 import com.jiaye.cashloan.http.data.loan.UploadContact;
 import com.jiaye.cashloan.http.data.loan.UploadContactRequest;
-import com.jiaye.cashloan.http.data.file.UploadFileRequest;
 import com.jiaye.cashloan.http.data.loan.UploadLocation;
 import com.jiaye.cashloan.http.data.loan.UploadLocationRequest;
 import com.jiaye.cashloan.http.data.loan.UploadPhoto;
@@ -78,6 +79,8 @@ import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.step1.Step1;
+import com.jiaye.cashloan.http.data.step1.Step1Request;
 import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
@@ -86,8 +89,6 @@ import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
-import com.jiaye.cashloan.http.data.step1.Step1;
-import com.jiaye.cashloan.http.data.step1.Step1Request;
 import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
 
 import io.reactivex.Flowable;
@@ -241,6 +242,11 @@ public interface SatcatcheService {
     @POST("saveAlbumUrl")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadFace(@Body SatcatcheRequest<UploadFaceRequest> request);
 
+    /**
+     * 绑定银行卡信息保存 24
+     */
+    @POST("saveBindingBankCard")
+    Flowable<SatcatcheResponse<EmptyResponse>> saveBankCard(@Body SatcatcheRequest<SaveBankCardRequest> request);
 
     /*旧的接口*/
 
