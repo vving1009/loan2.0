@@ -181,7 +181,7 @@ public class FileFragment extends PhotoFunctionFragment implements FileContract.
                         // 住址
                         if (mList.get(i).getType() == 4) {
                             if (mList.get(i).getCount() > 0) {
-                                holder.setBackground(R.drawable.file_bg_3_un_upload);
+                                holder.setBackground(R.drawable.file_bg_3_upload);
                                 holder.setPhotoVisibility(false);
                                 holder.setText("住址证明 (" + mList.get(i).getCount() + "张)");
                                 holder.setTextColor(getResources().getColor(R.color.color_white));
