@@ -16,6 +16,7 @@ import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
 import com.jiaye.cashloan.widget.StepView;
 
@@ -25,7 +26,7 @@ import com.jiaye.cashloan.widget.StepView;
  * @author 贾博瑄
  */
 
-public class Step3Fragment extends BaseFragment implements Step3Contract.View {
+public class Step3Fragment extends BaseStepFragment implements Step3Contract.View {
 
     private Step3Contract.Presenter mPresenter;
 
@@ -41,6 +42,7 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         View root = inflater.inflate(R.layout.step3_fragment, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -62,6 +64,11 @@ public class Step3Fragment extends BaseFragment implements Step3Contract.View {
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    protected void requestStep() {
+        mPresenter.requestStep();
     }
 
     @Override

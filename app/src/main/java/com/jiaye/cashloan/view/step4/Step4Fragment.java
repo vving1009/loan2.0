@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step4.source.Step4Repository;
 
 /**
@@ -16,7 +16,7 @@ import com.jiaye.cashloan.view.step4.source.Step4Repository;
  * @author 贾博瑄
  */
 
-public class Step4Fragment extends BaseFragment implements Step4Contract.View {
+public class Step4Fragment extends BaseStepFragment implements Step4Contract.View {
 
     private Step4Contract.Presenter mPresenter;
 
@@ -30,7 +30,8 @@ public class Step4Fragment extends BaseFragment implements Step4Contract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.step4_fragment,container,false);
+        super.onCreateView(inflater, container, savedInstanceState);
+        View root = inflater.inflate(R.layout.step4_fragment, container, false);
         mPresenter = new Step4Presenter(this, new Step4Repository());
         mPresenter.subscribe();
         return root;
@@ -40,5 +41,10 @@ public class Step4Fragment extends BaseFragment implements Step4Contract.View {
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    protected void requestStep() {
+
     }
 }

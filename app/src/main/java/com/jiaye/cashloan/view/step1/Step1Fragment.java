@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.service.UploadFaceService;
-import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bioassay.BioassayActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
@@ -28,7 +27,7 @@ import com.jiaye.cashloan.widget.StepView;
  * @author 贾博瑄
  */
 
-public class Step1Fragment extends BaseFragment implements Step1Contract.View {
+public class Step1Fragment extends BaseStepFragment implements Step1Contract.View {
 
     private Step1Contract.Presenter mPresenter;
 
@@ -46,6 +45,7 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.step1_fragment, container, false);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -67,6 +67,11 @@ public class Step1Fragment extends BaseFragment implements Step1Contract.View {
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    protected void requestStep() {
+        mPresenter.requestStep();
     }
 
     @Override

@@ -119,16 +119,11 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         pagerScroller.initViewPagerScroll(mViewPager);
         mPresenter = new CertificationPresenter(this, new CertificationRepository());
         mPresenter.subscribe();
+        mPresenter.requestStep();
         IntentFilter intentFilter = new IntentFilter("refresh");
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
         mLocalBroadcastManager.registerReceiver(mReceiver, intentFilter);
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.requestStep();
     }
 
     @Override
@@ -152,12 +147,16 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     public void setStep(int step) {
         if (step == 1) {
             mViewPager.setCurrentItem(0);
+            Step1Fragment.refresh(getActivity());
         } else if (step == 2 || step == 3 || step == 4) {
             mViewPager.setCurrentItem(1);
+            Step2Fragment.refresh(getActivity());
         } else if (step == 5) {
             mViewPager.setCurrentItem(2);
+            Step3Fragment.refresh(getActivity());
         } else if (step == 6) {
             mViewPager.setCurrentItem(3);
+            Step4Fragment.refresh(getActivity());
         }
         switch (step) {
             case 6:
