@@ -10,6 +10,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_blue_hole"
+            android:drawableLeft="@drawable/info_ic_person"
+            android:drawablePadding="9dp"
+            android:gravity="center|left"
+            android:paddingLeft="21dp"
+            android:text="个人信息"
+            android:textColor="@color/color_blue"
+            android:textSize="15sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -182,9 +194,11 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="@color/color_blue_hole"
+            android:drawableLeft="@drawable/info_ic_contact"
+            android:drawablePadding="9dp"
             android:gravity="center|left"
             android:paddingLeft="21dp"
-            android:text="联系人一"
+            android:text="联系人一信息"
             android:textColor="@color/color_blue"
             android:textSize="15sp" />
 
@@ -307,9 +321,11 @@
             android:layout_height="30dp"
             android:layout_marginTop="12dp"
             android:background="@color/color_blue_hole"
+            android:drawableLeft="@drawable/info_ic_contact"
+            android:drawablePadding="9dp"
             android:gravity="center|left"
             android:paddingLeft="21dp"
-            android:text="联系人二"
+            android:text="联系人二信息"
             android:textColor="@color/color_blue"
             android:textSize="15sp" />
 

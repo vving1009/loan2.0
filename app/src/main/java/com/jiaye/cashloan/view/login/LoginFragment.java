@@ -42,6 +42,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.login_fragment, container, false);
         root.getBackground().setAlpha(26);
+        root.findViewById(R.id.img_close).setOnClickListener(v -> getActivity().finish());
         mEditPhone = root.findViewById(R.id.edit_phone);
         mEditPhone.addTextChangedListener(this);
         mEditPhone.setVerificationBtnEnabled(false);
