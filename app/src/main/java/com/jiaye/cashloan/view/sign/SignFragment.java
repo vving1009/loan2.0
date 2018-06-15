@@ -76,7 +76,6 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
                 .setPositiveButton("确定", ((dialog, which) -> mPresenter.sign(mSMSDialog.getInputText())))
                 .setNegativeButton("取消", ((dialog, which) -> mSMSDialog.dismiss()))
                 .build();
-        showSMSDialog();
         mPresenter = new SignPresenter(this, new SignRepository());
         mPresenter.subscribe();
         return root;
