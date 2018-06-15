@@ -114,8 +114,6 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
 
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
-        mText.setVisibility(View.VISIBLE);
-        mText.setText(R.string.info_submit);
         View root = LayoutInflater.from(getContext()).inflate(R.layout.info_fragment, frameLayout, true);
         root.findViewById(R.id.layout_1_relation).setOnClickListener(v -> show1Picker());
         root.findViewById(R.id.layout_2_relation).setOnClickListener(v -> show2Picker());
@@ -134,6 +132,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
         mEdit2Name = root.findViewById(R.id.edit_2_name);
         mText2Relation = root.findViewById(R.id.text_2_relation);
         mText2Phone = root.findViewById(R.id.text_2_phone_value);
+        root.findViewById(R.id.btn_submit).setOnClickListener(v -> mPresenter.submit());
         mPresenter = new InfoPresenter(this, new InfoRepository());
         mPresenter.subscribe();
         return root;
@@ -143,11 +142,6 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void onClickText() {
-        mPresenter.submit();
     }
 
     @Override
@@ -286,6 +280,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
                 }).setDividerColor(getResources().getColor(R.color.color_blue)).isDialog(true).build();
         mOptions2.setPicker(relations);
     }
+
     @Override
     public void finish() {
         getActivity().finish();
