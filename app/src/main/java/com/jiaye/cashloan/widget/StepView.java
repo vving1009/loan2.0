@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -28,6 +27,8 @@ public class StepView extends View {
     private int mType;
 
     private boolean mSelect;
+
+    private boolean mReady;
 
     private Bitmap mBitmapSelect;
 
@@ -71,19 +72,25 @@ public class StepView extends View {
                     break;
             }
         } else {
-            mPaintTop.setColor(Color.parseColor("#e2ebf3"));
-            mPaintBottom.setColor(Color.parseColor("#e2ebf3"));
+            mPaintTop.setColor(getResources().getColor(R.color.color_blue_hole));
+            mPaintBottom.setColor(getResources().getColor(R.color.color_blue_hole));
             switch (mType) {
                 case 0:
                     canvas.drawBitmap(mBitmapUnSelect, 0, 13 * density, mPaintMid);
                     canvas.drawRect(10 * density, 36 * density, 13 * density, 44 * density, mPaintBottom);
                     break;
                 case 1:
+                    if (mReady) {
+                        mPaintTop.setColor(getResources().getColor(R.color.color_blue));
+                    }
                     canvas.drawRect(10 * density, 0, 13 * density, 13 * density, mPaintTop);
                     canvas.drawBitmap(mBitmapUnSelect, 0, 13 * density, mPaintMid);
                     canvas.drawRect(10 * density, 36 * density, 13 * density, 44 * density, mPaintBottom);
                     break;
                 case 2:
+                    if (mReady) {
+                        mPaintTop.setColor(getResources().getColor(R.color.color_blue));
+                    }
                     canvas.drawRect(10 * density, 0, 13 * density, 13 * density, mPaintTop);
                     canvas.drawBitmap(mBitmapUnSelect, 0, 13 * density, mPaintMid);
                     break;
@@ -93,12 +100,14 @@ public class StepView extends View {
 
     public void setType(int type) {
         mType = type;
-        invalidate();
     }
 
     public void setSelect(boolean select) {
         mSelect = select;
-        invalidate();
+    }
+
+    public void setReady(boolean ready) {
+        mReady = ready;
     }
 
     private void init(Context context, AttributeSet attrs) {

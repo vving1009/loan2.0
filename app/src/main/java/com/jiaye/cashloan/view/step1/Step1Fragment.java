@@ -141,21 +141,25 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                     holder.setType(1);
                     holder.setName("人像对比");
                     holder.setState(mStep1.getBioassay());
+                    holder.setReady(mStep1.getId() == 1);
                     break;
                 case 2:
                     holder.setType(1);
                     holder.setName("个人资料 ");
                     holder.setState(mStep1.getPersonal());
+                    holder.setReady(mStep1.getBioassay() == 1);
                     break;
                 case 3:
                     holder.setType(1);
                     holder.setName("手机运营商");
                     holder.setState(mStep1.getPhone());
+                    holder.setReady(mStep1.getPersonal() == 1);
                     break;
                 case 4:
                     holder.setType(2);
                     holder.setName("车辆证件");
                     holder.setState(mStep1.getCar());
+                    holder.setReady(mStep1.getPhone() == 1);
                     break;
             }
         }
@@ -217,6 +221,10 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                     mStepView.setSelect(true);
                     break;
             }
+        }
+
+        public void setReady(boolean ready) {
+            mStepView.setReady(ready);
         }
     }
 }
