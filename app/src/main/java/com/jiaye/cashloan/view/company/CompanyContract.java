@@ -9,12 +9,14 @@ import java.util.List;
 /**
  * CompanyContract
  *
- * @author 贾博�?
+ * @author 贾博瑄
  */
 
 public interface CompanyContract {
 
     interface View extends BaseViewContract {
+
+        void setInitCity();
 
         void setCompanyListItemSelected(String company);
 
@@ -33,7 +35,7 @@ public interface CompanyContract {
 
         void queryPeopleByCompanyList(String column, String word);
 
-        void queryPeopleBySearchView(String newText);
+        void queryCompany(String city);
 
         void selectSalesman(Salesman salesman);
 

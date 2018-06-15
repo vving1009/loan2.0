@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".view.company.CompanyActivity">
+    tools:context=".view.company.CompanyActivity"
+    tools:ignore="RtlHardcoded,RtlSymmetry">
 
     <LinearLayout
         android:id="@+id/search_bar"
@@ -32,39 +33,23 @@
                 android:layout_marginLeft="6dp"
                 android:text="返回"
                 android:textColor="#989898"
-                android:textSize="14sp" />
-
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+        <Button
+            android:id="@+id/search_btn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="250dp"
+            android:layout_height="29dp"
             android:layout_gravity="center"
             android:layout_marginLeft="28dp"
-            android:layout_marginRight="35dp"
             android:background="@drawable/search_view_bg"
-            app:iconifiedByDefault="false"
-            app:queryHint="请输入营业厅名称、姓名、工号"
-            app:searchIcon="@null" />
+            android:text="请输入姓名、工号"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/color_gray"
+            android:textSize="12sp"/>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/ok_btn"
-        android:layout_width="230dp"
-        android:layout_height="44dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/search_people_ok_btn"
-        android:elevation="0dp"
-        android:gravity="center"
-        android:text="确 定"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:targetApi="lollipop" />
 
     <LinearLayout
         android:id="@+id/title"
@@ -96,7 +81,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ok_btn"
         android:layout_below="@id/title"
         android:orientation="horizontal">
 
@@ -115,6 +99,5 @@
             android:background="@android:color/white" />
 
     </LinearLayout>
-
 
 </RelativeLayout>

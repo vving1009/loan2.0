@@ -15,7 +15,7 @@ public interface HomeContract {
         /**
          * 显示搜索公司页面
          */
-        void showSearchView();
+        void showCompanyView();
 
         /**
          * 显示认证页面

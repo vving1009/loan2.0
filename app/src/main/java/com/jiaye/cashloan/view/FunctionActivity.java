@@ -13,11 +13,13 @@ import com.jiaye.cashloan.view.bankcard.BankCardFragment;
 import com.jiaye.cashloan.view.bindbank.BindBankFragment;
 import com.jiaye.cashloan.view.cash.CashFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.company.CompanyFragment;
 import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
+import com.jiaye.cashloan.view.search.SearchFragment;
 import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.support.SupportFragment;
 import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
@@ -30,7 +32,7 @@ import com.jiaye.cashloan.view.vehicle.VehicleFragment;
  */
 public class FunctionActivity extends AppCompatActivity {
 
-    private BaseFunctionFragment mFragment;
+    private BaseFragment mFragment;
 
     public static void function(Activity activity, String function) {
         Intent intent = new Intent(activity, FunctionActivity.class);
@@ -105,9 +107,17 @@ public class FunctionActivity extends AppCompatActivity {
                     // 提现
                     mFragment = CashFragment.newInstance(getIntent().getParcelableExtra("balance"));
                     break;
+                case "Company":
+                    // 公司业务员搜索
+                    mFragment = CompanyFragment.newInstance(getIntent().getStringExtra("city"));
+                    break;
+                case "Search":
+                    // 公司业务员搜索
+                    mFragment = SearchFragment.newInstance();
+                    break;
             }
         } else {
-            mFragment = (BaseFunctionFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
+            mFragment = (BaseFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_content, mFragment).commit();
     }

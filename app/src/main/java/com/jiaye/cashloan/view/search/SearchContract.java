@@ -1,39 +1,31 @@
 package com.jiaye.cashloan.view.search;
 
+import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
-import com.jiaye.cashloan.persistence.Salesman;
 
 import java.util.List;
 
 /**
  * SearchContract
  *
- * @author 贾博�?
+ * @author 贾博瑄
  */
 
 public interface SearchContract {
 
     interface View extends BaseViewContract {
 
-        void setCompanyListItemSelected(String company);
+        void setListDataChanged(List<Salesman> list);
 
-        void setCompanyListNoneSelected();
-
-        void setCompanyListDataChanged(List<String> list);
-
-        void setPersonListDataChanged(List<Salesman> list);
-
-        void setPersonListBlankContent();
+        void setListBlankContent();
 
         void showCertificationView();
     }
 
     interface Presenter extends BasePresenter {
 
-        void queryPeopleByCompanyList(String column, String word);
-
-        void queryPeopleBySearchView(String newText);
+        void querySalesman(String newText);
 
         void selectSalesman(Salesman salesman);
 

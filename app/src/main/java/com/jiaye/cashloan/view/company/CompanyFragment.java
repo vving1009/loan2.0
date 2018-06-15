@@ -1,17 +1,15 @@
 package com.jiaye.cashloan.view.company;
 
-import android.graphics.Color;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +21,9 @@ import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.company.source.CompanyRepository;
+import com.jiaye.cashloan.view.search.SearchFragment;
+import com.jiaye.cashloan.widget.SatcatcheDialog;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,11 +37,11 @@ import java.util.Objects;
 public class CompanyFragment extends BaseFragment implements CompanyContract.View {
 
     private CompanyContract.Presenter mPresenter;
-    private SearchView mSearchView;
     private RecyclerView mCompanyList;
     private RecyclerView mPersonList;
     private CompanyListAdapter mCompanyListAdapter;
     private PersonListAdapter mPersonListAdapter;
+    private SatcatcheDialog mDialog;
 
     public static CompanyFragment newInstance(String city) {
         Bundle args = new Bundle();
@@ -56,21 +55,21 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.company_fragment, container, false);
-        mSearchView = root.findViewById(R.id.search_view);
+        mDialog = new SatcatcheDialog.Builder(getContext())
+                .setTitle("提示")
+                .setMessage("是否选择当前客户经理")
+                .setPositiveButton("是", ((dialog, which) -> mPresenter.saveSalesman()))
+                .setNegativeButton("否", null)
+                .build();
         mCompanyList = root.findViewById(R.id.company_list);
         mPersonList = root.findViewById(R.id.person_list);
-        root.findViewById(R.id.img_back).setOnClickListener(v ->
-                Objects.requireNonNull(getActivity()).finish());
-        root.findViewById(R.id.ok_btn).setOnClickListener(v -> {
-            mPresenter.saveSalesman();
-        });
+        root.findViewById(R.id.search_btn).setOnClickListener(v -> FunctionActivity.function(getActivity(), "Search"));
+        root.findViewById(R.id.img_back).setOnClickListener(v -> Objects.requireNonNull(getActivity()).finish());
         initList();
-        initSearchView();
         mCompanyList.requestFocus();
-        new Handler().postDelayed(() ->
-                mSearchView.setQuery(getArguments().getString("city", ""), true), 200);
         mPresenter = new CompanyPresenter(this, new CompanyRepository());
         mPresenter.subscribe();
+        registerLocalBroadcast();
         return root;
     }
 
@@ -78,6 +77,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+        unRegisterLocalBroadcast();
     }
 
     @Override
@@ -88,6 +88,11 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     @Override
     public void setCompanyListNoneSelected() {
         mCompanyListAdapter.setNoneSelected();
+    }
+
+    @Override
+    public void setInitCity() {
+        mPresenter.queryCompany(getArguments().getString("city", ""));
     }
 
     @Override
@@ -111,44 +116,6 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     public void setPersonListDataChanged(List<Salesman> list) {
         setPersonListBlankContent();
         mPersonListAdapter.notifyListChange(list);
-    }
-
-    private void initSearchView() {
-        TextView textView = mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        textView.setTextColor(Color.BLACK);
-        textView.setTextSize(14);
-        textView.setHintTextColor(Color.GRAY);
-        textView.setGravity(Gravity.CENTER_VERTICAL);
-        SpannableString spanText = new SpannableString("请输入营业厅名称、姓名、工号");
-        spanText.setSpan(new AbsoluteSizeSpan(14, true), 0, spanText.length(),
-                Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        mSearchView.setQueryHint(spanText);// 设置字体大小
-        //动态显示删除✖键
-        mSearchView.onActionViewExpanded();
-        mSearchView.setIconified(true);
-
-        try {
-            Class<?> argClass = mSearchView.getClass();
-            Field searchPlate = argClass.getDeclaredField("mSearchPlate");
-            searchPlate.setAccessible(true);
-            View view = (View) searchPlate.get(mSearchView);
-            view.setBackgroundColor(Color.TRANSPARENT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mPresenter.queryPeopleBySearchView(newText);
-                return true;
-            }
-        });
     }
 
     private void initList() {
@@ -256,6 +223,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
                 selectPos = holder.getAdapterPosition();
                 notifyDataSetChanged();
                 mPresenter.selectSalesman(salesmen.get(selectPos));
+                mDialog.show();
             });
         }
 
@@ -290,5 +258,21 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
                 rootView = itemView.findViewById(R.id.root_view);
             }
         }
+    }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getActivity().finish();
+        }
+    };
+
+    private void registerLocalBroadcast(){
+        IntentFilter intentFilter = new IntentFilter(SearchFragment.FINISH_COMPANY_FRAGMENT_ACTION);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,intentFilter);
+    }
+
+    private void unRegisterLocalBroadcast(){
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 }

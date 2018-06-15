@@ -34,8 +34,6 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
 
     private final CompanyDataSource mDataSource;
 
-    private int step;
-
     private Salesman mSalesman;
 
     public CompanyPresenter(CompanyContract.View view, CompanyDataSource dataSource) {
@@ -58,6 +56,7 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
                 .subscribe(list -> {
                     mView.dismissProgressDialog();
                     mView.setCompanyListDataChanged(list);
+                    mView.setInitCity();
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
@@ -71,49 +70,16 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
     }
 
     @Override
-    public void queryPeopleBySearchView(String newText) {
+    public void queryCompany(String city) {
         List<com.jiaye.cashloan.persistence.Salesman> Salesmen = new ArrayList<>();
-        step = 0;
-        if (!TextUtils.isEmpty(newText)) {
-            Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, newText)
+        if (!TextUtils.isEmpty(city)) {
+            Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, city)
                     .filter(list -> list != null && list.size() != 0)
-                    .doOnNext(list -> {
-                        if (step == 0) {
-                            step = 1;
-                        }
-                    })
-                    .switchIfEmpty(mDataSource.queryPeople(DbContract.Salesman.COLUMN_NAME, newText))
-                    .filter(list -> list != null && list.size() != 0)
-                    .doOnNext(list -> {
-                        if (step == 0) {
-                            step = 2;
-                        }
-                    })
-                    .switchIfEmpty(mDataSource.queryPeople(DbContract.Salesman.COLUMN_WORK_ID, newText))
-                    .filter(list -> list != null && list.size() != 0)
-                    .doOnNext(list -> {
-                        if (step == 0) {
-                            step = 3;
-                        }
-                    })
                     .defaultIfEmpty(Salesmen)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(list -> {
-                        switch (step) {
-                            case 1:
-                                mView.setCompanyListItemSelected(list.get(0).getCompany());
-                                mView.setPersonListDataChanged(list);
-                                break;
-                            case 2:
-                            case 3:
-                                mView.setCompanyListNoneSelected();
-                                mView.setPersonListDataChanged(list);
-                                break;
-                            default:
-                                mView.setCompanyListNoneSelected();
-                                mView.setPersonListDataChanged(list);
-                                break;
-                        }
+                        mView.setCompanyListItemSelected(list.get(0).getCompany());
+                        mView.setPersonListDataChanged(list);
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         } else {

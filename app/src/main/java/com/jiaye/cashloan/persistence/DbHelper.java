@@ -223,7 +223,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public List<Salesman> querySales(String column, String value) {
         Cursor cursor = getReadableDatabase().rawQuery("select * from salesman where " + column + " like ?" +
-                "order by name", new String[]{"%" + value + "%"});
+                "order by work_id", new String[]{"%" + value + "%"});
         List<Salesman> salesmen = new ArrayList<>();
         while (cursor.moveToNext()) {
             Salesman sp = new Salesman();
