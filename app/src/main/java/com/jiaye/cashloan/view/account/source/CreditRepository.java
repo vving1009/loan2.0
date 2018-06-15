@@ -1,6 +1,8 @@
 package com.jiaye.cashloan.view.account.source;
 
 import com.jiaye.cashloan.http.LoanClient;
+import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditBalanceRequest;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
@@ -10,6 +12,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.http.data.my.CreditPasswordStatusRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import org.reactivestreams.Publisher;
 
@@ -18,6 +21,7 @@ import java.net.URLEncoder;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * CreditRepository
@@ -38,55 +42,9 @@ public class CreditRepository implements CreditDataSource {
     }
 
     @Override
-    public Flowable<CreditPasswordRequest> password() {
-        return creditInfo().map(new Function<CreditInfo, CreditPasswordRequest>() {
-            @Override
-            public CreditPasswordRequest apply(CreditInfo creditInfo) throws Exception {
-                mPasswordRequest = new CreditPasswordRequest();
-                mPasswordRequest.setAccountId(creditInfo.getAccountId());
-                mPasswordRequest.setIdNo(creditInfo.getId());
-                mPasswordRequest.setName(creditInfo.getName());
-                mPasswordRequest.setMobile(creditInfo.getPhone());
-                return mPasswordRequest;
-            }
-        }).flatMap(new Function<CreditPasswordRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
-            @Override
-            public Publisher<retrofit2.Response<ResponseBody>> apply(CreditPasswordRequest request) throws Exception {
-                return LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()));
-            }
-        }).flatMap(new Function<retrofit2.Response<ResponseBody>, Publisher<CreditPasswordRequest>>() {
-            @Override
-            public Publisher<CreditPasswordRequest> apply(retrofit2.Response<ResponseBody> sign) throws Exception {
-                mPasswordRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
-                return Flowable.just(mPasswordRequest);
-            }
-        });
-    }
-
-    @Override
-    public Flowable<CreditPasswordResetRequest> passwordReset() {
-        return creditInfo().map(new Function<CreditInfo, CreditPasswordResetRequest>() {
-            @Override
-            public CreditPasswordResetRequest apply(CreditInfo creditInfo) throws Exception {
-                mPasswordResetRequest = new CreditPasswordResetRequest();
-                mPasswordResetRequest.setAccountId(creditInfo.getAccountId());
-                mPasswordResetRequest.setIdNo(creditInfo.getId());
-                mPasswordResetRequest.setName(creditInfo.getName());
-                mPasswordResetRequest.setMobile(creditInfo.getPhone());
-                return mPasswordResetRequest;
-            }
-        }).flatMap(new Function<CreditPasswordResetRequest, Publisher<retrofit2.Response<ResponseBody>>>() {
-            @Override
-            public Publisher<retrofit2.Response<ResponseBody>> apply(CreditPasswordResetRequest request) throws Exception {
-                return LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()));
-            }
-        }).flatMap(new Function<retrofit2.Response<ResponseBody>, Publisher<CreditPasswordResetRequest>>() {
-            @Override
-            public Publisher<CreditPasswordResetRequest> apply(retrofit2.Response<ResponseBody> sign) throws Exception {
-                mPasswordResetRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
-                return Flowable.just(mPasswordResetRequest);
-            }
-        });
+    public Flowable<CreditInfo> creditInfo() {
+        return Flowable.just(new CreditInfoRequest())
+                .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
     }
 
     @Override
@@ -96,8 +54,42 @@ public class CreditRepository implements CreditDataSource {
     }
 
     @Override
-    public Flowable<CreditInfo> creditInfo() {
-        return Flowable.just(new CreditInfoRequest())
-                .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
+    public Flowable<EmptyResponse> saveBankCard(CreditInfo creditInfo) {
+        SaveBankCardRequest request = new SaveBankCardRequest();
+        request.setName(creditInfo.getAccountName());
+        request.setNumber(creditInfo.getBankNo());
+        request.setPhone(creditInfo.getPhone());
+        return Flowable.just(request)
+                .compose(new SatcatcheResponseTransformer<SaveBankCardRequest, EmptyResponse>("saveBankCard"));
+    }
+
+    @Override
+    public Flowable<CreditPasswordRequest> password() {
+        return creditInfo().map(creditInfo -> {
+            mPasswordRequest = new CreditPasswordRequest();
+            mPasswordRequest.setAccountId(creditInfo.getAccountId());
+            mPasswordRequest.setIdNo(creditInfo.getId());
+            mPasswordRequest.setName(creditInfo.getName());
+            mPasswordRequest.setMobile(creditInfo.getPhone());
+            return mPasswordRequest;
+        }).flatMap((Function<CreditPasswordRequest, Publisher<Response<ResponseBody>>>) request -> LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()))).flatMap((Function<Response<ResponseBody>, Publisher<CreditPasswordRequest>>) sign -> {
+            mPasswordRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
+            return Flowable.just(mPasswordRequest);
+        });
+    }
+
+    @Override
+    public Flowable<CreditPasswordResetRequest> passwordReset() {
+        return creditInfo().map(creditInfo -> {
+            mPasswordResetRequest = new CreditPasswordResetRequest();
+            mPasswordResetRequest.setAccountId(creditInfo.getAccountId());
+            mPasswordResetRequest.setIdNo(creditInfo.getId());
+            mPasswordResetRequest.setName(creditInfo.getName());
+            mPasswordResetRequest.setMobile(creditInfo.getPhone());
+            return mPasswordResetRequest;
+        }).flatMap((Function<CreditPasswordResetRequest, Publisher<Response<ResponseBody>>>) request -> LoanClient.INSTANCE.getService().sign(URLEncoder.encode(request.toString()))).flatMap((Function<Response<ResponseBody>, Publisher<CreditPasswordResetRequest>>) sign -> {
+            mPasswordResetRequest.setSign(new String(sign.body().string().getBytes("UTF-8")));
+            return Flowable.just(mPasswordResetRequest);
+        });
     }
 }
