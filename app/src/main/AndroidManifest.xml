@@ -58,7 +58,7 @@
             android:name=".view.account.AccountWebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.search.SearchActivity"
+            android:name=".view.company.CompanyActivity"
             android:screenOrientation="portrait" />
 
         <service
