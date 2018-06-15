@@ -14,16 +14,6 @@ public class LoginContract {
     interface View extends BaseViewContract {
 
         /**
-         * 设置登录按钮状态
-         */
-        void setLoginBtnEnable(boolean enable);
-
-        /**
-         * 设置短信验证按钮状态
-         */
-        void setSmsBtnEnable(boolean enable);
-
-        /**
          * 获取手机号
          */
         String getPhone();
@@ -45,11 +35,6 @@ public class LoginContract {
     }
 
     interface Presenter extends BasePresenter {
-
-        /**
-         * 输入检查
-         */
-        void checkInput();
 
         /**
          * 登录

@@ -61,7 +61,6 @@
         android:layout_height="44dp"
         android:layout_gravity="center"
         android:background="@drawable/step_btn"
-        android:enabled="false"
         android:text="@string/login_login"
         android:textColor="@android:color/white"
         android:textSize="18sp"

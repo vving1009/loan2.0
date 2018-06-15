@@ -31,25 +31,6 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
     }
 
     @Override
-    public void checkInput() {
-        /*监听获取验证码按钮是否可用*/
-        if (!TextUtils.isEmpty(mView.getPhone())) {
-            mView.setSmsBtnEnable(true);
-        } else {
-            mView.setSmsBtnEnable(false);
-        }
-        /*监听登录按钮是否可用*/
-        if (TextUtils.isEmpty(mView.getPhone())) {
-            mView.setLoginBtnEnable(false);
-        } else if (TextUtils.isEmpty(mView.getCode())) {
-            mView.setLoginBtnEnable(false);
-        } else {
-            mView.setLoginBtnEnable(true);
-        }
-
-    }
-
-    @Override
     public void login() {
         if (TextUtils.isEmpty(mView.getPhone()) || !mView.getPhone().matches(RegexUtil.phone())) {/*检测手机号*/
             mView.showToastById(R.string.error_auth_phone);

@@ -2,8 +2,6 @@ package com.jiaye.cashloan.view.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,7 @@ import com.jiaye.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class LoginFragment extends BaseFragment implements LoginContract.View, TextWatcher {
+public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     private LoginContract.Presenter mPresenter;
 
@@ -44,14 +42,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
         root.getBackground().setAlpha(26);
         root.findViewById(R.id.img_close).setOnClickListener(v -> getActivity().finish());
         mEditPhone = root.findViewById(R.id.edit_phone);
-        mEditPhone.addTextChangedListener(this);
-        mEditPhone.setVerificationBtnEnabled(false);
         mEditPhone.setOnClickVerificationCode(() -> {
             clearError();
             mPresenter.verificationCode();
         });
         mEditCode = root.findViewById(R.id.edit_code);
-        mEditCode.addTextChangedListener(this);
         mBtnLogin = root.findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(v -> {
             clearError();
@@ -66,31 +61,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, T
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        mPresenter.checkInput();
-    }
-
-    @Override
-    public void setLoginBtnEnable(boolean enable) {
-        mBtnLogin.setEnabled(enable);
-    }
-
-    @Override
-    public void setSmsBtnEnable(boolean enable) {
-        mEditPhone.setVerificationBtnEnabled(enable);
     }
 
     @Override
