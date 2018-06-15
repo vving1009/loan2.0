@@ -42,7 +42,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater,container,savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.step3_fragment, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -126,6 +126,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
                 } else if (mStep3.getFile() == 1) {
                     holder.setStateText("已认证");
                 }
+                holder.setReady(mStep3.getTaobao() == 1);
             } else if (position == 2) {
                 holder.setType(2);
                 holder.setName("电子签章授权");
@@ -135,6 +136,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
                 } else if (mStep3.getSign() == 1) {
                     holder.setStateText("已授权");
                 }
+                holder.setReady(mStep3.getFile() == 1);
             }
         }
 
@@ -174,6 +176,10 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
         public void setType(int type) {
             mStepView.setType(type);
+        }
+
+        public void setReady(boolean ready) {
+            mStepView.setReady(ready);
         }
 
         public void setName(String name) {
