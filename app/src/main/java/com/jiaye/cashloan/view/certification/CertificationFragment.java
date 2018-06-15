@@ -91,6 +91,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         mTextStep2 = view.findViewById(R.id.text_step_2);
         mTextStep3 = view.findViewById(R.id.text_step_3);
         mTextStep4 = view.findViewById(R.id.text_step_4);
+        mViewPager.setOffset(true);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override

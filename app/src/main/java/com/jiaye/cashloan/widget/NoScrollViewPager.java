@@ -13,12 +13,23 @@ import android.view.MotionEvent;
 
 public class NoScrollViewPager extends ViewPager {
 
+    // 配合ScrollOffsetTransformer使用
+    private static final float MIN_SCALE = 0.8325f;
+
+    private float xLeft;
+
+    private float xRight;
+
+    private boolean mIsOffset;
+
     public NoScrollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public NoScrollViewPager(Context context) {
         super(context);
+        init();
     }
 
     @Override
@@ -28,6 +39,21 @@ public class NoScrollViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
-        return false;
+        return mIsOffset && (arg0.getX() < xLeft || arg0.getX() > xRight);
+    }
+
+    public boolean isOffset() {
+        return mIsOffset;
+    }
+
+    public void setOffset(boolean offset) {
+        mIsOffset = offset;
+    }
+
+    private void init() {
+        int width = getResources().getDisplayMetrics().widthPixels;
+        float density = getResources().getDisplayMetrics().density;
+        xLeft = (width - 300 * MIN_SCALE * density) / 2;
+        xRight = xLeft + 300 * MIN_SCALE * density;
     }
 }
