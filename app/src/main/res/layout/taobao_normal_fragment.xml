@@ -76,7 +76,6 @@
         android:layout_marginTop="52dp"
         android:layout_gravity="center"
         android:background="@drawable/loan_btn"
-        android:enabled="false"
         android:text="@string/loan_auth_taobao_normal_commit"
         android:textColor="@android:color/white"
         android:textSize="18sp" />

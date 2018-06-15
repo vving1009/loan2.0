@@ -3,12 +3,9 @@ package com.jiaye.cashloan.view.taobao;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
@@ -21,7 +18,7 @@ import com.jiaye.cashloan.widget.LoanEditText;
  * @author 贾博瑄
  */
 
-public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalContract.View, TextWatcher {
+public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalContract.View {
 
     private TaoBaoNormalContract.Presenter mPresenter;
 
@@ -32,8 +29,6 @@ public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalCo
     private LoanEditText mEditSMS;
 
     private LoanEditText mEditIMG;
-
-    private Button mBtnNext;
 
     public static TaoBaoNormalFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,29 +45,9 @@ public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalCo
         mEditPassword = root.findViewById(R.id.edit_code);
         mEditSMS = root.findViewById(R.id.edit_sms);
         mEditIMG = root.findViewById(R.id.edit_img);
-        mEditSMS.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                mPresenter.requestSMS();
-            }
-        });
-        mEditIMG.setOnClickVerificationCode(new LoanEditText.OnClickVerificationCode() {
-            @Override
-            public void onClickVerificationCode() {
-                mPresenter.requestIMG();
-            }
-        });
-        mBtnNext = root.findViewById(R.id.btn_commit);
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.submit();
-            }
-        });
-        mEditAccount.addTextChangedListener(this);
-        mEditPassword.addTextChangedListener(this);
-        mEditSMS.addTextChangedListener(this);
-        mEditIMG.addTextChangedListener(this);
+        mEditSMS.setOnClickVerificationCode(() -> mPresenter.requestSMS());
+        mEditIMG.setOnClickVerificationCode(() -> mPresenter.requestIMG());
+        root.findViewById(R.id.btn_commit).setOnClickListener(v -> mPresenter.submit());
         mPresenter = new TaoBaoNormalPresenter(this, new TaoBaoNormalRepository());
         mPresenter.subscribe();
         return root;
@@ -82,21 +57,6 @@ public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalCo
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        mPresenter.checkInput();
     }
 
     @Override
@@ -127,11 +87,6 @@ public class TaoBaoNormalFragment extends BaseFragment implements TaoBaoNormalCo
     @Override
     public String getImgCode() {
         return mEditIMG.getText().toString();
-    }
-
-    @Override
-    public void setEnable(boolean enable) {
-        mBtnNext.setEnabled(enable);
     }
 
     @Override

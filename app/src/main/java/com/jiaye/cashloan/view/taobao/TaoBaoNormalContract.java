@@ -27,8 +27,6 @@ public interface TaoBaoNormalContract {
 
         String getImgCode();
 
-        void setEnable(boolean enable);
-
         void cleanImgVerificationCodeText();
 
         void setImgVerificationCodeVisibility();
@@ -47,8 +45,6 @@ public interface TaoBaoNormalContract {
         void requestSMS();
 
         void requestIMG();
-
-        void checkInput();
 
         void submit();
     }
