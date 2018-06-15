@@ -53,6 +53,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
                     .compose(new ViewTransformer<>())
                     .subscribe(aBoolean -> {
                         mView.setBtnText("登录");
+                        mIsLogin = false;
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         } else {

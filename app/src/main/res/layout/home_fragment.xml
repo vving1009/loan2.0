@@ -13,14 +13,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_height="137dp"
             android:background="@color/color_blue">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/home_ic_logo" />
 
             <TextView
@@ -28,9 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="19dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/home_ic_location"
+                android:gravity="bottom|right"
                 android:includeFontPadding="false"
                 android:textColor="@android:color/white"
                 android:textSize="17sp" />
