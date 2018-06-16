@@ -5,12 +5,11 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginTop="11dp"
-        android:background="#4CC1EC"
+        android:layout_width="345dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_blue"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -19,32 +18,50 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/loan_plan_date"
+            android:text="@string/plan_date"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/loan_plan_money"
+            android:text="@string/plan_principal"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/loan_plan_state"
+            android:text="@string/plan_interest"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/plan_charge"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/plan_repayment"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="11dp"

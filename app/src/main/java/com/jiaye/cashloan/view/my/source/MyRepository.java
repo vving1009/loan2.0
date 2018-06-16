@@ -6,14 +6,13 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CheckAccount;
 import com.jiaye.cashloan.http.data.my.CheckAccountRequest;
+import com.jiaye.cashloan.http.data.plan.Plan;
+import com.jiaye.cashloan.http.data.plan.PlanRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
 import com.jiaye.cashloan.view.LocalException;
 
-import org.reactivestreams.Publisher;
-
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 
 /**
  * MyRepository
@@ -51,14 +50,14 @@ public class MyRepository implements MyDataSource {
     }
 
     @Override
-    public Flowable<Boolean> checkPlan() {
-        // todo 还款计划接口
+    public Flowable<Plan> checkPlan() {
         return queryUser().map(user -> {
             if (TextUtils.isEmpty(user.getToken())) {
                 throw new LocalException(R.string.error_auth_not_log_in);
             } else {
                 return user;
             }
-        }).flatMap((Function<User, Publisher<Boolean>>) user -> Flowable.just(false));
+        }).map(user -> new PlanRequest())
+                .compose(new SatcatcheResponseTransformer<PlanRequest, Plan>("plan"));
     }
 }

@@ -1,8 +1,10 @@
 package com.jiaye.cashloan.view.plan;
 
-import com.jiaye.cashloan.http.data.loan.LoanPlan;
+import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
+
+import java.util.List;
 
 /**
  * PlanContract
@@ -14,7 +16,7 @@ public interface PlanContract {
 
     interface View extends BaseViewContract {
 
-        void setPlans(LoanPlan.Plan[] plans);
+        void setPlans(List<Plan.Details> list);
     }
 
     interface Presenter extends BasePresenter {

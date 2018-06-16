@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="28dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:ignore="SmallSp">
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/color_gray"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/text_principal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/color_gray"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/text_interest"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/color_gray"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/text_charge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/color_gray"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/text_repayment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/color_gray"
+        android:textSize="9sp" />
+</LinearLayout>

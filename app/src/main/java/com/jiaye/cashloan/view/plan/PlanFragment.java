@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.loan.LoanPlan;
+import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.plan.source.PlanRepository;
+
+import java.util.List;
 
 /**
  * PlanFragment
@@ -42,7 +44,7 @@ public class PlanFragment extends BaseFunctionFragment implements PlanContract.V
 
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
-        View root = inflater.inflate(R.layout.loan_plan_activity, frameLayout, true);
+        View root = inflater.inflate(R.layout.plan_fragment, frameLayout, true);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
@@ -59,39 +61,41 @@ public class PlanFragment extends BaseFunctionFragment implements PlanContract.V
     }
 
     @Override
-    public void setPlans(LoanPlan.Plan[] plans) {
-        mAdapter.setPlans(plans);
+    public void setPlans(List<Plan.Details> list) {
+        mAdapter.setPlans(list);
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private LoanPlan.Plan[] mPlans;
+        private List<Plan.Details> mList;
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.loan_plan_item, parent, false);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.plan_item, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setBackground(position);
-            holder.setDate(mPlans[position].getDate());
-            holder.setMoney(mPlans[position].getMoney());
-            holder.setState(mPlans[position].getStatus());
+            holder.setDate(mList.get(position).getDate());
+            holder.setPrincipal(mList.get(position).getPrincipal());
+            holder.setInterest(mList.get(position).getInterest());
+            holder.setCharge(mList.get(position).getCharge());
+            holder.setRepayment(mList.get(position).getRepayment());
         }
 
         @Override
         public int getItemCount() {
-            if (mPlans == null) {
+            if (mList == null || mList.size() == 0) {
                 return 0;
             } else {
-                return mPlans.length;
+                return mList.size();
             }
         }
 
-        public void setPlans(LoanPlan.Plan[] plans) {
-            mPlans = plans;
+        public void setPlans(List<Plan.Details> list) {
+            mList = list;
             notifyDataSetChanged();
         }
     }
@@ -102,23 +106,29 @@ public class PlanFragment extends BaseFunctionFragment implements PlanContract.V
 
         private TextView mTextDate;
 
-        private TextView mTextMoney;
+        private TextView mTextPrincipal;
 
-        private TextView mTextState;
+        private TextView mTextInterest;
+
+        private TextView mTextCharge;
+
+        private TextView mTextRepayment;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mLayout = itemView.findViewById(R.id.layout);
-            mTextState = itemView.findViewById(R.id.text_state);
-            mTextMoney = itemView.findViewById(R.id.text_money);
             mTextDate = itemView.findViewById(R.id.text_date);
+            mTextPrincipal = itemView.findViewById(R.id.text_principal);
+            mTextInterest = itemView.findViewById(R.id.text_interest);
+            mTextCharge = itemView.findViewById(R.id.text_charge);
+            mTextRepayment = itemView.findViewById(R.id.text_repayment);
         }
 
         public void setBackground(int position) {
             if (position % 2 == 0) {
                 mLayout.setBackgroundColor(Color.WHITE);
             } else {
-                mLayout.setBackgroundColor(Color.parseColor("#E6E6E6"));
+                mLayout.setBackgroundColor(Color.parseColor("#F2F2F2"));
             }
         }
 
@@ -126,12 +136,20 @@ public class PlanFragment extends BaseFunctionFragment implements PlanContract.V
             mTextDate.setText(date);
         }
 
-        public void setState(String state) {
-            mTextState.setText(state);
+        public void setPrincipal(String principal) {
+            mTextPrincipal.setText(principal);
         }
 
-        public void setMoney(String money) {
-            mTextMoney.setText(money);
+        public void setInterest(String interest) {
+            mTextInterest.setText(interest);
+        }
+
+        public void setCharge(String charge) {
+            mTextCharge.setText(charge);
+        }
+
+        public void setRepayment(String repayment) {
+            mTextRepayment.setText(repayment);
         }
     }
 }

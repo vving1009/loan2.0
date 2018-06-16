@@ -1,6 +1,7 @@
 package com.jiaye.cashloan.view.my.source;
 
 import com.jiaye.cashloan.http.data.my.CheckAccount;
+import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.persistence.User;
 
 import io.reactivex.Flowable;
@@ -20,5 +21,5 @@ public interface MyDataSource {
 
     Flowable<CheckAccount> checkBank();
 
-    Flowable<Boolean> checkPlan();
+    Flowable<Plan> checkPlan();
 }

@@ -41,6 +41,13 @@
     <string name="cash_title">提现</string>
     <!--my-->
     <string name="my_error_account">暂时无法进入存管账户管理</string>
+    <string name="my_error_plan">暂时没有还款计划</string>
+    <!--plan-->
+    <string name="plan_date">还款日期</string>
+    <string name="plan_principal">本金</string>
+    <string name="plan_interest">利息</string>
+    <string name="plan_charge">服务费</string>
+    <string name="plan_repayment">还款金额</string>
     <!--loan auth-->
     <string name="loan_auth_name">姓名</string>
     <string name="loan_auth_ocr_number">身份证号</string>
@@ -76,9 +83,6 @@
     <string name="loan_auth_file_camera">拍照</string>
     <string name="loan_auth_file_photo">相册</string>
     <string name="loan_plan_title">还款计划</string>
-    <string name="loan_plan_date">还款日</string>
-    <string name="loan_plan_money">月还款额</string>
-    <string name="loan_plan_state">还款状态</string>
     <string name="loan_bank_person">持卡人</string>
     <string name="loan_bank_phone">预留手机号</string>
     <string name="loan_bank_phone_hint">输入银行预留手机号</string>

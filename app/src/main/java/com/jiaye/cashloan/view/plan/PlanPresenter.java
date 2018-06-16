@@ -1,7 +1,13 @@
 package com.jiaye.cashloan.view.plan;
 
+import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.plan.source.PlanDataSource;
+
+import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * PlanPresenter
@@ -23,5 +29,18 @@ public class PlanPresenter extends BasePresenterImpl implements PlanContract.Pre
     @Override
     public void subscribe() {
         super.subscribe();
+        Disposable disposable = mDataSource.plan()
+                .compose(new ViewTransformer<List<Plan.Details>>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(details -> {
+                    mView.dismissProgressDialog();
+                    mView.setPlans(details);
+                });
+        mCompositeDisposable.add(disposable);
     }
 }

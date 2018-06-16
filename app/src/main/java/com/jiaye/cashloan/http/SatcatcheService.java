@@ -39,8 +39,6 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
-import com.jiaye.cashloan.http.data.loan.LoanPlan;
-import com.jiaye.cashloan.http.data.loan.LoanPlanRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
 import com.jiaye.cashloan.http.data.loan.LoanProgressRequest;
 import com.jiaye.cashloan.http.data.loan.Person;
@@ -75,6 +73,8 @@ import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
 import com.jiaye.cashloan.http.data.my.PhoneRequest;
+import com.jiaye.cashloan.http.data.plan.Plan;
+import com.jiaye.cashloan.http.data.plan.PlanRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
@@ -248,6 +248,12 @@ public interface SatcatcheService {
     @POST("saveBindingBankCard")
     Flowable<SatcatcheResponse<EmptyResponse>> saveBankCard(@Body SatcatcheRequest<SaveBankCardRequest> request);
 
+    /**
+     * 查询还款计划 25
+     */
+    @POST("queryGetRepaymentDetail")
+    Flowable<SatcatcheResponse<Plan>> plan(@Body SatcatcheRequest<PlanRequest> request);
+
     /*旧的接口*/
 
     /**
@@ -351,12 +357,6 @@ public interface SatcatcheService {
      */
     @POST("shjk")
     Flowable<SatcatcheResponse<LoanApply>> loanApply(@Body SatcatcheRequest<LoanApplyRequest> request);
-
-    /**
-     * 还款列表
-     */
-    @POST("repaymentPlan")
-    Flowable<SatcatcheResponse<LoanPlan>> loanPlan(@Body SatcatcheRequest<LoanPlanRequest> request);
 
     /**
      * 查看合同列表
