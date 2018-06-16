@@ -14,7 +14,6 @@ import com.jiaye.cashloan.view.company.source.CompanyDataSource;
 
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -71,11 +70,9 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
 
     @Override
     public void queryCompany(String city) {
-        List<com.jiaye.cashloan.persistence.Salesman> Salesmen = new ArrayList<>();
         if (!TextUtils.isEmpty(city)) {
             Disposable disposable = mDataSource.queryPeople(DbContract.Salesman.COLUMN_COMPANY, city)
-                    .filter(list -> list != null && list.size() != 0)
-                    .defaultIfEmpty(Salesmen)
+                    .filter(list -> list != null && list.size() > 0)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(list -> {
                         mView.setCompanyListItemSelected(list.get(0).getCompany());
