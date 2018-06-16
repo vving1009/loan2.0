@@ -7,8 +7,6 @@ import com.jiaye.cashloan.http.data.loan.LoanBindBank;
 import com.jiaye.cashloan.http.data.loan.LoanBindBankRequest;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMS;
 import com.jiaye.cashloan.http.data.loan.LoanOpenSMSRequest;
-import com.jiaye.cashloan.http.data.loan.LoanVisaSMS;
-import com.jiaye.cashloan.http.data.loan.LoanVisaSMSRequest;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSign;
 import com.jiaye.cashloan.http.data.loan.LoanVisaSignRequest;
 import com.jiaye.cashloan.http.data.loan.SupportBankList;
@@ -48,15 +46,9 @@ public interface LoanService {
     Flowable<ResponseBody> dictCommon(@Body DictionaryListRequest request);
 
     /**
-     * 电子签章短信验证码
-     */
-    @POST("esign/sendMobileCode")
-    Flowable<Response<LoanVisaSMS>> loanVisaSMS(@Body Request<LoanVisaSMSRequest> request);
-
-    /**
      * 电子签章
      */
-    @POST("esign/eSignCompact")
+    @POST("esignSq")
     Flowable<Response<LoanVisaSign>> loanVisaSign(@Body Request<LoanVisaSignRequest> request);
 
     /**

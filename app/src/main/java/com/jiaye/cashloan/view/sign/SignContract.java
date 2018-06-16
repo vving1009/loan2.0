@@ -15,17 +15,11 @@ public interface SignContract {
 
         void postUrl(String url, byte[] postData);
 
-        void showSMSDialog();
-
-        void dismissSMSDialog();
-
         void hideBtn();
     }
 
     interface Presenter extends BasePresenter {
 
-        void sendSMS();
-
-        void sign(String sms);
+        void sign();
     }
 }

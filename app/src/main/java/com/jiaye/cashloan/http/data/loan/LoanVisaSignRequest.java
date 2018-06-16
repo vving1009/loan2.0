@@ -11,30 +11,19 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class LoanVisaSignRequest extends ChildRequest {
 
-    @SerializedName("tel_code")
-    private String sms;
+    @SerializedName("app_jlaId")
+    private String loanId;
 
-    @SerializedName("compact_type")
-    private String type;
-
-    public String getSms() {
-        return sms;
+    public String getLoanId() {
+        return loanId;
     }
 
-    public void setSms(String sms) {
-        this.sms = sms;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     @Override
     protected String getBusiness() {
-        return "CL055";
+        return "CL071";
     }
 }

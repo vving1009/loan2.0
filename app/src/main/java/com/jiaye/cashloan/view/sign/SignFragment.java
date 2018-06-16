@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.sign.source.SignRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
 
 /**
  * SignFragment
@@ -27,8 +26,6 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
     private SignContract.Presenter mPresenter;
 
     private WebView mWebView;
-
-    private SatcatcheDialog mSMSDialog;
 
     private Button mBtnVisa;
 
@@ -49,7 +46,7 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View root = inflater.inflate(R.layout.sign_fragment, frameLayout, true);
         mBtnVisa = root.findViewById(R.id.btn_visa);
-        mBtnVisa.setOnClickListener(v -> mPresenter.sendSMS());
+        mBtnVisa.setOnClickListener(v -> mPresenter.sign());
         mWebView = root.findViewById(R.id.web_view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
@@ -69,13 +66,6 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
                 handler.proceed();
             }
         });
-        mSMSDialog = new SatcatcheDialog.Builder(getContext())
-                .setTitle("提示")
-                .setMessage("请输入您收到的验证码")
-                .setEnableEditText(true)
-                .setPositiveButton("确定", ((dialog, which) -> mPresenter.sign(mSMSDialog.getInputText())))
-                .setNegativeButton("取消", ((dialog, which) -> mSMSDialog.dismiss()))
-                .build();
         mPresenter = new SignPresenter(this, new SignRepository());
         mPresenter.subscribe();
         return root;
@@ -90,16 +80,6 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
     @Override
     public void postUrl(String url, byte[] postData) {
         mWebView.postUrl(url, postData);
-    }
-
-    @Override
-    public void showSMSDialog() {
-        mSMSDialog.show();
-    }
-
-    @Override
-    public void dismissSMSDialog() {
-        mSMSDialog.dismiss();
     }
 
     @Override
