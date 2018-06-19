@@ -50,7 +50,7 @@ public class VehicleRepository implements VehicleDataSource {
                             request.setPicType("9");
                             break;
                         case VehicleContract.FOLDER_VEHICLE_OWNERSHIP:
-                            request.setPicType("10");
+                            request.setPicType("11");
                             break;
                     }
                     request.setPicUrl(BuildConfig.OSS_BASE_URL + ossPath);
