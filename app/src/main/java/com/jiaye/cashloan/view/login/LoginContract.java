@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.login;
 
+import android.net.Uri;
+
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
@@ -32,6 +34,11 @@ public class LoginContract {
          * 验证码倒计时
          */
         void smsVerificationCodeCountDown();
+
+        /**
+         * 填写验证码
+         */
+        void writeSmsCode(String code);
     }
 
     interface Presenter extends BasePresenter {
@@ -45,5 +52,10 @@ public class LoginContract {
          * 发送验证码
          */
         void verificationCode();
+
+        /**
+         * 自动获取验证码
+         */
+        void getSmsCode(Uri uri);
     }
 }

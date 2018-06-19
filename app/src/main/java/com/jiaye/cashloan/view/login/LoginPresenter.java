@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.login;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
@@ -11,7 +12,9 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.login.source.LoginDataSource;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * LoginPresenter
@@ -71,5 +74,14 @@ public class LoginPresenter extends BasePresenterImpl implements LoginContract.P
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         }
+    }
+
+    @Override
+    public void getSmsCode(Uri uri) {
+        Disposable disposable = mDataSource.querySmsCode(uri)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::writeSmsCode, new ThrowableConsumer());
+        mCompositeDisposable.add(disposable);
     }
 }

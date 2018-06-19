@@ -1,12 +1,20 @@
 package com.jiaye.cashloan.view.login.source;
 
+import android.database.Cursor;
+import android.net.Uri;
+
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
+import com.jiaye.cashloan.utils.RegexUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 
 /**
@@ -39,5 +47,35 @@ public class LoginRepository implements LoginDataSource {
         return Flowable.just(request)
                 .compose(new SatcatcheResponseTransformer<VerificationCodeRequest, EmptyResponse>
                         ("verificationCode"));
+    }
+
+    @Override
+    public Flowable<String> querySmsCode(Uri uri) {
+        return Flowable.create(e -> {
+            if (uri.toString().equals("content://sms/raw")) {
+                return;
+            }
+            Uri inboxUri = Uri.parse("content://sms/inbox");
+            Cursor c = LoanApplication.getInstance().getContentResolver().query(inboxUri,
+                    null, null, null, "date desc");
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    // 手机号
+                    String address = c.getString(c.getColumnIndex("address"));
+                    // 短信内容
+                    String body = c.getString(c.getColumnIndex("body"));
+                    if (!address.matches(RegexUtil.smsPhoneNum())) {
+                        return;
+                    }
+                    // 正则表达式截取验证码
+                    Pattern pattern = Pattern.compile(RegexUtil.smsCode());
+                    Matcher matcher = pattern.matcher(body);
+                    if (matcher.find()) {
+                        e.onNext(matcher.group());
+                    }
+                }
+                c.close();
+            }
+        }, BackpressureStrategy.DROP);
     }
 }
