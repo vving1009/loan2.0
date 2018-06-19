@@ -17,7 +17,6 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.guide.GuideActivity;
 import com.jiaye.cashloan.view.launch.source.LaunchRepository;
 import com.jiaye.cashloan.view.main.MainActivity;
 import com.jiaye.cashloan.widget.SatcatcheDialog;
@@ -112,13 +111,6 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-    }
-
-    @Override
-    public void showGuideView() {
-        Intent intent = new Intent(getActivity(), GuideActivity.class);
-        getActivity().startActivity(intent);
-        getActivity().finish();
     }
 
     @Override

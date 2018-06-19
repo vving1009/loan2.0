@@ -39,9 +39,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.guide.GuideActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -94,11 +94,6 @@ public class LaunchRepository implements LaunchDataSource {
                 .map(inputStream -> save(inputStream, "loan.apk"));
     }
 
-    @Override
-    public boolean isNeedGuide() {
-        return LoanApplication.getInstance().getPreferencesHelper().isNeedGuide();
-    }
-
     private File save(InputStream input, String name) {
         File dir = LoanApplication.getInstance().getApplicationContext().getExternalFilesDir("Download");
         if (dir != null && !dir.exists()) {

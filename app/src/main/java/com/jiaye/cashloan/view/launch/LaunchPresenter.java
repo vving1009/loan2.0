@@ -59,10 +59,6 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
 
     @Override
     public void auto() {
-        if (mDataSource.isNeedGuide()) {
-            mView.showGuideView();
-        } else {
-            mView.showMainView();
-        }
+        mView.showMainView();
     }
 }

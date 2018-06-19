@@ -17,11 +17,6 @@ public interface LaunchContract {
     interface View extends BaseViewContract {
 
         /**
-         * 显示引导页
-         */
-        void showGuideView();
-
-        /**
          * 显示主页面
          */
         void showMainView();

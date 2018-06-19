@@ -29,11 +29,4 @@ public interface LaunchDataSource {
      * 下载应用
      */
     Flowable<File> download(DownloadProgressListener listener);
-
-    /**
-     * 是否需要引导
-     *
-     * @return true 需要 false 不需要
-     */
-    boolean isNeedGuide();
 }
