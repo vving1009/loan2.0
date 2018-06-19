@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">嘉E贷</string>
     <string name="home">首页</string>
     <string name="my">我的</string>
@@ -18,7 +18,6 @@
     <!--phone-->
     <string name="phone_title">手机运营商</string>
     <!--info-->
-    <string name="info_submit">提交</string>
     <string name="error_auth_unknown_contact">获取手机通讯录失败</string>
     <!--taobao-->
     <string name="taobao_title">淘宝/支付宝认证</string>
@@ -58,12 +57,11 @@
     <string name="loan_auth_visa_confirm">确认电子签章授权</string>
     <string name="loan_auth_face_fail">活体检测失败</string>
     <string name="loan_auth_info">个人资料</string>
-    <string name="loan_auth_person_info">个人信息</string>
     <string name="loan_auth_person_register_city">户籍所在城市</string>
     <string name="loan_auth_person_city">现居住城市</string>
     <string name="loan_auth_person_address">现居住地址</string>
     <string name="loan_auth_person_email">电子邮箱</string>
-    <string name="loan_auth_contact_info">联系人信息</string>
+    <string name="loan_auth_contact_info" tools:keep="@string/loan_auth_contact_info">联系人信息</string>
     <string name="loan_auth_contact_family">关系</string>
     <string name="loan_auth_contact_friend">亲属/朋友</string>
     <string name="loan_auth_contact_phone">手机号码</string>
@@ -158,7 +156,6 @@
     <string name="error_loan_auth_ocr_idcard">身份证号错误，请重新扫描上传</string>
     <string name="error_loan_auth_ocr_date">身份证有效期错误，请重新扫描上传</string>
     <string name="error_loan_auth_face">人像识别检测失败</string>
-    <string name="error_loan_visa_sms">请输入正确的验证码</string>
     <string name="error_loan_person_register_city">请选择户籍所在城市</string>
     <string name="error_loan_person_city">请选择现居住城市</string>
     <string name="error_loan_person_address">请输入现居住地址</string>
