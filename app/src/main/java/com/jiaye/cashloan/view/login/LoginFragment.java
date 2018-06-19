@@ -120,8 +120,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, E
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == READ_SMS_REQUEST && EasyPermissions.hasPermissions(getContext(),
-                Manifest.permission.READ_SMS)) {
+        if (requestCode == READ_SMS_REQUEST) {
             mPresenter.verificationCode();
         }
     }
