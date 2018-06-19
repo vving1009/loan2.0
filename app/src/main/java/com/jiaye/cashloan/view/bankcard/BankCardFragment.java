@@ -63,6 +63,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     public void complete() {
         mDialogBuilder.setMessage(getString(R.string.my_bank_un_bind_complete))
                 .setButtonNumber(0)
+                .setCancelable(true)
                 .setOnDismissListener(dialog -> getActivity().finish())
                 .build().show();
     }
@@ -78,6 +79,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     public void unBindFailedWrongCode() {
         mDialogBuilder.setMessage("解绑未成功\n错误代码：显示对应错误原因")
                 .setButtonNumber(0)
+                .setCancelable(true)
                 .build().show();
     }
 

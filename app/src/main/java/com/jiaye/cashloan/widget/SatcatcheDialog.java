@@ -34,6 +34,7 @@ public class SatcatcheDialog extends BaseDialog {
     private String mMessage;
     private SpannableString mMessageSpannable;
     private boolean mEnableEditText;
+    private boolean mCancelable;
     private String mPositiveButtonText, mNegativeButtonText;
     private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
     private OnDismissListener mOnDismissListener;
@@ -45,7 +46,7 @@ public class SatcatcheDialog extends BaseDialog {
     private Button mPositiveBtn, mNegativeBtn;
 
     private SatcatcheDialog(Context context, @StyleRes int themeResId, int buttonNum, String title,
-                            String message, SpannableString messageSpannable,
+                            String message, SpannableString messageSpannable, Boolean cancelable,
                             String positiveButtonText, String negativeButtonText,
                             DialogInterface.OnClickListener positiveButtonListener,
                             DialogInterface.OnClickListener negativeButtonListener,
@@ -56,6 +57,7 @@ public class SatcatcheDialog extends BaseDialog {
         mTitle = title;
         mMessage = message;
         mMessageSpannable = messageSpannable;
+        mCancelable = cancelable;
         mEnableEditText = enableEditText;
         mPositiveButtonText = positiveButtonText;
         mNegativeButtonText = negativeButtonText;
@@ -129,6 +131,8 @@ public class SatcatcheDialog extends BaseDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setCancelable(mCancelable);
+        setCanceledOnTouchOutside(mCancelable);
     }
 
     public void setMessage(String message) {
@@ -175,6 +179,7 @@ public class SatcatcheDialog extends BaseDialog {
         private String mMessage;  //dialog信息
         private SpannableString mMessageSpannable;  //dialog信息
         private boolean mEnableEditText;  //dialog含有输入框
+        private boolean mCancelable;
         private String mPositiveButtonText, mNegativeButtonText;
         private DialogInterface.OnClickListener mPositiveButtonListener, mNegativeButtonListener;
         private DialogInterface.OnDismissListener mOnDismissListener;
@@ -208,6 +213,11 @@ public class SatcatcheDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setCancelable(boolean cancelable) {
+            mCancelable = cancelable;
+            return this;
+        }
+
         public Builder setEnableEditText(boolean enableEditText) {
             mEnableEditText = enableEditText;
             return this;
@@ -234,7 +244,7 @@ public class SatcatcheDialog extends BaseDialog {
 
         public SatcatcheDialog build() {
             return new SatcatcheDialog(mContext, mThemeResId, mButtonNum, mTitle, mMessage, mMessageSpannable,
-                    mPositiveButtonText, mNegativeButtonText, mPositiveButtonListener,
+                    mCancelable, mPositiveButtonText, mNegativeButtonText, mPositiveButtonListener,
                     mNegativeButtonListener, mOnDismissListener, mEnableEditText);
         }
     }
