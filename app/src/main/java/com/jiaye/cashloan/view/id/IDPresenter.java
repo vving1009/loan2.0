@@ -15,7 +15,6 @@ import com.jiaye.cashloan.view.id.source.IDDataSource;
 import org.reactivestreams.Publisher;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -79,13 +78,10 @@ public class IDPresenter extends BasePresenterImpl implements IDContract.Present
     @Override
     public void check() {
         Disposable disposable = mDataSource.ocrFront(mFront)
-                .flatMap(new Function<TongDunOCRFront, Publisher<TongDunOCRBack>>() {
-                    @Override
-                    public Publisher<TongDunOCRBack> apply(TongDunOCRFront tongDunOCRFront) throws Exception {
-                        mName = tongDunOCRFront.getName();
-                        mId = tongDunOCRFront.getIdNumber();
-                        return mDataSource.ocrBack(mBack);
-                    }
+                .flatMap((Function<TongDunOCRFront, Publisher<TongDunOCRBack>>) tongDunOCRFront -> {
+                    mName = tongDunOCRFront.getName();
+                    mId = tongDunOCRFront.getIdNumber();
+                    return mDataSource.ocrBack(mBack);
                 })
                 .compose(new ViewTransformer<TongDunOCRBack>() {
                     @Override
@@ -94,14 +90,11 @@ public class IDPresenter extends BasePresenterImpl implements IDContract.Present
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(new Consumer<TongDunOCRBack>() {
-                    @Override
-                    public void accept(TongDunOCRBack tongDunOCRBack) throws Exception {
-                        mView.dismissProgressDialog();
-                        mDate = tongDunOCRBack.getDateBegin() + "-" + tongDunOCRBack.getDateEnd();
-                        mView.showInfo(mName, mId, mDate);
-                        mView.setSubmitEnable();
-                    }
+                .subscribe(tongDunOCRBack -> {
+                    mView.dismissProgressDialog();
+                    mDate = tongDunOCRBack.getDateBegin() + "-" + tongDunOCRBack.getDateEnd();
+                    mView.showInfo(mName, mId, mDate);
+                    mView.setSubmitEnable();
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

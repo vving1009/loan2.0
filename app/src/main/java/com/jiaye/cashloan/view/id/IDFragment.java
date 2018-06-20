@@ -42,6 +42,10 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
 
     private ImageView mImgBack;
 
+    private ImageView mImgFrontPhoto;
+
+    private ImageView mImgBackPhoto;
+
     private Button mBtnCheck;
 
     private Button mBtnCommit;
@@ -70,6 +74,8 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
         mImgBack = view.findViewById(R.id.img_back);
         mImgFront.setOnClickListener(v -> mPresenter.pickFront());
         mImgBack.setOnClickListener(v -> mPresenter.pickBack());
+        mImgFrontPhoto = view.findViewById(R.id.img_front_photo);
+        mImgBackPhoto = view.findViewById(R.id.img_back_photo);
         mBtnCheck.setOnClickListener(v -> mPresenter.check());
         mBtnCommit.setOnClickListener(v -> mPresenter.submit());
         mPresenter = new IDPresenter(this, new IDRepository());
@@ -130,12 +136,14 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
     public void setFrontDrawable(String path) {
         BitmapDrawable drawable = new BitmapDrawable(getResources(), path);
         mImgFront.setImageDrawable(drawable);
+        mImgFrontPhoto.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void setBackDrawable(String path) {
         BitmapDrawable drawable = new BitmapDrawable(getResources(), path);
         mImgBack.setImageDrawable(drawable);
+        mImgBackPhoto.setVisibility(View.INVISIBLE);
     }
 
     @Override
