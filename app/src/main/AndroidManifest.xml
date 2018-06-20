@@ -63,13 +63,15 @@
             android:name=".service.LocationService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name=".service.UploadFaceService"
             android:enabled="true"
             android:exported="false" />
-
         <service android:name="com.amap.api.location.APSService" />
+        <service
+            android:name=".service.UploadSmsService"
+            android:enabled="true"
+            android:exported="false" />
 
         <meta-data
             android:name="${AMAP_APIKEY_NAME}"

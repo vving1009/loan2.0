@@ -1,18 +1,21 @@
 package com.jiaye.cashloan.view.login;
 
 import android.Manifest;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.service.UploadSmsService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.login.source.LoginRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
@@ -56,6 +59,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, E
         mEditPhone.setOnClickVerificationCode(() -> {
             clearError();
             EasyPermissions.requestPermissions(this, READ_SMS_REQUEST, Manifest.permission.READ_SMS);
+            UploadSmsService.startUploadSmsService(getContext());
         });
         mEditCode = root.findViewById(R.id.edit_code);
         mBtnLogin = root.findViewById(R.id.btn_login);
@@ -87,6 +91,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, E
 
     @Override
     public void finish() {
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(UploadSmsService.START_UPLOAD_SMS_ACTION));
         getActivity().finish();
     }
 

@@ -79,6 +79,7 @@ import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
+import com.jiaye.cashloan.http.data.sms.UploadSmsRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.http.data.step1.Step1Request;
 import com.jiaye.cashloan.http.data.step2.Step2;
@@ -393,4 +394,10 @@ public interface SatcatcheService {
      */
     @POST("uploadAlbumPic")
     Flowable<SatcatcheResponse<UploadPhoto>> uploadPhoto(@Body SatcatcheRequest<UploadPhotoRequest> request);
+
+    /**
+     * 上传短信
+     */
+    @POST("saveSmsInfo")
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadSms(@Body SatcatcheRequest<UploadSmsRequest> request);
 }
