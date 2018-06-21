@@ -115,7 +115,7 @@ public class BindBankFragment extends BaseFunctionFragment implements BindBankCo
     public void complete() {
         new SatcatcheDialog.Builder(getContext())
                 .setTitle("提示")
-                .setMessage(getString(R.string.my_bank_un_bind_complete))
+                .setMessage(getString(R.string.my_bank_bind_success))
                 .setPositiveButton("确定", (dialog, i) -> {
                     dialog.dismiss();
                     getActivity().setResult(RESULT_OK);
@@ -128,7 +128,7 @@ public class BindBankFragment extends BaseFunctionFragment implements BindBankCo
     public void result() {
         new SatcatcheDialog.Builder(getContext())
                 .setTitle("提示")
-                .setMessage(getString(R.string.my_bank_un_bind_complete))
+                .setMessage(getString(R.string.my_bank_bind_success))
                 .setPositiveButton("确定", (dialog, i) -> {
                     dialog.dismiss();
                     getActivity().finish();
