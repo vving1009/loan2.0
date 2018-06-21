@@ -65,6 +65,6 @@ public class SignPresenter extends BasePresenterImpl implements SignContract.Pre
     }
 
     private void loadUrl(Request<LoanVisaRequest> request) {
-        mView.postUrl(BuildConfig.BASE_URL + "showSqs", new Gson().toJson(request).getBytes());
+        mView.postUrl(BuildConfig.BASE_URL + "esignSq/showSqs", new Gson().toJson(request).getBytes());
     }
 }
