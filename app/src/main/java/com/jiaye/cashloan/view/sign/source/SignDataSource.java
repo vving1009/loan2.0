@@ -14,7 +14,7 @@ import io.reactivex.Flowable;
 
 public interface SignDataSource {
 
-    Flowable<Request<LoanVisaRequest>> show();
+    Flowable<Request<LoanVisaRequest>> show(String type);
 
     Flowable<Visa> sign();
 }

@@ -11,8 +11,19 @@ import com.jiaye.cashloan.http.base.ChildRequest;
 
 public class LoanVisaRequest extends ChildRequest {
 
-    @SerializedName("compact_type")
+    @SerializedName("app_jlaId")
+    private String loanId;
+
+    @SerializedName("app_opertype")
     private String type;
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
+    }
 
     public String getType() {
         return type;
@@ -24,6 +35,6 @@ public class LoanVisaRequest extends ChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL053";
+        return "CL072";
     }
 }

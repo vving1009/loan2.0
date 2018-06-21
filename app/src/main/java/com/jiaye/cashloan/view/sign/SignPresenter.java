@@ -35,13 +35,13 @@ public class SignPresenter extends BasePresenterImpl implements SignContract.Pre
     @Override
     public void subscribe() {
         super.subscribe();
-        show();
+        show("0");
     }
 
     @Override
     public void sign() {
         Disposable disposable = mDataSource.sign()
-                .flatMap((Function<Visa, Publisher<Request<LoanVisaRequest>>>) loanVisaSign -> mDataSource.show())
+                .flatMap((Function<Visa, Publisher<Request<LoanVisaRequest>>>) loanVisaSign -> mDataSource.show("1"))
                 .compose(new ViewTransformer<Request<LoanVisaRequest>>() {
                     @Override
                     public void accept() {
@@ -57,14 +57,14 @@ public class SignPresenter extends BasePresenterImpl implements SignContract.Pre
         mCompositeDisposable.add(disposable);
     }
 
-    private void show() {
-        Disposable disposable = mDataSource.show()
+    private void show(String type) {
+        Disposable disposable = mDataSource.show(type)
                 .compose(new ViewTransformer<>())
                 .subscribe(this::loadUrl, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
     private void loadUrl(Request<LoanVisaRequest> request) {
-        mView.postUrl(BuildConfig.BASE_URL + "show", new Gson().toJson(request).getBytes());
+        mView.postUrl(BuildConfig.BASE_URL + "showSqs", new Gson().toJson(request).getBytes());
     }
 }

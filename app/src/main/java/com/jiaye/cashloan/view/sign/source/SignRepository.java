@@ -29,17 +29,23 @@ import io.reactivex.functions.Function;
 public class SignRepository implements SignDataSource {
 
     @Override
-    public Flowable<Request<LoanVisaRequest>> show() {
-        Request<LoanVisaRequest> request = new Request<>();
-        RequestContent<LoanVisaRequest> content = new RequestContent<>();
-        List<LoanVisaRequest> list = new ArrayList<>();
-        LoanVisaRequest visaRequest = new LoanVisaRequest();
-        visaRequest.setType("01");
-        list.add(visaRequest);
-        content.setBody(list);
-        content.setHeader(RequestHeader.create());
-        request.setContent(content);
-        return Flowable.just(request);
+    public Flowable<Request<LoanVisaRequest>> show(String type) {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    LoanVisaRequest visaRequest = new LoanVisaRequest();
+                    visaRequest.setLoanId(user.getLoanId());
+                    visaRequest.setType(type);
+                    return visaRequest;
+                }).map(loanVisaRequest -> {
+                    Request<LoanVisaRequest> request = new Request<>();
+                    RequestContent<LoanVisaRequest> content = new RequestContent<>();
+                    List<LoanVisaRequest> list = new ArrayList<>();
+                    list.add(loanVisaRequest);
+                    content.setBody(list);
+                    content.setHeader(RequestHeader.create());
+                    request.setContent(content);
+                    return request;
+                });
     }
 
     @Override
