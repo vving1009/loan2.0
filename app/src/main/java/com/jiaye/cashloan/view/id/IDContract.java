@@ -13,10 +13,6 @@ public interface IDContract {
 
     interface View extends BaseViewContract {
 
-        void pickFront(String path);
-
-        void pickBack(String path);
-
         void setFrontDrawable(String path);
 
         void setBackDrawable(String path);
@@ -34,6 +30,8 @@ public interface IDContract {
         String getIdCardDate();
 
         void result();
+
+        void showBottomDialog();
     }
 
     interface Presenter extends BasePresenter {

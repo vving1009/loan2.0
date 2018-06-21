@@ -25,6 +25,10 @@ import io.reactivex.functions.Function;
 
 public class IDPresenter extends BasePresenterImpl implements IDContract.Presenter {
 
+    private final int FRONT = 1;
+
+    private final int BACK = 2;
+
     private final IDContract.View mView;
 
     private final IDDataSource mDataSource;
@@ -48,24 +52,24 @@ public class IDPresenter extends BasePresenterImpl implements IDContract.Present
 
     @Override
     public void pickFront() {
-        mState = 1;
-        mView.pickFront("/card/" + "front.jpg");
+        mState = FRONT;
+        mView.showBottomDialog();
     }
 
     @Override
     public void pickBack() {
-        mState = 2;
-        mView.pickBack("/card/" + "back.jpg");
+        mState = BACK;
+        mView.showBottomDialog();
     }
 
     @Override
     public void savePath(String path) {
         switch (mState) {
-            case 1:
+            case FRONT:
                 mFront = path;
                 mView.setFrontDrawable(mFront);
                 break;
-            case 2:
+            case BACK:
                 mBack = path;
                 mView.setBackDrawable(mBack);
                 break;

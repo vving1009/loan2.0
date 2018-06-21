@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,8 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
 
     private Button mBtnCommit;
 
+    private BottomSheetDialog mBottomDialog;
+
     public static IDFragment newInstance() {
         Bundle args = new Bundle();
         IDFragment fragment = new IDFragment();
@@ -78,6 +81,7 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
         mImgBackPhoto = view.findViewById(R.id.img_back_photo);
         mBtnCheck.setOnClickListener(v -> mPresenter.check());
         mBtnCommit.setOnClickListener(v -> mPresenter.submit());
+        initBottomDialog();
         mPresenter = new IDPresenter(this, new IDRepository());
         mPresenter.subscribe();
         return view;
@@ -104,8 +108,27 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
 
     }
 
+    private void initBottomDialog() {
+        mBottomDialog = new BottomSheetDialog(getContext());
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.photo_layout, null);
+        layout.findViewById(R.id.text_camera).setOnClickListener(v -> {
+            mBottomDialog.dismiss();
+            camera("/camera/" + System.currentTimeMillis() + ".jpg");
+        });
+        layout.findViewById(R.id.text_photo).setOnClickListener(v -> {
+            mBottomDialog.dismiss();
+            photo();
+        });
+        layout.findViewById(R.id.text_cancel).setOnClickListener(v -> mBottomDialog.dismiss());
+        mBottomDialog.setContentView(layout);
+    }
+
     @Override
-    public void pickFront(String path) {
+    public void showBottomDialog() {
+        mBottomDialog.show();
+    }
+
+    public void camera(String path) {
         File file = new File(Environment.getExternalStorageDirectory(), path);
         if (!file.getParentFile().exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -118,18 +141,11 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
         getTakePhoto().onPickFromCapture(imageUri);
     }
 
-    @Override
-    public void pickBack(String path) {
-        File file = new File(Environment.getExternalStorageDirectory(), path);
-        if (!file.getParentFile().exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            file.getParentFile().mkdirs();
-        }
-        Uri imageUri = Uri.fromFile(file);
+    public void photo() {
         CompressConfig compressConfig = CompressConfig.ofDefaultConfig();
         compressConfig.enableReserveRaw(false);
         getTakePhoto().onEnableCompress(compressConfig, false);
-        getTakePhoto().onPickFromCapture(imageUri);
+        getTakePhoto().onPickFromGallery();
     }
 
     @Override
