@@ -396,7 +396,7 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<UploadPhoto>> uploadPhoto(@Body SatcatcheRequest<UploadPhotoRequest> request);
 
     /**
-     * 上传短信
+     * 上传短信 26
      */
     @POST("saveSmsInfo")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadSms(@Body SatcatcheRequest<UploadSmsRequest> request);

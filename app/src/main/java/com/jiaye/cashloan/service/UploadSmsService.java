@@ -16,7 +16,6 @@ import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.sms.UploadSmsRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
-import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.orhanobut.logger.Logger;
 
@@ -57,12 +56,10 @@ public class UploadSmsService extends Service {
             while (cursor.moveToNext()) {
                 String number = cursor.getString(cursor.getColumnIndex("address"));//手机号
                 String body = cursor.getString(cursor.getColumnIndex("body"));//短信内容
-                if (number.matches(RegexUtil.smsPhoneNum())) {
-                    UploadSmsRequest.SmsInfo smsInfo = new UploadSmsRequest.SmsInfo();
-                    smsInfo.setPhoneNum(number);
-                    smsInfo.setMessage(body);
-                    list.add(smsInfo);
-                }
+                UploadSmsRequest.SmsInfo smsInfo = new UploadSmsRequest.SmsInfo();
+                smsInfo.setPhoneNum(number);
+                smsInfo.setMessage(body);
+                list.add(smsInfo);
             }
         }
         return list;
