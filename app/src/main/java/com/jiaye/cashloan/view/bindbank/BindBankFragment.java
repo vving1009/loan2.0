@@ -111,19 +111,18 @@ public class BindBankFragment extends BaseFunctionFragment implements BindBankCo
         mEditSMS.startCountDown();
     }
 
+    /**
+     * 返回到BankCardFragment
+     */
     @Override
     public void complete() {
-        new SatcatcheDialog.Builder(getContext())
-                .setTitle("提示")
-                .setMessage(getString(R.string.my_bank_bind_success))
-                .setPositiveButton("确定", (dialog, i) -> {
-                    dialog.dismiss();
-                    getActivity().setResult(RESULT_OK);
-                    getActivity().finish();
-                })
-                .build().show();
+        getActivity().setResult(RESULT_OK);
+        getActivity().finish();
     }
 
+    /**
+     * 返回到AccountFragment
+     */
     @Override
     public void result() {
         new SatcatcheDialog.Builder(getContext())
