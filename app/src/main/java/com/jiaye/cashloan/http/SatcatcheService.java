@@ -17,7 +17,6 @@ import com.jiaye.cashloan.http.data.file.SubmitUploadFileRequest;
 import com.jiaye.cashloan.http.data.file.UploadFileRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
-import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.id.IDUploadPicture;
@@ -86,6 +85,8 @@ import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
+import com.jiaye.cashloan.http.data.step4.Step4;
+import com.jiaye.cashloan.http.data.step4.Step4Request;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
@@ -255,6 +256,13 @@ public interface SatcatcheService {
     @POST("queryGetRepaymentDetail")
     Flowable<SatcatcheResponse<Plan>> plan(@Body SatcatcheRequest<PlanRequest> request);
 
+    /**
+     * 查询批核金额 26
+     */
+    @POST("queryAmountMoney")
+    Flowable<SatcatcheResponse<Step4>> step4(@Body SatcatcheRequest<Step4Request> request);
+
+
     /*旧的接口*/
 
     /**
@@ -268,12 +276,6 @@ public interface SatcatcheService {
      */
     @POST("getVersion")
     Flowable<SatcatcheResponse<CheckUpdate>> checkUpdate(@Body SatcatcheRequest<CheckUpdateRequest> request);
-
-    /**
-     * 是否可以借款
-     */
-    @POST("userApprove/ifAgainLend")
-    Flowable<SatcatcheResponse<EmptyResponse>> checkLoan(@Body SatcatcheRequest<CheckLoanRequest> request);
 
     /**
      * 我要借款

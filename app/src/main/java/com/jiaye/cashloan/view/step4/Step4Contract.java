@@ -13,8 +13,21 @@ public interface Step4Contract {
 
     interface View extends BaseViewContract {
 
+        void setText(String msg);
+
+        void setLayoutVisibility();
+
+        void setBtnVisibility(boolean visibility);
+
+        void sendBroadcast();
+
+        void finish();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestStep();
+
+        void onClickNext();
     }
 }

@@ -34,8 +34,7 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
     @Override
     public void loan() {
         Disposable disposable = mDataSource.queryUser()
-                .concatMap((Function<User, Publisher<EmptyResponse>>) user -> mDataSource.checkLoan())
-                .concatMap((Function<EmptyResponse, Publisher<Loan>>) emptyResponse -> mDataSource.requestLoan())
+                .concatMap((Function<User, Publisher<Loan>>) user -> mDataSource.requestLoan())
                 .concatMap((Function<Loan, Publisher<EmptyResponse>>) loan -> mDataSource.uploadRiskAppList())
                 .concatMap((Function<EmptyResponse, Publisher<CheckCompany>>) o -> mDataSource.checkCompany())
                 .compose(new ViewTransformer<CheckCompany>() {

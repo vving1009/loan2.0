@@ -155,11 +155,13 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         } else if (step == 5) {
             mViewPager.setCurrentItem(2);
             Step3Fragment.refresh(getActivity());
-        } else if (step == 6) {
+        } else if (step == 6 || step == 7 || step == 10) {
             mViewPager.setCurrentItem(3);
             Step4Fragment.refresh(getActivity());
         }
         switch (step) {
+            case 10:
+            case 7:
             case 6:
                 mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
                         null,

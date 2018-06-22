@@ -9,7 +9,6 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
-import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.http.data.loan.RiskAppList;
@@ -42,12 +41,6 @@ public class HomeRepository implements HomeDataSource {
                         throw new LocalException(R.string.error_auth_not_log_in);
                     }
                 });
-    }
-
-    @Override
-    public Flowable<EmptyResponse> checkLoan() {
-        return Flowable.just(new CheckLoanRequest())
-                .compose(new SatcatcheResponseTransformer<CheckLoanRequest, EmptyResponse>("checkLoan"));
     }
 
     @Override
