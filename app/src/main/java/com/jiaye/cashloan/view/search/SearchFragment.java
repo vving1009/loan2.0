@@ -158,10 +158,10 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             holder.company.setText(salesmen.get(position).getCompany());
             if (position == selectPos) {
                 holder.image.setImageDrawable(resources.getDrawable(R.drawable.search_list_person_ic_selected));
-                holder.setTextColor(R.color.salesman_list_text_selected);
+                holder.setTextColor(R.color.color_blue);
             } else {
                 holder.image.setImageDrawable(resources.getDrawable(R.drawable.search_list_person_ic));
-                holder.setTextColor(R.color.salesman_list_text);
+                holder.setTextColor(R.color.color_gray);
             }
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();

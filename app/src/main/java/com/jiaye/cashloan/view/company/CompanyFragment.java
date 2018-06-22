@@ -149,7 +149,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
             if (position == selectPos) {
                 holder.rootView.setBackgroundColor(getContext().getResources().getColor(android.R.color.white));
             } else {
-                holder.rootView.setBackgroundColor(getContext().getResources().getColor(R.color.salesman_list_item_bg));
+                holder.rootView.setBackgroundColor(getContext().getResources().getColor(R.color.color_gray_light));
             }
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();
@@ -213,11 +213,11 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
             holder.name.setText(salesmen.get(position).getName());
             holder.phone.setText(salesmen.get(position).getWorkId());
             if (position == selectPos) {
-                holder.name.setTextColor(getContext().getResources().getColor(R.color.salesman_list_text_selected));
-                holder.phone.setTextColor(getContext().getResources().getColor(R.color.salesman_list_text_selected));
+                holder.name.setTextColor(getContext().getResources().getColor(R.color.color_blue));
+                holder.phone.setTextColor(getContext().getResources().getColor(R.color.color_blue));
             } else {
-                holder.name.setTextColor(getContext().getResources().getColor(R.color.salesman_list_text));
-                holder.phone.setTextColor(getContext().getResources().getColor(R.color.salesman_list_text));
+                holder.name.setTextColor(getContext().getResources().getColor(R.color.color_gray));
+                holder.phone.setTextColor(getContext().getResources().getColor(R.color.color_gray));
             }
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();

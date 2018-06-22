@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/tab_layout"
-        android:background="@color/color_gray_dark_holo" />
+        android:background="#D1D1D1" />
 
     <com.jiaye.cashloan.widget.NoScrollViewPager
         android:id="@+id/view_pager"

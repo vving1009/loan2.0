@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:layout_weight="1"
     android:orientation="vertical"
-    tools:ignore="UseCompoundDrawables">
+    tools:ignore="UseCompoundDrawables,SmallSp,ContentDescription">
 
     <ImageView
         android:id="@+id/img"
@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="6dp"
-        tools:ignore="ContentDescription" />
+        android:layout_marginTop="6dp" />
 
     <TextView
         android:id="@+id/text"
@@ -24,6 +23,5 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/main_tab_color"
-        android:textSize="10sp"
-        tools:ignore="SmallSp" />
+        android:textSize="10sp" />
 </LinearLayout>
