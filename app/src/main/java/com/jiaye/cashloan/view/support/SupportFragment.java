@@ -44,7 +44,7 @@ public class SupportFragment extends BaseFunctionFragment implements SupportCont
 
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
-        View root = inflater.inflate(R.layout.loan_support_bank_activity, frameLayout, true);
+        View root = inflater.inflate(R.layout.support_fragment, frameLayout, true);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
@@ -71,7 +71,7 @@ public class SupportFragment extends BaseFunctionFragment implements SupportCont
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.loan_support_bank_item, parent, false);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.support_item, parent, false);
             return new ViewHolder(view);
         }
 

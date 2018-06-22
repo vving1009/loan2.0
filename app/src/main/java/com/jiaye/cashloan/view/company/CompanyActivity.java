@@ -13,7 +13,7 @@ public class CompanyActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loan_auth_activity);
+        setContentView(R.layout.activity);
 
         String city = getIntent().getStringExtra("city");
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseActivity;
@@ -21,7 +20,7 @@ public class MainActivity extends BaseActivity {
         } else {
             myFragment = (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
         }
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.layout_content, myFragment).commit();
         Bundle bundle = getIntent().getExtras();

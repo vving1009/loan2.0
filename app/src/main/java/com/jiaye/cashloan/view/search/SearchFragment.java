@@ -147,7 +147,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         @NonNull
         @Override
         public SearchFragment.SearchListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.search_list_item, parent, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.search_item, parent, false);
             return new SearchFragment.SearchListAdapter.ViewHolder(view);
         }
 

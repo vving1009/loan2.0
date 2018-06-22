@@ -139,7 +139,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
         @NonNull
         @Override
         public CompanyListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.salescompany_list_item, parent, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.salescompany_item, parent, false);
             return new ViewHolder(view);
         }
 
@@ -204,7 +204,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
         @NonNull
         @Override
         public PersonListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.salesman_list_item, parent, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.salesman_item, parent, false);
             return new ViewHolder(view);
         }
 

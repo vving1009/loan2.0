@@ -43,7 +43,7 @@ public class FunctionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.function_activity);
+        setContentView(R.layout.activity);
         String function = getIntent().getStringExtra("function");
         if (savedInstanceState == null) {
             switch (function) {

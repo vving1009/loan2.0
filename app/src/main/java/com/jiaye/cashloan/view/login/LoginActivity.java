@@ -18,7 +18,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
         LoginFragment fragment = LoginFragment.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layout_content, fragment).commit();

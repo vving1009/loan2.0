@@ -42,7 +42,7 @@
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginTop="11dp"
-        android:background="#4CC1EC"
+        android:background="@color/color_blue"
         android:gravity="center"
         android:orientation="horizontal">
 

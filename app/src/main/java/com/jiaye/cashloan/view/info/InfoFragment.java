@@ -167,7 +167,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
     @Override
     public void initArea(final ArrayList<Area> areas, final ArrayList<ArrayList<String>> areas2, final ArrayList<ArrayList<ArrayList<String>>> areas3) {
         mOptionsRegisterCity =
-                new OptionsPickerView.Builder(getActivity(), (options1, options2, options3, v) -> mTextRegisterCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3))).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
+                new OptionsPickerView.Builder(getActivity(), (options1, options2, options3, v) -> mTextRegisterCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3))).setLayoutRes(R.layout.info_layout, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
                         TextView textView = v.findViewById(R.id.text_title);
@@ -182,7 +182,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
         mOptionsRegisterCity.setPicker(areas, areas2, areas3);
 
         mOptionsCity =
-                new OptionsPickerView.Builder(getActivity(), (options1, options2, options3, v) -> mTextCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3))).setLayoutRes(R.layout.loan_auth_person_item, new CustomListener() {
+                new OptionsPickerView.Builder(getActivity(), (options1, options2, options3, v) -> mTextCity.setText(areas.get(options1).getName() + "|" + areas2.get(options1).get(options2) + "|" + areas3.get(options1).get(options2).get(options3))).setLayoutRes(R.layout.info_layout, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
                         TextView textView = v.findViewById(R.id.text_title);
@@ -248,7 +248,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
                     }
                     relations.get(options1).setSelect(true);
                     mText1Relation.setText(relations.get(options1).getPickerViewText());
-                }).setLayoutRes(R.layout.loan_auth_person_item, v -> {
+                }).setLayoutRes(R.layout.info_layout, v -> {
                     TextView textView = v.findViewById(R.id.text_title);
                     textView.setText(R.string.loan_auth_contact_family);
                     v.findViewById(R.id.btn_cancel).setOnClickListener(v1 -> mOptions1.dismiss());
@@ -269,7 +269,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
                     }
                     relations.get(options1).setSelect(true);
                     mText2Relation.setText(relations.get(options1).getPickerViewText());
-                }).setLayoutRes(R.layout.loan_auth_person_item, v -> {
+                }).setLayoutRes(R.layout.info_layout, v -> {
                     TextView textView = v.findViewById(R.id.text_title);
                     textView.setText(R.string.loan_auth_contact_friend);
                     v.findViewById(R.id.btn_cancel).setOnClickListener(v12 -> mOptions2.dismiss());

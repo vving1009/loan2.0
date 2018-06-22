@@ -116,7 +116,7 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
     public void addSms() {
         mSmsIndex++;
         LoanEditText editSms = (LoanEditText) LayoutInflater.from(getContext())
-                .inflate(R.layout.loan_auth_phone_sms, null, false);
+                .inflate(R.layout.phone_layout_sms, null, false);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -146,7 +146,7 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
     public void addImg() {
         mImgIndex++;
         LoanEditText editImg = (LoanEditText) LayoutInflater.from(getContext())
-                .inflate(R.layout.loan_auth_phone_img, null, false);
+                .inflate(R.layout.phone_layout_img, null, false);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
