@@ -224,7 +224,7 @@ public class LoanEditText extends RelativeLayout {
                     mTextVerification.setTextColor(getResources().getColor(R.color.color_blue));
                     mTextVerification.setText(getResources().getString(R.string.send_verification_code));
                     mTextVerification.setGravity(Gravity.CENTER);
-                    mTextVerification.setBackgroundDrawable(getResources().getDrawable(R.drawable.loan_btn_verification));
+                    mTextVerification.setBackgroundDrawable(getResources().getDrawable(R.drawable.edit_btn_verification));
                     mTextVerification.setOnClickListener(v -> {
                         if (mOnClickVerificationCode != null) {
                             mOnClickVerificationCode.onClickVerificationCode();

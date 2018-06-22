@@ -144,7 +144,7 @@ public class VehicleFragment extends PhotoFunctionFragment implements VehicleCon
     @Override
     public void showLicenceCount(int count) {
         Resources resources = getContext().getResources();
-        mDriveLicence.setBackgroundDrawable(resources.getDrawable(R.drawable.capture_vehicle__uploaded_bg));
+        mDriveLicence.setBackgroundDrawable(resources.getDrawable(R.drawable.vehicle_bg_capture_uploaded));
         mDriveLicenceIcon.setVisibility(View.INVISIBLE);
         mDriveLicenceText.setText(resources.getString(R.string.vehicle_drive_licence_count, count));
         mDriveLicenceText.setTextColor(resources.getColor(R.color.color_white));
@@ -153,7 +153,7 @@ public class VehicleFragment extends PhotoFunctionFragment implements VehicleCon
     @Override
     public void showOwnershipCount(int count) {
         Resources resources = getContext().getResources();
-        mVehicleOwnership.setBackgroundDrawable(resources.getDrawable(R.drawable.capture_vehicle__uploaded_bg));
+        mVehicleOwnership.setBackgroundDrawable(resources.getDrawable(R.drawable.vehicle_bg_capture_uploaded));
         mVehicleOwnershipIcon.setVisibility(View.INVISIBLE);
         mVehicleOwnershipText.setText(resources.getString(R.string.vehicle_ownership_count, count));
         mVehicleOwnershipText.setTextColor(resources.getColor(R.color.color_white));

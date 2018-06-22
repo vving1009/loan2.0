@@ -154,7 +154,7 @@
             android:layout_height="44dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="52dp"
-            android:background="@drawable/loan_btn"
+            android:background="@drawable/step_btn"
             android:text="@string/my_credit_cash_submit"
             android:textColor="@color/color_white"
             android:textSize="18sp" />

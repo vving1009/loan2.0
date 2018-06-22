@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|left"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/function_ic_left" />
     </FrameLayout>
 
 </FrameLayout>

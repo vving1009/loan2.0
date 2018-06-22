@@ -10,7 +10,7 @@
         android:id="@+id/rv_topbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/loan_auth_bg_person_item_top">
+        android:background="@drawable/info_bg_top">
 
         <Button
             android:id="@+id/btn_cancel"
@@ -73,5 +73,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/loan_auth_bg_person_item_bottom" />
+        android:background="@drawable/info_bg_bottom" />
 </LinearLayout>

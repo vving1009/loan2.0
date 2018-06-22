@@ -171,11 +171,10 @@
             android:layout_height="18dp"
             android:layout_gravity="right"
             android:layout_marginTop="22dp"
-            android:background="@drawable/support_bank"
+            android:background="@drawable/support_ic_bank"
             android:paddingTop="22dp" />
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/btn_commit"
@@ -184,7 +183,7 @@
         android:layout_height="44dp"
         android:layout_gravity="center"
         android:layout_marginTop="142dp"
-        android:background="@drawable/loan_btn"
+        android:background="@drawable/step_btn"
         android:text="@string/commit"
         android:textColor="@color/color_white"
         android:textSize="18sp" />

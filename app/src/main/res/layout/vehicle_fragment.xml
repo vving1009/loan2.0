@@ -25,7 +25,7 @@
             android:layout_height="144dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11dp"
-            android:background="@drawable/capture_vehicle_bg">
+            android:background="@drawable/vehicle_bg_capture">
 
             <ImageView
                 android:id="@+id/drive_Licence_ic"
@@ -34,7 +34,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="37dp"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/ic_capture" />
+                android:background="@drawable/id_ic_camera" />
 
             <TextView
                 android:id="@+id/drive_Licence_text"
@@ -54,7 +54,7 @@
             android:layout_height="144dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="22dp"
-            android:background="@drawable/capture_vehicle_bg">
+            android:background="@drawable/vehicle_bg_capture">
 
             <ImageView
                 android:id="@+id/vehicle_ownership_ic"
@@ -63,7 +63,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="37dp"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/ic_capture" />
+                android:background="@drawable/id_ic_camera" />
 
             <TextView
                 android:id="@+id/vehicle_ownership_text"
@@ -87,8 +87,7 @@
         android:layout_marginBottom="13dp"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
-        android:background="@drawable/loan_btn"
-        android:enabled="true"
+        android:background="@drawable/step_btn"
         android:text="@string/commit"
         android:textColor="@android:color/white"
         android:textSize="18sp"

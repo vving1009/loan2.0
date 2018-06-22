@@ -35,7 +35,7 @@
         android:maxLength="11"
         app:editHeight="28dp"
         app:enable_verification="true"
-        app:icon="@drawable/auth_ic_phone"
+        app:icon="@drawable/login_ic_phone"
         app:iconMarginLeft="2dp"
         app:request_force="true"
         app:underLineColor="@color/color_blue"
@@ -50,7 +50,7 @@
         android:hint="@string/input_login_verification"
         android:inputType="number"
         app:editHeight="28dp"
-        app:icon="@drawable/auth_ic_password"
+        app:icon="@drawable/login_ic_password"
         app:underLineColor="@color/color_blue"
         app:underlineLength="227dp" />
 

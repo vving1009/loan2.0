@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_angle_gray" />
+                app:srcCompat="@drawable/my_ic_angle" />
         </RelativeLayout>
 
         <View
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_angle_gray" />
+                app:srcCompat="@drawable/my_ic_angle" />
         </RelativeLayout>
 
         <View
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_angle_gray" />
+                app:srcCompat="@drawable/my_ic_angle" />
         </RelativeLayout>
 
         <View
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_angle_gray" />
+                app:srcCompat="@drawable/my_ic_angle" />
         </RelativeLayout>
 
         <View

@@ -7,6 +7,6 @@
     android:maxLength="6"
     app:editHeight="28dp"
     app:enable_verification="true"
-    app:icon="@drawable/auth_ic_password"
+    app:icon="@drawable/login_ic_password"
     app:underLineColor="@color/color_blue"
     app:verification_type="2" />

@@ -53,7 +53,7 @@
         android:visibility="gone"
         app:editHeight="28dp"
         app:enable_verification="true"
-        app:icon="@drawable/auth_ic_password" />
+        app:icon="@drawable/login_ic_password" />
 
     <com.jiaye.cashloan.widget.LoanEditText
         android:id="@+id/edit_img"
@@ -65,7 +65,7 @@
         android:visibility="gone"
         app:editHeight="28dp"
         app:enable_verification="true"
-        app:icon="@drawable/auth_ic_password"
+        app:icon="@drawable/login_ic_password"
         app:verification_type="2" />
 
     <Button
@@ -75,7 +75,7 @@
         android:layout_height="44dp"
         android:layout_marginTop="52dp"
         android:layout_gravity="center"
-        android:background="@drawable/loan_btn"
+        android:background="@drawable/step_btn"
         android:text="@string/loan_auth_taobao_normal_commit"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
