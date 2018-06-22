@@ -52,7 +52,7 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
                     if (!TextUtils.isEmpty(step4.getAmount())) {
                         mView.setText("您的批核金额为" + step4.getAmount());
                     }
-
+                    mView.setLayoutVisibility();
                     switch (mStep.getStep()) {
                         case 7:
                             mView.setBtnVisibility(true);
