@@ -102,6 +102,7 @@ public class IDRepository implements IDDataSource {
             String ocrName = "";
             String ocrBirthday = "";
             String ocrGender = "";
+            String ocrNation = "";
             String ocrAddress = "";
             String ocrDateBegin = "";
             String ocrDateEnd = "";
@@ -115,6 +116,7 @@ public class IDRepository implements IDDataSource {
                     ocrName = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
                     ocrBirthday = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_BIRTHDAY));
                     ocrGender = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_GENDER));
+                    ocrNation = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NATION));
                     ocrAddress = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ADDRESS));
                     ocrDateBegin = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_DATE_BEGIN));
                     ocrDateEnd = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_DATE_END));
@@ -128,6 +130,7 @@ public class IDRepository implements IDDataSource {
             request.setName(ocrName);
             request.setBirthday(ocrBirthday);
             request.setGender(ocrGender);
+            request.setNation(ocrNation);
             request.setAddress(ocrAddress);
             request.setDateBeigin(ocrDateBegin);
             request.setDateEnd(ocrDateEnd);
