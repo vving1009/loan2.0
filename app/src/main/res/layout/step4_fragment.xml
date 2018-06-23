@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="31dp"
                 android:lineSpacingExtra="6dp"
-                android:text="您已完成车抵贷申请所需材料请联系您的客户经理，到店进行借款申请。"
+                android:text="您已完成车抵贷申请所需材料，请联系您的客户经理，到店办理后续贷款手续。"
                 android:textColor="#425FBB"
                 android:textSize="18sp" />
 
@@ -103,6 +103,31 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_next"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="如有问题请拨打: "
+                android:textColor="@color/color_black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="400-8780-777"
+                android:textColor="@color/color_blue"
+                android:textSize="10sp" />
+        </LinearLayout>
 
     </RelativeLayout>
 
