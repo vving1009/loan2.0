@@ -111,7 +111,7 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
                             mView.showToastById(R.string.my_credit_account_error);
                             break;
                     }
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }
