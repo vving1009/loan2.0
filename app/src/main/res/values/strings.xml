@@ -13,6 +13,9 @@
     <string name="step2_progress">车辆正在评估,请耐心等待</string>
     <!--step3-->
     <string name="step3_error">请填写提交信息</string>
+    <!--step4-->
+    <string name="step4_confirm">确认借款</string>
+    <string name="step4_open">去开户</string>
     <!--id-->
     <string name="id_title">身份认证</string>
     <!--phone-->

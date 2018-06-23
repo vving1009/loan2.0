@@ -2,8 +2,10 @@ package com.jiaye.cashloan.view.step4;
 
 import android.text.TextUtils;
 
+import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -55,10 +57,10 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
                     mView.setLayoutVisibility();
                     switch (mStep.getStep()) {
                         case 7:
-                            mView.setBtnVisibility(true);
+                            mView.setBtnTextById(R.string.step4_confirm);
                             break;
                         case 10:
-                            mView.setBtnVisibility(false);
+                            mView.setBtnTextById(R.string.step4_open);
                             break;
                     }
 
@@ -68,7 +70,7 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
     }
 
     @Override
-    public void onClickNext() {
+    public void onClickConfirm() {
         if (mStep != null) {
             if (mStep.getStep() == 7) {
                 Disposable disposable = mDataSource.requestUpdateStep()
@@ -86,5 +88,30 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
                 mCompositeDisposable.add(disposable);
             }
         }
+    }
+
+    @Override
+    public void onClickOpen() {
+        Disposable disposable = mDataSource.creditInfo()
+                .compose(new ViewTransformer<CreditInfo>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(creditInfo -> {
+                    mView.dismissProgressDialog();
+                    //01-未开户;02-已开户未绑卡;03-已开户已绑卡
+                    switch (creditInfo.getBankStatus()) {
+                        case "01":
+                            mView.showBindBankView();
+                            break;
+                        default:
+                            mView.showToastById(R.string.my_credit_account_error);
+                            break;
+                    }
+                });
+        mCompositeDisposable.add(disposable);
     }
 }

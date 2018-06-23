@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.step4;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step4.source.Step4Repository;
@@ -48,7 +50,13 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
         mLayout2 = root.findViewById(R.id.layout_2);
         mText = root.findViewById(R.id.text);
         mBtnNext = root.findViewById(R.id.btn_next);
-        mBtnNext.setOnClickListener(v -> mPresenter.onClickNext());
+        mBtnNext.setOnClickListener(v -> {
+            if (mBtnNext.getText().toString().equals(getString(R.string.step4_confirm))) {
+                mPresenter.onClickConfirm();
+            } else if (mBtnNext.getText().toString().equals(getString(R.string.step4_open))) {
+                mPresenter.onClickOpen();
+            }
+        });
         mPresenter = new Step4Presenter(this, new Step4Repository());
         mPresenter.subscribe();
         return root;
@@ -83,12 +91,9 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     }
 
     @Override
-    public void setBtnVisibility(boolean visibility) {
-        if (visibility) {
-            mBtnNext.setVisibility(View.VISIBLE);
-        } else {
-            mBtnNext.setVisibility(View.INVISIBLE);
-        }
+    public void setBtnTextById(int resId) {
+        mBtnNext.setVisibility(View.VISIBLE);
+        mBtnNext.setText(resId);
     }
 
     @Override
@@ -97,7 +102,11 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     }
 
     @Override
-    public void finish() {
+    public void showBindBankView() {
+        Intent intent = new Intent(getActivity(), FunctionActivity.class);
+        intent.putExtra("source", "01");
+        intent.putExtra("function", "BindBank");
+        startActivity(intent);
         getActivity().finish();
     }
 }

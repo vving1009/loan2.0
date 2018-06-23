@@ -17,17 +17,19 @@ public interface Step4Contract {
 
         void setLayoutVisibility();
 
-        void setBtnVisibility(boolean visibility);
+        void setBtnTextById(int resId);
 
         void sendBroadcast();
 
-        void finish();
+        void showBindBankView();
     }
 
     interface Presenter extends BasePresenter {
 
         void requestStep();
 
-        void onClickNext();
+        void onClickConfirm();
+
+        void onClickOpen();
     }
 }

@@ -5,8 +5,11 @@ import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
+import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
 import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.http.data.step4.Step4Request;
+import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
@@ -52,5 +55,11 @@ public class Step4Repository implements Step4DataSource {
                     return request;
                 })
                 .compose(new SatcatcheResponseTransformer<UpdateStepRequest, EmptyResponse>("updateStep"));
+    }
+
+    @Override
+    public Flowable<CreditInfo> creditInfo() {
+        return Flowable.just(new CreditInfoRequest())
+                .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
     }
 }

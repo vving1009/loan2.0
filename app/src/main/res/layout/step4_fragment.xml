@@ -99,7 +99,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/home_btn_bg"
-            android:text="确定"
+            android:text="@string/step4_confirm"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:visibility="invisible" />
