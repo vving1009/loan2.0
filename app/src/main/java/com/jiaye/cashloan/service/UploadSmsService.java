@@ -110,6 +110,8 @@ public class UploadSmsService extends Service {
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(uploadSmsReceiver);
-        mDisposable.dispose();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
     }
 }
