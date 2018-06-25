@@ -148,7 +148,7 @@ public class InfoPresenter extends BasePresenterImpl implements InfoContact.Pres
             return Flowable.error(new LocalException(R.string.error_contact_1_name));
         } else if (TextUtils.isEmpty(mView.get1Relation())) {
             return Flowable.error(new LocalException(R.string.error_contact_1_relation));
-        } else if (TextUtils.isEmpty(mView.get1Phone()) ||
+        } else if (TextUtils.isEmpty(mView.get1Phone()) || mView.get1Phone().length() < 11 ||
                 !mView.get1Phone().substring(mView.get1Phone().length() - 11, mView.get1Phone().length())
                         .matches(RegexUtil.phone())) {
             return Flowable.error(new LocalException(R.string.error_contact_1_phone));
@@ -156,7 +156,7 @@ public class InfoPresenter extends BasePresenterImpl implements InfoContact.Pres
             return Flowable.error(new LocalException(R.string.error_contact_2_name));
         } else if (TextUtils.isEmpty(mView.get2Relation())) {
             return Flowable.error(new LocalException(R.string.error_contact_2_relation));
-        } else if (TextUtils.isEmpty(mView.get2Phone()) ||
+        } else if (TextUtils.isEmpty(mView.get2Phone()) || mView.get2Phone().length() < 11 ||
                 !mView.get2Phone().substring(mView.get2Phone().length() - 11, mView.get2Phone().length())
                         .matches(RegexUtil.phone())) {
             return Flowable.error(new LocalException(R.string.error_contact_2_phone));
