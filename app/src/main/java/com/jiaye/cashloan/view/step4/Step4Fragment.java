@@ -86,7 +86,7 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
 
     @Override
     public void setLayoutVisibility() {
-        mLayout1.setVisibility(View.INVISIBLE);
+        mLayout1.setVisibility(View.GONE);
         mLayout2.setVisibility(View.VISIBLE);
     }
 
