@@ -108,7 +108,6 @@ public class StepView extends View {
 
     public void setReady(boolean ready) {
         mReady = ready;
-        invalidate();
     }
 
     private void init(Context context, AttributeSet attrs) {

@@ -162,6 +162,7 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                     holder.setReady(mStep1.getPhone() == 1);
                     break;
             }
+            holder.invalidate();
         }
 
         @Override
@@ -225,6 +226,10 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
 
         public void setReady(boolean ready) {
             mStepView.setReady(ready);
+        }
+
+        public void invalidate() {
+            mStepView.invalidate();
         }
     }
 }

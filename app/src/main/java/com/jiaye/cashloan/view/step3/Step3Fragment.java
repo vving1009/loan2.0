@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.step3.Step3;
-import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
@@ -138,6 +137,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
                 }
                 holder.setReady(mStep3.getFile() == 1);
             }
+            holder.invalidate();
         }
 
         @Override
@@ -203,6 +203,10 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
         public void setStateText(String text) {
             mTextState.setText(text);
+        }
+
+        public void invalidate() {
+            mStepView.invalidate();
         }
     }
 }
