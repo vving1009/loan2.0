@@ -173,8 +173,12 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mDisposable.dispose();
-        mLocationClient.stopLocation();
-        mLocationClient.onDestroy();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient.onDestroy();
+        }
     }
 }

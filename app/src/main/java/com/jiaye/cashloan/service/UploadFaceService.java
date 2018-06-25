@@ -183,6 +183,8 @@ public class UploadFaceService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mDisposable.dispose();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
     }
 }
