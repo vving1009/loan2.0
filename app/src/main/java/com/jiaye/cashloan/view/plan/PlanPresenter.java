@@ -2,6 +2,7 @@ package com.jiaye.cashloan.view.plan;
 
 import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.plan.source.PlanDataSource;
 
@@ -40,7 +41,7 @@ public class PlanPresenter extends BasePresenterImpl implements PlanContract.Pre
                 .subscribe(details -> {
                     mView.dismissProgressDialog();
                     mView.setPlans(details);
-                });
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }
