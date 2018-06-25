@@ -55,8 +55,6 @@ public class FileRepository implements FileDataSource {
     public Flowable<EmptyResponse> uploadFile(String folder, List<String> paths) {
         User user = LoanApplication.getInstance().getDbHelper().queryUser();
         return Flowable.fromIterable(paths)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
                 .map(path -> {
                     picName = DateUtil.formatDateTimeMillis(System.currentTimeMillis()) + ".jpg";
                     String ossPath = user.getPhone() + "/" +

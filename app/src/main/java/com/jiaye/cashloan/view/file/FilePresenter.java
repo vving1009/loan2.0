@@ -8,9 +8,13 @@ import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.file.source.FileDataSource;
 import com.jph.takephoto.model.TImage;
 
+import org.reactivestreams.Publisher;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * FilePresenter
@@ -49,16 +53,20 @@ public class FilePresenter extends BasePresenterImpl implements FileContract.Pre
             paths.add(path);
         }
         Disposable disposable = mDataSource.uploadFile(mFolder, paths)
-                .compose(new ViewTransformer<EmptyResponse>() {
+                .toList()
+                .toFlowable()
+                .flatMap((Function<List<EmptyResponse>, Publisher<FileState>>)
+                        responses -> mDataSource.requestFileState())
+                .compose(new ViewTransformer<FileState>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(uploadFile -> {
+                .subscribe(fileState -> {
                     mView.dismissProgressDialog();
-                    requestFileState();
+                    mView.setList(fileState.getList());
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
