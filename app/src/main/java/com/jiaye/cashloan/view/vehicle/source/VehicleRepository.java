@@ -2,9 +2,9 @@ package com.jiaye.cashloan.view.vehicle.source;
 
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
-import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
@@ -28,7 +28,7 @@ public class VehicleRepository implements VehicleDataSource {
     private String picName;
 
     @Override
-    public Flowable<UploadCarPapers> uploadFile(String folder, List<String> paths) {
+    public Flowable<EmptyResponse> uploadFile(String folder, List<String> paths) {
         User user = LoanApplication.getInstance().getDbHelper().queryUser();
         return Flowable.fromIterable(paths)
                 .subscribeOn(Schedulers.io())
@@ -56,7 +56,7 @@ public class VehicleRepository implements VehicleDataSource {
                     request.setPicUrl(BuildConfig.OSS_BASE_URL + ossPath);
                     return request;
                 })
-                .compose(new SatcatcheResponseTransformer<UploadCarPapersRequest, UploadCarPapers>("uploadCarPapers"));
+                .compose(new SatcatcheResponseTransformer<UploadCarPapersRequest, EmptyResponse>("uploadCarPapers"));
     }
 
     @Override

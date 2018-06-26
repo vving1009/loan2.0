@@ -89,7 +89,6 @@ import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.http.data.step4.Step4Request;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
-import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
 
@@ -200,7 +199,7 @@ public interface SatcatcheService {
      * 上传车辆认证图片 16
      */
     @POST("carPapers/save")
-    Flowable<SatcatcheResponse<UploadCarPapers>> uploadCarPapers(@Body SatcatcheRequest<UploadCarPapersRequest> request);
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadCarPapers(@Body SatcatcheRequest<UploadCarPapersRequest> request);
 
     /**
      * 提交车辆认证状态 17

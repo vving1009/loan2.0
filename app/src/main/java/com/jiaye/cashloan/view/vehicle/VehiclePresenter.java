@@ -1,9 +1,7 @@
 package com.jiaye.cashloan.view.vehicle;
 
-import android.util.Log;
-
+import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
-import com.jiaye.cashloan.http.data.vehcile.UploadCarPapers;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -11,6 +9,7 @@ import com.jiaye.cashloan.view.vehicle.source.VehicleDataSource;
 import com.jph.takephoto.model.TImage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
@@ -52,22 +51,24 @@ public class VehiclePresenter extends BasePresenterImpl implements VehicleContra
             paths.add(path);
         }
         Disposable disposable = mDataSource.uploadFile(mFolder, paths)
-                .compose(new ViewTransformer<UploadCarPapers>() {
+                .toList()
+                .toFlowable()
+                .compose(new ViewTransformer<List<EmptyResponse>>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(putObjectResult -> {
+                .subscribe(responses -> {
                     mView.dismissProgressDialog();
                     switch (mFolder) {
                         case VehicleContract.FOLDER_DRIVE_LICENCE:
-                            licenceCount++;
+                            licenceCount += responses.size();
                             mView.showLicenceCount(licenceCount);
                             break;
                         case VehicleContract.FOLDER_VEHICLE_OWNERSHIP:
-                            ownershipCount++;
+                            ownershipCount += responses.size();
                             mView.showOwnershipCount(ownershipCount);
                             break;
                     }
