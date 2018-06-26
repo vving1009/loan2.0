@@ -3,9 +3,9 @@ package com.jiaye.cashloan.view.my;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.my.CheckAccount;
 import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.my.source.MyDataSource;
@@ -64,20 +64,13 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
 
     @Override
     public void bank() {
-        Disposable disposable = mDataSource.checkBank()
-                .compose(new ViewTransformer<CheckAccount>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(checkAccount -> {
-                    mView.dismissProgressDialog();
-                    if (checkAccount.getIsOpen() == 1) {
-                        mView.showAccountView();
+        Disposable disposable = mDataSource.queryUser()
+                .compose(new ViewTransformer<>())
+                .subscribe(user -> {
+                    if (TextUtils.isEmpty(user.getToken())) {
+                        throw new LocalException(R.string.error_auth_not_log_in);
                     } else {
-                        mView.showToastById(R.string.my_error_account);
+                        mView.showAccountView();
                     }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
