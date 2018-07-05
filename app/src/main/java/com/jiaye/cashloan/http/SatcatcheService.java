@@ -17,6 +17,7 @@ import com.jiaye.cashloan.http.data.file.SubmitUploadFileRequest;
 import com.jiaye.cashloan.http.data.file.UploadFileRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
+import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.id.IDUploadPicture;
@@ -275,6 +276,12 @@ public interface SatcatcheService {
      */
     @POST("getVersion")
     Flowable<SatcatcheResponse<CheckUpdate>> checkUpdate(@Body SatcatcheRequest<CheckUpdateRequest> request);
+
+    /**
+     * 是否可以借款
+     */
+    @POST("userApprove/ifAgainLend")
+    Flowable<SatcatcheResponse<EmptyResponse>> checkLoan(@Body SatcatcheRequest<CheckLoanRequest> request);
 
     /**
      * 我要借款

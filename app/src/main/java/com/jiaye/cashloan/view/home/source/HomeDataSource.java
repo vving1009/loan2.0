@@ -21,6 +21,11 @@ public interface HomeDataSource {
     Flowable<User> queryUser();
 
     /**
+     * 检测是否可以申请借款
+     */
+    Flowable<EmptyResponse> checkLoan();
+
+    /**
      * 申请借款
      */
     Flowable<Loan> requestLoan();
