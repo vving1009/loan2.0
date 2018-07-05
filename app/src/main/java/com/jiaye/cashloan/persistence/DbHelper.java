@@ -74,6 +74,7 @@ public class DbHelper extends SQLiteOpenHelper {
             case 1:
                 // 2018.2.5 user 表 删除 loan_approve_id;loan_progress_id;
                 db.execSQL("create table temp_user as select " +
+                        "_id, " +
                         "token, phone, " +
                         "approve_number, progress_number, history_number, loan_id, " +
                         "ocr_id, ocr_name, ocr_birthday, ocr_gender, ocr_nation, ocr_address, " +
@@ -83,7 +84,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 db.execSQL("alter table temp_user rename to user");
             case 2:
                 // 2018.4.29 删除表 product
-                db.execSQL("drop table product");
+                db.execSQL("drop table if exists product");
             case 3:
                 // 2018.5.11 修改 approve_number progress_number history_number 字段类型
                 db.execSQL("alter table user rename to temp_user");
@@ -91,9 +92,9 @@ public class DbHelper extends SQLiteOpenHelper {
                         DbContract.User._ID + INTEGER_TYPE + " primary key," +
                         DbContract.User.COLUMN_NAME_TOKEN + TEXT_TYPE + COMMA_SEP +
                         DbContract.User.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
-                        DbContract.User.COLUMN_NAME_APPROVE_NUMBER + TEXT_TYPE + COMMA_SEP +
-                        DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + TEXT_TYPE + COMMA_SEP +
-                        DbContract.User.COLUMN_NAME_HISTORY_NUMBER + TEXT_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_APPROVE_NUMBER + INTEGER_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_PROGRESS_NUMBER + INTEGER_TYPE + COMMA_SEP +
+                        DbContract.User.COLUMN_NAME_HISTORY_NUMBER + INTEGER_TYPE + COMMA_SEP +
                         DbContract.User.COLUMN_NAME_LOAN_ID + TEXT_TYPE + COMMA_SEP +
                         DbContract.User.COLUMN_NAME_OCR_ID + TEXT_TYPE + COMMA_SEP +
                         DbContract.User.COLUMN_NAME_OCR_NAME + TEXT_TYPE + COMMA_SEP +
