@@ -97,16 +97,16 @@ public class SatcatcheDialog extends BaseDialog {
             mNegativeBtn.setText(mNegativeButtonText);
         }
         mPositiveBtn.setOnClickListener(v -> {
+            dismiss();
             if (mPositiveButtonListener != null) {
                 mPositiveButtonListener.onClick(SatcatcheDialog.this, Dialog.BUTTON_POSITIVE);
             }
-            dismiss();
         });
         mNegativeBtn.setOnClickListener(v -> {
+            dismiss();
             if (mNegativeButtonListener != null) {
                 mNegativeButtonListener.onClick(SatcatcheDialog.this, Dialog.BUTTON_NEGATIVE);
             }
-            dismiss();
         });
 
         switch (mButtonNum) {

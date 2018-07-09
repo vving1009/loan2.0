@@ -1,13 +1,10 @@
 package com.jiaye.cashloan.view.launch;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +28,7 @@ import java.io.File;
 
 public class LaunchFragment extends BaseFragment implements LaunchContract.View {
 
-    private static final int REQUEST_INSTALL_PERMISSION = 101;
-
-    private static final int REQUEST_ALLOW_INSTALL_PERMISSION = 102;
+    private static final int REQUEST_ALLOW_INSTALL_PERMISSION = 101;
 
     private LaunchContract.Presenter mPresenter;
 
@@ -44,21 +39,6 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
         LaunchFragment fragment = new LaunchFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_INSTALL_PERMISSION:
-                if (isGrant(grantResults)) {
-                    startDownload();
-                } else {
-                    @SuppressLint("InlinedApi")
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
-                    startActivityForResult(intent, REQUEST_ALLOW_INSTALL_PERMISSION);
-                }
-                break;
-        }
     }
 
     @Override
@@ -136,12 +116,14 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
 
     @Override
     public void install(File file) {
+        mCheckUpdateDialog.dismiss();
         FileUtils.install(getActivity(), file);
     }
 
     private void startDownload() {
         mCheckUpdateDialog.setProgressVisibility(View.VISIBLE);
         mCheckUpdateDialog.setAllBtnVisibility(View.GONE);
+        mCheckUpdateDialog.show();
         mPresenter.download();
     }
 
@@ -151,15 +133,5 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
             has = getActivity().getPackageManager().canRequestPackageInstalls();
         }
         return has;
-    }
-
-    private boolean isGrant(@NonNull int[] grantResults) {
-        boolean grant = true;
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                grant = false;
-            }
-        }
-        return grant;
     }
 }
