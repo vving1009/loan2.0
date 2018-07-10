@@ -157,7 +157,7 @@
             app:enable_verification="true"
             app:inputMarginLeft="0dp"
             app:request_force="true"
-            app:textSize="15sp"
+            app:textSize="12sp"
             app:underlineLength="0dp" />
 
         <View
