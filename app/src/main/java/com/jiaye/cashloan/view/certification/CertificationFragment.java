@@ -48,7 +48,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
 
     private TextView mTextCompany;
 
-    private TextView mTextNumber;
+    private TextView mTextName;
 
     private TextView mTextStep1;
 
@@ -85,7 +85,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View view = inflater.inflate(R.layout.certification_fragment, frameLayout, true);
         mTextCompany = view.findViewById(R.id.text_company);
-        mTextNumber = view.findViewById(R.id.text_number);
+        mTextName = view.findViewById(R.id.text_number);
         mViewPager = view.findViewById(R.id.view_pager);
         mTextStep1 = view.findViewById(R.id.text_step_1);
         mTextStep2 = view.findViewById(R.id.text_step_2);
@@ -140,8 +140,8 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     }
 
     @Override
-    public void setNumber(String number) {
-        mTextNumber.setText(number);
+    public void setName(String number) {
+        mTextName.setText(number);
     }
 
     @Override

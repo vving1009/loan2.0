@@ -15,7 +15,7 @@ public interface CertificationContract {
 
         void setCompany(String company);
 
-        void setNumber(String number);
+        void setName(String number);
 
         void setStep(int step);
     }

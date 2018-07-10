@@ -32,7 +32,7 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
                 .compose(new ViewTransformer<>())
                 .subscribe(recommend -> {
                     mView.setCompany(recommend.getCompany());
-                    mView.setNumber(recommend.getNumber());
+                    mView.setName(recommend.getName());
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
