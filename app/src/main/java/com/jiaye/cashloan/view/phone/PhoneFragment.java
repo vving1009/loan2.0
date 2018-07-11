@@ -1,28 +1,24 @@
 package com.jiaye.cashloan.view.phone;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.phone.source.PhoneRepository;
-import com.jiaye.cashloan.widget.CustomProgressDialog;
-import com.jiaye.cashloan.widget.LoanEditText;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
-
-import java.util.ArrayList;
 
 /**
  * PhoneFragment
@@ -30,33 +26,13 @@ import java.util.ArrayList;
  * @author 贾博瑄
  */
 
-public class PhoneFragment extends BaseFunctionFragment implements PhoneContract.View {
+public class PhoneFragment extends BaseFragment implements PhoneContract.View {
+
+    private static final String TAG = "PhoneFragment";
 
     private PhoneContract.Presenter mPresenter;
 
-    private TextView mTextPhone;
-
-    private TextView mTextOperators;
-
-    private LoanEditText mEditPassword;
-
-    private LinearLayout mLayoutEdit;
-
-    private TextView mTextForgetPassword;
-
-    private SatcatcheDialog mForgetPasswordDialog;
-
-    private ArrayList<LoanEditText> mSmsArray;
-
-    private ArrayList<LoanEditText> mImgArray;
-
-    private CustomProgressDialog mCustomProgressDialog;
-
-    private int mSmsIndex = -1;
-
-    private int mImgIndex = -1;
-
-    private boolean showCustomDialog = false;
+    private WebView mWebView;
 
     public static PhoneFragment newInstance() {
         Bundle args = new Bundle();
@@ -65,25 +41,65 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
         return fragment;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    @Nullable
     @Override
-    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.phone_fragment, frameLayout, true);
-        mTextPhone = rootView.findViewById(R.id.text_phone);
-        mTextOperators = rootView.findViewById(R.id.text_operators);
-        mEditPassword = rootView.findViewById(R.id.edit_code);
-        mLayoutEdit = rootView.findViewById(R.id.layout_edit);
-        mTextForgetPassword = rootView.findViewById(R.id.text_forget_password);
-        mTextForgetPassword.setOnClickListener(v -> mForgetPasswordDialog.show());
-        rootView.findViewById(R.id.btn_commit).setOnClickListener(v -> {
-            showCustomDialog = true;
-            mPresenter.submit();
-        });
-        initForgetPasswordDialog();
-        mSmsArray = new ArrayList<>();
-        mImgArray = new ArrayList<>();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.phone_fragment, container, false);
+        mWebView = rootView.findViewById(R.id.web_view);
+        initWebView();
         mPresenter = new PhonePresenter(this, new PhoneRepository());
         mPresenter.subscribe();
         return rootView;
+    }
+
+    private void initWebView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "shouldOverrideUrlLoading: " + url);
+                //调用拨号、短信等程序
+                if (url.startsWith("mailto:") || url.startsWith("geo:") || url.startsWith("tel:") || url.startsWith("sms:")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+                if (url.contains("loan//callback")) {
+                    Uri uri = Uri.parse(url);
+                    if (!TextUtils.isEmpty(uri.getQueryParameter("message")) &&
+                            uri.getQueryParameter("loginDone").equals("1") &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("userId")) &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("account")) &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("taskId"))) {
+                        // TODO: 2018/7/11 carrier verification done.
+                        Log.d(TAG, "carrier verification done. ");
+                        Log.d(TAG, "message=" + uri.getQueryParameter("message"));
+                        Log.d(TAG, "userId=" + uri.getQueryParameter("userId"));
+                        Log.d(TAG, "account=" + uri.getQueryParameter("account"));
+                        Log.d(TAG, "taskId=" + uri.getQueryParameter("taskId"));
+                    }
+                    getActivity().finish();
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
+        String userId = LoanApplication.getInstance().getDbHelper().queryUser().getLoanId();
+        String phoneNum = LoanApplication.getInstance().getDbHelper().queryUser().getPhone();
+        String userName = LoanApplication.getInstance().getDbHelper().queryUser().getName();
+        userName = !TextUtils.isEmpty(userName) ? ",\"name\":\"" + userName + "\"" : "";
+        Log.d(TAG, "userName: " + userName);
+        String idCard = LoanApplication.getInstance().getDbHelper().queryUser().getId();
+        idCard = !TextUtils.isEmpty(idCard) ? ",\"idcard\":\"" + idCard + "\"" : "";
+        Log.d(TAG, "idCard: " + idCard);
+
+        mWebView.loadUrl(BuildConfig.MOXIE_URL + "index.html#/carrier?apiKey=" +
+                BuildConfig.MOXIE_APIKEY + "&userId=" + userId + "&backUrl=loan://callback&themeColor=425FBB&loginParams={\"phone\":\"" +
+                phoneNum + "\"" + userName + idCard + "}");
     }
 
     @Override
@@ -93,200 +109,11 @@ public class PhoneFragment extends BaseFunctionFragment implements PhoneContract
     }
 
     @Override
-    public void setPhone(String text) {
-        mTextPhone.setText(text);
-    }
-
-    @Override
-    public void setOperators(String text) {
-        mTextOperators.setText(text);
-    }
-
-    @Override
-    public void setPasswordVisibility(int visibility) {
-        mEditPassword.setVisibility(visibility);
-    }
-
-    @Override
-    public void setForgetPasswordVisibility(int visibility) {
-        mTextForgetPassword.setVisibility(visibility);
-    }
-
-    @Override
-    public void addSms() {
-        mSmsIndex++;
-        LoanEditText editSms = (LoanEditText) LayoutInflater.from(getContext())
-                .inflate(R.layout.phone_layout_sms, null, false);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,
-                (int) (16 * getResources().getDisplayMetrics().density),
-                0,
-                0);
-        editSms.setLayoutParams(layoutParams);
-        mLayoutEdit.addView(editSms);
-        editSms.setOnClickVerificationCode(() -> mPresenter.requestSMSVerification());
-        mSmsArray.add(editSms);
-        for (int i = 0; i <= mSmsIndex; i++) {
-            if (i - 1 > 0) {
-                if (!TextUtils.isEmpty(mSmsArray.get(i - 1).getText().toString())) {
-                    mSmsArray.get(i - 1).setEnabled(false);
-                }
-            }
+    public boolean onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
         }
-        for (int i = 0; i <= mImgIndex; i++) {
-            if (!TextUtils.isEmpty(mImgArray.get(i).getText().toString())) {
-                mImgArray.get(i).setEnabled(false);
-            }
-        }
-    }
-
-    @Override
-    public void addImg() {
-        mImgIndex++;
-        LoanEditText editImg = (LoanEditText) LayoutInflater.from(getContext())
-                .inflate(R.layout.phone_layout_img, null, false);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,
-                (int) (16 * getResources().getDisplayMetrics().density),
-                0,
-                0);
-        editImg.setLayoutParams(layoutParams);
-        mLayoutEdit.addView(editImg);
-        editImg.setOnClickVerificationCode(() -> mPresenter.requestIMGVerification());
-        mImgArray.add(editImg);
-        for (int i = 0; i <= mImgIndex; i++) {
-            if (i - 1 > 0) {
-                if (!TextUtils.isEmpty(mImgArray.get(i - 1).getText().toString())) {
-                    mImgArray.get(i - 1).setEnabled(false);
-                }
-            }
-        }
-        for (int i = 0; i <= mSmsIndex; i++) {
-            if (!TextUtils.isEmpty(mSmsArray.get(i).getText().toString())) {
-                mSmsArray.get(i).setEnabled(false);
-            }
-        }
-    }
-
-    @Override
-    public void firstSubmit() {
-        mEditPassword.setEnabled(false);
-    }
-
-    @Override
-    public void setImgVerificationCode(Bitmap bitmap) {
-        mImgArray.get(mImgIndex).setCode(bitmap);
-    }
-
-    @Override
-    public void setSmsVerificationCodeCountDown() {
-        mSmsArray.get(mSmsIndex).startCountDown();
-    }
-
-    @Override
-    public String getPassword() {
-        return mEditPassword.getText().toString();
-    }
-
-    @Override
-    public String getSmsVerificationCode() {
-        if (mSmsIndex == -1) {
-            return "";
-        } else {
-            return mSmsArray.get(mSmsIndex).getText().toString();
-        }
-    }
-
-    @Override
-    public String getImgVerificationCode() {
-        if (mImgIndex == -1) {
-            return "";
-        } else {
-            return mImgArray.get(mImgIndex).getText().toString();
-        }
-    }
-
-    @Override
-    public boolean isSmsVerificationCodeVisibility() {
-        return mSmsIndex != -1 && mSmsArray.get(mSmsIndex).getVisibility() == View.VISIBLE;
-    }
-
-    @Override
-    public boolean isImgVerificationCodeVisibility() {
-        return mImgIndex != -1 && mImgArray.get(mImgIndex).getVisibility() == View.VISIBLE;
-    }
-
-    @Override
-    public void result() {
-        getActivity().finish();
-    }
-
-    @Override
-    public void showProgressDialog() {
-        if (showCustomDialog) {
-            if (mCustomProgressDialog == null) {
-                mCustomProgressDialog = new CustomProgressDialog(getContext());
-            }
-            mCustomProgressDialog.show("认证中, 预计等待2-3分钟");
-        } else {
-            super.showProgressDialog();
-        }
-    }
-
-    @Override
-    public void dismissProgressDialog() {
-        if (mCustomProgressDialog != null && mCustomProgressDialog.isShowing()) {
-            mCustomProgressDialog.dismiss();
-            showCustomDialog = false;
-        } else {
-            super.dismissProgressDialog();
-        }
-    }
-
-    @Override
-    protected int getTitleId() {
-        return R.string.phone_title;
-    }
-
-    private void initForgetPasswordDialog() {
-        SpannableString spanText = new SpannableString("移动用户请拨打 10086\n\n联通用户请拨打 10010\n\n电信用户请拨打 10000");
-        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
-                8, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spanText.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                dial("10086");
-            }
-        }, 8, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
-                23, 28, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spanText.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                dial("10010");
-            }
-        }, 23, 28, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spanText.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_blue)),
-                38, 43, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spanText.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                dial("10000");
-            }
-        }, 38, 43, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mForgetPasswordDialog = new SatcatcheDialog.Builder(getContext())
-                .setTitle("提示")
-                .setMessage(spanText)
-                .setPositiveButton("我知道了", ((dialog, which) -> mForgetPasswordDialog.dismiss()))
-                .build();
-    }
-
-    private void dial(String phoneNum) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNum));
-        startActivity(intent);
+        return super.onBackPressed();
     }
 }

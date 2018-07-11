@@ -144,4 +144,12 @@ public class FunctionActivity extends AppCompatActivity {
             getSupportFragmentManager().putFragment(outState, "fragment", mFragment);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mFragment != null && mFragment.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 }

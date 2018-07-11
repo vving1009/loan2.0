@@ -50,4 +50,8 @@ public abstract class BaseFragment extends Fragment implements BaseViewContract 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
+    public boolean onBackPressed() {
+        return false;
+    }
 }
