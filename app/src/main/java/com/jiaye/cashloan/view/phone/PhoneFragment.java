@@ -41,7 +41,6 @@ public class PhoneFragment extends BaseFragment implements PhoneContract.View {
         return fragment;
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +52,7 @@ public class PhoneFragment extends BaseFragment implements PhoneContract.View {
         return rootView;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
@@ -70,8 +70,14 @@ public class PhoneFragment extends BaseFragment implements PhoneContract.View {
                 }
                 if (url.contains("loan//callback")) {
                     Uri uri = Uri.parse(url);
-                    if (!TextUtils.isEmpty(uri.getQueryParameter("message")) &&
+                    if (uri.getQueryParameter("mxcode").equals("-1") &&
+                            uri.getQueryParameter("loginDone").equals("0")) {
+                        Log.d(TAG, "exit carrier verification. ");
+                        getActivity().finish();
+                    }
+                    if (uri.getQueryParameter("mxcode").equals("1") &&
                             uri.getQueryParameter("loginDone").equals("1") &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("message")) &&
                             !TextUtils.isEmpty(uri.getQueryParameter("userId")) &&
                             !TextUtils.isEmpty(uri.getQueryParameter("account")) &&
                             !TextUtils.isEmpty(uri.getQueryParameter("taskId"))) {
@@ -81,14 +87,14 @@ public class PhoneFragment extends BaseFragment implements PhoneContract.View {
                         Log.d(TAG, "userId=" + uri.getQueryParameter("userId"));
                         Log.d(TAG, "account=" + uri.getQueryParameter("account"));
                         Log.d(TAG, "taskId=" + uri.getQueryParameter("taskId"));
+                        getActivity().finish();
                     }
-                    getActivity().finish();
                     return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
-        String userId = LoanApplication.getInstance().getDbHelper().queryUser().getLoanId();
+        String userId = LoanApplication.getInstance().getDbHelper().queryUser().getToken();
         String phoneNum = LoanApplication.getInstance().getDbHelper().queryUser().getPhone();
         String userName = LoanApplication.getInstance().getDbHelper().queryUser().getName();
         userName = !TextUtils.isEmpty(userName) ? ",\"name\":\"" + userName + "\"" : "";
