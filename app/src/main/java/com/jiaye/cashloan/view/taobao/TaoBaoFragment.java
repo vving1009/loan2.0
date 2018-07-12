@@ -1,20 +1,24 @@
 package com.jiaye.cashloan.view.taobao;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import com.jiaye.cashloan.BuildConfig;
+import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.BaseFunctionFragment;
-import com.jiaye.cashloan.widget.NoScrollViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.jiaye.cashloan.view.BaseFragment;
+import com.jiaye.cashloan.view.taobao.source.TaoBaoRepository;
 
 /**
  * TaoBaoFragment
@@ -22,13 +26,13 @@ import java.util.List;
  * @author 贾博瑄
  */
 
-public class TaoBaoFragment extends BaseFunctionFragment {
+public class TaoBaoFragment extends BaseFragment implements TaoBaoContract.View {
 
-    private static final int[] TAB_TEXT = new int[]{R.string.loan_auth_taobao_normal, R.string.loan_auth_taobao_qr};
+    private static final String TAG = "TaoBaoFragment";
 
-    private NoScrollViewPager mViewPager;
+    private TaoBaoContract.Presenter mPresenter;
 
-    private List<View> indicators = new ArrayList<>();
+    private WebView mWebView;
 
     public static TaoBaoFragment newInstance() {
         Bundle args = new Bundle();
@@ -37,90 +41,77 @@ public class TaoBaoFragment extends BaseFunctionFragment {
         return fragment;
     }
 
+    @Nullable
     @Override
-    protected int getTitleId() {
-        return R.string.taobao_title;
-    }
-
-    @Override
-    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.taobao_fragment, frameLayout, true);
-        mViewPager = rootView.findViewById(R.id.view_pager);
-        mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
-
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return normal();
-                    case 1:
-                        return qr();
-                    default:
-                        return normal();
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-            @Override
-            public int getItemPosition(Object object) {
-                return POSITION_NONE;
-            }
-        });
-        TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
-        setTabs(tabLayout, getLayoutInflater(), TAB_TEXT);
-        indicators.get(0).setVisibility(View.VISIBLE);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 1) {
-                    String name = "android:switcher:" + mViewPager.getId() + ":" + "1";
-                    TaoBaoQRFragment fragment = (TaoBaoQRFragment) getActivity().getSupportFragmentManager().findFragmentByTag(name);
-                    fragment.request();
-                }
-                for (View indicator : indicators) {
-                    indicator.setVisibility(View.INVISIBLE);
-                }
-                indicators.get(tab.getPosition()).setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.taobao_fragment, container, false);
+        mWebView = rootView.findViewById(R.id.web_view);
+        initWebView();
+        mPresenter = new TaoBaoPresenter(this, new TaoBaoRepository());
+        mPresenter.subscribe();
         return rootView;
     }
 
-    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
-        for (int aText : text) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.taobao_tab, null);
-            tab.setCustomView(view);
-            TextView tvTitle = view.findViewById(R.id.text);
-            View indicator = view.findViewById(R.id.indicator);
-            tvTitle.setText(aText);
-            indicators.add(indicator);
-            tabLayout.addTab(tab);
+    @SuppressLint("SetJavaScriptEnabled")
+    private void initWebView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
         }
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "shouldOverrideUrlLoading: " + url);
+                //调用拨号、短信等程序
+                if (url.startsWith("taobao:") || url.startsWith("mailto:") ||
+                        url.startsWith("geo:") || url.startsWith("tel:") || url.startsWith("sms:")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+                if (url.contains("loan//callback")) {
+                    Uri uri = Uri.parse(url);
+                    if (uri.getQueryParameter("mxcode").equals("-1") &&
+                            uri.getQueryParameter("loginDone").equals("0")) {
+                        Log.d(TAG, "exit carrier verification. ");
+                        getActivity().finish();
+                    }
+                    if (uri.getQueryParameter("mxcode").equals("1") &&
+                            uri.getQueryParameter("loginDone").equals("1") &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("message")) &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("userId")) &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("account")) &&
+                            !TextUtils.isEmpty(uri.getQueryParameter("taskId"))) {
+                        // TODO: 2018/7/11 carrier verification done.
+                        Log.d(TAG, "carrier verification done. ");
+                        Log.d(TAG, "message=" + uri.getQueryParameter("message"));
+                        Log.d(TAG, "userId=" + uri.getQueryParameter("userId"));
+                        Log.d(TAG, "account=" + uri.getQueryParameter("account"));
+                        Log.d(TAG, "taskId=" + uri.getQueryParameter("taskId"));
+                        getActivity().finish();
+                    }
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
+        String userId = LoanApplication.getInstance().getDbHelper().queryUser().getToken();
+        mWebView.loadUrl(BuildConfig.MOXIE_URL + "index.html#/taobao?apiKey=" +
+                BuildConfig.MOXIE_APIKEY + "&userId=" + userId + "&backUrl=loan://callback&themeColor=425FBB");
     }
 
-    private TaoBaoNormalFragment normal() {
-        return TaoBaoNormalFragment.newInstance();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
-    private TaoBaoQRFragment qr() {
-        return TaoBaoQRFragment.newInstance();
+    @Override
+    public boolean onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+        return super.onBackPressed();
     }
 }
