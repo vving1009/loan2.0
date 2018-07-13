@@ -18,6 +18,7 @@ import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.forgetpassword.ForgetPasswordFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
+import com.jiaye.cashloan.view.insurance.InsuranceFragment;
 import com.jiaye.cashloan.view.login.LoginFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
@@ -129,6 +130,10 @@ public class FunctionActivity extends AppCompatActivity {
                 case "Search":
                     // 公司业务员搜索
                     mFragment = SearchFragment.newInstance();
+                    break;
+                case "Insurance":
+                    // 车险
+                    mFragment = InsuranceFragment.newInstance();
                     break;
             }
         } else {
