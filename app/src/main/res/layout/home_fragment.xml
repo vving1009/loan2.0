@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:includeFontPadding="false"
-                        android:text="线上预约 线下办理"
+                        android:text="线上预约线下办理"
                         android:textColor="#989898"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="还款灵活"
+                        android:text="快速放款"
                         android:textColor="@color/color_blue"
                         android:textSize="12sp" />
 
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:includeFontPadding="false"
-                        android:text="自由灵活 快速解抵"
+                        android:text="最快当日放款"
                         android:textColor="#989898"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -148,9 +148,9 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:includeFontPadding="false"
-                        android:text="不押车"
+                        android:text="不押爱车"
                         android:textColor="@color/color_blue"
                         android:textSize="12sp" />
 
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:includeFontPadding="false"
-                        android:text="有车就能抵息贷"
+                        android:text="车随人走不压爱车"
                         android:textColor="#989898"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="放款快"
+                        android:text="还款方便"
                         android:textColor="@color/color_blue"
                         android:textSize="12sp" />
 
@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:includeFontPadding="false"
-                        android:text="最快当日放款"
+                        android:text="自由灵活快速解抵"
                         android:textColor="#989898"
                         android:textSize="10sp" />
                 </LinearLayout>
