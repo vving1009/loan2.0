@@ -28,7 +28,7 @@
     <!--vehicle-->
     <string name="vehicle_title">车辆证件</string>
     <string name="vehicle_message">请拍摄或上传您的行驶证主副页面和车辆产权证页面</string>
-    <string name="vehicle_drive_licence_message">行驶证照片（主副页、车照页）</string>
+    <string name="vehicle_drive_licence_message">行驶证照片（主副页、车辆页）</string>
     <string name="vehicle_ownership_message">车辆产权证（全部页）</string>
     <string name="vehicle_drive_licence_count">行驶证照片（%1$d张） </string>
     <string name="vehicle_ownership_count">车辆产权证（%1$d张） </string>
