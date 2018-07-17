@@ -99,6 +99,15 @@ public abstract class MoxieFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mWebView != null) {
+            ViewGroup parent = (ViewGroup) mWebView.getParent();
+            if(parent!=null){
+                parent.removeView(mWebView);
+            }
+            mWebView.removeAllViews();
+            mWebView.destroy();
+            mWebView = null;
+        }
         mPresenter.unsubscribe();
     }
 
