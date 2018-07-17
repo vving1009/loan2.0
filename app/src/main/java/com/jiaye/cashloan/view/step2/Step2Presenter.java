@@ -60,11 +60,13 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                 })
                 .subscribe(step2 -> {
                     mView.dismissProgressDialog();
-                    if (!TextUtils.isEmpty(step2.getAmount())) {
-                        mView.setText("您的爱车估值" + step2.getAmount());
-                    } else {
+                    if (mStep.getStep() == 3) {
                         if (!TextUtils.isEmpty(step2.getMsg())) {
                             mView.setText(step2.getMsg());
+                        }
+                    } else if (mStep.getStep() == 4) {
+                        if (!TextUtils.isEmpty(step2.getAmount())) {
+                            mView.setText("您的爱车估值" + step2.getAmount());
                         }
                     }
                 }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
