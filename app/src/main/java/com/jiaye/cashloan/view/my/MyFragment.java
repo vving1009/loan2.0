@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.login.LoginActivity;
 import com.jiaye.cashloan.view.my.source.MyRepository;
 
 /**
@@ -64,8 +63,7 @@ public class MyFragment extends BaseFragment implements MyContract.View {
 
     @Override
     public void startAuthView() {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
+        FunctionActivity.function(getActivity(), "Login");
     }
 
     @Override

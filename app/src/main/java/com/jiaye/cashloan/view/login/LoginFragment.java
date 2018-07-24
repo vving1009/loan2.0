@@ -1,46 +1,49 @@
 package com.jiaye.cashloan.view.login;
 
-import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.database.ContentObserver;
-import android.net.Uri;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.service.UploadSmsService;
-import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.login.source.LoginRepository;
-import com.jiaye.cashloan.widget.LoanEditText;
+import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.widget.NoScrollViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * LoginFragment
  *
  * @author 贾博瑄
  */
+public class LoginFragment extends BaseFunctionFragment {
 
-public class LoginFragment extends BaseFragment implements LoginContract.View, EasyPermissions.PermissionCallbacks {
+    private static final int[] TAB_TEXT = new int[]{R.string.login_shortcut, R.string.login_normal};
 
-    private final int READ_SMS_REQUEST = 101;
+    private List<View> indicators = new ArrayList<>();
 
-    private LoginContract.Presenter mPresenter;
+    private LocalBroadcastManager mLocalBroadcastManager;
 
-    private LoanEditText mEditPhone;
-
-    private LoanEditText mEditCode;
-
-    private Button mBtnLogin;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if ("finish".equals(action)) {
+                getActivity().finish();
+            }
+        }
+    };
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -49,89 +52,110 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, E
         return fragment;
     }
 
-    @Nullable
+    public static void finish(Context context) {
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+        Intent intent = new Intent("finish");
+        localBroadcastManager.sendBroadcast(intent);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.login_fragment, container, false);
-        root.getBackground().setAlpha(26);
-        root.findViewById(R.id.img_close).setOnClickListener(v -> getActivity().finish());
-        mEditPhone = root.findViewById(R.id.edit_phone);
-        mEditPhone.setOnClickVerificationCode(() -> {
-            clearError();
-            EasyPermissions.requestPermissions(this, READ_SMS_REQUEST, Manifest.permission.READ_SMS);
-            UploadSmsService.startUploadSmsService(getContext());
+    protected int getTitleId() {
+        return R.string.login;
+    }
+
+    @Override
+    protected int getFunctionId() {
+        return R.string.register;
+    }
+
+    @Override
+    protected void onClickFunction() {
+        FunctionActivity.function(getActivity(), "Register");
+    }
+
+    @Override
+    protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.login_fragment, frameLayout, true);
+        NoScrollViewPager viewPager = rootView.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
+
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return shortcut();
+                    case 1:
+                        return normal();
+                    default:
+                        return shortcut();
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public int getItemPosition(Object object) {
+                return POSITION_NONE;
+            }
         });
-        mEditCode = root.findViewById(R.id.edit_code);
-        mBtnLogin = root.findViewById(R.id.btn_login);
-        mBtnLogin.setOnClickListener(v -> {
-            clearError();
-            mPresenter.login();
+        TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
+        setTabs(tabLayout, getLayoutInflater(), TAB_TEXT);
+        indicators.get(0).setVisibility(View.VISIBLE);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                for (View indicator : indicators) {
+                    indicator.setVisibility(View.INVISIBLE);
+                }
+                indicators.get(tab.getPosition()).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
-        mPresenter = new LoginPresenter(this, new LoginRepository());
-        mPresenter.subscribe();
-        return root;
+        IntentFilter intentFilter = new IntentFilter("finish");
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        mLocalBroadcastManager.registerReceiver(mReceiver, intentFilter);
+        return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.unsubscribe();
-        getContext().getContentResolver().unregisterContentObserver(mContentObserver);
+        mLocalBroadcastManager.unregisterReceiver(mReceiver);
     }
 
-    @Override
-    public String getPhone() {
-        return mEditPhone.getText().toString();
-    }
-
-    @Override
-    public String getCode() {
-        return mEditCode.getText().toString();
-    }
-
-    @Override
-    public void finish() {
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(UploadSmsService.START_UPLOAD_SMS_ACTION));
-        getActivity().finish();
-    }
-
-    @Override
-    public void smsVerificationCodeCountDown() {
-        mEditPhone.startCountDown();
-    }
-
-    /*清除错误信息*/
-    private void clearError() {
-        mEditPhone.setError("");
-        mEditCode.setError("");
-    }
-
-    private ContentObserver mContentObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            mPresenter.getSmsCode(uri);
-        }
-    };
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == READ_SMS_REQUEST && EasyPermissions.hasPermissions(getContext(),
-                Manifest.permission.READ_SMS)) {
-            getContext().getContentResolver().registerContentObserver(Uri.parse("content://sms/"),
-                    true, mContentObserver);
-            mPresenter.verificationCode();
+    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
+        for (int aText : text) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            View view = inflater.inflate(R.layout.taobao_tab, null);
+            tab.setCustomView(view);
+            TextView tvTitle = view.findViewById(R.id.text);
+            View indicator = view.findViewById(R.id.indicator);
+            tvTitle.setText(aText);
+            indicators.add(indicator);
+            tabLayout.addTab(tab);
         }
     }
 
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == READ_SMS_REQUEST) {
-            mPresenter.verificationCode();
-        }
+    private LoginShortcutFragment shortcut() {
+        return LoginShortcutFragment.newInstance();
     }
 
-    @Override
-    public void writeSmsCode(String code) {
-        mEditCode.setText(code);
+    private LoginNormalFragment normal() {
+        return LoginNormalFragment.newInstance();
     }
 }

@@ -24,6 +24,12 @@ public abstract class BaseFunctionFragment extends BaseFragment {
         root.findViewById(R.id.img_back).setOnClickListener(v -> onClickBack());
         TextView textTitle = root.findViewById(R.id.text_title);
         textTitle.setText(getTitleId());
+        TextView textFunction = root.findViewById(R.id.text_function);
+        if (getFunctionId() != -1) {
+            textFunction.setVisibility(View.VISIBLE);
+            textFunction.setText(getFunctionId());
+            textFunction.setOnClickListener(v -> onClickFunction());
+        }
         FrameLayout frameLayout = root.findViewById(R.id.layout_function);
         onCreateFunctionView(inflater, frameLayout);
         return root;
@@ -42,6 +48,22 @@ public abstract class BaseFunctionFragment extends BaseFragment {
      * @return resId
      */
     protected abstract int getTitleId();
+
+    /**
+     * 获取功能资源Id
+     *
+     * @return resId
+     */
+    protected int getFunctionId() {
+        return -1;
+    }
+
+    /**
+     * 点击功能键回调
+     */
+    protected void onClickFunction() {
+
+    }
 
     /**
      * onCreateFunctionView

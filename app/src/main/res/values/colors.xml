@@ -12,6 +12,8 @@
     <color name="color_gray_dark">#656565</color>
     <!--次要内容色-->
     <color name="color_gray">#989898</color>
+    <!--禁用状态色-->
+    <color name="color_gray_little">#CFCFCF</color>
     <!--背景色-->
     <color name="color_gray_light">#F2F2F2</color>
     <!--分割线色-->

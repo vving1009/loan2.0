@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="22dp"
         android:background="@drawable/my_btn"
-        android:text="@string/login_login"
+        android:text="@string/login"
         android:textColor="@color/color_white"
         android:textSize="15sp"
         android:textStyle="bold" />

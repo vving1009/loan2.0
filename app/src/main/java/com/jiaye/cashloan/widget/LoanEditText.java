@@ -48,7 +48,9 @@ public class LoanEditText extends RelativeLayout {
 
     private TextView mTextError;
 
-    private CountDownTimer countDownTimer;
+    private CountDownTimer mCountDownTimer;
+
+    private boolean mHide;
 
     public LoanEditText(Context context) {
         this(context, null);
@@ -65,8 +67,8 @@ public class LoanEditText extends RelativeLayout {
 
     @Override
     protected void onDetachedFromWindow() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
         }
         super.onDetachedFromWindow();
     }
@@ -133,8 +135,8 @@ public class LoanEditText extends RelativeLayout {
     }
 
     public void startCountDown() {
-        if (countDownTimer == null) {
-            countDownTimer = new CountDownTimer(60 * 1000, 1) {
+        if (mCountDownTimer == null) {
+            mCountDownTimer = new CountDownTimer(60 * 1000, 1) {
 
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -151,7 +153,7 @@ public class LoanEditText extends RelativeLayout {
                 }
             };
         }
-        countDownTimer.start();
+        mCountDownTimer.start();
     }
 
     public void setError(String error) {
@@ -231,7 +233,7 @@ public class LoanEditText extends RelativeLayout {
                         }
                     });
                     editLayout.addView(mTextVerification);
-                    LayoutParams lText = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    LayoutParams lText = new LayoutParams((int) (73 * density), (int) (25 * density));
                     lText.addRule(ALIGN_PARENT_RIGHT);
                     lText.addRule(CENTER_VERTICAL);
                     mTextVerification.setLayoutParams(lText);
@@ -254,6 +256,28 @@ public class LoanEditText extends RelativeLayout {
                     mImg.setOnClickListener(v -> {
                         if (mOnClickVerificationCode != null) {
                             mOnClickVerificationCode.onClickVerificationCode();
+                        }
+                    });
+                    break;
+                case 3:// 密码显示开关
+                    mImg = new ImageView(context);
+                    mImg.setImageResource(R.drawable.edit_password_hide);
+                    editLayout.addView(mImg);
+                    LayoutParams lPasswordImg = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    lPasswordImg.addRule(ALIGN_PARENT_RIGHT);
+                    lPasswordImg.addRule(CENTER_VERTICAL);
+                    mImg.setLayoutParams(lPasswordImg);
+                    mHide = true;
+                    mImg.setImageResource(R.drawable.edit_password_hide);
+                    mEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+                    mImg.setOnClickListener(v -> {
+                        mHide = !mHide;
+                        if (mHide) {
+                            mImg.setImageResource(R.drawable.edit_password_hide);
+                            mEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+                        } else {
+                            mImg.setImageResource(R.drawable.edit_password_show);
+                            mEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                         }
                     });
                     break;
@@ -289,5 +313,4 @@ public class LoanEditText extends RelativeLayout {
     public int sp2px(float spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, getResources().getDisplayMetrics());
     }
-
 }

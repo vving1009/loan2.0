@@ -15,6 +15,8 @@ import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.data.file.SubmitUploadFileRequest;
 import com.jiaye.cashloan.http.data.file.UploadFileRequest;
+import com.jiaye.cashloan.http.data.forgetpassword.ForgetPasswordCodeRequest;
+import com.jiaye.cashloan.http.data.forgetpassword.ForgetPasswordRequest;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
 import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
@@ -65,7 +67,8 @@ import com.jiaye.cashloan.http.data.loan.UploadRiskAppListRequest;
 import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.login.Login;
-import com.jiaye.cashloan.http.data.login.LoginRequest;
+import com.jiaye.cashloan.http.data.login.LoginNormalRequest;
+import com.jiaye.cashloan.http.data.login.LoginShortcutRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.data.my.CheckAccount;
 import com.jiaye.cashloan.http.data.my.CheckAccountRequest;
@@ -92,6 +95,7 @@ import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
+import com.jiaye.cashloan.http.register.RegisterRequest;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -107,10 +111,10 @@ public interface SatcatcheService {
     /*新的接口*/
 
     /**
-     * 登录 1
+     * 快捷登录 1
      */
     @POST("carLogin")
-    Flowable<SatcatcheResponse<Login>> login(@Body SatcatcheRequest<LoginRequest> request);
+    Flowable<SatcatcheResponse<Login>> loginShortcut(@Body SatcatcheRequest<LoginShortcutRequest> request);
 
     /**
      * 验证码 2
@@ -262,6 +266,29 @@ public interface SatcatcheService {
     @POST("queryAmountMoney")
     Flowable<SatcatcheResponse<Step4>> step4(@Body SatcatcheRequest<Step4Request> request);
 
+    /**
+     * 注册 27
+     */
+    @POST("register")
+    Flowable<SatcatcheResponse<Login>> register(@Body SatcatcheRequest<RegisterRequest> request);
+
+    /**
+     * 账号登录 28
+     */
+    @POST("loginPass")
+    Flowable<SatcatcheResponse<Login>> loginNormal(@Body SatcatcheRequest<LoginNormalRequest> request);
+
+    /**
+     * 注册/忘记密码获取验证码 29
+     */
+    @POST("sendMsg")
+    Flowable<SatcatcheResponse<EmptyResponse>> forgetPasswordCode(@Body SatcatcheRequest<ForgetPasswordCodeRequest> request);
+
+    /**
+     * 忘记密码 30
+     */
+    @POST("forgetPass")
+    Flowable<SatcatcheResponse<EmptyResponse>> forgetPassword(@Body SatcatcheRequest<ForgetPasswordRequest> request);
 
     /*旧的接口*/
 

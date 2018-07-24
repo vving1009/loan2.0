@@ -15,10 +15,13 @@ import com.jiaye.cashloan.view.cash.CashFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.company.CompanyFragment;
 import com.jiaye.cashloan.view.file.FileFragment;
+import com.jiaye.cashloan.view.forgetpassword.ForgetPasswordFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
+import com.jiaye.cashloan.view.login.LoginFragment;
 import com.jiaye.cashloan.view.phone.PhoneFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
+import com.jiaye.cashloan.view.register.RegisterFragment;
 import com.jiaye.cashloan.view.search.SearchFragment;
 import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.support.SupportFragment;
@@ -47,6 +50,18 @@ public class FunctionActivity extends AppCompatActivity {
         String function = getIntent().getStringExtra("function");
         if (savedInstanceState == null) {
             switch (function) {
+                case "Login":
+                    // 登录
+                    mFragment = LoginFragment.newInstance();
+                    break;
+                case "Register":
+                    // 注册
+                    mFragment = RegisterFragment.newInstance();
+                    break;
+                case "ForgetPassword":
+                    // 忘记密码
+                    mFragment = ForgetPasswordFragment.newInstance();
+                    break;
                 case "Certification":
                     // 认证中心
                     mFragment = CertificationFragment.newInstance();

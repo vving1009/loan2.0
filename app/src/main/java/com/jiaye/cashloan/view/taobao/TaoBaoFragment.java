@@ -30,32 +30,11 @@ public class TaoBaoFragment extends BaseFunctionFragment {
 
     private List<View> indicators = new ArrayList<>();
 
-    private TaoBaoNormalFragment normal() {
-        return TaoBaoNormalFragment.newInstance();
-    }
-
-    private TaoBaoQRFragment qr() {
-        return TaoBaoQRFragment.newInstance();
-    }
-
     public static TaoBaoFragment newInstance() {
         Bundle args = new Bundle();
         TaoBaoFragment fragment = new TaoBaoFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
-        for (int aText : text) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.taobao_tab, null);
-            tab.setCustomView(view);
-            TextView tvTitle = view.findViewById(R.id.text);
-            View indicator = view.findViewById(R.id.indicator);
-            tvTitle.setText(aText);
-            indicators.add(indicator);
-            tabLayout.addTab(tab);
-        }
     }
 
     @Override
@@ -122,5 +101,26 @@ public class TaoBaoFragment extends BaseFunctionFragment {
             }
         });
         return rootView;
+    }
+
+    private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
+        for (int aText : text) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            View view = inflater.inflate(R.layout.taobao_tab, null);
+            tab.setCustomView(view);
+            TextView tvTitle = view.findViewById(R.id.text);
+            View indicator = view.findViewById(R.id.indicator);
+            tvTitle.setText(aText);
+            indicators.add(indicator);
+            tabLayout.addTab(tab);
+        }
+    }
+
+    private TaoBaoNormalFragment normal() {
+        return TaoBaoNormalFragment.newInstance();
+    }
+
+    private TaoBaoQRFragment qr() {
+        return TaoBaoQRFragment.newInstance();
     }
 }

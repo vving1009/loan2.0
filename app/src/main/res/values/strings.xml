@@ -3,6 +3,16 @@
     <string name="home">首页</string>
     <string name="my">我的</string>
     <!--launch-->
+    <!--login-->
+    <string name="login">登录</string>
+    <string name="login_shortcut">快捷登录</string>
+    <string name="login_normal">账号登录</string>
+    <!--register-->
+    <string name="register">注册</string>
+    <string name="register_at_once">立即注册</string>
+    <!--forget password-->
+    <string name="forget_password">忘记密码</string>
+    <string name="confirm">确认</string>
     <!--search-->
     <string name="search_error">请先选择业务员</string>
     <!--certification-->
@@ -137,10 +147,10 @@
     <string name="input_phone">请输入手机号码</string>
     <!--<string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string>&lt;!&ndash;(-,&#8211;)&ndash;&gt;-->
     <string name="input_login_verification">请输入验证码</string>
+    <string name="input_login_password">请输入6-16位数字和字母</string>
     <string name="send_verification_code">发送验证码</string>
     <string name="send_count_down">%s秒后重新发送</string>
     <string name="send_again">重新发送</string>
-    <string name="login_login">登录</string>
     <!--register-->
     <string name="input_sms_verification">请输入手机验证码</string>
     <!--password-->
@@ -155,6 +165,7 @@
     <string name="error_install_permission">请开启安装第三方应用的授权</string>
     <string name="error_auth_not_log_in">未登录</string>
     <string name="error_auth_phone">请输入正确的手机号</string>
+    <string name="error_auth_password">请输入正确的密码</string>
     <string name="error_auth_sms_verification">请输入正确的验证码</string>
     <string name="error_loan_auth_ocr">请填写正确的姓名</string>
     <string name="error_loan_auth_ocr_idcard">身份证号错误，请重新扫描上传</string>
