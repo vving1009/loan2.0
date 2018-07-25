@@ -1,7 +1,5 @@
 package com.jiaye.cashloan.view.taobao;
 
-import android.graphics.Bitmap;
-
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
@@ -14,8 +12,12 @@ import com.jiaye.cashloan.view.BaseViewContract;
 public interface TaoBaoContract {
 
     interface View extends BaseViewContract {
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestTaoBao();
     }
 }

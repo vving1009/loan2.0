@@ -12,8 +12,12 @@ import com.jiaye.cashloan.view.BaseViewContract;
 public interface PhoneContract {
 
     interface View extends BaseViewContract {
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter {
+
+        void requestUpdatePhone();
     }
 }

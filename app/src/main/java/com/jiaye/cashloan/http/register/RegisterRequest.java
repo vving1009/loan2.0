@@ -45,6 +45,6 @@ public class RegisterRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL0027";
+        return "CL027";
     }
 }

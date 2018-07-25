@@ -1,5 +1,9 @@
 package com.jiaye.cashloan.view.taobao.source;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
+
+import io.reactivex.Flowable;
+
 /**
  * TaoBaoDataSource
  *
@@ -7,4 +11,6 @@ package com.jiaye.cashloan.view.taobao.source;
  */
 
 public interface TaoBaoDataSource {
+
+    Flowable<EmptyResponse> requestTaoBao();
 }

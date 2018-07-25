@@ -1,5 +1,9 @@
 package com.jiaye.cashloan.view.phone.source;
 
+import com.jiaye.cashloan.http.base.EmptyResponse;
+
+import io.reactivex.Flowable;
+
 /**
  * PhoneDataSource
  *
@@ -8,4 +12,5 @@ package com.jiaye.cashloan.view.phone.source;
 
 public interface PhoneDataSource {
 
+    Flowable<EmptyResponse> requestUpdatePhone();
 }

@@ -76,6 +76,7 @@ import com.jiaye.cashloan.http.data.my.IDCardAuth;
 import com.jiaye.cashloan.http.data.my.IDCardAuthRequest;
 import com.jiaye.cashloan.http.data.my.Phone;
 import com.jiaye.cashloan.http.data.my.PhoneRequest;
+import com.jiaye.cashloan.http.data.phone.UpdatePhoneRequest;
 import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.http.data.plan.PlanRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
@@ -91,6 +92,7 @@ import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
 import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.http.data.step4.Step4Request;
+import com.jiaye.cashloan.http.data.taobao.UpdateTaoBaoRequest;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
@@ -289,6 +291,18 @@ public interface SatcatcheService {
      */
     @POST("forgetPass")
     Flowable<SatcatcheResponse<EmptyResponse>> forgetPassword(@Body SatcatcheRequest<ForgetPasswordRequest> request);
+
+    /**
+     * 运营商认证 31
+     */
+    @POST("updateOperatorStatus")
+    Flowable<SatcatcheResponse<EmptyResponse>> updatePhone(@Body SatcatcheRequest<UpdatePhoneRequest> request);
+
+    /**
+     * 淘宝认证 32
+     */
+    @POST("updateTaobaoStatus")
+    Flowable<SatcatcheResponse<EmptyResponse>> updateTaoBao(@Body SatcatcheRequest<UpdateTaoBaoRequest> request);
 
     /*旧的接口*/
 

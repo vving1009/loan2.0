@@ -40,4 +40,9 @@ public class TaoBaoFragment extends MoxieFragment implements TaoBaoContract.View
     protected String getMoxieParams() {
         return "";
     }
+
+    @Override
+    protected void notifyService() {
+        mPresenter.requestTaoBao();
+    }
 }

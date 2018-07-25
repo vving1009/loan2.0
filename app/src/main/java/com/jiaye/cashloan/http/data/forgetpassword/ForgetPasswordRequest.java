@@ -45,6 +45,6 @@ public class ForgetPasswordRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL0030";
+        return "CL030";
     }
 }

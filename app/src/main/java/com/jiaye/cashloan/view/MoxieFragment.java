@@ -57,14 +57,7 @@ public abstract class MoxieFragment extends BaseFragment {
                     if (uri.getQueryParameter("mxcode").equals("1")) {
                         Log.d(TAG, "moxie verification done. ");
                         Log.d(TAG, "message=" + uri.getQueryParameter("message"));
-                        // TODO: 2018/7/25 发送验证成功请求
-                        switch (uri.getQueryParameter("taskType")) {
-                            case "taobao":
-                                break;
-                            case "carrier" :
-                                break;
-                        }
-                        exit();
+                        notifyService();
                     } else {
                         Log.d(TAG, "moxie verification failed");
                         exit();
@@ -112,6 +105,8 @@ public abstract class MoxieFragment extends BaseFragment {
     protected abstract String getMoxieType();
 
     protected abstract String getMoxieParams();
+    
+    protected abstract void notifyService();
 
     protected abstract BasePresenter getPresenter();
 }

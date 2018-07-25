@@ -2,7 +2,6 @@ package com.jiaye.cashloan.view.phone;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.view.BasePresenter;
@@ -48,5 +47,10 @@ public class PhoneFragment extends MoxieFragment implements PhoneContract.View {
         String idCard = LoanApplication.getInstance().getDbHelper().queryUser().getId();
         idCard = !TextUtils.isEmpty(idCard) ? ",\"idcard\":\"" + idCard + "\"" : "";
         return "&loginParams={" + phoneNum + userName + idCard + "}";
+    }
+
+    @Override
+    protected void notifyService() {
+        mPresenter.requestUpdatePhone();
     }
 }
