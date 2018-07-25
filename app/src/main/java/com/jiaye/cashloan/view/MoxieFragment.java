@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +46,6 @@ public abstract class MoxieFragment extends BaseFragment {
         mWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.d(TAG, "shouldOverrideUrlLoading: " + url);
-                //调用拨号、短信等程序
                 if (url.startsWith("mailto:") || url.startsWith("geo:") ||
                         url.startsWith("tel:") || url.startsWith("sms:") || url.startsWith("taobao:")) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -56,24 +54,20 @@ public abstract class MoxieFragment extends BaseFragment {
                 }
                 if (url.contains("loan//callback")) {
                     Uri uri = Uri.parse(url);
-                    if (uri.getQueryParameter("mxcode").equals("-1") &&
-                            uri.getQueryParameter("loginDone").equals("0")) {
-                        Log.d(TAG, "exit moxie verification. ");
-                        getActivity().finish();
-                    }
-                    if (uri.getQueryParameter("mxcode").equals("1") &&
-                            uri.getQueryParameter("loginDone").equals("1") &&
-                            !TextUtils.isEmpty(uri.getQueryParameter("message")) &&
-                            !TextUtils.isEmpty(uri.getQueryParameter("userId")) &&
-                            !TextUtils.isEmpty(uri.getQueryParameter("account")) &&
-                            !TextUtils.isEmpty(uri.getQueryParameter("taskId"))) {
-                        // TODO: 2018/7/11 carrier verification done.
+                    if (uri.getQueryParameter("mxcode").equals("1")) {
                         Log.d(TAG, "moxie verification done. ");
                         Log.d(TAG, "message=" + uri.getQueryParameter("message"));
-                        Log.d(TAG, "userId=" + uri.getQueryParameter("userId"));
-                        Log.d(TAG, "account=" + uri.getQueryParameter("account"));
-                        Log.d(TAG, "taskId=" + uri.getQueryParameter("taskId"));
-                        getActivity().finish();
+                        // TODO: 2018/7/25 发送验证成功请求
+                        switch (uri.getQueryParameter("taskType")) {
+                            case "taobao":
+                                break;
+                            case "carrier" :
+                                break;
+                        }
+                        exit();
+                    } else {
+                        Log.d(TAG, "moxie verification failed");
+                        exit();
                     }
                     return true;
                 }
@@ -109,6 +103,10 @@ public abstract class MoxieFragment extends BaseFragment {
             mWebView = null;
         }
         mPresenter.unsubscribe();
+    }
+
+    public void exit() {
+        getActivity().finish();
     }
 
     protected abstract String getMoxieType();
