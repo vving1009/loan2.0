@@ -141,7 +141,7 @@ public class LoginFragment extends BaseFunctionFragment {
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] text) {
         for (int aText : text) {
             TabLayout.Tab tab = tabLayout.newTab();
-            View view = inflater.inflate(R.layout.taobao_tab, null);
+            View view = inflater.inflate(R.layout.login_tab, null);
             tab.setCustomView(view);
             TextView tvTitle = view.findViewById(R.id.text);
             View indicator = view.findViewById(R.id.indicator);
