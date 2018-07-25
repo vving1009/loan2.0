@@ -10,19 +10,8 @@ import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
  */
 public class UpdateTaoBaoRequest extends SatcatcheChildRequest {
 
-    @SerializedName("userinfo_id")
-    private String token;
-
     @SerializedName("jla_id")
     private String loanId;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getLoanId() {
         return loanId;

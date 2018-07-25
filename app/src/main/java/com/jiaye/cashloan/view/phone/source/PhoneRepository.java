@@ -20,7 +20,6 @@ public class PhoneRepository implements PhoneDataSource {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
                 .map(user -> {
                     UpdatePhoneRequest request = new UpdatePhoneRequest();
-                    request.setToken(user.getToken());
                     request.setLoanId(user.getLoanId());
                     return request;
                 }).compose(new SatcatcheResponseTransformer<UpdatePhoneRequest, EmptyResponse>("updatePhone"));

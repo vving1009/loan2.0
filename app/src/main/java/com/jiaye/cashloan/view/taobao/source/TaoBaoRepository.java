@@ -20,7 +20,6 @@ public class TaoBaoRepository implements TaoBaoDataSource {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
                 .map(user -> {
                     UpdateTaoBaoRequest request = new UpdateTaoBaoRequest();
-                    request.setToken(user.getToken());
                     request.setLoanId(user.getLoanId());
                     return request;
                 }).compose(new SatcatcheResponseTransformer<UpdateTaoBaoRequest, EmptyResponse>("updateTaoBao"));
