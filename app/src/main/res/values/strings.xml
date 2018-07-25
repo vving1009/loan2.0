@@ -150,7 +150,7 @@
     <string name="error_upload_server_timeout">上传至服务器超时</string>
     <string name="error_install_permission">请开启安装第三方应用的授权</string>
     <string name="error_auth_not_log_in">未登录</string>
-    <string name="error_auth_phone">请输入正确的手机号</string>
+    <string name="error_auth_phone">请输入正确的手机号码</string>
     <string name="error_auth_password">请输入正确的密码</string>
     <string name="error_auth_sms_verification">请输入正确的验证码</string>
     <string name="error_loan_auth_ocr">请填写正确的姓名</string>
