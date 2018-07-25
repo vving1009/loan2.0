@@ -51,6 +51,9 @@ public class InfoPresenter extends BasePresenterImpl implements InfoContact.Pres
 
     private ArrayList<Relation> mRelationFriend;
 
+    // 只上传一次通讯录
+    private boolean finishUploadContact = false;
+
     public InfoPresenter(InfoContact.View view, InfoDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -109,11 +112,13 @@ public class InfoPresenter extends BasePresenterImpl implements InfoContact.Pres
 
     @Override
     public void upLoadContact() {
-        Disposable disposable = mDataSource.uploadContact()
-                .compose(new ViewTransformer<>())
-                .subscribe(uploadContact -> {
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        if (!finishUploadContact) {
+            Disposable disposable = mDataSource.uploadContact()
+                    .compose(new ViewTransformer<>())
+                    .subscribe(uploadContact -> finishUploadContact = true
+                            , new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
+        }
     }
 
     @Override
