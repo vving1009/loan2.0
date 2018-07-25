@@ -38,7 +38,7 @@ public class FunctionActivity extends AppCompatActivity {
 
     public static void function(Activity activity, String function) {
         if (function.equals(MxParam.PARAM_TASK_CARRIER) || function.equals(MxParam.PARAM_TASK_TAOBAO)) {
-            MoxieActivity.getInstance().start(activity, function);
+            MoxieHelper.INSTANCE.start(activity, function);
             return;
         }
         Intent intent = new Intent(activity, FunctionActivity.class);

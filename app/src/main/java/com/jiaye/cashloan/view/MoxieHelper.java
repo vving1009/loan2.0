@@ -9,6 +9,10 @@ import android.widget.Toast;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.phone.UpdatePhoneRequest;
+import com.jiaye.cashloan.http.data.taobao.UpdateTaoBaoRequest;
+import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.moxie.client.exception.ExceptionType;
 import com.moxie.client.exception.MoxieException;
 import com.moxie.client.manager.MoxieCallBack;
@@ -22,22 +26,17 @@ import com.moxie.client.model.TitleParams;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MoxieActivity {
+import io.reactivex.Flowable;
 
-    private static final String TAG = "MoxieActivity";
+public enum MoxieHelper {
 
-    private static MoxieActivity INSTANCE;
+    INSTANCE;
+
+    private static final String TAG = "Moxie";
 
     private MxParam mxParam;
 
-    public static synchronized MoxieActivity getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MoxieActivity();
-        }
-        return INSTANCE;
-    }
-
-    private MoxieActivity() {
+    MoxieHelper() {
         initMxParam();
     }
 
@@ -188,33 +187,57 @@ public class MoxieActivity {
                                 Log.d(TAG, "任务未开始");
                                 break;
                             case MxParam.ResultCode.THIRD_PARTY_SERVER_ERROR:
-                                Toast.makeText(activity, "导入失败(平台方服务问题)", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "导入失败(平台方服务问题)");
                                 break;
                             case MxParam.ResultCode.MOXIE_SERVER_ERROR:
-                                Toast.makeText(activity, "导入失败(魔蝎数据服务异常)", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "导入失败(魔蝎数据服务异常)");
                                 break;
                             case MxParam.ResultCode.USER_INPUT_ERROR:
-                                Toast.makeText(activity, "导入失败(" + moxieCallBackData.getMessage() + ")", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "导入失败(" + moxieCallBackData.getMessage() + ")");
                                 break;
                             case MxParam.ResultCode.IMPORT_FAIL:
-                                Toast.makeText(activity, "导入失败", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "导入失败");
                                 break;
                             case MxParam.ResultCode.IMPORT_SUCCESS:
                                 Log.d(TAG, "任务采集成功，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
-
                                 //根据taskType进行对应的处理
                                 switch (moxieCallBackData.getTaskType()) {
-                                    case MxParam.PARAM_TASK_EMAIL:
-                                        Toast.makeText(activity, "邮箱导入成功", Toast.LENGTH_SHORT).show();
+                                    case MxParam.PARAM_TASK_CARRIER:
+                                        Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                                                .map(user -> {
+                                                    UpdatePhoneRequest request = new UpdatePhoneRequest();
+                                                    request.setLoanId(user.getLoanId());
+                                                    return request;
+                                                })
+                                                .compose(new SatcatcheResponseTransformer<UpdatePhoneRequest, EmptyResponse>("updatePhone"))
+                                                .compose(new ViewTransformer<>())
+                                                .subscribe(emptyResponse -> moxieContext.finish(), t -> {
+                                                    if (t != null && !TextUtils.isEmpty(t.getMessage())) {
+                                                        Toast.makeText(moxieContext.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    moxieContext.finish();
+                                                }, moxieContext::finish);
                                         break;
-                                    case MxParam.PARAM_TASK_ONLINEBANK:
-                                        Toast.makeText(activity, "网银导入成功", Toast.LENGTH_SHORT).show();
+                                    case MxParam.PARAM_TASK_TAOBAO:
+                                        Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                                                .map(user -> {
+                                                    UpdateTaoBaoRequest request = new UpdateTaoBaoRequest();
+                                                    request.setLoanId(user.getLoanId());
+                                                    return request;
+                                                })
+                                                .compose(new SatcatcheResponseTransformer<UpdateTaoBaoRequest, EmptyResponse>("updateTaoBao"))
+                                                .compose(new ViewTransformer<>())
+                                                .subscribe(emptyResponse -> moxieContext.finish(), t -> {
+                                                    if (t != null && !TextUtils.isEmpty(t.getMessage())) {
+                                                        Toast.makeText(moxieContext.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    moxieContext.finish();
+                                                }, moxieContext::finish);
                                         break;
-                                    //.....
                                     default:
-                                        Toast.makeText(activity, "导入成功", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "导入成功");
+                                        moxieContext.finish();
                                 }
-                                moxieContext.finish();
                                 return true;
                         }
                     }
@@ -228,14 +251,16 @@ public class MoxieActivity {
                 @Override
                 public void onError(MoxieContext moxieContext, MoxieException moxieException) {
                     super.onError(moxieContext, moxieException);
-                    if (moxieException.getExceptionType() == ExceptionType.SDK_HAS_STARTED) {
-                        Toast.makeText(activity, moxieException.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else if (moxieException.getExceptionType() == ExceptionType.SDK_LACK_PARAMETERS) {
-                        Toast.makeText(activity, moxieException.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else if (moxieException.getExceptionType() == ExceptionType.WRONG_PARAMETERS) {
-                        Toast.makeText(activity, moxieException.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (moxieException != null) {
+                        if (moxieException.getExceptionType() == ExceptionType.SDK_HAS_STARTED) {
+                            Log.d(TAG, moxieException.getMessage());
+                        } else if (moxieException.getExceptionType() == ExceptionType.SDK_LACK_PARAMETERS) {
+                            Log.d(TAG, moxieException.getMessage());
+                        } else if (moxieException.getExceptionType() == ExceptionType.WRONG_PARAMETERS) {
+                            Log.d(TAG, moxieException.getMessage());
+                        }
+                        Log.d("BigdataFragment", "MoxieSDK onError : " + moxieException.toString());
                     }
-                    Log.d("BigdataFragment", "MoxieSDK onError : " + (moxieException != null ? moxieException.toString() : ""));
                 }
             });
         } catch (Exception e) {
