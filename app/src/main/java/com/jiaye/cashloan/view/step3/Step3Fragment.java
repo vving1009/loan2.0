@@ -18,6 +18,7 @@ import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
 import com.jiaye.cashloan.widget.StepView;
+import com.moxie.client.model.MxParam;
 
 /**
  * Step3Fragment
@@ -77,7 +78,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
     @Override
     public void showTaoBaoView() {
-        FunctionActivity.function(getActivity(), "Taobao");
+        FunctionActivity.function(getActivity(), MxParam.PARAM_TASK_TAOBAO);
     }
 
     @Override

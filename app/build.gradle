@@ -129,6 +129,9 @@ dependencies {
     // https://help.aliyun.com/document_detail/32043.html
     api 'com.aliyun.dpa:oss-android-sdk:2.8.3'
     api 'com.squareup.okio:okio:1.13.0'
+    // http://open.51datakey.com/
+    api 'com.moxie:moxie-client:2.3.5'
+
     // module
     implementation project(':tongdun')
     // https://github.com/crazycodeboy/TakePhoto

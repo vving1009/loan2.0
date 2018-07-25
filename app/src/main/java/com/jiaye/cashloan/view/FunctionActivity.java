@@ -18,16 +18,14 @@ import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.forgetpassword.ForgetPasswordFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
-import com.jiaye.cashloan.view.insurance.InsuranceFragment;
 import com.jiaye.cashloan.view.login.LoginFragment;
-import com.jiaye.cashloan.view.phone.PhoneFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
 import com.jiaye.cashloan.view.register.RegisterFragment;
 import com.jiaye.cashloan.view.search.SearchFragment;
 import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.support.SupportFragment;
-import com.jiaye.cashloan.view.taobao.TaoBaoFragment;
 import com.jiaye.cashloan.view.vehicle.VehicleFragment;
+import com.moxie.client.model.MxParam;
 
 /**
  * FunctionActivity
@@ -39,6 +37,10 @@ public class FunctionActivity extends AppCompatActivity {
     private BaseFragment mFragment;
 
     public static void function(Activity activity, String function) {
+        if (function.equals(MxParam.PARAM_TASK_CARRIER) || function.equals(MxParam.PARAM_TASK_TAOBAO)) {
+            MoxieActivity.getInstance().start(activity, function);
+            return;
+        }
         Intent intent = new Intent(activity, FunctionActivity.class);
         intent.putExtra("function", function);
         activity.startActivity(intent);
@@ -75,17 +77,9 @@ public class FunctionActivity extends AppCompatActivity {
                     // 个人资料
                     mFragment = InfoFragment.newInstance();
                     break;
-                case "Phone":
-                    // 手机运营商
-                    mFragment = PhoneFragment.newInstance();
-                    break;
                 case "Vehicle":
                     // 车辆证件
                     mFragment = VehicleFragment.newInstance();
-                    break;
-                case "Taobao":
-                    // 淘宝
-                    mFragment = TaoBaoFragment.newInstance();
                     break;
                 case "File":
                     // 进件资料
@@ -130,10 +124,6 @@ public class FunctionActivity extends AppCompatActivity {
                 case "Search":
                     // 公司业务员搜索
                     mFragment = SearchFragment.newInstance();
-                    break;
-                case "Insurance":
-                    // 车险
-                    mFragment = InsuranceFragment.newInstance();
                     break;
             }
         } else {

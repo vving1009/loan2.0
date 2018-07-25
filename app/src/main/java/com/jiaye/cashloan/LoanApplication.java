@@ -16,6 +16,7 @@ import com.jiaye.cashloan.service.UploadFaceService;
 import com.jiaye.cashloan.service.UploadSmsService;
 import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.main.MainActivity;
+import com.moxie.client.manager.MoxieSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -109,6 +110,7 @@ public class LoanApplication extends Application {
         setupBugly();
         setupLogger();
         setupDict();
+        initMoxie();
     }
 
     /**
@@ -210,5 +212,12 @@ public class LoanApplication extends Application {
         if (!file4.exists()) {
             FileUtils.copyFiles(this, "relation.json", file4.getPath());
         }
+    }
+
+    /**
+     * 初始化魔蝎
+     */
+    private void initMoxie() {
+        MoxieSDK.init(this);
     }
 }

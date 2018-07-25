@@ -20,6 +20,7 @@ import com.jiaye.cashloan.view.bioassay.BioassayActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
+import com.moxie.client.model.MxParam;
 
 /**
  * Step1Fragment
@@ -98,7 +99,7 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
 
     @Override
     public void showPhoneView() {
-        FunctionActivity.function(getActivity(), "Phone");
+        FunctionActivity.function(getActivity(), MxParam.PARAM_TASK_CARRIER);
     }
 
     @Override
