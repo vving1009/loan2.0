@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.download;
+package com.satcatche.appupgrade.download;
 
 /**
  * DownloadProgressListener

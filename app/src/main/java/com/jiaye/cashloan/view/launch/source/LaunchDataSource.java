@@ -1,7 +1,7 @@
 package com.jiaye.cashloan.view.launch.source;
 
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
-import com.jiaye.cashloan.http.download.DownloadProgressListener;
+import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.appupgrade.download.DownloadProgressListener;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ public interface LaunchDataSource {
     /**
      * 检测升级
      */
-    Flowable<CheckUpdate> checkUpdate();
+    Flowable<UpgradeResponse.Body> checkUpdate();
 
     /**
      * 下载应用

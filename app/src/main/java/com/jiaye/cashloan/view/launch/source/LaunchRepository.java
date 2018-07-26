@@ -4,12 +4,12 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
-import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
-import com.jiaye.cashloan.http.download.DownloadClient;
-import com.jiaye.cashloan.http.download.DownloadProgressListener;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.utils.MD5Util;
+import com.satcatche.appupgrade.AppUpgradeModule;
+import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.appupgrade.download.DownloadClient;
+import com.satcatche.appupgrade.download.DownloadProgressListener;
 
 import org.reactivestreams.Publisher;
 
@@ -31,7 +31,7 @@ import okhttp3.ResponseBody;
 
 public class LaunchRepository implements LaunchDataSource {
 
-    private CheckUpdate mCheckUpdate;
+    private UpgradeResponse.Body mCheckUpdate;
 
     @Override
     public Flowable<Object> requestDictionaryList() {
@@ -74,14 +74,9 @@ public class LaunchRepository implements LaunchDataSource {
     }
 
     @Override
-    public Flowable<CheckUpdate> checkUpdate() {
-        return Flowable.just(new CheckUpdateRequest())
-                .compose(new SatcatcheResponseTransformer<CheckUpdateRequest, CheckUpdate>
-                        ("checkUpdate"))
-                .map(checkUpdate -> {
-                    mCheckUpdate = checkUpdate;
-                    return checkUpdate;
-                });
+    public Flowable<UpgradeResponse.Body> checkUpdate() {
+        return AppUpgradeModule.getCheckUpgradeFlowable()
+                .doOnNext(responseBody -> mCheckUpdate = responseBody);
     }
 
     @Override

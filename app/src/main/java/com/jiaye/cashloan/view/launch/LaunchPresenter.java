@@ -1,11 +1,11 @@
 package com.jiaye.cashloan.view.launch;
 
 import com.jiaye.cashloan.BuildConfig;
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.launch.source.LaunchDataSource;
+import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
 
 import org.reactivestreams.Publisher;
 
@@ -33,7 +33,7 @@ public class LaunchPresenter extends BasePresenterImpl implements LaunchContract
     public void subscribe() {
         super.subscribe();
         Disposable disposable = mDataSource.requestDictionaryList()
-                .flatMap((Function<Object, Publisher<CheckUpdate>>) file -> mDataSource.checkUpdate())
+                .flatMap((Function<Object, Publisher<UpgradeResponse.Body>>) file -> mDataSource.checkUpdate())
                 .compose(new ViewTransformer<>())
                 .subscribe(checkUpdate -> {
                     if (checkUpdate.getVersionCode() > BuildConfig.VERSION_CODE) {

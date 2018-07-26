@@ -24,8 +24,6 @@ import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.id.IDUploadPicture;
 import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
-import com.jiaye.cashloan.http.data.launch.CheckUpdateRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.ContractList;
@@ -311,12 +309,6 @@ public interface SatcatcheService {
      */
     @POST("dictEntry")
     Flowable<SatcatcheResponse<DictionaryList>> dictionaryList(@Body SatcatcheRequest<DictionaryListRequest> request);
-
-    /**
-     * 检测升级
-     */
-    @POST("getVersion")
-    Flowable<SatcatcheResponse<CheckUpdate>> checkUpdate(@Body SatcatcheRequest<CheckUpdateRequest> request);
 
     /**
      * 是否可以借款

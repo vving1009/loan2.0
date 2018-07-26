@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.download;
+package com.satcatche.appupgrade.download;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -17,5 +17,4 @@ public interface DownloadService {
     @Streaming
     @GET
     Flowable<ResponseBody> download(@Url String url);
-
 }

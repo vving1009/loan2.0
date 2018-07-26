@@ -21,6 +21,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.satcatche.appupgrade.utils.UpgradeConfig;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
@@ -111,6 +112,7 @@ public class LoanApplication extends Application {
         setupLogger();
         setupDict();
         initMoxie();
+        initUpgradeConfig();
     }
 
     /**
@@ -219,5 +221,14 @@ public class LoanApplication extends Application {
      */
     private void initMoxie() {
         MoxieSDK.init(this);
+    }
+
+    /**
+     * upgrade模块初始化
+     */
+    private void initUpgradeConfig() {
+        UpgradeConfig.setCheckUpgradeUrl(BuildConfig.CHECK_UPGRADE_URL);
+        UpgradeConfig.setPackageName(BuildConfig.APPLICATION_ID);
+        UpgradeConfig.setVersionCode(BuildConfig.VERSION_CODE);
     }
 }

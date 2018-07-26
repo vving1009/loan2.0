@@ -1,1 +1,1 @@
-include ':app', ':tongdun', ':takephoto', ':easypermissions'
+include ':app', ':tongdun', ':takephoto', ':easypermissions' ,':network'

@@ -1,8 +1,8 @@
 package com.jiaye.cashloan.view.launch;
 
-import com.jiaye.cashloan.http.data.launch.CheckUpdate;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
+import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
 
 import java.io.File;
 
@@ -24,7 +24,7 @@ public interface LaunchContract {
         /**
          * 显示升级页面
          */
-        void showUpdateView(CheckUpdate data);
+        void showUpdateView(UpgradeResponse.Body data);
 
         /**
          * 设置进度
