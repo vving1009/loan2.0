@@ -275,9 +275,11 @@ public class LoanEditText extends RelativeLayout {
                         if (mHide) {
                             mImg.setImageResource(R.drawable.edit_password_hide);
                             mEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+                            mEditText.setSelection(mEditText.getText().length());
                         } else {
                             mImg.setImageResource(R.drawable.edit_password_show);
                             mEditText.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            mEditText.setSelection(mEditText.getText().length());
                         }
                     });
                     break;
