@@ -29,9 +29,8 @@ android {
         buildConfigField("String", "OSS_ACCESS_KEY_SECRET", properties.getProperty("OSS_ACCESS_KEY_SECRET"))
         buildConfigField("String", "OSS_BUCKET_NAME", properties.getProperty("OSS_BUCKET_NAME"))
         buildConfigField("String", "OSS_BASE_URL", properties.getProperty("OSS_BASE_URL"))
-        buildConfigField("String", "MOXIE_URL", properties.getProperty("MOXIE_URL"))
+        buildConfigField("String", "MOXIE_PROTOCOL_URL", properties.getProperty("MOXIE_PROTOCOL_URL"))
         buildConfigField("String", "MOXIE_APIKEY", properties.getProperty("MOXIE_APIKEY"))
-        buildConfigField("String", "MOXIE_TOKEN", properties.getProperty("MOXIE_TOKEN"))
     }
     /**
      * url  对应服务器地址

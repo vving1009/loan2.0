@@ -46,7 +46,7 @@ public enum MoxieHelper {
         mxParam.setUserId(LoanApplication.getInstance().getDbHelper().queryUser().getToken());
         mxParam.setThemeColor("#425FBB");
         // 设置协议地址
-        mxParam.setAgreementUrl("http://47.93.206.19/doc/dataAcquisition.html");
+        mxParam.setAgreementUrl(BuildConfig.MOXIE_PROTOCOL_URL);
         // 设置协议文字
         mxParam.setAgreementEntryText("数据采集服务协议");
         initTitle();
