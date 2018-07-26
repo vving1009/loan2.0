@@ -135,8 +135,8 @@
     <!--<string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string>&lt;!&ndash;(-,&#8211;)&ndash;&gt;-->
     <string name="input_login_verification">请输入验证码</string>
     <string name="input_login_password">请输入6-16位数字和字母</string>
-    <string name="send_verification_code">发送验证码</string>
-    <string name="send_count_down">%s秒后重新发送</string>
+    <string name="send_verification_code">获取验证码</string>
+    <string name="send_count_down">%ss</string>
     <string name="send_again">重新发送</string>
     <!--register-->
     <string name="input_sms_verification">请输入手机验证码</string>

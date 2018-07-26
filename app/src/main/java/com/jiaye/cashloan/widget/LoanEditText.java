@@ -81,6 +81,7 @@ public class LoanEditText extends RelativeLayout {
         }
         if (mTextVerification != null) {
             mTextVerification.setEnabled(enabled);
+            setVerificationBtnEnabled(enabled);
         }
         if (mImgVerification != null) {
             mImgVerification.setEnabled(enabled);
@@ -148,7 +149,7 @@ public class LoanEditText extends RelativeLayout {
                 @Override
                 public void onFinish() {
                     mTextVerification.setEnabled(true);
-                    mTextVerification.setText(getResources().getString(R.string.send_again));
+                    //mTextVerification.setText(getResources().getString(R.string.send_again));
                     mTextVerification.setTextColor(getResources().getColor(R.color.color_blue));
                 }
             };

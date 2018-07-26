@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,14 @@ public class LoginShortcutFragment extends BaseFragment implements LoginShortcut
 
     private LoanEditText mEditPassword;
 
+    private Button mBtnLogin;
+
+    private boolean phoneReady = false;
+
+    private boolean codeReady = false;
+
+    private boolean pwReady = false;
+
     public static LoginShortcutFragment newInstance() {
         Bundle args = new Bundle();
         LoginShortcutFragment fragment = new LoginShortcutFragment();
@@ -58,18 +68,103 @@ public class LoginShortcutFragment extends BaseFragment implements LoginShortcut
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.login_shortcut_fragment, container, false);
         mEditPhone = root.findViewById(R.id.edit_phone);
+        mEditPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 11) {
+                    phoneReady = true;
+                } else {
+                    phoneReady = false;
+                }
+                setBtnEnable();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         mEditCode = root.findViewById(R.id.edit_code);
+        mEditCode.setEnabled(false);
         mEditCode.setOnClickVerificationCode(() -> {
             EasyPermissions.requestPermissions(this, READ_SMS_REQUEST, Manifest.permission.READ_SMS);
             UploadSmsService.startUploadSmsService(getContext());
         });
+        mEditCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 4) {
+                    codeReady = true;
+                } else {
+                    codeReady = false;
+                }
+                setBtnEnable();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         mLayoutPassword = root.findViewById(R.id.layout_password);
         mEditPassword = root.findViewById(R.id.edit_password);
-        Button btnLogin = root.findViewById(R.id.btn_login);
-        btnLogin.setOnClickListener(v -> mPresenter.login());
+        mEditPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 6) {
+                    pwReady = true;
+                } else {
+                    pwReady = false;
+                }
+                setBtnEnable();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mBtnLogin = root.findViewById(R.id.btn_login);
+        mBtnLogin.setOnClickListener(v -> mPresenter.login());
         mPresenter = new LoginShortcutPresenter(this, new LoginShortcutRepository());
         mPresenter.subscribe();
         return root;
+    }
+
+    private void setBtnEnable() {
+        if (phoneReady) {
+            mEditCode.setEnabled(true);
+        } else {
+            mEditCode.setEnabled(false);
+        }
+        if (phoneReady && codeReady) {
+            if (mLayoutPassword.getVisibility() == View.VISIBLE) {
+                if (pwReady) {
+                    mBtnLogin.setEnabled(true);
+                } else {
+                    mBtnLogin.setEnabled(false);
+                }
+            } else {
+                mBtnLogin.setEnabled(true);
+            }
+        } else {
+            mBtnLogin.setEnabled(false);
+        }
     }
 
     @Override

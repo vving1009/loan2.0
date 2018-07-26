@@ -47,6 +47,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/input_password"
+        android:maxLength="16"
         app:editHeight="28dp"
         app:enable_verification="true"
         app:icon="@drawable/login_ic_password"
