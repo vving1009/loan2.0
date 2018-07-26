@@ -7,6 +7,7 @@
     <string name="login">登录</string>
     <string name="login_shortcut">快捷登录</string>
     <string name="login_normal">账号登录</string>
+    <string name="input_phone">请输入手机号</string>
     <!--register-->
     <string name="register">注册</string>
     <string name="register_at_once">立即注册</string>
@@ -130,7 +131,6 @@
     <string name="my_contact_phone">400&#8211;8780&#8211;777</string><!--(-,&#8211;)-->
     <string name="my_cancel">取消</string>
     <!--login-->
-    <string name="input_phone">请输入手机号码</string>
     <!--<string name="input_password">请输入密码（6&#8211;12位,必须包含数字与英文）</string>&lt;!&ndash;(-,&#8211;)&ndash;&gt;-->
     <string name="input_login_verification">请输入验证码</string>
     <string name="input_login_password">请输入6-16位数字和字母</string>
