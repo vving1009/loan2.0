@@ -1,11 +1,11 @@
 package com.jiaye.cashloan.view.bioassay;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.bioassay.source.BioassayRepository;
+import com.jiaye.cashloan.widget.CustomProgressDialog;
 import com.oliveapp.face.livenessdetectorsdk.livenessdetector.datatype.LivenessDetectionFrames;
 
 import cn.tongdun.android.liveness.view_controller.LivenessDetectionMainActivity;
@@ -20,7 +20,7 @@ public class BioassayActivity extends LivenessDetectionMainActivity implements B
 
     private BioassayContract.Presenter mPresenter;
 
-    private ProgressDialog mDialog;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class BioassayActivity extends LivenessDetectionMainActivity implements B
     @Override
     public void showProgressDialog() {
         if (mDialog == null) {
-            mDialog = new ProgressDialog(this);
+            mDialog = new CustomProgressDialog(this);
             mDialog.setCancelable(false);
             mDialog.setCanceledOnTouchOutside(false);
         }
