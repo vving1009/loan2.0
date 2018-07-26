@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
@@ -22,19 +23,19 @@ android {
 
 dependencies {
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.4'
+    api 'io.reactivex.rxjava2:rxjava:2.1.4'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/adapter-rxjava2
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    api 'com.squareup.okhttp3:okhttp:3.9.1'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // https://github.com/orhanobut/logger
     implementation 'com.orhanobut:logger:2.2.0'
 }
