@@ -8,6 +8,7 @@
     <string name="login_shortcut">快捷登录</string>
     <string name="login_normal">账号登录</string>
     <string name="input_phone">请输入手机号</string>
+    <string name="input_password">请输入密码</string>
     <!--register-->
     <string name="register">注册</string>
     <string name="register_at_once">立即注册</string>
