@@ -128,7 +128,7 @@ public class ForgetPasswordFragment extends BaseFunctionFragment implements Forg
     }
 
     private void setBtnEnable() {
-        if (phoneReady) {
+        if (phoneReady && !mEditCode.isCountDownNow()) {
             mEditCode.setEnabled(true);
         } else {
             mEditCode.setEnabled(false);

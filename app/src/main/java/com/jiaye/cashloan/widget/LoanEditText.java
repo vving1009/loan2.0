@@ -52,6 +52,8 @@ public class LoanEditText extends RelativeLayout {
 
     private boolean mHide;
 
+    private boolean isCountDownNow = false;
+
     public LoanEditText(Context context) {
         this(context, null);
     }
@@ -136,6 +138,7 @@ public class LoanEditText extends RelativeLayout {
     }
 
     public void startCountDown() {
+        isCountDownNow = true;
         if (mCountDownTimer == null) {
             mCountDownTimer = new CountDownTimer(60 * 1000, 1) {
 
@@ -148,6 +151,7 @@ public class LoanEditText extends RelativeLayout {
 
                 @Override
                 public void onFinish() {
+                    isCountDownNow = false;
                     mTextVerification.setEnabled(true);
                     mTextVerification.setText(getResources().getString(R.string.send_verification_code));
                     mTextVerification.setTextColor(getResources().getColor(R.color.color_blue));
@@ -155,6 +159,10 @@ public class LoanEditText extends RelativeLayout {
             };
         }
         mCountDownTimer.start();
+    }
+
+    public boolean isCountDownNow() {
+        return isCountDownNow;
     }
 
     public void setError(String error) {

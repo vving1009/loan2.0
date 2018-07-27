@@ -129,7 +129,7 @@ public class RegisterFragment extends BaseFunctionFragment implements RegisterCo
     }
 
     private void setBtnEnable() {
-        if (phoneReady) {
+        if (phoneReady && !mEditCode.isCountDownNow()) {
             mEditCode.setEnabled(true);
         } else {
             mEditCode.setEnabled(false);

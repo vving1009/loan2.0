@@ -147,7 +147,7 @@ public class LoginShortcutFragment extends BaseFragment implements LoginShortcut
     }
 
     private void setBtnEnable() {
-        if (phoneReady) {
+        if (phoneReady && !mEditCode.isCountDownNow()) {
             mEditCode.setEnabled(true);
         } else {
             mEditCode.setEnabled(false);
