@@ -265,6 +265,7 @@ public enum MoxieHelper {
             });
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "start: MoxieActivity error: " + e.getMessage());
         }
     }
 }

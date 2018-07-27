@@ -97,7 +97,7 @@ repositories {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.android.support:recyclerview-v7:27.1.1'
     api 'com.android.support:design:27.1.1'
@@ -115,7 +115,7 @@ dependencies {
     api 'com.aliyun.dpa:oss-android-sdk:2.8.3'
     api 'com.squareup.okio:okio:1.13.0'
     // http://open.51datakey.com/
-    api 'com.moxie:moxie-client:2.3.5'
+    //api 'com.moxie:moxie-client:2.3.5'
     // module
     implementation project(':tongdun')
     // https://github.com/crazycodeboy/TakePhoto
