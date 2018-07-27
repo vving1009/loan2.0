@@ -29,7 +29,8 @@
                 android:layout_marginTop="1dp"
                 android:text="到店借款"
                 android:textColor="#282828"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
