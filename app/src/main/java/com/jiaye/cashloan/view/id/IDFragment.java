@@ -170,6 +170,7 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
     @Override
     public void showInfo(String name, String id, String date) {
         mEditName.setText(name);
+        mEditName.setSelection(name.length());
         mTextId.setText(id);
         mTextDate.setText(date);
     }

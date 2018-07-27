@@ -29,12 +29,12 @@
 
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@id/text_name_title"
-                android:background="@android:color/white"
+                android:background="@android:color/transparent"
                 android:textColor="#282828"
                 android:textSize="15sp" />
         </RelativeLayout>
