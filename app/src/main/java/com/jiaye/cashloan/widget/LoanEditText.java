@@ -149,7 +149,7 @@ public class LoanEditText extends RelativeLayout {
                 @Override
                 public void onFinish() {
                     mTextVerification.setEnabled(true);
-                    //mTextVerification.setText(getResources().getString(R.string.send_again));
+                    mTextVerification.setText(getResources().getString(R.string.send_verification_code));
                     mTextVerification.setTextColor(getResources().getColor(R.color.color_blue));
                 }
             };
