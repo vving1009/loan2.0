@@ -130,7 +130,6 @@ public class VehicleFragment extends PhotoFunctionFragment implements VehicleCon
 
     public void photo() {
         CompressConfig compressConfig = CompressConfig.ofDefaultConfig();
-        compressConfig.enableReserveRaw(false);
         compressConfig.setMaxSize(500 * 1024);
         getTakePhoto().onEnableCompress(compressConfig, false);
         getTakePhoto().onPickMultiple(9);

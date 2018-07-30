@@ -121,7 +121,6 @@ public class FileFragment extends PhotoFunctionFragment implements FileContract.
 
     public void photo() {
         CompressConfig compressConfig = CompressConfig.ofDefaultConfig();
-        compressConfig.enableReserveRaw(false);
         compressConfig.setMaxSize(500 * 1024);
         getTakePhoto().onEnableCompress(compressConfig, false);
         getTakePhoto().onPickMultiple(9);

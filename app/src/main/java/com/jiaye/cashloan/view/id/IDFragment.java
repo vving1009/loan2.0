@@ -143,7 +143,6 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
 
     public void photo() {
         CompressConfig compressConfig = CompressConfig.ofDefaultConfig();
-        compressConfig.enableReserveRaw(false);
         getTakePhoto().onEnableCompress(compressConfig, false);
         getTakePhoto().onPickFromGallery();
     }
