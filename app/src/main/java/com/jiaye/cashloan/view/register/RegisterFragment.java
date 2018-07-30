@@ -76,7 +76,7 @@ public class RegisterFragment extends BaseFunctionFragment implements RegisterCo
             }
         });
         mEditCode = rootView.findViewById(R.id.edit_code);
-        mEditCode.setEnabled(false);
+        mEditCode.setVerificationBtnEnabled(false);
         mEditCode.setOnClickVerificationCode(() -> mPresenter.verificationCode());
         mEditCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,9 +130,9 @@ public class RegisterFragment extends BaseFunctionFragment implements RegisterCo
 
     private void setBtnEnable() {
         if (phoneReady && !mEditCode.isCountDownNow()) {
-            mEditCode.setEnabled(true);
+            mEditCode.setVerificationBtnEnabled(true);
         } else {
-            mEditCode.setEnabled(false);
+            mEditCode.setVerificationBtnEnabled(false);
         }
         if (phoneReady && codeReady && pwReady) {
             mBtnRegister.setEnabled(true);

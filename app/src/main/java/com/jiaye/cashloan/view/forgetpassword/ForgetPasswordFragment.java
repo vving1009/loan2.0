@@ -75,7 +75,7 @@ public class ForgetPasswordFragment extends BaseFunctionFragment implements Forg
             }
         });
         mEditCode = rootView.findViewById(R.id.edit_code);
-        mEditCode.setEnabled(false);
+        mEditCode.setVerificationBtnEnabled(false);
         mEditCode.setOnClickVerificationCode(() -> mPresenter.verificationCode());
         mEditCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,9 +129,9 @@ public class ForgetPasswordFragment extends BaseFunctionFragment implements Forg
 
     private void setBtnEnable() {
         if (phoneReady && !mEditCode.isCountDownNow()) {
-            mEditCode.setEnabled(true);
+            mEditCode.setVerificationBtnEnabled(true);
         } else {
-            mEditCode.setEnabled(false);
+            mEditCode.setVerificationBtnEnabled(false);
         }
         if (phoneReady && codeReady && pwReady) {
             mBtnPassword.setEnabled(true);

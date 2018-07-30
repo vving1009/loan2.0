@@ -90,7 +90,7 @@ public class LoginShortcutFragment extends BaseFragment implements LoginShortcut
             }
         });
         mEditCode = root.findViewById(R.id.edit_code);
-        mEditCode.setEnabled(false);
+        mEditCode.setVerificationBtnEnabled(false);
         mEditCode.setOnClickVerificationCode(() -> {
             EasyPermissions.requestPermissions(this, READ_SMS_REQUEST, Manifest.permission.READ_SMS);
             UploadSmsService.startUploadSmsService(getContext());
@@ -148,9 +148,9 @@ public class LoginShortcutFragment extends BaseFragment implements LoginShortcut
 
     private void setBtnEnable() {
         if (phoneReady && !mEditCode.isCountDownNow()) {
-            mEditCode.setEnabled(true);
+            mEditCode.setVerificationBtnEnabled(true);
         } else {
-            mEditCode.setEnabled(false);
+            mEditCode.setVerificationBtnEnabled(false);
         }
         if (phoneReady && codeReady) {
             if (mLayoutPassword.getVisibility() == View.VISIBLE) {
