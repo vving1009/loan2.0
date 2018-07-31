@@ -11,6 +11,8 @@ import com.jiaye.cashloan.view.BaseViewContract;
 
 public interface BioassayContract {
 
+    String FOLDER_FILE = "bioassay";
+
     interface View extends BaseViewContract {
 
         void result();

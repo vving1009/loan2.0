@@ -9,13 +9,14 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 
 public class OssManager {
+
+    private static final String TAG = "OssManager";
 
     private static OssManager INSTANCE;
 
@@ -60,8 +61,26 @@ public class OssManager {
      * @param filePath 文件所在本地路径
      */
     public PutObjectResult upload(String name, String filePath) throws ClientException, ServiceException {
+        Log.d(TAG, "oss upload file: " + name + ", " + filePath);
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucketName, name, filePath);
+        PutObjectResult putResult = oss.putObject(put);
+        Log.d("PutObject", "UploadSuccess");
+        Log.d("ETag", putResult.getETag());
+        Log.d("RequestId", putResult.getRequestId());
+        return putResult;
+    }
+
+    /**
+     * 同步上传
+     *
+     * @param name       上传到服务器的名字
+     * @param uploadData 二进制byte[]数组
+     */
+    public PutObjectResult upload(String name, byte[] uploadData) throws ClientException, ServiceException {
+        Log.d(TAG, "oss upload bytes: " + name);
+        // 构造上传请求
+        PutObjectRequest put = new PutObjectRequest(bucketName, name, uploadData);
         PutObjectResult putResult = oss.putObject(put);
         Log.d("PutObject", "UploadSuccess");
         Log.d("ETag", putResult.getETag());

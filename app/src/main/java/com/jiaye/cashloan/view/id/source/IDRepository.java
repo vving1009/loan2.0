@@ -9,7 +9,6 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.id.IDRequest;
-import com.jiaye.cashloan.http.data.id.IDUploadPicture;
 import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunAntifraudRealName;
 import com.jiaye.cashloan.http.tongdun.TongDunAntifraudResponseFunction;
@@ -19,8 +18,12 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRFront;
 import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
+import com.jiaye.cashloan.persistence.User;
 import com.jiaye.cashloan.utils.Base64Util;
+import com.jiaye.cashloan.utils.DateUtil;
+import com.jiaye.cashloan.utils.OssManager;
 import com.jiaye.cashloan.view.LocalException;
+import com.jiaye.cashloan.view.id.IDContract;
 
 import java.io.File;
 
@@ -34,17 +37,20 @@ import io.reactivex.Flowable;
 
 public class IDRepository implements IDDataSource {
 
-    private String mBase64Front;
+    private String mPathFront;
 
-    private String mBase64Back;
+    private String mPathBack;
 
     private String mPicFront;
 
     private String mPicBack;
 
+    private User user = LoanApplication.getInstance().getDbHelper().queryUser();
+
     @Override
     public Flowable<TongDunOCRFront> ocrFront(String path) {
-        mBase64Front = Base64Util.fileToBase64(new File(path)).replace("\n", "");
+        mPathFront = path;
+        String mBase64Front = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrFront(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Front)
                 .map(new TongDunOCRResponseFunction<>())
@@ -63,7 +69,8 @@ public class IDRepository implements IDDataSource {
 
     @Override
     public Flowable<TongDunOCRBack> ocrBack(String path) {
-        mBase64Back = Base64Util.fileToBase64(new File(path)).replace("\n", "");
+        mPathBack = path;
+        String mBase64Back = Base64Util.fileToBase64(new File(path)).replace("\n", "");
         return TongDunClient.INSTANCE.getService()
                 .ocrBack(BuildConfig.TONGDUN_CODE, BuildConfig.TONGDUN_KEY, mBase64Back)
                 .map(new TongDunOCRResponseFunction<>())
@@ -142,43 +149,44 @@ public class IDRepository implements IDDataSource {
     }
 
     // 上传正面照片,并保存正面照片id
-    private Flowable<IDUploadPicture> uploadFront() {
-        return Flowable.just(mBase64Front)
-                .map(base64 -> getLoanUploadPictureRequest("01", "01", base64, "front.jpg"))
-                .compose(new SatcatcheResponseTransformer<IDUploadPictureRequest, IDUploadPicture>("uploadPicture"))
-                .map(loanUploadPicture -> {
-                    mPicFront = loanUploadPicture.getPicId();
-                    return loanUploadPicture;
-                });
+    private Flowable<EmptyResponse> uploadFront() {
+        mPicFront = DateUtil.formatDateTimeMillis(System.currentTimeMillis()) + ".jpg";
+        return Flowable.just(mPathFront)
+                .map(path -> {
+                    String ossPath = user.getPhone() + "/" + user.getLoanId() + "/" +
+                            IDContract.FOLDER_FILE + "/" + mPicFront;
+                    OssManager.getInstance().upload(ossPath, path);
+                    return ossPath;
+                })
+                .map(ossPath -> {
+                    IDUploadPictureRequest request = new IDUploadPictureRequest();
+                    request.setLoanId(user.getLoanId());
+                    request.setPicName(mPicFront);
+                    request.setPicUrl(BuildConfig.OSS_BASE_URL + ossPath);
+                    request.setPicType("1");
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<IDUploadPictureRequest, EmptyResponse>("uploadIdCard"));
     }
 
     // 上传背面照片,并保存背面照片id
-    private Flowable<IDUploadPicture> uploadBack() {
-        return Flowable.just(mBase64Back)
-                .map(base64 -> getLoanUploadPictureRequest("01", "02", base64, "back.jpg"))
-                .compose(new SatcatcheResponseTransformer<IDUploadPictureRequest, IDUploadPicture>("uploadPicture"))
-                .map(loanUploadPicture -> {
-                    mPicBack = loanUploadPicture.getPicId();
-                    return loanUploadPicture;
-                });
-    }
-
-    private IDUploadPictureRequest getLoanUploadPictureRequest(String source, String type, String base64, String name) {
-        String phone = "";
-        SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
-        if (cursor != null) {
-            if (cursor.moveToNext()) {
-                phone = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_PHONE));
-            }
-            cursor.close();
-        }
-        IDUploadPictureRequest request = new IDUploadPictureRequest();
-        request.setPhone(phone);
-        request.setSource(source);
-        request.setType(type);
-        request.setBase64(base64);
-        request.setName(name);
-        return request;
+    private Flowable<EmptyResponse> uploadBack() {
+        mPicBack = DateUtil.formatDateTimeMillis(System.currentTimeMillis()) + ".jpg";
+        return Flowable.just(mPathBack)
+                .map(path -> {
+                    String ossPath = user.getPhone() + "/" + user.getLoanId() + "/" +
+                            IDContract.FOLDER_FILE + "/" + mPicBack;
+                    OssManager.getInstance().upload(ossPath, path);
+                    return ossPath;
+                })
+                .map(ossPath -> {
+                    IDUploadPictureRequest request = new IDUploadPictureRequest();
+                    request.setLoanId(user.getLoanId());
+                    request.setPicName(mPicBack);
+                    request.setPicUrl(BuildConfig.OSS_BASE_URL + ossPath);
+                    request.setPicType("2");
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<IDUploadPictureRequest, EmptyResponse>("uploadIdCard"));
     }
 }

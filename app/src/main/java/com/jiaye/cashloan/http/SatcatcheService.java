@@ -6,6 +6,7 @@ import com.jiaye.cashloan.http.base.SatcatcheResponse;
 import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
+import com.jiaye.cashloan.http.data.bioassay.BioassayUploadPictureRequest;
 import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
@@ -22,7 +23,6 @@ import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
 import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
-import com.jiaye.cashloan.http.data.id.IDUploadPicture;
 import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
@@ -335,16 +335,22 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<EmptyResponse>> uploadRiskAppList(@Body SatcatcheRequest<UploadRiskAppListRequest> request);
 
     /**
-     * 上传图片
+     * 上传人脸识别图片url
      */
-    @POST("uploadPic")
-    Flowable<SatcatcheResponse<IDUploadPicture>> uploadPicture(@Body SatcatcheRequest<IDUploadPictureRequest> request);
+    @POST("saveBioassayUrl")
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadBioassay(@Body SatcatcheRequest<BioassayUploadPictureRequest> request);
 
     /**
      * 身份证认证
      */
     @POST("cardAuth/queryIdentityInfo")
     Flowable<SatcatcheResponse<IDCardAuth>> idCardAuth(@Body SatcatcheRequest<IDCardAuthRequest> request);
+
+    /**
+     * 上传身份证认证图片url
+     */
+    @POST("saveIdcardUrl")
+    Flowable<SatcatcheResponse<EmptyResponse>> uploadIdCard(@Body SatcatcheRequest<IDUploadPictureRequest> request);
 
     /**
      * 个人资料状态

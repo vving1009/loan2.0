@@ -11,6 +11,8 @@ import com.jiaye.cashloan.view.BasePresenter;
 
 public interface IDContract {
 
+    String FOLDER_FILE = "idCard";
+
     interface View extends BaseViewContract {
 
         void setFrontDrawable(String path);

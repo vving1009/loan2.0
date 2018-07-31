@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.http.data.id;
+package com.jiaye.cashloan.http.data.bioassay;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
@@ -9,14 +9,11 @@ import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
  * @author 贾博瑄
  */
 
-public class IDUploadPictureRequest extends SatcatcheChildRequest {
+public class BioassayUploadPictureRequest extends SatcatcheChildRequest {
 
     @SerializedName("jla_id")
     private String loanId;
 
-    /**
-     * type: 1→front 2→back
-     */
     @SerializedName("pic_type")
     private String picType;
 
@@ -60,6 +57,6 @@ public class IDUploadPictureRequest extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL033";
+        return "CL034";
     }
 }
