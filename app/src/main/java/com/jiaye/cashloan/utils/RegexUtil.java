@@ -38,10 +38,10 @@ public class RegexUtil {
     }
 
     /**
-     * 身份证有效期20180101-20190101
+     * 身份证有效期20180101-20190101|20180101-长期
      */
     public static String idCardDate() {
-        return "^\\d{8}-\\d{8}$";
+        return "^\\d{8}-\\d{8}|^\\d{8}-长期$";
     }
 
     /**
