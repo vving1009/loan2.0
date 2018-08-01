@@ -72,6 +72,7 @@ public class BindBankFragment extends BaseFunctionFragment implements BindBankCo
         mPresenter.subscribe();
         //noinspection ConstantConditions
         mPresenter.setSource(getActivity().getIntent().getExtras().getString("source", ""));
+        mEditPhone.requestFocus();
         return rootView;
     }
 
