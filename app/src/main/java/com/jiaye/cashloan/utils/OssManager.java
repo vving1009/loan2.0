@@ -7,37 +7,42 @@ import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
+import com.jiaye.cashloan.http.StsTokenClient;
+import com.jiaye.cashloan.http.data.ststoken.StsTokenRequest;
+import com.jiaye.cashloan.http.data.ststoken.StsTokenResponse;
+import com.orhanobut.logger.Logger;
 
-public class OssManager {
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+public enum OssManager {
+
+    INSTANCE;
 
     private static final String TAG = "OssManager";
-
-    private static OssManager INSTANCE;
 
     private OSS oss;
 
     private String bucketName = BuildConfig.OSS_BUCKET_NAME;
 
-    private String accessKeyId = BuildConfig.OSS_ACCESS_KEY_ID;
-
-    private String accessKeySecret = BuildConfig.OSS_ACCESS_KEY_SECRET;
-
     private String endPoint = BuildConfig.OSS_ENDPOINT;
 
-    public synchronized static OssManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new OssManager();
-        }
+    public static OssManager getInstance() {
         return INSTANCE;
     }
 
-    private OssManager() {
+    OssManager() {
         init();
     }
 
@@ -45,13 +50,32 @@ public class OssManager {
      * 初始化
      **/
     private void init() {
-        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(accessKeyId, accessKeySecret);
+        OSSCredentialProvider credentialProvider = new OSSFederationCredentialProvider() {
+            @Override
+            public OSSFederationToken getFederationToken() throws ClientException {
+                Logger.d("Get oss token...");
+                try {
+                    StsTokenResponse.JyrcResDataBean response = getTokenResponse().getJyrcResData();
+                    return new OSSFederationToken(response.getAccessKeyId(), response.getAccessKeySecret(),
+                            response.getSecurityToken(), response.getExpiration());
+                } catch (IOException e) {
+                    Logger.d(e.getMessage());
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
         ClientConfiguration conf = new ClientConfiguration();
         conf.setConnectionTimeout(10 * 1000); // 连接超时，默认15秒
         conf.setSocketTimeout(10 * 1000); // socket超时，默认15秒
         conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         oss = new OSSClient(LoanApplication.getInstance().getApplicationContext(), endPoint, credentialProvider, conf);
+    }
+
+    private StsTokenResponse getTokenResponse() throws IOException{
+        StsTokenRequest request = new StsTokenRequest();
+        return StsTokenClient.INSTANCE.getService().getToken(request).execute().body();
     }
 
     /**

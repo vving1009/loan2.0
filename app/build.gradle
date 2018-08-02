@@ -25,8 +25,6 @@ android {
         buildConfigField("String", "TONGDUN_KEY", properties.getProperty("TONGDUN_KEY"))
         buildConfigField("String", "TONGDUN_APP_NAME", properties.getProperty("TONGDUN_APP_NAME"))
         buildConfigField("String", "OSS_ENDPOINT", properties.getProperty("OSS_ENDPOINT"))
-        buildConfigField("String", "OSS_ACCESS_KEY_ID", properties.getProperty("OSS_ACCESS_KEY_ID"))
-        buildConfigField("String", "OSS_ACCESS_KEY_SECRET", properties.getProperty("OSS_ACCESS_KEY_SECRET"))
         buildConfigField("String", "OSS_BUCKET_NAME", properties.getProperty("OSS_BUCKET_NAME"))
         buildConfigField("String", "OSS_BASE_URL", properties.getProperty("OSS_BASE_URL"))
         buildConfigField("String", "MOXIE_APIKEY", properties.getProperty("MOXIE_APIKEY"))
@@ -148,6 +146,7 @@ static def flavorBuildConfigField(flavor, properties) {
     flavor.buildConfigField("String", "CREDIT2GO_ESCROW_URL", properties.getProperty("CREDIT2GO_ESCROW_URL"))
     flavor.buildConfigField("String", "CHECK_UPGRADE_URL", properties.getProperty("CHECK_UPGRADE_URL"))
     flavor.buildConfigField("String", "MOXIE_PROTOCOL_URL", properties.getProperty("MOXIE_PROTOCOL_URL"))
+    flavor.buildConfigField("String", "STS_URL", properties.getProperty("STS_URL"))
 }
 
 static def buildBuildConfigField(build, properties) {
