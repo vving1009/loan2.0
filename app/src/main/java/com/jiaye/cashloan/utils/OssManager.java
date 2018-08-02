@@ -1,13 +1,10 @@
 package com.jiaye.cashloan.utils;
 
-import android.util.Log;
-
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
@@ -21,16 +18,12 @@ import com.jiaye.cashloan.http.data.ststoken.StsTokenResponse;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 public enum OssManager {
 
     INSTANCE;
 
-    private static final String TAG = "OssManager";
+    private static final String TAG = "OssManager : ";
 
     private OSS oss;
 
@@ -53,13 +46,13 @@ public enum OssManager {
         OSSCredentialProvider credentialProvider = new OSSFederationCredentialProvider() {
             @Override
             public OSSFederationToken getFederationToken() throws ClientException {
-                Logger.d("Get oss token...");
+                Logger.d(TAG + "Get oss token...");
                 try {
                     StsTokenResponse.JyrcResDataBean response = getTokenResponse().getJyrcResData();
                     return new OSSFederationToken(response.getAccessKeyId(), response.getAccessKeySecret(),
                             response.getSecurityToken(), response.getExpiration());
                 } catch (IOException e) {
-                    Logger.d(e.getMessage());
+                    Logger.d(TAG + e.getMessage());
                     e.printStackTrace();
                 }
                 return null;
@@ -85,13 +78,13 @@ public enum OssManager {
      * @param filePath 文件所在本地路径
      */
     public PutObjectResult upload(String name, String filePath) throws ClientException, ServiceException {
-        Log.d(TAG, "oss upload file: " + name + ", " + filePath);
+        Logger.d(TAG + "oss upload file: " + name + ", " + filePath);
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucketName, name, filePath);
         PutObjectResult putResult = oss.putObject(put);
-        Log.d("PutObject", "UploadSuccess");
-        Log.d("ETag", putResult.getETag());
-        Log.d("RequestId", putResult.getRequestId());
+        Logger.d(TAG + "PutObject UploadSuccess");
+        Logger.d(TAG + "ETag" + putResult.getETag());
+        Logger.d(TAG + "RequestId" + putResult.getRequestId());
         return putResult;
     }
 
@@ -102,13 +95,13 @@ public enum OssManager {
      * @param uploadData 二进制byte[]数组
      */
     public PutObjectResult upload(String name, byte[] uploadData) throws ClientException, ServiceException {
-        Log.d(TAG, "oss upload bytes: " + name);
+        Logger.d(TAG + "oss upload file: " + name);
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucketName, name, uploadData);
         PutObjectResult putResult = oss.putObject(put);
-        Log.d("PutObject", "UploadSuccess");
-        Log.d("ETag", putResult.getETag());
-        Log.d("RequestId", putResult.getRequestId());
+        Logger.d(TAG + "PutObject UploadSuccess");
+        Logger.d(TAG + "ETag" + putResult.getETag());
+        Logger.d(TAG + "RequestId" + putResult.getRequestId());
         return putResult;
     }
 }

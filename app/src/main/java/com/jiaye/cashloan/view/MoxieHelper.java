@@ -22,6 +22,7 @@ import com.moxie.client.manager.MoxieSDK;
 import com.moxie.client.model.MxLoginCustom;
 import com.moxie.client.model.MxParam;
 import com.moxie.client.model.TitleParams;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +33,8 @@ public enum MoxieHelper {
 
     INSTANCE;
 
-    private static final String TAG = "Moxie";
-
+    private static final String TAG = "MoxieHelper : ";
+    
     private MxParam mxParam;
 
     MoxieHelper() {
@@ -153,7 +154,7 @@ public enum MoxieHelper {
                      *  businessUserId :  第三方被爬取平台本身的userId，非商户传入，例如支付宝的UserId
                      */
                     if (moxieCallBackData != null) {
-                        Log.d("BigdataFragment", "MoxieSDK Callback Data : " + moxieCallBackData.toString());
+                        Logger.d(TAG + "MoxieSDK Callback Data : " + moxieCallBackData.toString());
                         switch (moxieCallBackData.getCode()) {
                             /**
                              * 账单导入中
@@ -166,11 +167,11 @@ public enum MoxieHelper {
                             case MxParam.ResultCode.IMPORTING:
                                 if (moxieCallBackData.isLoginDone()) {
                                     //状态为IMPORTING, 且loginDone为true，说明这个时候已经在采集中，已经登录成功
-                                    Log.d(TAG, "任务已经登录成功，正在采集中，SDK退出后不会再回调任务状态，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
+                                    Logger.d(TAG + "任务已经登录成功，正在采集中，SDK退出后不会再回调任务状态，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
 
                                 } else {
                                     //状态为IMPORTING, 且loginDone为false，说明这个时候正在登录中
-                                    Log.d(TAG, "任务正在登录中，SDK退出后不会再回调任务状态，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
+                                    Logger.d(TAG + "任务正在登录中，SDK退出后不会再回调任务状态，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
                                 }
                                 break;
                             /**
@@ -184,22 +185,22 @@ public enum MoxieHelper {
                              *      return true;
                              * */
                             case MxParam.ResultCode.IMPORT_UNSTART:
-                                Log.d(TAG, "任务未开始");
+                                Logger.d(TAG + "任务未开始");
                                 break;
                             case MxParam.ResultCode.THIRD_PARTY_SERVER_ERROR:
-                                Log.d(TAG, "导入失败(平台方服务问题)");
+                                Logger.d(TAG + "导入失败(平台方服务问题)");
                                 break;
                             case MxParam.ResultCode.MOXIE_SERVER_ERROR:
-                                Log.d(TAG, "导入失败(魔蝎数据服务异常)");
+                                Logger.d(TAG + "导入失败(魔蝎数据服务异常)");
                                 break;
                             case MxParam.ResultCode.USER_INPUT_ERROR:
-                                Log.d(TAG, "导入失败(" + moxieCallBackData.getMessage() + ")");
+                                Logger.d(TAG + "导入失败(" + moxieCallBackData.getMessage() + ")");
                                 break;
                             case MxParam.ResultCode.IMPORT_FAIL:
-                                Log.d(TAG, "导入失败");
+                                Logger.d(TAG + "导入失败");
                                 break;
                             case MxParam.ResultCode.IMPORT_SUCCESS:
-                                Log.d(TAG, "任务采集成功，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
+                                Logger.d(TAG + "任务采集成功，任务最终状态会从服务端回调，建议轮询APP服务端接口查询任务/业务最新状态");
                                 //根据taskType进行对应的处理
                                 switch (moxieCallBackData.getTaskType()) {
                                     case MxParam.PARAM_TASK_CARRIER:
@@ -235,7 +236,7 @@ public enum MoxieHelper {
                                                 }, moxieContext::finish);
                                         break;
                                     default:
-                                        Log.d(TAG, "导入成功");
+                                        Logger.d(TAG + "导入成功");
                                         moxieContext.finish();
                                 }
                                 return true;
@@ -253,19 +254,19 @@ public enum MoxieHelper {
                     super.onError(moxieContext, moxieException);
                     if (moxieException != null) {
                         if (moxieException.getExceptionType() == ExceptionType.SDK_HAS_STARTED) {
-                            Log.d(TAG, moxieException.getMessage());
+                            Logger.d(TAG + moxieException.getMessage());
                         } else if (moxieException.getExceptionType() == ExceptionType.SDK_LACK_PARAMETERS) {
-                            Log.d(TAG, moxieException.getMessage());
+                            Logger.d(TAG + moxieException.getMessage());
                         } else if (moxieException.getExceptionType() == ExceptionType.WRONG_PARAMETERS) {
-                            Log.d(TAG, moxieException.getMessage());
+                            Logger.d(TAG + moxieException.getMessage());
                         }
-                        Log.d("BigdataFragment", "MoxieSDK onError : " + moxieException.toString());
+                        Logger.d(TAG + "MoxieSDK onError : " + moxieException.toString());
                     }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "start: MoxieActivity error: " + e.getMessage());
+            Logger.e(TAG + "start: MoxieActivity error: " + e.getMessage());
         }
     }
 }

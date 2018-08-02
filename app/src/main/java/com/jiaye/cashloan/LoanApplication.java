@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.jiaye.cashloan.config.FileConfig;
@@ -191,7 +192,12 @@ public class LoanApplication extends Application {
     /*setup Logger*/
     private void setupLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder().tag(TAG).build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return BuildConfig.DEBUG;
+            }
+        });
     }
 
     /*setup Dict*/
