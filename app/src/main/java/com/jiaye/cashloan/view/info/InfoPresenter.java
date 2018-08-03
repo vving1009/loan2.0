@@ -14,12 +14,12 @@ import com.jiaye.cashloan.http.data.loan.SaveContact;
 import com.jiaye.cashloan.http.data.loan.SaveContactRequest;
 import com.jiaye.cashloan.http.data.loan.SavePerson;
 import com.jiaye.cashloan.http.data.loan.SavePersonRequest;
-import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.info.source.InfoDataSource;
+import com.satcatche.library.utils.RegexUtil;
 
 import org.reactivestreams.Publisher;
 

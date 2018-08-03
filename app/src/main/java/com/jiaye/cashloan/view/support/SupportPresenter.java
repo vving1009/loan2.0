@@ -9,7 +9,6 @@ import com.jiaye.cashloan.view.support.source.SupportDataSource;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * SupportPresenter

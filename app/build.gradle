@@ -91,6 +91,7 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
+    maven { url 'https://dl.bintray.com/jiaboxuan/maven/' }
 }
 
 dependencies {
@@ -113,13 +114,15 @@ dependencies {
     api 'com.squareup.okio:okio:1.13.0'
     // http://open.51datakey.com/
     //api 'com.moxie:moxie-client:2.3.5'
+    implementation 'com.satcatche.library:network:1.1'
+    implementation 'com.satcatche.library:utils:1.1'
+    implementation 'com.satcatche.library:widget:1.0'
+    // https://github.com/googlesamples/easypermissions
+    implementation 'com.satcatche.library:easypermissions:1.0'
     // module
     implementation project(':tongdun')
     // https://github.com/crazycodeboy/TakePhoto
     implementation project(':takephoto')
-    // https://github.com/googlesamples/easypermissions
-    implementation project(':easypermissions')
-    implementation project(':network')
 }
 
 static def versionName(properties) {

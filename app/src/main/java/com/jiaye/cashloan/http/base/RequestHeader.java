@@ -7,9 +7,9 @@ import android.os.Build;
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.persistence.DbContract;
-import com.jiaye.cashloan.utils.DeviceInfoUtil;
-import com.jiaye.cashloan.utils.IPUtil;
-import com.jiaye.cashloan.utils.NetworkTypeUtil;
+import com.satcatche.library.utils.DeviceInfoUtil;
+import com.satcatche.library.utils.IPUtil;
+import com.satcatche.library.utils.NetworkTypeUtil;
 
 /**
  * RequestHeader

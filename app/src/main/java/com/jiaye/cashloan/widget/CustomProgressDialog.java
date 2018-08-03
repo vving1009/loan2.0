@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
+import com.satcatche.library.widget.BaseDialog;
 
 public class CustomProgressDialog extends BaseDialog {
 

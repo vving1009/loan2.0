@@ -22,7 +22,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.company.source.CompanyRepository;
 import com.jiaye.cashloan.view.search.SearchFragment;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.util.ArrayList;
 import java.util.List;

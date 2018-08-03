@@ -18,7 +18,7 @@ import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.account.source.CreditRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 /**
  * AccountFragment

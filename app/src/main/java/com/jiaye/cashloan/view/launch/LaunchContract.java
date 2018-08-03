@@ -2,7 +2,7 @@ package com.jiaye.cashloan.view.launch;
 
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
-import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.network.checkupgrade.bean.UpgradeResponse;
 
 import java.io.File;
 

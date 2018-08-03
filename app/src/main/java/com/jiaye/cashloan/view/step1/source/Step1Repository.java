@@ -2,8 +2,6 @@ package com.jiaye.cashloan.view.step1.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.step1.Step1;
 import com.jiaye.cashloan.http.data.step1.Step1Request;

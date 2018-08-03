@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.utils;
+package com.jiaye.cashloan.http;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
@@ -12,7 +12,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.StsTokenClient;
 import com.jiaye.cashloan.http.data.ststoken.StsTokenRequest;
 import com.jiaye.cashloan.http.data.ststoken.StsTokenResponse;
 import com.orhanobut.logger.Logger;

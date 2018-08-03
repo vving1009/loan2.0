@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.http.utils;
 
-import com.jiaye.cashloan.http.base.ChildRequest;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheRequestContent;

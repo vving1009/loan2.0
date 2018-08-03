@@ -24,7 +24,7 @@ import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.company.CompanyActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.util.List;
 

@@ -1,7 +1,8 @@
 package com.jiaye.cashloan.view.launch.source;
 
-import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
-import com.satcatche.appupgrade.download.DownloadProgressListener;
+
+import com.satcatche.library.network.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.network.download.DownloadProgressListener;
 
 import java.io.File;
 

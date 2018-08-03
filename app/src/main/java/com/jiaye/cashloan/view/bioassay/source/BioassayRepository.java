@@ -19,11 +19,11 @@ import com.jiaye.cashloan.http.tongdun.TongDunOCRResponseFunction;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.User;
-import com.jiaye.cashloan.utils.Base64Util;
-import com.jiaye.cashloan.utils.DateUtil;
-import com.jiaye.cashloan.utils.OssManager;
+import com.jiaye.cashloan.http.OssManager;
 import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.bioassay.BioassayContract;
+import com.satcatche.library.utils.Base64Util;
+import com.satcatche.library.utils.DateUtil;
 
 import org.reactivestreams.Publisher;
 

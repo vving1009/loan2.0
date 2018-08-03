@@ -7,7 +7,7 @@ import com.jiaye.cashloan.http.data.forgetpassword.ForgetPasswordCodeRequest;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.register.RegisterRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.utils.RSAUtil;
+import com.satcatche.library.utils.RSAUtil;
 
 import io.reactivex.Flowable;
 

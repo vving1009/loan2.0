@@ -22,7 +22,7 @@ import com.jiaye.cashloan.service.UploadSmsService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.login.source.LoginShortcutRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.util.List;
 

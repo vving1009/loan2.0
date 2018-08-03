@@ -8,8 +8,8 @@ import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
-import com.jiaye.cashloan.utils.DateUtil;
-import com.jiaye.cashloan.utils.OssManager;
+import com.jiaye.cashloan.http.OssManager;
+import com.satcatche.library.utils.DateUtil;
 import com.jiaye.cashloan.view.vehicle.VehicleContract;
 
 import java.util.List;

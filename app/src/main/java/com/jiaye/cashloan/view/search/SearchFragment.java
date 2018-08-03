@@ -27,7 +27,7 @@ import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.search.source.SearchRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.jiaye.cashloan.BuildConfig;

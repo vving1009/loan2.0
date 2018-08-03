@@ -15,14 +15,14 @@ import com.jiaye.cashloan.persistence.DbHelper;
 import com.jiaye.cashloan.persistence.PreferencesHelper;
 import com.jiaye.cashloan.service.UploadFaceService;
 import com.jiaye.cashloan.service.UploadSmsService;
-import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.main.MainActivity;
 import com.moxie.client.manager.MoxieSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
-import com.satcatche.appupgrade.utils.UpgradeConfig;
+import com.satcatche.library.network.checkupgrade.UpgradeConfig;
+import com.satcatche.library.utils.FileUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;

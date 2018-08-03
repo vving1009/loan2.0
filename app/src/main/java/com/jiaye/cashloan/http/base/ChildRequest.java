@@ -1,8 +1,8 @@
 package com.jiaye.cashloan.http.base;
 
 import com.google.gson.annotations.SerializedName;
-import com.jiaye.cashloan.utils.DateUtil;
-import com.jiaye.cashloan.utils.RandomUtil;
+import com.satcatche.library.utils.DateUtil;
+import com.satcatche.library.utils.RandomUtil;
 
 /**
  * ChildRequest

@@ -7,7 +7,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.base.NetworkException;
 import com.jiaye.cashloan.http.data.login.Login;
-import com.jiaye.cashloan.utils.RegexUtil;
+import com.satcatche.library.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.ThrowableConsumer;

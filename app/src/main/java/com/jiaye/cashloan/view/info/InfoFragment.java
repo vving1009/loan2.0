@@ -21,7 +21,7 @@ import com.jiaye.cashloan.http.data.dictionary.Area;
 import com.jiaye.cashloan.http.data.dictionary.Relation;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.info.source.InfoRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.util.ArrayList;
 import java.util.List;

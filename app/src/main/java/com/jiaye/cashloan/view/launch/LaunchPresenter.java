@@ -5,7 +5,7 @@ import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.launch.source.LaunchDataSource;
-import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.network.checkupgrade.bean.UpgradeResponse;
 
 import org.reactivestreams.Publisher;
 

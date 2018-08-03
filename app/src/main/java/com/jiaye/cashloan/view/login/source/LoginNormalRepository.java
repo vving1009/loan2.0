@@ -5,7 +5,7 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginNormalRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.utils.RSAUtil;
+import com.satcatche.library.utils.RSAUtil;
 
 import io.reactivex.Flowable;
 

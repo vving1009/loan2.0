@@ -5,11 +5,11 @@ import com.jiaye.cashloan.config.FileConfig;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryList;
 import com.jiaye.cashloan.http.data.dictionary.DictionaryListRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.utils.MD5Util;
-import com.satcatche.appupgrade.AppUpgradeModule;
-import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
-import com.satcatche.appupgrade.download.DownloadClient;
-import com.satcatche.appupgrade.download.DownloadProgressListener;
+import com.satcatche.library.utils.MD5Util;
+import com.satcatche.library.network.checkupgrade.AppUpgradeModule;
+import com.satcatche.library.network.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.network.download.DownloadClient;
+import com.satcatche.library.network.download.DownloadProgressListener;
 
 import org.reactivestreams.Publisher;
 

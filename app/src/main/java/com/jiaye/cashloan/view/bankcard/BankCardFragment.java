@@ -22,7 +22,7 @@ import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bankcard.source.BankCardRepository;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 /**
  * BankCardFragment

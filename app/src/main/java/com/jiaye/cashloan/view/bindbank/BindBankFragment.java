@@ -12,7 +12,7 @@ import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.bindbank.source.BindBankRepository;
 import com.jiaye.cashloan.widget.LoanEditText;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import static android.app.Activity.RESULT_OK;
 

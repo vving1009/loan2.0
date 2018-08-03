@@ -4,11 +4,11 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.utils.RegexUtil;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.forgetpassword.source.ForgetPasswordDataSource;
+import com.satcatche.library.utils.RegexUtil;
 
 import io.reactivex.disposables.Disposable;
 

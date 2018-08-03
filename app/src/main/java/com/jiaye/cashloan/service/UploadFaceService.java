@@ -20,11 +20,11 @@ import com.jiaye.cashloan.http.data.loan.QueryUploadPhotoRequest;
 import com.jiaye.cashloan.http.data.vehcile.UploadFaceRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.User;
-import com.jiaye.cashloan.utils.DateUtil;
-import com.jiaye.cashloan.utils.FileUtils;
-import com.jiaye.cashloan.utils.OssManager;
+import com.jiaye.cashloan.http.OssManager;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.orhanobut.logger.Logger;
+import com.satcatche.library.utils.DateUtil;
+import com.satcatche.library.utils.FileUtils;
 
 import org.reactivestreams.Publisher;
 

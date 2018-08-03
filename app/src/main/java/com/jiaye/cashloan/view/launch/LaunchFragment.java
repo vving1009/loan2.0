@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.utils.FileUtils;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.launch.source.LaunchRepository;
 import com.jiaye.cashloan.view.main.MainActivity;
-import com.jiaye.cashloan.widget.SatcatcheDialog;
-import com.satcatche.appupgrade.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.network.checkupgrade.bean.UpgradeResponse;
+import com.satcatche.library.utils.FileUtils;
+import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.io.File;
 
@@ -117,7 +118,7 @@ public class LaunchFragment extends BaseFragment implements LaunchContract.View 
     @Override
     public void install(File file) {
         mCheckUpdateDialog.dismiss();
-        FileUtils.install(getActivity(), file);
+        FileUtils.install(getActivity(), file, BuildConfig.APPLICATION_ID);
     }
 
     private void startDownload() {

@@ -2,7 +2,6 @@ package com.jiaye.cashloan.http.data.loan;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.ChildRequest;
-import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
  * LoanBindBankRequest

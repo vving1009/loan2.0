@@ -10,8 +10,8 @@ import com.jiaye.cashloan.http.data.login.Login;
 import com.jiaye.cashloan.http.data.login.LoginShortcutRequest;
 import com.jiaye.cashloan.http.data.login.VerificationCodeRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
-import com.jiaye.cashloan.utils.RSAUtil;
-import com.jiaye.cashloan.utils.RegexUtil;
+import com.satcatche.library.utils.RSAUtil;
+import com.satcatche.library.utils.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

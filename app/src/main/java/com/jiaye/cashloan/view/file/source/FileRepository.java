@@ -13,14 +13,13 @@ import com.jiaye.cashloan.http.data.vehcile.UploadCarPapersRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.User;
-import com.jiaye.cashloan.utils.DateUtil;
-import com.jiaye.cashloan.utils.OssManager;
+import com.jiaye.cashloan.http.OssManager;
 import com.jiaye.cashloan.view.file.FileContract;
+import com.satcatche.library.utils.DateUtil;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * FileRepository
