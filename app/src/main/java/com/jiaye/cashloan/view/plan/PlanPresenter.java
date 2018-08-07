@@ -1,5 +1,7 @@
 package com.jiaye.cashloan.view.plan;
 
+import android.text.TextUtils;
+
 import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -40,6 +42,11 @@ public class PlanPresenter extends BasePresenterImpl implements PlanContract.Pre
                 })
                 .subscribe(details -> {
                     mView.dismissProgressDialog();
+                    for (Plan.Details detail : details) {
+                        if (!TextUtils.isEmpty(detail.getCurrentMonthRecoverPrincipal())) {
+                            detail.setInterest(detail.getCurrentMonthRecoverPrincipal());
+                        }
+                    }
                     mView.setPlans(details);
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);

@@ -25,6 +25,8 @@ public class Plan extends SatcatcheChildResponse {
 
     public static class Details {
 
+        private String period;
+
         /**
          * 还款日期
          */
@@ -44,9 +46,9 @@ public class Plan extends SatcatcheChildResponse {
         private String principal;
 
         /**
-         * 利息
+         * 优先显示利息为空时显示这个利息
          */
-        @SerializedName("financialCustomerInterest")
+        @SerializedName("currentMonthInterest")
         private String interest;
 
         /**
@@ -54,6 +56,18 @@ public class Plan extends SatcatcheChildResponse {
          */
         @SerializedName("actualServiceCharge")
         private String charge;
+
+        private String advanceRepaymentAmount;
+
+        private String currentMonthRecoverPrincipal;
+
+        /**
+         * 优先显示利息
+         */
+        @SerializedName("financialCustomerInterest")
+        private String financialCustomerInterest;
+
+        private String gpsflowfee;
 
         public String getDate() {
             return date;
@@ -93,6 +107,14 @@ public class Plan extends SatcatcheChildResponse {
 
         public void setCharge(String charge) {
             this.charge = charge;
+        }
+
+        public String getCurrentMonthRecoverPrincipal() {
+            return currentMonthRecoverPrincipal;
+        }
+
+        public void setCurrentMonthRecoverPrincipal(String currentMonthRecoverPrincipal) {
+            this.currentMonthRecoverPrincipal = currentMonthRecoverPrincipal;
         }
     }
 }
