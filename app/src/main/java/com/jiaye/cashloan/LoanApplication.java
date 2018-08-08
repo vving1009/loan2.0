@@ -195,7 +195,7 @@ public class LoanApplication extends Application {
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
-                return BuildConfig.DEBUG;
+                return BuildConfig.DEBUG || !BuildConfig.FLAVOR.equals("urlProduct");
             }
         });
     }
