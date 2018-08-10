@@ -43,8 +43,12 @@ public class PlanPresenter extends BasePresenterImpl implements PlanContract.Pre
                 .subscribe(details -> {
                     mView.dismissProgressDialog();
                     for (Plan.Details detail : details) {
-                        if (!TextUtils.isEmpty(detail.getCurrentMonthRecoverPrincipal())) {
-                            detail.setInterest(detail.getCurrentMonthRecoverPrincipal());
+                        // 优先显示financialCustomerInterest
+                        // 如果financialCustomerInterest为空,显示currentMonthInterest
+                        if (TextUtils.isEmpty(detail.getFinancialCustomerInterest())) {
+                            if (!TextUtils.isEmpty(detail.getInterest())) {
+                                detail.setFinancialCustomerInterest(detail.getInterest());
+                            }
                         }
                     }
                     mView.setPlans(details);

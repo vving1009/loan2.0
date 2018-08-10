@@ -116,5 +116,13 @@ public class Plan extends SatcatcheChildResponse {
         public void setCurrentMonthRecoverPrincipal(String currentMonthRecoverPrincipal) {
             this.currentMonthRecoverPrincipal = currentMonthRecoverPrincipal;
         }
+
+        public String getFinancialCustomerInterest() {
+            return financialCustomerInterest;
+        }
+
+        public void setFinancialCustomerInterest(String financialCustomerInterest) {
+            this.financialCustomerInterest = financialCustomerInterest;
+        }
     }
 }

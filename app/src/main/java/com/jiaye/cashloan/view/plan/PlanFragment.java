@@ -80,7 +80,7 @@ public class PlanFragment extends BaseFunctionFragment implements PlanContract.V
             holder.setBackground(position);
             holder.setDate(mList.get(position).getDate());
             holder.setPrincipal(mList.get(position).getPrincipal());
-            holder.setInterest(mList.get(position).getInterest());
+            holder.setInterest(mList.get(position).getFinancialCustomerInterest());
             holder.setCharge(mList.get(position).getCharge());
             holder.setRepayment(mList.get(position).getRepayment());
         }
