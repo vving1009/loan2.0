@@ -1,8 +1,13 @@
 package com.jiaye.cashloan.view.step1;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +26,11 @@ import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
 import com.moxie.client.model.MxParam;
+import com.satcatche.library.widget.SatcatcheDialog;
+
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Step1Fragment
@@ -28,13 +38,18 @@ import com.moxie.client.model.MxParam;
  * @author 贾博瑄
  */
 
-public class Step1Fragment extends BaseStepFragment implements Step1Contract.View {
+public class Step1Fragment extends BaseStepFragment implements Step1Contract.View, EasyPermissions.PermissionCallbacks {
+
+    private final int CAMERA_PERMS_REQUEST_CODE = 101;
 
     private Step1Contract.Presenter mPresenter;
 
     private RecyclerView mRecyclerView;
 
     private Adapter mAdapter;
+
+    @SuppressLint("InlinedApi")
+    private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     public static Step1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -88,8 +103,7 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
 
     @Override
     public void showBioassayView() {
-        Intent intent = new Intent(getActivity(), BioassayActivity.class);
-        startActivity(intent);
+        EasyPermissions.requestPermissions(this, CAMERA_PERMS_REQUEST_CODE, permissions);
     }
 
     @Override
@@ -232,5 +246,50 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         public void invalidate() {
             mStepView.invalidate();
         }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.hasPermissions(getContext(), permissions)) {
+            Intent intent = new Intent(getActivity(), BioassayActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        StringBuilder sb = new StringBuilder();
+        String s;
+        for (String perm : perms) {
+            switch (perm) {
+                case Manifest.permission.CAMERA:
+                    s = "相机，";
+                    break;
+                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                    s = "写存储设备，";
+                    break;
+                default:
+                    s = "";
+                    break;
+            }
+            sb.append(s);
+        }
+        sb.deleteCharAt(sb.lastIndexOf("，"));
+        new SatcatcheDialog.Builder(getContext())
+                .setTitle("权限申请")
+                .setMessage("人像对比需要" + sb.toString() + "权限，否则不能进行，是否打开设置？")
+                .setPositiveButton("好", (dialog, which) ->
+                        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                        .setData(Uri.fromParts("package", getContext().getPackageName(), null)),
+                                CAMERA_PERMS_REQUEST_CODE))
+                .setNegativeButton("不行", null)
+                .build()
+                .show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        EasyPermissions.requestPermissions(this, CAMERA_PERMS_REQUEST_CODE, permissions);
     }
 }
