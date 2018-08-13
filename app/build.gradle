@@ -27,7 +27,6 @@ android {
         buildConfigField("String", "OSS_ENDPOINT", properties.getProperty("OSS_ENDPOINT"))
         buildConfigField("String", "OSS_BUCKET_NAME", properties.getProperty("OSS_BUCKET_NAME"))
         buildConfigField("String", "OSS_BASE_URL", properties.getProperty("OSS_BASE_URL"))
-        buildConfigField("String", "MOXIE_APIKEY", properties.getProperty("MOXIE_APIKEY"))
     }
     /**
      * url  对应服务器地址
@@ -150,6 +149,7 @@ static def flavorBuildConfigField(flavor, properties) {
     flavor.buildConfigField("String", "CHECK_UPGRADE_URL", properties.getProperty("CHECK_UPGRADE_URL"))
     flavor.buildConfigField("String", "MOXIE_PROTOCOL_URL", properties.getProperty("MOXIE_PROTOCOL_URL"))
     flavor.buildConfigField("String", "STS_URL", properties.getProperty("STS_URL"))
+    flavor.buildConfigField("String", "MOXIE_APIKEY", properties.getProperty("MOXIE_APIKEY"))
 }
 
 static def buildBuildConfigField(build, properties) {
