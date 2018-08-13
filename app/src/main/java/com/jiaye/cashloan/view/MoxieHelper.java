@@ -75,10 +75,6 @@ public enum MoxieHelper {
         mxParam.setTitleParams(titleParams);
     }
 
-    public MxParam getMxParam() {
-        return mxParam;
-    }
-
     public void setTaskType(String type) {
         mxParam.setTaskType(type);
         if (type.equals(MxParam.PARAM_TASK_CARRIER)) {
@@ -111,7 +107,12 @@ public enum MoxieHelper {
     }
 
     public void start(Activity activity, String taskType) {
+        // userId变化后需要在这更新
+        mxParam.setUserId(LoanApplication.getInstance().getDbHelper().queryUser().getToken());
         setTaskType(taskType);
+        Logger.d("start Moxie:");
+        Logger.d("user_id = " + mxParam.getUserId());
+        Logger.d("task_type = " + mxParam.getTaskType());
         try {
             MoxieSDK.getInstance().start(activity, mxParam, new MoxieCallBack() {
                 /**
