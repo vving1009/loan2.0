@@ -235,6 +235,23 @@ public enum MoxieHelper {
                                                     moxieContext.finish();
                                                 }, moxieContext::finish);
                                         break;
+                                    case MxParam.PARAM_TASK_INSURANCE:
+                                        // TODO: 2018/8/23 保单成功回调
+                                        /*Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                                                .map(user -> {
+                                                    UpdateTaoBaoRequest request = new UpdateTaoBaoRequest();
+                                                    request.setLoanId(user.getLoanId());
+                                                    return request;
+                                                })
+                                                .compose(new SatcatcheResponseTransformer<UpdateTaoBaoRequest, EmptyResponse>("updateTaoBao"))
+                                                .compose(new ViewTransformer<>())
+                                                .subscribe(emptyResponse -> moxieContext.finish(), t -> {
+                                                    if (t != null && !TextUtils.isEmpty(t.getMessage())) {
+                                                        Toast.makeText(moxieContext.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    moxieContext.finish();
+                                                }, moxieContext::finish);*/
+                                        break;
                                     default:
                                         Logger.d(TAG + "导入成功");
                                         moxieContext.finish();

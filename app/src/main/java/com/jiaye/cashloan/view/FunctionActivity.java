@@ -37,7 +37,9 @@ public class FunctionActivity extends AppCompatActivity {
     private BaseFragment mFragment;
 
     public static void function(Activity activity, String function) {
-        if (function.equals(MxParam.PARAM_TASK_CARRIER) || function.equals(MxParam.PARAM_TASK_TAOBAO)) {
+        if (function.equals(MxParam.PARAM_TASK_CARRIER) ||
+                function.equals(MxParam.PARAM_TASK_TAOBAO) ||
+                function.equals(MxParam.PARAM_TASK_INSURANCE)) {
             MoxieHelper.INSTANCE.start(activity, function);
             return;
         }
