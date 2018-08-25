@@ -100,7 +100,7 @@ public class InfoFragment extends BaseFunctionFragment implements InfoContact.Vi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             mPresenter.selectPhone(data.getData(), requestCode);
-            mPresenter.upLoadContact();
+            //mPresenter.upLoadContact();
         }
     }
 

@@ -60,7 +60,7 @@ public class UploadFaceService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        uploadPhoto();
+        //uploadPhoto();
     }
 
     private void uploadPhoto() {

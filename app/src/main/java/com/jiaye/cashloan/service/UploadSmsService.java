@@ -94,7 +94,7 @@ public class UploadSmsService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (EasyPermissions.hasPermissions(UploadSmsService.this, Manifest.permission.READ_SMS)) {
-                uploadSms();
+                //uploadSms();
             }
         }
     };
