@@ -10,11 +10,11 @@ bugly {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion "27.0.3"
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode properties.getProperty("VERSION_CODE").toInteger()
         versionName versionName(properties)
         applicationId "com.jiaye.cashloan"
@@ -27,6 +27,8 @@ android {
         buildConfigField("String", "OSS_ENDPOINT", properties.getProperty("OSS_ENDPOINT"))
         buildConfigField("String", "OSS_BUCKET_NAME", properties.getProperty("OSS_BUCKET_NAME"))
         buildConfigField("String", "OSS_BASE_URL", properties.getProperty("OSS_BASE_URL"))
+        buildConfigField("String", "JD_CAR_URL", properties.getProperty("JD_CAR_URL"))
+        buildConfigField("String", "JD_CAR_KEY", properties.getProperty("JD_CAR_KEY"))
     }
     /**
      * url  对应服务器地址
@@ -122,6 +124,7 @@ dependencies {
     implementation project(':tongdun')
     // https://github.com/crazycodeboy/TakePhoto
     implementation project(':takephoto')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }
 
 static def versionName(properties) {
