@@ -15,7 +15,7 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import io.reactivex.Flowable;
 
 /**
- * Step4Repository
+ * Step1ResultRepository
  *
  * @author 贾博瑄
  */

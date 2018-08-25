@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
 /**
- * Step4Presenter
+ * Step3ResultPresenter
  *
  * @author 贾博瑄
  */

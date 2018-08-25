@@ -16,16 +16,18 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.certification.source.CertificationRepository;
-import com.jiaye.cashloan.view.step1.Step1Fragment;
-import com.jiaye.cashloan.view.step2.Step2Fragment;
-import com.jiaye.cashloan.view.step3.Step3Fragment;
+import com.jiaye.cashloan.view.step1.parent.Step1Fragment;
+import com.jiaye.cashloan.view.step2.parent.Step2Fragment;
+import com.jiaye.cashloan.view.step3.input.Step3InputFragment;
+import com.jiaye.cashloan.view.step3.parent.Step3Fragment;
 import com.jiaye.cashloan.view.step4.Step4Fragment;
+import com.jiaye.cashloan.widget.LetterIndexView;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 import com.jiaye.cashloan.widget.ScrollOffsetTransformer;
 import com.jiaye.cashloan.widget.ViewPagerScroller;
 
 /**
- * CertificationFragment
+ * JdCarFragment
  *
  * @author 贾博瑄
  */
@@ -46,9 +48,9 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         }
     };
 
-    private TextView mTextCompany;
+    //private TextView mTextCompany;
 
-    private TextView mTextName;
+    //private TextView mTextName;
 
     private TextView mTextStep1;
 
@@ -59,6 +61,8 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     private TextView mTextStep4;
 
     private NoScrollViewPager mViewPager;
+
+    private Step2Fragment mStep2Fragment;
 
     public CertificationFragment() {
     }
@@ -84,8 +88,8 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View view = inflater.inflate(R.layout.certification_fragment, frameLayout, true);
-        mTextCompany = view.findViewById(R.id.text_company);
-        mTextName = view.findViewById(R.id.text_number);
+        //mTextCompany = view.findViewById(R.id.text_company);
+        //mTextName = view.findViewById(R.id.text_number);
         mViewPager = view.findViewById(R.id.view_pager);
         mTextStep1 = view.findViewById(R.id.text_step_1);
         mTextStep2 = view.findViewById(R.id.text_step_2);
@@ -100,7 +104,8 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
                     case 0:
                         return Step1Fragment.newInstance();
                     case 1:
-                        return Step2Fragment.newInstance();
+                        mStep2Fragment = Step2Fragment.newInstance();
+                        return mStep2Fragment;
                     case 2:
                         return Step3Fragment.newInstance();
                     case 3:
@@ -135,26 +140,17 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     }
 
     @Override
-    public void setCompany(String company) {
-        mTextCompany.setText(company);
-    }
-
-    @Override
-    public void setName(String number) {
-        mTextName.setText(number);
-    }
-
-    @Override
     public void setStep(int step) {
         if (step == 1) {
             mViewPager.setCurrentItem(0);
             Step1Fragment.refresh(getActivity());
         } else if (step == 2 || step == 3 || step == 4) {
+            mStep2Fragment.setMainStep(step);
             mViewPager.setCurrentItem(1);
             Step2Fragment.refresh(getActivity());
         } else if (step == 5) {
             mViewPager.setCurrentItem(2);
-            Step3Fragment.refresh(getActivity());
+            Step3InputFragment.refresh(getActivity());
         } else if (step == 6 || step == 7 || step == 10) {
             mViewPager.setCurrentItem(3);
             Step4Fragment.refresh(getActivity());

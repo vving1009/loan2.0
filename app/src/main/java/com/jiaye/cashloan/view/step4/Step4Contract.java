@@ -4,7 +4,7 @@ import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
 
 /**
- * Step4Contract
+ * Step1ResultContract
  *
  * @author 贾博瑄
  */

@@ -4,7 +4,7 @@ import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
 
 /**
- * CertificationContract
+ * JdCarContract
  *
  * @author 贾博瑄
  */
@@ -12,10 +12,6 @@ import com.jiaye.cashloan.view.BasePresenter;
 public interface CertificationContract {
 
     interface View extends BaseViewContract {
-
-        void setCompany(String company);
-
-        void setName(String number);
 
         void setStep(int step);
     }

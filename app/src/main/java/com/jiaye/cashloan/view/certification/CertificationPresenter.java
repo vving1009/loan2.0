@@ -9,7 +9,7 @@ import com.jiaye.cashloan.view.certification.source.CertificationDataSource;
 import io.reactivex.disposables.Disposable;
 
 /**
- * CertificationPresenter
+ * JdCarPresenter
  *
  * @author 贾博瑄
  */
@@ -31,8 +31,8 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
         Disposable disposable = mDataSource.requestRecommend()
                 .compose(new ViewTransformer<>())
                 .subscribe(recommend -> {
-                    mView.setCompany(recommend.getCompany());
-                    mView.setName(recommend.getName());
+/*                    mView.setCompany(recommend.getCompany());
+                    mView.setName(recommend.getName());*/
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

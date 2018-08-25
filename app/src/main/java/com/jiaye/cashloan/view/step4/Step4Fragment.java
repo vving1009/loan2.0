@@ -17,7 +17,7 @@ import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step4.source.Step4Repository;
 
 /**
- * Step4Fragment
+ * Step3ResultFragment
  *
  * @author 贾博瑄
  */
@@ -47,16 +47,16 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.step4_fragment, container, false);
         mLayout1 = root.findViewById(R.id.layout_1);
-        mLayout2 = root.findViewById(R.id.layout_2);
+        //mLayout2 = root.findViewById(R.id.layout_2);
         mText = root.findViewById(R.id.text);
-        mBtnNext = root.findViewById(R.id.btn_next);
+        /*mBtnNext = root.findViewById(R.id.btn_next);
         mBtnNext.setOnClickListener(v -> {
             if (mBtnNext.getText().toString().equals(getString(R.string.step4_confirm))) {
                 mPresenter.onClickConfirm();
             } else if (mBtnNext.getText().toString().equals(getString(R.string.step4_open))) {
                 mPresenter.onClickOpen();
             }
-        });
+        });*/
         mPresenter = new Step4Presenter(this, new Step4Repository());
         mPresenter.subscribe();
         return root;

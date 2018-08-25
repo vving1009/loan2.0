@@ -10,7 +10,7 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import io.reactivex.Flowable;
 
 /**
- * CertificationRepository
+ * JdCarRepository
  *
  * @author 贾博瑄
  */
