@@ -235,6 +235,10 @@ public enum MoxieHelper {
                                                     moxieContext.finish();
                                                 }, moxieContext::finish);
                                         break;
+                                    case MxParam.PARAM_TASK_INSURANCE:
+                                        // TODO: 2018/8/23 保单成功回调
+
+                                        break;
                                     default:
                                         Logger.d(TAG + "导入成功");
                                         moxieContext.finish();

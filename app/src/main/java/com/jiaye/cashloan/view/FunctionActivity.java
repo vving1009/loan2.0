@@ -18,6 +18,7 @@ import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.forgetpassword.ForgetPasswordFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
 import com.jiaye.cashloan.view.info.InfoFragment;
+import com.jiaye.cashloan.view.info2.Info2Fragment;
 import com.jiaye.cashloan.view.login.LoginFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
 import com.jiaye.cashloan.view.register.RegisterFragment;
@@ -37,7 +38,9 @@ public class FunctionActivity extends AppCompatActivity {
     private BaseFragment mFragment;
 
     public static void function(Activity activity, String function) {
-        if (function.equals(MxParam.PARAM_TASK_CARRIER) || function.equals(MxParam.PARAM_TASK_TAOBAO)) {
+        if (function.equals(MxParam.PARAM_TASK_CARRIER) ||
+                function.equals(MxParam.PARAM_TASK_TAOBAO) ||
+                function.equals(MxParam.PARAM_TASK_INSURANCE)) {
             MoxieHelper.INSTANCE.start(activity, function);
             return;
         }
@@ -124,6 +127,10 @@ public class FunctionActivity extends AppCompatActivity {
                 case "Search":
                     // 公司业务员搜索
                     mFragment = SearchFragment.newInstance();
+                    break;
+                case "Info2":
+                    // 信息确认
+                    mFragment = Info2Fragment.newInstance();
                     break;
             }
         } else {
