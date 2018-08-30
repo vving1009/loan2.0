@@ -102,6 +102,7 @@
     <string name="my_credit_account_error">已开户</string>
     <string name="my_credit_password">设置初始密码</string>
     <string name="my_credit_password_reset">重置密码</string>
+    <string name="my_credit_auth">授权</string>
     <string name="my_credit_password_error">未开户</string>
     <string name="my_credit_cash">提现</string>
     <string name="my_credit_bank">银行卡</string>

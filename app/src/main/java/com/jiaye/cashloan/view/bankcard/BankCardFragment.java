@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
-import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.bankcard.source.BankCardRepository;
 import com.satcatche.library.widget.SatcatcheDialog;
 
@@ -84,10 +84,9 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     }
 
     private void showBindBankView() {
-        Intent intent = new Intent(getActivity(), FunctionActivity.class);
-        intent.putExtra("source", "");
-        intent.putExtra("function", "BindBank");
-        startActivityForResult(intent, REQUEST_CODE_BANK);
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "accountOpen");
+        startActivity(intent);
     }
 
     @Override

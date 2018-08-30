@@ -64,9 +64,8 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showBindBankView() {
-        Intent intent = new Intent(getActivity(), FunctionActivity.class);
-        intent.putExtra("source", "01");
-        intent.putExtra("function", "BindBank");
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "accountOpen");
         startActivity(intent);
     }
 
@@ -75,6 +74,12 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
         intent.putExtra("type", "password");
         intent.putExtra("request", request);
+        startActivity(intent);
+    }
+
+    public void showAuthView() {
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "termsAuth");
         startActivity(intent);
     }
 
@@ -111,11 +116,15 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showBankView(boolean bind, CreditInfo creditInfo) {
-        Intent intent = new Intent(getContext(), FunctionActivity.class);
-        intent.putExtra("bind", bind);
-        intent.putExtra("creditInfo", creditInfo);
-        intent.putExtra("function", "BankCard");
-        startActivity(intent);
+        if (bind) {
+            Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+            intent.putExtra("type", "bindCard");
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+            intent.putExtra("type", "unbind");
+            startActivity(intent);
+        }
     }
 
     private void copy() {
@@ -139,6 +148,7 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
         mTextAccountId = view.findViewById(R.id.text_account_id);
         view.findViewById(R.id.layout_account).setOnClickListener(v -> mPresenter.account());
         view.findViewById(R.id.layout_password).setOnClickListener(v -> mPresenter.password());
+        view.findViewById(R.id.layout_auth).setOnClickListener(v -> showAuthView());
         view.findViewById(R.id.layout_cash).setOnClickListener(v -> mPresenter.cash());
         view.findViewById(R.id.layout_bank).setOnClickListener(v -> mPresenter.bank());
         view.findViewById(R.id.text_copy).setOnClickListener(v -> copy());

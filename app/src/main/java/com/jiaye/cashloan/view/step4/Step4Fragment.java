@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step4.source.Step4Repository;
@@ -103,9 +103,8 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
 
     @Override
     public void showBindBankView() {
-        Intent intent = new Intent(getActivity(), FunctionActivity.class);
-        intent.putExtra("source", "01");
-        intent.putExtra("function", "BindBank");
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "accountOpen");
         startActivity(intent);
         getActivity().finish();
     }
