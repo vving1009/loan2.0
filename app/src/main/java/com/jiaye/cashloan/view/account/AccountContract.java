@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.account;
 
 import com.jiaye.cashloan.http.data.my.CreditBalance;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
@@ -34,7 +33,7 @@ public interface AccountContract {
 
         void showOpenDialog();
 
-        void showBankView(boolean bind, CreditInfo creditInfo);
+        void showBankView();
     }
 
     interface Presenter extends BasePresenter {

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
@@ -114,10 +113,8 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
     }
 
     @Override
-    public void showBankView(boolean bind, CreditInfo creditInfo) {
+    public void showBankView() {
         Intent intent = new Intent(getContext(), FunctionActivity.class);
-        intent.putExtra("bind", bind);
-        intent.putExtra("creditInfo", creditInfo);
         intent.putExtra("function", "BankCard");
         startActivity(intent);
     }

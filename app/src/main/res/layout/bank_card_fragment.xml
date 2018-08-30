@@ -15,7 +15,8 @@
         <RelativeLayout
             android:id="@+id/layout_bind"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="26dp"
@@ -42,7 +43,7 @@
             android:paddingLeft="33dp"
             android:paddingRight="33dp"
             android:paddingTop="38dp"
-            android:paddingBottom="39dp">
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/text_name"
@@ -83,7 +84,8 @@
         android:background="@drawable/step_btn"
         android:text="@string/my_credit_bank_un_bind"
         android:textColor="@color/color_white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/text_tips"
@@ -94,5 +96,6 @@
         android:lineSpacingExtra="10dp"
         android:text="@string/my_credit_bank_tip"
         android:textColor="@color/color_gray_dark"
-        android:textSize="8sp" />
+        android:textSize="8sp"
+        android:visibility="invisible" />
 </LinearLayout>

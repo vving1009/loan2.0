@@ -12,8 +12,14 @@ import com.jiaye.cashloan.view.BaseViewContract;
 public interface BankCardContract {
 
     interface View extends BaseViewContract {
+
+        void showBindCardView();
+
+        void showUnbindCardView(String account, String name, String bankNo);
     }
 
     interface Presenter extends BasePresenter {
+
+        void init();
     }
 }

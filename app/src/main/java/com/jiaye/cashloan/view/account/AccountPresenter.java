@@ -32,9 +32,14 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
 
     private final CreditDataSource mDataSource;
 
-    private String mPasswordStatus;
-
     private CreditBalance mBalance;
+
+    /**
+     * -1：未开户
+     * 0：已开户，未设密码
+     * 1：已开户，已设密码
+     */
+    private String mPasswordStatus;
 
     /**
      * 是否绑定银行卡
@@ -191,31 +196,11 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
 
     @Override
     public void bank() {
-        Disposable disposable = mDataSource.creditInfo()
-                .compose(new ViewTransformer<CreditInfo>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(creditInfo -> {
-                    mView.dismissProgressDialog();
-                    switch (creditInfo.getBankStatus()) {
-                        case "01":
-                            mView.showOpenDialog();
-                            break;
-                        case "02":
-                            // 绑卡
-                            mView.showBankView(true, creditInfo);
-                            break;
-                        case "03":
-                            // 解绑
-                            mView.showBankView(false, creditInfo);
-                            break;
-                    }
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        if (mPasswordStatus.equals("-1")) {
+            mView.showOpenDialog();
+        } else {
+            mView.showBankView();
+        }
     }
 
     private void passwordInit() {

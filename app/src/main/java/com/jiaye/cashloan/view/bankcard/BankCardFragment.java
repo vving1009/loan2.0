@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.bankcard.source.BankCardRepository;
@@ -34,6 +33,20 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     private static final int REQUEST_CODE_BANK = 101;
 
     private BankCardContract.Presenter mPresenter;
+
+    private RelativeLayout bindLayout;
+
+    private RelativeLayout unBindLayout;
+
+    private Button unBindBtn;
+
+    private TextView textBank;
+
+    private TextView textName;
+
+    private TextView textNumber;
+
+    private TextView textTips;
 
     public static BankCardFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,14 +69,19 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         mPresenter.unsubscribe();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.init();
+    }
 
-    private void showBindCardView() {
+    private void goToBindCard() {
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
         intent.putExtra("type", "bindCard");
         startActivity(intent);
     }
 
-    private void showUnbindCardView() {
+    private void goToUnbindCard() {
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
         intent.putExtra("type", "unbind");
         startActivity(intent);
@@ -77,49 +95,17 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View view = inflater.inflate(R.layout.bank_card_fragment, frameLayout, true);
-        RelativeLayout bindLayout = view.findViewById(R.id.layout_bind);
-        RelativeLayout unBindLayout = view.findViewById(R.id.layout_un_bind);
-        Button unBindBtn = view.findViewById(R.id.btn_un_bind);
-        TextView textTips = view.findViewById(R.id.text_tips);
-        boolean bind = getActivity().getIntent().getExtras().getBoolean("bind");
-        if (bind) {
-            bindLayout.setVisibility(View.VISIBLE);
-            unBindLayout.setVisibility(View.GONE);
-            unBindBtn.setVisibility(View.GONE);
-            bindLayout.setOnClickListener(v -> showBindCardView());
-        } else {
-            bindLayout.setVisibility(View.GONE);
-            unBindLayout.setVisibility(View.VISIBLE);
-            TextView textBank = view.findViewById(R.id.text_bank);
-            TextView textName = view.findViewById(R.id.text_name);
-            TextView textNumber = view.findViewById(R.id.text_number);
-            CreditInfo creditInfo = getActivity().getIntent().getExtras().getParcelable("creditInfo");
-            //noinspection ConstantConditions
-            textBank.setText(creditInfo.getAccountName());
-            String name = creditInfo.getName();
-            int length = name.length();
-            StringBuilder unKnown = new StringBuilder();
-            for (int i = 0; i < length - 1; i++) {
-                unKnown.append("*");
-            }
-            name = unKnown + name.substring(name.length() - 1, name.length());
-            textName.setText(String.format(getString(R.string.my_credit_bank_name), name));
-            String number = creditInfo.getBankNo();
-            int numberLength = number.length();
-            if (numberLength > 7) {
-                StringBuilder unKnownNumber = new StringBuilder();
-                for (int i = 0; i < numberLength - 7; i++) {
-                    unKnownNumber.append("*");
-                }
-                number = number.substring(0, 3) + unKnownNumber + number.substring(number.length() - 4, number.length());
-                textNumber.setText(String.format(getString(R.string.my_credit_bank_number), number));
-            }
-            unBindBtn.setOnClickListener(v -> showUnbindCardView());
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textTips.getLayoutParams();
-            int density = (int) getResources().getDisplayMetrics().density;
-            params.setMargins(31 * density, 33 * density, 0, 0);
-            textTips.setLayoutParams(params);
-        }
+        bindLayout = view.findViewById(R.id.layout_bind);
+        unBindLayout = view.findViewById(R.id.layout_un_bind);
+        unBindBtn = view.findViewById(R.id.btn_un_bind);
+        textBank = view.findViewById(R.id.text_bank);
+        textName = view.findViewById(R.id.text_name);
+        textNumber = view.findViewById(R.id.text_number);
+        textTips = view.findViewById(R.id.text_tips);
+
+        bindLayout.setOnClickListener(v -> goToBindCard());
+        unBindBtn.setOnClickListener(v -> goToUnbindCard());
+
         SpannableString string = new SpannableString(textTips.getText());
         string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
                 textTips.getText().length() - 12, textTips.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -132,8 +118,48 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         }, textTips.getText().length() - 12, textTips.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textTips.setText(string);
         textTips.setMovementMethod(LinkMovementMethod.getInstance());
+
         mPresenter = new BankCardPresenter(this, new BankCardRepository());
         mPresenter.subscribe();
         return view;
+    }
+
+    @Override
+    public void showBindCardView() {
+        bindLayout.setVisibility(View.VISIBLE);
+        unBindLayout.setVisibility(View.GONE);
+        unBindBtn.setVisibility(View.GONE);
+        textTips.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showUnbindCardView(String account, String name, String bankNo) {
+        bindLayout.setVisibility(View.GONE);
+        unBindLayout.setVisibility(View.VISIBLE);
+        unBindBtn.setVisibility(View.VISIBLE);
+        textTips.setVisibility(View.VISIBLE);
+
+        //noinspection ConstantConditions
+        textBank.setText(account);
+        int length = name.length();
+        StringBuilder unKnown = new StringBuilder();
+        for (int i = 0; i < length - 1; i++) {
+            unKnown.append("*");
+        }
+        name = unKnown + name.substring(name.length() - 1, name.length());
+        textName.setText(String.format(getString(R.string.my_credit_bank_name), name));
+        int numberLength = bankNo.length();
+        if (numberLength > 7) {
+            StringBuilder unKnownNumber = new StringBuilder();
+            for (int i = 0; i < numberLength - 7; i++) {
+                unKnownNumber.append("*");
+            }
+            bankNo = bankNo.substring(0, 3) + unKnownNumber + bankNo.substring(bankNo.length() - 4, bankNo.length());
+            textNumber.setText(String.format(getString(R.string.my_credit_bank_number), bankNo));
+        }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textTips.getLayoutParams();
+        int density = (int) getResources().getDisplayMetrics().density;
+        params.setMargins(31 * density, 33 * density, 0, 0);
+        textTips.setLayoutParams(params);
     }
 }
