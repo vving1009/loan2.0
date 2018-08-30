@@ -8,8 +8,6 @@ import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
-import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
-import com.jiaye.cashloan.http.data.my.CreditPasswordStatus;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -38,6 +36,16 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
 
     private CreditBalance mBalance;
 
+    /**
+     * 是否绑定银行卡
+     */
+    private boolean isBindCard;
+
+    /**
+     * 是否授权
+     */
+    private boolean isAuth;
+
     public AccountPresenter(AccountContract.View view, CreditDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -45,39 +53,49 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
 
     @Override
     public void init() {
-        Disposable disposable = mDataSource.passwordStatus()
-                .compose(new ViewTransformer<CreditPasswordStatus>() {
+        Disposable disposable = mDataSource.creditInfo()
+                .compose(new ViewTransformer<CreditInfo>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .map(creditPasswordStatus -> {
-                    if (creditPasswordStatus.getOpen().equals("0")) {// 未开户
-                        mPasswordStatus = "-1";
-                        mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
-                    } else if (creditPasswordStatus.getOpen().equals("1")) {// 已开户
-                        if (creditPasswordStatus.getStatus().equals("0")) {// 初始密码
-                            mPasswordStatus = "0";
+                .doOnNext(creditInfo -> {
+                    switch (creditInfo.getBankStatus()) {
+                        case "01": // 未开户
+                            mPasswordStatus = "-1";
                             mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
-                        } else if (creditPasswordStatus.getStatus().equals("1")) {// 重置密码
-                            mPasswordStatus = "1";
-                            mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password_reset));
-                        }
+                            break;
+                        case "02": // 已开户
+                        case "03": // 已开户，绑卡
+                            if (creditInfo.getPwdStatus().equals("0")) {// 初始密码
+                                mPasswordStatus = "0";
+                                mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password));
+                            } else if (creditInfo.getPwdStatus().equals("1")) {// 重置密码
+                                mPasswordStatus = "1";
+                                mView.setPasswordText(LoanApplication.getInstance().getResources().getString(R.string.my_credit_password_reset));
+                            }
+                            if (creditInfo.getBankStatus().equals("03")) {
+                                isBindCard = true;  //已绑卡
+                            }
+                            if (!TextUtils.isEmpty(creditInfo.getPaymentDeadline()) &&
+                                    !TextUtils.isEmpty(creditInfo.getPaymentMaxamt()) &&
+                                    !TextUtils.isEmpty(creditInfo.getRepaymentDeadline()) &&
+                                    !TextUtils.isEmpty(creditInfo.getRepaymentMaxamt())) {
+                                isAuth = true;  //已授权
+                            }
+                            break;
                     }
-                    return creditPasswordStatus;
                 })
                 // 过滤未开户的情况
-                .filter(creditPasswordStatus -> creditPasswordStatus.getOpen().equals("1"))
+                .filter(creditInfo -> !creditInfo.getBankStatus().equals("01"))
                 .observeOn(Schedulers.io())
-                .flatMap((Function<CreditPasswordStatus, Publisher<CreditInfo>>) balance -> mDataSource.creditInfo())
                 .observeOn(AndroidSchedulers.mainThread())
                 // 过滤accountId为空的情况
                 .filter(creditInfo -> creditInfo != null && !TextUtils.isEmpty(creditInfo.getAccountId()))
-                .map(creditInfo -> {
+                .doOnNext(creditInfo -> {
                     mView.showAccountId(creditInfo.getAccountId());
-                    return creditInfo;
                 })
                 // 过滤未开户和开户未绑卡的情况
                 .filter(creditInfo -> creditInfo.getBankStatus().equals("03"))
@@ -131,7 +149,28 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
                     passwordInit();
                     break;
                 case "1":
-                    passwordReset();
+                    if (isBindCard) {
+                        mView.showPasswordResetView();
+                    } else {
+                        mView.showToastById(R.string.my_credit_no_bind_card);
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void auth() {
+        if (!TextUtils.isEmpty(mPasswordStatus)) {
+            switch (mPasswordStatus) {
+                case "-1":
+                    mView.showToastById(R.string.my_credit_password_error);
+                    break;
+                case "0":
+                    mView.showToastById(R.string.my_credit_no_password);
+                    break;
+                case "1":
+                    mView.showAuthView();
                     break;
             }
         }
@@ -139,10 +178,14 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
 
     @Override
     public void cash() {
-        if (mBalance != null && mBalance.getIsSupportCash().equals("1") && mPasswordStatus.equals("1")) {
-            mView.showCashView(mBalance);
+        if (isAuth) {
+            if (mBalance != null && mBalance.getIsSupportCash().equals("1") && mPasswordStatus.equals("1")) {
+                mView.showCashView(mBalance);
+            } else {
+                mView.showToastById(R.string.error_my_credit);
+            }
         } else {
-            mView.showToastById(R.string.error_my_credit);
+            mView.showToastById(R.string.error_my_credit_no_auth);
         }
     }
 
@@ -187,22 +230,6 @@ public class AccountPresenter extends BasePresenterImpl implements AccountContra
                 .subscribe(request -> {
                     mView.dismissProgressDialog();
                     mView.showPasswordView(request);
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
-    }
-
-    private void passwordReset() {
-        Disposable disposable = mDataSource.passwordReset()
-                .compose(new ViewTransformer<CreditPasswordResetRequest>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(request -> {
-                    mView.dismissProgressDialog();
-                    mView.showPasswordResetView(request);
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

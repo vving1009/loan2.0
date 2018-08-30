@@ -20,6 +20,7 @@ import com.jiaye.cashloan.http.base.RequestContent;
 import com.jiaye.cashloan.http.base.RequestHeader;
 import com.jiaye.cashloan.http.data.loan.AccountOpenRequest;
 import com.jiaye.cashloan.http.data.loan.BindCardRequest;
+import com.jiaye.cashloan.http.data.loan.SetAndResetPasswordRequest;
 import com.jiaye.cashloan.http.data.loan.TermsAuthRequest;
 import com.jiaye.cashloan.http.data.loan.UnbindCardRequest;
 import com.jiaye.cashloan.http.data.my.CreditCashRequest;
@@ -104,14 +105,6 @@ public class AccountWebActivity extends BaseActivity {
                 passwordRequest.setNotifyUrl(URLEncoder.encode(passwordRequest.getNotifyUrl()));
                 webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/passwordset", json2KeyValue(passwordRequest.toString()).getBytes());
                 break;
-            case "passwordReset":
-                CreditPasswordResetRequest passwordResetRequest = getIntent().getExtras().getParcelable("request");
-                passwordResetRequest.setName(URLEncoder.encode(passwordResetRequest.getName()));
-                passwordResetRequest.setSign(URLEncoder.encode(passwordResetRequest.getSign()));
-                passwordResetRequest.setRetUrl(URLEncoder.encode(passwordResetRequest.getRetUrl()));
-                passwordResetRequest.setNotifyUrl(URLEncoder.encode(passwordResetRequest.getNotifyUrl()));
-                webView.postUrl(BuildConfig.CREDIT2GO_URL + BuildConfig.CREDIT2GO_ESCROW_URL + "p2p/page/mobile", json2KeyValue(passwordResetRequest.toString()).getBytes());
-                break;
             case "cash":
                 String cash = getIntent().getExtras().getString("cash");
                 String bank = getIntent().getExtras().getString("bank");
@@ -144,6 +137,12 @@ public class AccountWebActivity extends BaseActivity {
                 request = getRequest(termsAuthRequest);
                 Logger.d("AccountWebActivity: termsAuth: " + BuildConfig.BASE_URL + "termsAuth" + ",\n " + new Gson().toJson(request));
                 webView.postUrl(BuildConfig.BASE_URL + "termsAuth", new Gson().toJson(request).getBytes());
+                break;
+            case "setAndResetPassword":
+                SetAndResetPasswordRequest setAndResetPasswordRequest = new SetAndResetPasswordRequest();
+                request = getRequest(setAndResetPasswordRequest);
+                Logger.d("AccountWebActivity: termsAuth: " + BuildConfig.BASE_URL + "setAndResetPassword" + ",\n " + new Gson().toJson(request));
+                webView.postUrl(BuildConfig.BASE_URL + "transPwd/setAndResetPassword", new Gson().toJson(request).getBytes());
                 break;
         }
     }
@@ -205,7 +204,7 @@ public class AccountWebActivity extends BaseActivity {
                 .subscribe(request -> {
                     dismissProgressDialog();
                     Intent intent = new Intent(AccountWebActivity.this, AccountWebActivity.class);
-                    intent.putExtra("type", "passwordReset");
+                    intent.putExtra("type", "setAndResetPassword");
                     intent.putExtra("request", request);
                     startActivity(intent);
                     finish();

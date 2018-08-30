@@ -36,6 +36,36 @@ public class CreditInfo extends ChildResponse implements Parcelable {
     @SerializedName("account_name")
     private String accountName;
 
+    /**
+     * 密码设置状态 （0否1是）
+     */
+    @SerializedName("pwd_status")
+    private String pwdStatus;
+
+    /**
+     * 缴费授权有效期 格式：yyyy-MM-dd
+     */
+    @SerializedName("payment_deadline")
+    private String paymentDeadline;
+
+    /**
+     * 缴费授权金额
+     */
+    @SerializedName("payment_maxamt")
+    private String paymentMaxamt;
+
+    /**
+     * 还款授权有效期 格式：yyyy-MM-dd
+     */
+    @SerializedName("repayment_deadline")
+    private String repaymentDeadline;
+
+    /**
+     * 还款授权金额
+     */
+    @SerializedName("repayment_maxamt")
+    private String repaymentMaxamt;
+
     public String getAccountId() {
         return accountId;
     }
@@ -92,6 +122,46 @@ public class CreditInfo extends ChildResponse implements Parcelable {
         this.accountName = accountName;
     }
 
+    public String getPwdStatus() {
+        return pwdStatus;
+    }
+
+    public void setPwdStatus(String pwdStatus) {
+        this.pwdStatus = pwdStatus;
+    }
+
+    public String getPaymentDeadline() {
+        return paymentDeadline;
+    }
+
+    public void setPaymentDeadline(String paymentDeadline) {
+        this.paymentDeadline = paymentDeadline;
+    }
+
+    public String getPaymentMaxamt() {
+        return paymentMaxamt;
+    }
+
+    public void setPaymentMaxamt(String paymentMaxamt) {
+        this.paymentMaxamt = paymentMaxamt;
+    }
+
+    public String getRepaymentDeadline() {
+        return repaymentDeadline;
+    }
+
+    public void setRepaymentDeadline(String repaymentDeadline) {
+        this.repaymentDeadline = repaymentDeadline;
+    }
+
+    public String getRepaymentMaxamt() {
+        return repaymentMaxamt;
+    }
+
+    public void setRepaymentMaxamt(String repaymentMaxamt) {
+        this.repaymentMaxamt = repaymentMaxamt;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,6 +176,11 @@ public class CreditInfo extends ChildResponse implements Parcelable {
         dest.writeString(this.bankStatus);
         dest.writeString(this.bankNo);
         dest.writeString(this.accountName);
+        dest.writeString(this.pwdStatus);
+        dest.writeString(this.paymentDeadline);
+        dest.writeString(this.paymentMaxamt);
+        dest.writeString(this.repaymentDeadline);
+        dest.writeString(this.repaymentMaxamt);
     }
 
     public CreditInfo() {
@@ -119,6 +194,11 @@ public class CreditInfo extends ChildResponse implements Parcelable {
         this.bankStatus = in.readString();
         this.bankNo = in.readString();
         this.accountName = in.readString();
+        this.pwdStatus = in.readString();
+        this.paymentDeadline = in.readString();
+        this.paymentMaxamt = in.readString();
+        this.repaymentDeadline = in.readString();
+        this.repaymentMaxamt = in.readString();
     }
 
     public static final Parcelable.Creator<CreditInfo> CREATOR = new Parcelable.Creator<CreditInfo>() {

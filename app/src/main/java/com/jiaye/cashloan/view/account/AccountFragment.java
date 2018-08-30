@@ -14,7 +14,6 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
-import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.account.source.CreditRepository;
@@ -77,6 +76,7 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
         startActivity(intent);
     }
 
+    @Override
     public void showAuthView() {
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
         intent.putExtra("type", "termsAuth");
@@ -84,10 +84,9 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
     }
 
     @Override
-    public void showPasswordResetView(CreditPasswordResetRequest request) {
+    public void showPasswordResetView() {
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-        intent.putExtra("type", "passwordReset");
-        intent.putExtra("request", request);
+        intent.putExtra("type", "setAndResetPassword");
         startActivity(intent);
     }
 
@@ -148,7 +147,7 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
         mTextAccountId = view.findViewById(R.id.text_account_id);
         view.findViewById(R.id.layout_account).setOnClickListener(v -> mPresenter.account());
         view.findViewById(R.id.layout_password).setOnClickListener(v -> mPresenter.password());
-        view.findViewById(R.id.layout_auth).setOnClickListener(v -> showAuthView());
+        view.findViewById(R.id.layout_auth).setOnClickListener(v -> mPresenter.auth());
         view.findViewById(R.id.layout_cash).setOnClickListener(v -> mPresenter.cash());
         view.findViewById(R.id.layout_bank).setOnClickListener(v -> mPresenter.bank());
         view.findViewById(R.id.text_copy).setOnClickListener(v -> copy());

@@ -3,7 +3,6 @@ package com.jiaye.cashloan.view.account;
 import com.jiaye.cashloan.http.data.my.CreditBalance;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditPasswordRequest;
-import com.jiaye.cashloan.http.data.my.CreditPasswordResetRequest;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
@@ -23,7 +22,9 @@ public interface AccountContract {
 
         void showPasswordView(CreditPasswordRequest request);
 
-        void showPasswordResetView(CreditPasswordResetRequest request);
+        void showAuthView();
+
+        void showPasswordResetView();
 
         void showCashView(CreditBalance balance);
 
@@ -43,6 +44,8 @@ public interface AccountContract {
         void account();
 
         void password();
+
+        void auth();
 
         void cash();
 
