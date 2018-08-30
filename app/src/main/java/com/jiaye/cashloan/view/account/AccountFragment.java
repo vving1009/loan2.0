@@ -115,15 +115,11 @@ public class AccountFragment extends BaseFunctionFragment implements AccountCont
 
     @Override
     public void showBankView(boolean bind, CreditInfo creditInfo) {
-        if (bind) {
-            Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-            intent.putExtra("type", "bindCard");
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-            intent.putExtra("type", "unbind");
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getContext(), FunctionActivity.class);
+        intent.putExtra("bind", bind);
+        intent.putExtra("creditInfo", creditInfo);
+        intent.putExtra("function", "BankCard");
+        startActivity(intent);
     }
 
     private void copy() {

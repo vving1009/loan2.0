@@ -22,7 +22,6 @@ import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.bankcard.source.BankCardRepository;
-import com.satcatche.library.widget.SatcatcheDialog;
 
 /**
  * BankCardFragment
@@ -35,8 +34,6 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
     private static final int REQUEST_CODE_BANK = 101;
 
     private BankCardContract.Presenter mPresenter;
-
-    private SatcatcheDialog.Builder mDialogBuilder;
 
     public static BankCardFragment newInstance() {
         Bundle args = new Bundle();
@@ -59,33 +56,16 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         mPresenter.unsubscribe();
     }
 
-    @Override
-    public void complete() {
-        mDialogBuilder.setMessage(getString(R.string.my_bank_un_bind_complete))
-                .setButtonNumber(0)
-                .setCancelable(true)
-                .setOnDismissListener(dialog -> getActivity().finish())
-                .build().show();
-    }
 
-    @Override
-    public void unBindFailedBalance() {
-        mDialogBuilder.setMessage("余额不为0或存在未完成债权关系，暂不可解绑银行卡")
-                .setPositiveButton("确定", null)
-                .build().show();
-    }
-
-    @Override
-    public void unBindFailedWrongCode() {
-        mDialogBuilder.setMessage("解绑未成功\n错误代码：显示对应错误原因")
-                .setButtonNumber(0)
-                .setCancelable(true)
-                .build().show();
-    }
-
-    private void showBindBankView() {
+    private void showBindCardView() {
         Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-        intent.putExtra("type", "accountOpen");
+        intent.putExtra("type", "bindCard");
+        startActivity(intent);
+    }
+
+    private void showUnbindCardView() {
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "unbind");
         startActivity(intent);
     }
 
@@ -106,7 +86,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
             bindLayout.setVisibility(View.VISIBLE);
             unBindLayout.setVisibility(View.GONE);
             unBindBtn.setVisibility(View.GONE);
-            bindLayout.setOnClickListener(v -> showBindBankView());
+            bindLayout.setOnClickListener(v -> showBindCardView());
         } else {
             bindLayout.setVisibility(View.GONE);
             unBindLayout.setVisibility(View.VISIBLE);
@@ -134,7 +114,7 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
                 number = number.substring(0, 3) + unKnownNumber + number.substring(number.length() - 4, number.length());
                 textNumber.setText(String.format(getString(R.string.my_credit_bank_number), number));
             }
-            unBindBtn.setOnClickListener(v -> mPresenter.unBind());
+            unBindBtn.setOnClickListener(v -> showUnbindCardView());
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textTips.getLayoutParams();
             int density = (int) getResources().getDisplayMetrics().density;
             params.setMargins(31 * density, 33 * density, 0, 0);
@@ -152,7 +132,6 @@ public class BankCardFragment extends BaseFunctionFragment implements BankCardCo
         }, textTips.getText().length() - 12, textTips.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textTips.setText(string);
         textTips.setMovementMethod(LinkMovementMethod.getInstance());
-        mDialogBuilder = new SatcatcheDialog.Builder(getContext()).setTitle("提示");
         mPresenter = new BankCardPresenter(this, new BankCardRepository());
         mPresenter.subscribe();
         return view;

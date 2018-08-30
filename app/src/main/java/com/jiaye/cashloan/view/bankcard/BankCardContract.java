@@ -12,16 +12,8 @@ import com.jiaye.cashloan.view.BaseViewContract;
 public interface BankCardContract {
 
     interface View extends BaseViewContract {
-
-        void complete();
-
-        void unBindFailedWrongCode();
-
-        void unBindFailedBalance();
     }
 
     interface Presenter extends BasePresenter {
-
-        void unBind();
     }
 }
