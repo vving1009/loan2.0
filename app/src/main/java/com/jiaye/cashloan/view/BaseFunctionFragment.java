@@ -17,12 +17,14 @@ import com.jiaye.cashloan.R;
  */
 public abstract class BaseFunctionFragment extends BaseFragment {
 
+    private TextView textTitle;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.base_function_fragment, container, false);
         root.findViewById(R.id.img_back).setOnClickListener(v -> onClickBack());
-        TextView textTitle = root.findViewById(R.id.text_title);
+        textTitle = root.findViewById(R.id.text_title);
         textTitle.setText(getTitleId());
         TextView textFunction = root.findViewById(R.id.text_function);
         if (getFunctionId() != -1) {
@@ -40,6 +42,13 @@ public abstract class BaseFunctionFragment extends BaseFragment {
      */
     protected void onClickBack() {
         getActivity().finish();
+    }
+
+    /**
+     * 设置标题
+     */
+    protected void setTitle(String text) {
+        textTitle.setText(text);
     }
 
     /**

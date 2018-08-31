@@ -19,15 +19,49 @@
     <string name="search_error">请先选择业务员</string>
     <!--certification-->
     <string name="certification_title">认证中心</string>
-    <!--step1-->
+    <!--jd car-->
+    <string name="car_brand_title">品牌</string>
+    <string name="car_year_title">上牌年份</string>
+    <string name="car_month_title">上牌月份</string>
+    <string name="car_province_title">所在省份</string>
+    <string name="car_city_title">所在城市</string>
+    <string name="car_miles_title">行驶里程</string>
+
+    <!--step2Input-->
     <string name="step1_error">请填写认证资料</string>
-    <!--step2-->
+    <string name="step1_evaluation">立即评估</string>
+    <string name="step1_appointment">立即预约</string>
+    <string name="step1_valuation">您的爱车估值:\n%1$s-%2$s万</string>
+    <!--step2Result-->
     <string name="step2_progress">车辆正在评估,请耐心等待</string>
+    <string name="step2_loan_limit">经初步确定，您的借款额度:\n%1$s元</string>
+    <string name="step2_final_limit">获取最终额度</string>
     <!--step3-->
     <string name="step3_error">请填写提交信息</string>
+    <string name="step3_confirm">确认借款</string>
+    <string name="step3_approving">你的借款申请正在审核中,\n请耐心等待</string>
+    <string name="step3_reject">很抱歉，您的借款申请被拒绝</string>
+    <string name="step3_amount">您的最终批核金额为:\n%1$s元</string>
+    <string name="step3_info_confirm_title">信息确认</string>
+    <string-array name="step3_info_married_array" >
+        <item>已婚</item>
+        <item>未婚</item>
+        <item>离异</item>
+        <item>丧偶</item>
+    </string-array>
+    <string-array name="step3_info_education_array" >
+        <item>本科以上</item>
+        <item>本科以下</item>
+    </string-array>
+    <string-array name="step3_info_house_array" >
+        <item>是</item>
+        <item>否</item>
+    </string-array>
     <!--step4-->
     <string name="step4_confirm">确认借款</string>
     <string name="step4_open">去开户</string>
+    <string name="step4_wait">您的借款正在投标中,\n请耐心等待。</string>
+    <string name="step4_finish">您的借款已成功发放，请到个人中心-存管账户管理进行提现</string>
     <!--id-->
     <string name="id_title">身份认证</string>
     <!--phone-->
@@ -181,6 +215,17 @@
     <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>
     <string name="error_my_credit_cash_max_limit">提现金额不能大于可用余额</string>
     <string name="error_my_credit_cash_max_limit_bank">提现金额大于5万元请填写银行联行号</string>
+    <string name="error_step3_info_married">请选择婚姻状况</string>
+    <string name="error_step3_info_education">请选择最高学历</string>
+    <string name="error_step3_info_industry">请输入工作行业</string>
+    <string name="error_step3_info_years">请输入工作年限</string>
+    <string name="error_step3_info_job">请输入工作职务</string>
+    <string name="error_step3_info_salary">请输入月收入</string>
+    <string name="error_step3_info_house">请选择房产信息</string>
+    <string name="error_step3_info_card_num">请输入信用卡数量</string>
+    <string name="error_step3_info_card_limit">请输入信用卡额度</string>
+    <string name="error_step3_info_description">请输入借款描述</string>
+
     <!--error code-->
     <string name="error_0000">成功</string>
     <string name="error_9990">无有效记录</string>
