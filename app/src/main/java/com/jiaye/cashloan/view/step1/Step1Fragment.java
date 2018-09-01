@@ -1,36 +1,28 @@
 package com.jiaye.cashloan.view.step1;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.step1.Step1;
-import com.jiaye.cashloan.service.UploadFaceService;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.bioassay.BioassayActivity;
+import com.jiaye.cashloan.view.car.CarActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.source.Step1Repository;
 import com.jiaye.cashloan.widget.StepView;
-import com.moxie.client.model.MxParam;
-import com.satcatche.library.widget.SatcatcheDialog;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Step1Fragment
@@ -38,18 +30,41 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @author 贾博瑄
  */
 
-public class Step1Fragment extends BaseStepFragment implements Step1Contract.View, EasyPermissions.PermissionCallbacks {
+public class Step1Fragment extends BaseStepFragment implements Step1Contract.View {
 
-    private final int CAMERA_PERMS_REQUEST_CODE = 101;
+    private static final String TAG = "Step1Fragment";
+
+    public static final int REQUEST_CODE_CAR_BRAND = 101;
+    public static final int REQUEST_CODE_CAR_DATE = 102;
+    public static final int REQUEST_CODE_CAR_MILES = 103;
+    public static final int REQUEST_CODE_CAR_CITY = 104;
+
+    public static final String EXTRA_MODEL_ID = "model_id";
+    public static final String EXTRA_MODEL_NAME = "model_name";
+    public static final String EXTRA_YEAR = "year";
+    public static final String EXTRA_MONTH = "month";
+    public static final String EXTRA_MILES = "miles";
+    public static final String EXTRA_PROVINCE_ID = "city_province_id";
+    public static final String EXTRA_CITY_NAME = "city_name";
+    public static final String EXTRA_CITY_ID = "city_id";
 
     private Step1Contract.Presenter mPresenter;
 
+    private TextView mTextTitle;
+
+    private TextView mTextSubTitle;
+
     private RecyclerView mRecyclerView;
+
+    private LinearLayout mLayoutResult;
+
+    private TextView mTextResult;
 
     private Adapter mAdapter;
 
-    @SuppressLint("InlinedApi")
-    private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private Button mBtnNext;
+
+    private List<String> mList;
 
     public static Step1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -63,20 +78,24 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.step1_fragment, container, false);
+        mTextTitle = root.findViewById(R.id.title);
+        mTextSubTitle = root.findViewById(R.id.sub_title);
         mRecyclerView = root.findViewById(R.id.recycler_view);
+        mLayoutResult = root.findViewById(R.id.result_layout);
+        mTextResult = root.findViewById(R.id.result_text);
+        mList = new ArrayList<>();
+        mList.add("请选择");
+        mList.add("请选择");
+        mList.add("请输入");
+        mList.add("请选择");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
-        root.findViewById(R.id.btn_next).setOnClickListener(v -> mPresenter.onClickNext());
+        mBtnNext = root.findViewById(R.id.btn_next);
+        showInputView();
         mPresenter = new Step1Presenter(this, new Step1Repository());
         mPresenter.subscribe();
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.requestStep();
     }
 
     @Override
@@ -86,40 +105,104 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
     }
 
     @Override
-    protected void requestStep() {
-        mPresenter.requestStep();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CAR_BRAND) {
+            if (data != null) {
+                mList.set(0, data.getStringExtra(EXTRA_MODEL_NAME));
+                mAdapter.notifyDataSetChanged();
+                mPresenter.getStep1().setFinishItem0(true);
+                mPresenter.getStep1().setCarId(data.getStringExtra(EXTRA_MODEL_ID));
+                mPresenter.setState(mPresenter.getStep1());
+            }
+        }
+        if (requestCode == REQUEST_CODE_CAR_DATE) {
+            if (data != null) {
+                String year = data.getStringExtra(EXTRA_YEAR);
+                String month = data.getStringExtra(EXTRA_MONTH);
+                mList.set(1, year + "-" + month);
+                mAdapter.notifyDataSetChanged();
+                mPresenter.getStep1().setFinishItem1(true);
+                mPresenter.getStep1().setCarYear(year);
+                mPresenter.getStep1().setCarMonth(month);
+                mPresenter.setState(mPresenter.getStep1());
+            }
+        }
+        if (requestCode == REQUEST_CODE_CAR_MILES) {
+            if (data != null) {
+                String miles = data.getStringExtra(EXTRA_MILES);
+                mList.set(2, miles + "公里");
+                mAdapter.notifyDataSetChanged();
+                mPresenter.getStep1().setFinishItem2(true);
+                mPresenter.getStep1().setCarMiles(divideTenThousand(miles));
+                mPresenter.setState(mPresenter.getStep1());
+            }
+        }
+        if (requestCode == REQUEST_CODE_CAR_CITY) {
+            if (data != null) {
+                mList.set(3, data.getStringExtra(EXTRA_CITY_NAME));
+                mPresenter.getStep1().setFinishItem3(true);
+                mAdapter.notifyDataSetChanged();
+                mPresenter.getStep1().setCarCity(data.getStringExtra(EXTRA_CITY_ID));
+                mPresenter.getStep1().setCarProvince(data.getStringExtra(EXTRA_PROVINCE_ID));
+                mPresenter.setState(mPresenter.getStep1());
+            }
+        }
+    }
+
+    private String divideTenThousand(String value) {
+        BigDecimal miles = new BigDecimal(value);
+        BigDecimal tenThousand = new BigDecimal("10000");
+        return miles.divide(tenThousand, 2, RoundingMode.HALF_UP).toString();
+    }
+
+    public void showInputView() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mLayoutResult.setVisibility(View.GONE);
+        mTextTitle.setText("车辆评估");
+        mTextSubTitle.setText("完善信息后即可获得车辆估值");
+        mBtnNext.setText("立即评估");
+        mBtnNext.setOnClickListener(v -> mPresenter.onClickNext());
     }
 
     @Override
-    public void setStep1(Step1 step1) {
-        mAdapter.setStep1(step1);
-        mRecyclerView.scrollToPosition(0);
+    public void showResultView(String min, String max) {
+        mRecyclerView.setVisibility(View.GONE);
+        mLayoutResult.setVisibility(View.VISIBLE);
+        mTextTitle.setText("评估结果");
+        mTextSubTitle.setVisibility(View.INVISIBLE);
+        mTextResult.setText(getResources().getString(R.string.step1_valuation, min, max));
+        mBtnNext.setText("立即预约");
+        mBtnNext.setOnClickListener(v -> mPresenter.requestUpdateStep());
     }
 
     @Override
-    public void showIDView() {
-        FunctionActivity.function(getActivity(), "ID");
+    public void showCarBrandView() {
+        Intent intent = new Intent(getContext(), CarActivity.class);
+        intent.putExtra(CarActivity.EXTRA_TYPE, CarActivity.TYPE_BRAND);
+        startActivityForResult(intent, REQUEST_CODE_CAR_BRAND);
     }
 
     @Override
-    public void showBioassayView() {
-        EasyPermissions.requestPermissions(this, CAMERA_PERMS_REQUEST_CODE, permissions);
+    public void showCarDateView() {
+        Intent intent = new Intent(getContext(), CarActivity.class);
+        intent.putExtra(CarActivity.EXTRA_TYPE, CarActivity.TYPE_DATE);
+        intent.putExtra(EXTRA_MODEL_ID, mPresenter.getStep1().getCarId());
+        startActivityForResult(intent, REQUEST_CODE_CAR_DATE);
     }
 
     @Override
-    public void showInfoView() {
-        FunctionActivity.function(getActivity(), "Info");
+    public void showCarMilesView() {
+        Intent intent = new Intent(getContext(), FunctionActivity.class);
+        intent.putExtra("function", "CarMiles");
+        startActivityForResult(intent, REQUEST_CODE_CAR_MILES);
     }
 
     @Override
-    public void showPhoneView() {
-        FunctionActivity.function(getActivity(), MxParam.PARAM_TASK_CARRIER);
-    }
-
-    @Override
-    public void showVehicleView() {
-        FunctionActivity.function(getActivity(), "Vehicle");
-        UploadFaceService.startUploadFaceService(getContext());
+    public void showCarLocationView() {
+        Intent intent = new Intent(getContext(), CarActivity.class);
+        intent.putExtra(CarActivity.EXTRA_TYPE, CarActivity.TYPE_CITY);
+        startActivityForResult(intent, REQUEST_CODE_CAR_CITY);
     }
 
     @Override
@@ -127,9 +210,12 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         CertificationFragment.refresh(getActivity());
     }
 
-    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    @Override
+    protected void requestStep() {
 
-        private Step1 mStep1;
+    }
+
+    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -141,40 +227,34 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         public void onBindViewHolder(ViewHolder holder, int position) {
             if (position == 0) {
                 holder.setType(0);
-            } else if (position == getItemCount() - 1) {
+            } else if (position == 3) {
                 holder.setType(2);
             } else {
                 holder.setType(1);
             }
             switch (position) {
                 case 0:
-                    holder.setType(0);
-                    holder.setName("身份认证");
-                    holder.setState(mStep1.getId());
+                    holder.setTextName("车辆型号");
+                    holder.setTextState(mList.get(position));
+                    holder.setState(mPresenter.getStep1().isFinishItem0());
                     break;
                 case 1:
-                    holder.setType(1);
-                    holder.setName("人像对比");
-                    holder.setState(mStep1.getBioassay());
-                    holder.setReady(mStep1.getId() == 1);
+                    holder.setTextName("上牌时间");
+                    holder.setTextState(mList.get(position));
+                    holder.setState(mPresenter.getStep1().isFinishItem1());
+                    holder.setReady(mPresenter.getStep1().isFinishItem0());
                     break;
                 case 2:
-                    holder.setType(1);
-                    holder.setName("个人资料 ");
-                    holder.setState(mStep1.getPersonal());
-                    holder.setReady(mStep1.getBioassay() == 1);
+                    holder.setTextName("行驶里程");
+                    holder.setTextState(mList.get(position));
+                    holder.setState(mPresenter.getStep1().isFinishItem2());
+                    holder.setReady(mPresenter.getStep1().isFinishItem1());
                     break;
                 case 3:
-                    holder.setType(1);
-                    holder.setName("手机运营商");
-                    holder.setState(mStep1.getPhone());
-                    holder.setReady(mStep1.getPersonal() == 1);
-                    break;
-                case 4:
-                    holder.setType(2);
-                    holder.setName("车辆证件");
-                    holder.setState(mStep1.getCar());
-                    holder.setReady(mStep1.getPhone() == 1);
+                    holder.setTextName("所在城市");
+                    holder.setTextState(mList.get(position));
+                    holder.setState(mPresenter.getStep1().isFinishItem3());
+                    holder.setReady(mPresenter.getStep1().isFinishItem2());
                     break;
             }
             holder.invalidate();
@@ -182,16 +262,11 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
 
         @Override
         public int getItemCount() {
-            if (mStep1 != null) {
-                return 5;
+            if (mPresenter.getStep1() != null) {
+                return 4;
             } else {
                 return 0;
             }
-        }
-
-        public void setStep1(Step1 step1) {
-            this.mStep1 = step1;
-            notifyDataSetChanged();
         }
     }
 
@@ -203,7 +278,7 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
 
         private TextView mTextState;
 
-        private ImageView mImageInto;
+        //private ImageView mImageInto;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -211,31 +286,30 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
             mStepView = itemView.findViewById(R.id.step_view);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
-            mImageInto = itemView.findViewById(R.id.img_into);
+            //mImageInto = itemView.findViewById(R.id.img_into);
         }
 
         public void setType(int type) {
             mStepView.setType(type);
         }
 
-        public void setName(String name) {
+        public void setTextName(String name) {
             mTextName.setText(name);
         }
 
-        public void setState(int state) {
-            switch (state) {
-                case 0:
-                    mTextState.setTextColor(Color.parseColor("#989898"));
-                    mTextState.setText("待认证");
-                    mImageInto.setVisibility(View.VISIBLE);
-                    mStepView.setSelect(false);
-                    break;
-                case 1:
-                    mTextState.setTextColor(Color.parseColor("#425FBB"));
-                    mTextState.setText("已认证");
-                    mImageInto.setVisibility(View.INVISIBLE);
-                    mStepView.setSelect(true);
-                    break;
+        public void setTextState(String state) {
+            mTextState.setText(state);
+        }
+
+        public void setState(boolean state) {
+            if (state) {
+                //mTextState.setTextColor(Color.parseColor("#425FBB"));
+                //mImageInto.setVisibility(View.INVISIBLE);
+                mStepView.setSelect(true);
+            } else {
+                //mTextState.setTextColor(Color.parseColor("#989898"));
+                //mImageInto.setVisibility(View.VISIBLE);
+                mStepView.setSelect(false);
             }
         }
 
@@ -246,50 +320,5 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         public void invalidate() {
             mStepView.invalidate();
         }
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if (EasyPermissions.hasPermissions(getContext(), permissions)) {
-            Intent intent = new Intent(getActivity(), BioassayActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        StringBuilder sb = new StringBuilder();
-        String s;
-        for (String perm : perms) {
-            switch (perm) {
-                case Manifest.permission.CAMERA:
-                    s = "相机，";
-                    break;
-                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                    s = "写存储设备，";
-                    break;
-                default:
-                    s = "";
-                    break;
-            }
-            sb.append(s);
-        }
-        sb.deleteCharAt(sb.lastIndexOf("，"));
-        new SatcatcheDialog.Builder(getContext())
-                .setTitle("权限申请")
-                .setMessage("人像对比需要" + sb.toString() + "权限，否则不能进行，是否打开设置？")
-                .setPositiveButton("好", (dialog, which) ->
-                        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                        .setData(Uri.fromParts("package", getContext().getPackageName(), null)),
-                                CAMERA_PERMS_REQUEST_CODE))
-                .setNegativeButton("不行", null)
-                .build()
-                .show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        EasyPermissions.requestPermissions(this, CAMERA_PERMS_REQUEST_CODE, permissions);
     }
 }

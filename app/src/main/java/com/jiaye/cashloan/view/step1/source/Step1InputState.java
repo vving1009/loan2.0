@@ -1,7 +1,4 @@
-package com.jiaye.cashloan.view.step1.input;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.jiaye.cashloan.view.step1.source;
 
 public class Step1InputState {
 
@@ -22,19 +19,7 @@ public class Step1InputState {
     private String carMiles;
     private String carProvince;
     private String carCity;
-
-    /**
-     * step1 列表内容
-     */
-    private List<String> list;
-
-    public Step1InputState() {
-        list = new ArrayList<>();
-        list.add("请选择");
-        list.add("请选择");
-        list.add("请输入");
-        list.add("请选择");
-    }
+    private String carMaxPrice;
 
     public boolean isFinishItem0() {
         return finishItem0;
@@ -66,14 +51,6 @@ public class Step1InputState {
 
     public void setFinishItem3(boolean finishItem3) {
         this.finishItem3 = finishItem3;
-    }
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public void setList(List<String> list) {
-        this.list = list;
     }
 
     public String getCarId() {
@@ -122,5 +99,13 @@ public class Step1InputState {
 
     public void setCarCity(String carCity) {
         this.carCity = carCity;
+    }
+
+    public String getCarMaxPrice() {
+        return carMaxPrice;
+    }
+
+    public void setCarMaxPrice(String carMaxPrice) {
+        this.carMaxPrice = carMaxPrice;
     }
 }

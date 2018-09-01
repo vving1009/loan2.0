@@ -7,6 +7,7 @@ import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
 import com.jiaye.cashloan.http.data.bioassay.BioassayUploadPictureRequest;
+import com.jiaye.cashloan.http.data.car.SaveValuationRequest;
 import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
@@ -24,6 +25,7 @@ import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
+import com.jiaye.cashloan.http.data.insurance.InsuranceRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
 import com.jiaye.cashloan.http.data.loan.ContractList;
@@ -82,10 +84,6 @@ import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.http.data.sms.UploadSmsRequest;
-import com.jiaye.cashloan.http.data.step1.Step1;
-import com.jiaye.cashloan.http.data.step1.Step1Request;
-import com.jiaye.cashloan.http.data.step2.Step2;
-import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
 import com.jiaye.cashloan.http.data.step4.Step4;
@@ -145,12 +143,6 @@ public interface SatcatcheService {
      */
     @POST("queryOrderStatus")
     Flowable<SatcatcheResponse<Step>> step(@Body SatcatcheRequest<StepRequest> request);
-
-    /**
-     * 查询认证第一步的具体状态 7
-     */
-    @POST("queryAuthenticationStatus")
-    Flowable<SatcatcheResponse<Step1>> step1(@Body SatcatcheRequest<Step1Request> request);
 
     /**
      * 修改认证到第几步 8
@@ -233,8 +225,8 @@ public interface SatcatcheService {
     /**
      * 车辆审批结果查询 21
      */
-    @POST("queryExamineResult")
-    Flowable<SatcatcheResponse<Step2>> step2(@Body SatcatcheRequest<Step2Request> request);
+/*    @POST("queryExamineResult")
+    Flowable<SatcatcheResponse<Step2>> step2(@Body SatcatcheRequest<Step2Request> request);*/
 
     /**
      * 是否可以进入存管账户 22
@@ -301,6 +293,12 @@ public interface SatcatcheService {
      */
     @POST("updateTaobaoStatus")
     Flowable<SatcatcheResponse<EmptyResponse>> updateTaoBao(@Body SatcatcheRequest<UpdateTaoBaoRequest> request);
+
+    /**
+     * 车险认证 33
+     */
+    @POST("updateCarInsuranceStatus")
+    Flowable<SatcatcheResponse<EmptyResponse>> updateInsurance(@Body SatcatcheRequest<InsuranceRequest> request);
 
     /*旧的接口*/
 
@@ -447,4 +445,10 @@ public interface SatcatcheService {
      */
     @POST("saveSmsInfo")
     Flowable<SatcatcheResponse<EmptyResponse>> uploadSms(@Body SatcatcheRequest<UploadSmsRequest> request);
+
+    /**
+     * 上传车辆估值
+     */
+    @POST("saveValuation")
+    Flowable<SatcatcheResponse<EmptyResponse>> saveCarValuation(@Body SatcatcheRequest<SaveValuationRequest> request);
 }

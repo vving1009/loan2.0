@@ -12,11 +12,11 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseListFragment;
 import com.jiaye.cashloan.view.car.brand.BrandFragment;
 import com.jiaye.cashloan.view.car.city.CityFragment;
-import com.jiaye.cashloan.view.car.series.SeriesFragment;
 import com.jiaye.cashloan.view.car.model.ModelFragment;
 import com.jiaye.cashloan.view.car.province.ProvinceFragment;
+import com.jiaye.cashloan.view.car.series.SeriesFragment;
 import com.jiaye.cashloan.view.car.year.YearFragment;
-import com.jiaye.cashloan.view.step1.input.Step1InputFragment;
+import com.jiaye.cashloan.view.step1.Step1Fragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class CarActivity extends AppCompatActivity {
                 mFragments.add(ModelFragment.newInstance());
                 break;
             case TYPE_DATE:
-                mFragments.add(YearFragment.newInstance(getIntent().getStringExtra(Step1InputFragment.EXTRA_MODEL_ID)));
+                mFragments.add(YearFragment.newInstance(getIntent().getStringExtra(Step1Fragment.EXTRA_MODEL_ID)));
                 mFragments.add(MonthFragment.newInstance());
                 break;
             case TYPE_CITY:

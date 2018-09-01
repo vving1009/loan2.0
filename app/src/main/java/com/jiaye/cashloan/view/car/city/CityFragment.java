@@ -9,7 +9,7 @@ import com.jiaye.cashloan.http.data.car.CarCity;
 import com.jiaye.cashloan.view.BaseListFragment;
 import com.jiaye.cashloan.view.car.CarActivity;
 import com.jiaye.cashloan.view.car.city.source.CityRepository;
-import com.jiaye.cashloan.view.step1.input.Step1InputFragment;
+import com.jiaye.cashloan.view.step1.Step1Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +73,10 @@ public class CityFragment extends BaseListFragment implements CityContract.View 
         CarActivity activity = (CarActivity) getActivity();
         if (activity != null) {
             Intent intent = new Intent();
-            intent.putExtra(Step1InputFragment.EXTRA_PROVINCE_ID, provinceId);
-            intent.putExtra(Step1InputFragment.EXTRA_CITY_ID, String.valueOf(mList.get(position).getCityID()));
-            intent.putExtra(Step1InputFragment.EXTRA_CITY_NAME, mList.get(position).getCityName());
-            activity.setResult(Step1InputFragment.REQUEST_CODE_CAR_BRAND, intent);
+            intent.putExtra(Step1Fragment.EXTRA_PROVINCE_ID, provinceId);
+            intent.putExtra(Step1Fragment.EXTRA_CITY_ID, String.valueOf(mList.get(position).getCityID()));
+            intent.putExtra(Step1Fragment.EXTRA_CITY_NAME, mList.get(position).getCityName());
+            activity.setResult(Step1Fragment.REQUEST_CODE_CAR_BRAND, intent);
             activity.finish();
         }
     }

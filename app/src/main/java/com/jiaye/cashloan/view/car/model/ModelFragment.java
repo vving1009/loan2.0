@@ -6,11 +6,10 @@ import android.view.View;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.car.CarModel;
-import com.jiaye.cashloan.http.data.car.CarSeries;
 import com.jiaye.cashloan.view.BaseListFragment;
 import com.jiaye.cashloan.view.car.CarActivity;
 import com.jiaye.cashloan.view.car.model.source.ModelRepository;
-import com.jiaye.cashloan.view.step1.input.Step1InputFragment;
+import com.jiaye.cashloan.view.step1.Step1Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +78,9 @@ public class ModelFragment extends BaseListFragment implements ModelContract.Vie
         CarActivity activity = (CarActivity) getActivity();
         if (activity != null && mList.get(position) instanceof CarModel.DataBean.ChexingListBean) {
             Intent intent = new Intent();
-            intent.putExtra(Step1InputFragment.EXTRA_MODEL_ID, ((CarModel.DataBean.ChexingListBean) mList.get(position)).getId());
-            intent.putExtra(Step1InputFragment.EXTRA_MODEL_NAME, ((CarModel.DataBean.ChexingListBean) mList.get(position)).getCxname());
-            getActivity().setResult(Step1InputFragment.REQUEST_CODE_CAR_BRAND, intent);
+            intent.putExtra(Step1Fragment.EXTRA_MODEL_ID, ((CarModel.DataBean.ChexingListBean) mList.get(position)).getId());
+            intent.putExtra(Step1Fragment.EXTRA_MODEL_NAME, ((CarModel.DataBean.ChexingListBean) mList.get(position)).getCxname());
+            getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_BRAND, intent);
             getActivity().finish();
         }
     }

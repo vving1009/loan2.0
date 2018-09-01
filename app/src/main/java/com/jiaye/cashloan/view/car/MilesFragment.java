@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
-import com.jiaye.cashloan.view.step1.input.Step1InputFragment;
+import com.jiaye.cashloan.view.step1.Step1Fragment;
 
 public class MilesFragment extends BaseFunctionFragment {
 
@@ -31,8 +31,8 @@ public class MilesFragment extends BaseFunctionFragment {
             Activity activity = getActivity();
             if (activity != null) {
                 Intent intent = new Intent();
-                intent.putExtra(Step1InputFragment.EXTRA_MILES, mEditInput.getText().toString());
-                getActivity().setResult(Step1InputFragment.REQUEST_CODE_CAR_MILES, intent);
+                intent.putExtra(Step1Fragment.EXTRA_MILES, mEditInput.getText().toString());
+                getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_MILES, intent);
                 getActivity().finish();
             }
         });

@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseListFragment;
-import com.jiaye.cashloan.view.step1.input.Step1InputFragment;
+import com.jiaye.cashloan.view.step1.Step1Fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,9 +57,9 @@ public class MonthFragment extends BaseListFragment {
         CarActivity activity = (CarActivity) getActivity();
         if (activity != null) {
             Intent intent = new Intent();
-            intent.putExtra(Step1InputFragment.EXTRA_YEAR, year);
-            intent.putExtra(Step1InputFragment.EXTRA_MONTH, position + 1 < 10 ? "0" + (position + 1) : String.valueOf(position + 1));
-            getActivity().setResult(Step1InputFragment.REQUEST_CODE_CAR_DATE, intent);
+            intent.putExtra(Step1Fragment.EXTRA_YEAR, year);
+            intent.putExtra(Step1Fragment.EXTRA_MONTH, position + 1 < 10 ? "0" + (position + 1) : String.valueOf(position + 1));
+            getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_DATE, intent);
             getActivity().finish();
         }
     }
