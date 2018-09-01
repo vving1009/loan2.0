@@ -27,14 +27,14 @@
     <string name="car_city_title">所在城市</string>
     <string name="car_miles_title">行驶里程</string>
 
-    <!--step2Input-->
+    <!--step2-->
     <string name="step1_error">请填写认证资料</string>
     <string name="step1_evaluation">立即评估</string>
     <string name="step1_appointment">立即预约</string>
     <string name="step1_valuation">您的爱车估值:\n%1$s-%2$s万</string>
     <!--step2Result-->
     <string name="step2_progress">车辆正在评估,请耐心等待</string>
-    <string name="step2_loan_limit">经初步确定，您的借款额度:\n%1$s元</string>
+    <string name="step2_loan_limit">经初步确定，您的借款额度:\n%1$s万元</string>
     <string name="step2_final_limit">获取最终额度</string>
     <!--step3-->
     <string name="step3_error">请填写提交信息</string>

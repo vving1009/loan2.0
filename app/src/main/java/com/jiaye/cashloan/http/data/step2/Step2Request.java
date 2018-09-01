@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildRequest;
 
 /**
- * Step2Request
+ * Step1Request
  *
  * @author 贾博瑄
  */
@@ -23,6 +23,6 @@ public class Step2Request extends SatcatcheChildRequest {
 
     @Override
     protected String getBusiness() {
-        return "CL021";
+        return "CL007";
     }
 }

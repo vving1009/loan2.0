@@ -13,11 +13,6 @@ public interface HomeContract {
     interface View extends AuthView {
 
         /**
-         * 显示搜索公司页面
-         */
-        void showCompanyView();
-
-        /**
          * 显示认证页面
          */
         void showCertificationView();

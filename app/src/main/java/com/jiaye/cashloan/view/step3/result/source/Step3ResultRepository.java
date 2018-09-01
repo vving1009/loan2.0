@@ -1,26 +1,16 @@
-package com.jiaye.cashloan.view.step1.result.source;
+package com.jiaye.cashloan.view.step3.result.source;
 
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.certification.StepRequest;
-import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
-import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
-import com.jiaye.cashloan.http.data.step4.Step4;
-import com.jiaye.cashloan.http.data.step4.Step4Request;
-import com.jiaye.cashloan.http.utils.ResponseTransformer;
-import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
 
 /**
- * Step1ResultRepository
+ * Step3ResultRepository
  *
  * @author 贾博瑄
  */
 
-public class Step1ResultRepository implements Step1ResultDataSource {
+public class Step3ResultRepository implements Step3ResultDataSource {
 
     @Override
     public Flowable<EmptyResponse> requestUpdateStep() {

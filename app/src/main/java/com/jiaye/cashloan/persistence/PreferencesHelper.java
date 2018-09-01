@@ -29,8 +29,8 @@ public class PreferencesHelper {
         return mPrefs.getBoolean(PREF_KEY_NEED_GUIDE, true);
     }
 
-    public void setCarPrice(String price) {
-        mPrefs.edit().putString(PREF_KEY_CAR_PRICE, price).apply();
+    public boolean setCarPrice(String price) {
+        return mPrefs.edit().putString(PREF_KEY_CAR_PRICE, price).commit();
     }
 
     public String getCarPrice() {

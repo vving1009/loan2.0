@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="1dp"
-                android:text="到店借款"
+                android:text="等待放款"
                 android:textColor="#282828"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -43,94 +43,25 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/center_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="36dp"
-                android:src="@drawable/certification_ic_shop" />
+                android:layout_marginTop="74dp"
+                android:src="@drawable/certification_ic_wait" />
 
             <TextView
-                android:layout_width="227dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="31dp"
-                android:lineSpacingExtra="6dp"
-                android:text="您已完成车抵贷申请所需材料，请联系您的客户经理，到店办理后续贷款手续。"
-                android:textColor="#425FBB"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout_top"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="42dp"
-                android:src="@drawable/certification_ic_cash" />
-
-            <TextView
-                android:id="@+id/text"
+                android:id="@+id/center_text"
                 android:layout_width="227dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="31dp"
                 android:gravity="center"
                 android:lineSpacingExtra="6dp"
+                android:text="您的借款正在投标中,\n请耐心等待。"
                 android:textColor="#425FBB"
                 android:textSize="18sp" />
 
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_next"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="22dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/home_btn_bg"
-            android:text="@string/step4_confirm"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/btn_next"
-            android:layout_below="@id/layout_1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="如有问题请拨打: "
-                android:textColor="@color/color_black"
-                android:textSize="10sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="400-8780-777"
-                android:textColor="@color/color_blue"
-                android:textSize="10sp" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -1,10 +1,10 @@
-package com.jiaye.cashloan.view.step1.parent.source;
+package com.jiaye.cashloan.view.step3.parent.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
-import com.jiaye.cashloan.http.data.step2.Step2Input;
-import com.jiaye.cashloan.http.data.step2.Step2InputRequest;
+import com.jiaye.cashloan.http.data.step2.Step2;
+import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
@@ -15,17 +15,17 @@ import io.reactivex.Flowable;
  * @author 贾博瑄
  */
 
-public class Step1Repository implements Step1DataSource {
+public class Step3Repository implements Step3DataSource {
 
     @Override
-    public Flowable<Step2Input> requestStep1() {
+    public Flowable<Step2> requestStep1() {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
                 .map(user -> {
-                    Step2InputRequest request = new Step2InputRequest();
+                    Step2Request request = new Step2Request();
                     request.setLoanId(user.getLoanId());
                     return request;
                 })
-                .compose(new SatcatcheResponseTransformer<Step2InputRequest, Step2Input>("step1"));
+                .compose(new SatcatcheResponseTransformer<Step2Request, Step2>("step1"));
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Step1Repository implements Step1DataSource {
                     request.setValuation(value);
                     return request;
                 })
-                .compose(new SatcatcheResponseTransformer<SaveValuationRequest, EmptyResponse>("saveCarPrice"));
+                .compose(new SatcatcheResponseTransformer<SaveValuationRequest, EmptyResponse>("saveCarValuation"));
     }
 
     @Override

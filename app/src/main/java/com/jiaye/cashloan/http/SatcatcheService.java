@@ -84,6 +84,8 @@ import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.http.data.sms.UploadSmsRequest;
+import com.jiaye.cashloan.http.data.step2.Step2;
+import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
 import com.jiaye.cashloan.http.data.step4.Step4;
@@ -143,6 +145,12 @@ public interface SatcatcheService {
      */
     @POST("queryOrderStatus")
     Flowable<SatcatcheResponse<Step>> step(@Body SatcatcheRequest<StepRequest> request);
+
+    /**
+     * 查询认证第二步的具体状态 7
+     */
+    @POST("queryAuthState")
+    Flowable<SatcatcheResponse<Step2>> step2(@Body SatcatcheRequest<Step2Request> request);
 
     /**
      * 修改认证到第几步 8
@@ -221,12 +229,6 @@ public interface SatcatcheService {
      */
     @POST("intoInfo/state")
     Flowable<SatcatcheResponse<EmptyResponse>> submitUploadFile(@Body SatcatcheRequest<SubmitUploadFileRequest> request);
-
-    /**
-     * 车辆审批结果查询 21
-     */
-/*    @POST("queryExamineResult")
-    Flowable<SatcatcheResponse<Step2>> step2(@Body SatcatcheRequest<Step2Request> request);*/
 
     /**
      * 是否可以进入存管账户 22

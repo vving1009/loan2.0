@@ -26,6 +26,7 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.company.CompanyActivity;
 import com.jiaye.cashloan.view.search.source.SearchRepository;
 import com.satcatche.library.widget.SatcatcheDialog;
 
@@ -78,7 +79,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         mSearchView = root.findViewById(R.id.search_btn);
         mSearchList = root.findViewById(R.id.company_list);
         root.findViewById(R.id.img_back).setOnClickListener(v ->
-                Objects.requireNonNull(getActivity()).finish());
+                Objects.requireNonNull((CompanyActivity)getActivity()).showCompanyView());
         root.findViewById(R.id.clear_btn).setOnClickListener(v -> {
             mSearchView.setQuery("", false);
             mSearchView.setIconified(false);

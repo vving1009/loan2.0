@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
 /**
- * Step4Presenter
+ * Step3ResultPresenter
  *
  * @author 贾博瑄
  */
@@ -52,66 +52,11 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
                 .subscribe(step4 -> {
                     mView.dismissProgressDialog();
                     if (!TextUtils.isEmpty(step4.getAmount())) {
-                        mView.setText("您的批核金额为" + step4.getAmount());
+                        mView.setFinishLoan();
+                    } else {
+                        mView.setWaitLoan();
                     }
-                    mView.setLayoutVisibility();
-                    switch (mStep.getStep()) {
-                        case 7:
-                            mView.setBtnTextById(R.string.step4_confirm);
-                            break;
-                        case 10:
-                            mView.setBtnTextById(R.string.step4_open);
-                            break;
-                    }
-
-
                 }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
-        mCompositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void onClickConfirm() {
-        if (mStep != null) {
-            if (mStep.getStep() == 7) {
-                Disposable disposable = mDataSource.requestUpdateStep()
-                        .compose(new ViewTransformer<EmptyResponse>() {
-                            @Override
-                            public void accept() {
-                                super.accept();
-                                mView.showProgressDialog();
-                            }
-                        })
-                        .subscribe(emptyResponse -> {
-                            mView.dismissProgressDialog();
-                            mView.sendBroadcast();
-                        }, new ThrowableConsumer(mView));
-                mCompositeDisposable.add(disposable);
-            }
-        }
-    }
-
-    @Override
-    public void onClickOpen() {
-        Disposable disposable = mDataSource.creditInfo()
-                .compose(new ViewTransformer<CreditInfo>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(creditInfo -> {
-                    mView.dismissProgressDialog();
-                    //01-未开户;02-已开户未绑卡;03-已开户已绑卡
-                    switch (creditInfo.getBankStatus()) {
-                        case "01":
-                            mView.showBindBankView();
-                            break;
-                        default:
-                            mView.showToastById(R.string.my_credit_account_error);
-                            break;
-                    }
-                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }

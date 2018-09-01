@@ -10,25 +10,73 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
  */
 public class Step2 extends SatcatcheChildResponse {
 
-    @SerializedName("amount")
-    private String amount;
+    /**
+     * carinsurance_auth : 1 (0否1是)
+     * taobao_auth : 1
+     *  bioassay_auth  : 1
+     *  operator_auth  : 1
+     *  user_info  : 1
+     *  car_papers  : 1
+     */
 
-    @SerializedName("illustrate")
-    private String msg;
+    @SerializedName("carinsurance_auth")
+    private int carinsuranceAuth;
+    @SerializedName("taobao_auth")
+    private int taobaoAuth;
+    @SerializedName("bioassay_auth")
+    private int bioassayAuth;
+    @SerializedName("operator_auth")
+    private int operatorAuth;
+    @SerializedName("user_info")
+    private int userInfo;
+    @SerializedName("car_papers")
+    private int carPapers;
 
-    public String getAmount() {
-        return amount;
+    public int getCarinsuranceAuth() {
+        return carinsuranceAuth;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setCarinsuranceAuth(int carinsuranceAuth) {
+        this.carinsuranceAuth = carinsuranceAuth;
     }
 
-    public String getMsg() {
-        return msg;
+    public int getTaobaoAuth() {
+        return taobaoAuth;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setTaobaoAuth(int taobaoAuth) {
+        this.taobaoAuth = taobaoAuth;
+    }
+
+    public int getBioassayAuth() {
+        return bioassayAuth;
+    }
+
+    public void setBioassayAuth(int bioassayAuth) {
+        this.bioassayAuth = bioassayAuth;
+    }
+
+    public int getOperatorAuth() {
+        return operatorAuth;
+    }
+
+    public void setOperatorAuth(int operatorAuth) {
+        this.operatorAuth = operatorAuth;
+    }
+
+    public int getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(int userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public int getCarPapers() {
+        return carPapers;
+    }
+
+    public void setCarPapers(int carPapers) {
+        this.carPapers = carPapers;
     }
 }

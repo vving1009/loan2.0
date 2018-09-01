@@ -48,7 +48,7 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                 .subscribe(checkCompany -> {
                     mView.dismissProgressDialog();
                     if (checkCompany.isNeed()) {
-                        mView.showCompanyView();
+                        //mView.showCompanyView();
                     } else {
                         mView.showCertificationView();
                     }

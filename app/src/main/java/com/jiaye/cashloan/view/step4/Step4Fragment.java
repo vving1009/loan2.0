@@ -1,17 +1,14 @@
 package com.jiaye.cashloan.view.step4;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step4.source.Step4Repository;
@@ -26,13 +23,9 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
 
     private Step4Contract.Presenter mPresenter;
 
-    private LinearLayout mLayout1;
-
-    private LinearLayout mLayout2;
-
     private TextView mText;
 
-    private Button mBtnNext;
+    private ImageView mImage;
 
     public static Step4Fragment newInstance() {
         Bundle args = new Bundle();
@@ -46,17 +39,9 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.step4_fragment, container, false);
-        mLayout1 = root.findViewById(R.id.layout_1);
-        mLayout2 = root.findViewById(R.id.layout_2);
-        mText = root.findViewById(R.id.text);
-        mBtnNext = root.findViewById(R.id.btn_next);
-        mBtnNext.setOnClickListener(v -> {
-            if (mBtnNext.getText().toString().equals(getString(R.string.step4_confirm))) {
-                mPresenter.onClickConfirm();
-            } else if (mBtnNext.getText().toString().equals(getString(R.string.step4_open))) {
-                mPresenter.onClickOpen();
-            }
-        });
+        mText = root.findViewById(R.id.center_text);
+        mImage = root.findViewById(R.id.center_image);
+
         mPresenter = new Step4Presenter(this, new Step4Repository());
         mPresenter.subscribe();
         return root;
@@ -65,7 +50,9 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.requestStep();
+        if (((CertificationFragment) getParentFragment()).getCurrentFragmentIndex() == 4) {
+            mPresenter.requestStep();
+        }
     }
 
     @Override
@@ -80,32 +67,19 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     }
 
     @Override
-    public void setText(String msg) {
-        mText.setText(msg);
+    public void setWaitLoan() {
+        mImage.setImageDrawable(getResources().getDrawable(R.drawable.certification_ic_wait));
+        mText.setText(R.string.step4_wait);
     }
 
     @Override
-    public void setLayoutVisibility() {
-        mLayout1.setVisibility(View.GONE);
-        mLayout2.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void setBtnTextById(int resId) {
-        mBtnNext.setVisibility(View.VISIBLE);
-        mBtnNext.setText(resId);
+    public void setFinishLoan() {
+        mImage.setImageDrawable(getResources().getDrawable(R.drawable.certification_ic_money));
+        mText.setText(R.string.step4_finish);
     }
 
     @Override
     public void sendBroadcast() {
         CertificationFragment.refresh(getActivity());
-    }
-
-    @Override
-    public void showBindBankView() {
-        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
-        intent.putExtra("type", "accountOpen");
-        startActivity(intent);
-        getActivity().finish();
     }
 }

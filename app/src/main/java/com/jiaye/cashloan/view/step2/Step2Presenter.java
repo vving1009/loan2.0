@@ -30,7 +30,7 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
 
     private final Step2DataSource mDataSource;
 
-    private Step mStep;
+    private Step2 mStep2;
 
     public Step2Presenter(Step2Contract.View view, Step2DataSource dataSource) {
         mView = view;
@@ -39,62 +39,83 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
 
     @Override
     public void requestStep() {
-        Disposable disposable = mDataSource.requestStep()
-                .doOnNext(step -> mStep = step)
-                .filter(step -> step.getStep() == 2 || step.getStep() == 3 || step.getStep() == 4)
-                .flatMap((Function<Step, Publisher<Step2>>) step -> {
-                    if (step.getStep() == 2) {
-                        Step2 step2 = new Step2();
-                        step2.setMsg(LoanApplication.getInstance().getResources().getString(R.string.step2_progress));
-                        return Flowable.just(step2);
-                    } else {
-                        return mDataSource.requestStep2();
-                    }
-                })
-                .compose(new ViewTransformer<Step2>() {
+        Disposable disposable = mDataSource.requestStep2()
+                .compose(new ViewTransformer<>())
+                .subscribe(step2 -> {
+                    mStep2 = step2;
+                    mView.setStep2(step2);
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        switch (position) {
+            case 0:
+                if (mStep2.getCarinsuranceAuth() == 0) {
+                    mView.showInsuranceView();
+                }
+                break;
+            case 1:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 0) {
+                    mView.showBioassayView();
+                }
+                break;
+            case 2:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 0) {
+                    mView.showInfoView();
+                }
+                break;
+            case 3:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
+                        && mStep2.getOperatorAuth() == 0) {
+                    mView.showPhoneView();
+                }
+                break;
+            case 4:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
+                        && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 0) {
+                    mView.showTaobaoView();
+                }
+                break;
+            case 5:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
+                        && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 0) {
+                    mView.showVehicleView();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onClickNext() {
+        if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
+                && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 1) {
+            String price = LoanApplication.getInstance().getPreferencesHelper().getCarPrice();
+            if (!TextUtils.isEmpty(price)) {
+                mView.showResultView(price);
+            } else {
+                mView.showToast("车辆估值错误");
+            }
+        } else {
+            mView.showToastById(R.string.step1_error);
+        }
+    }
+
+    @Override
+    public void requestUpdateStep() {
+        Disposable disposable = mDataSource.requestUpdateStep()
+                .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(step2 -> {
+                .subscribe(emptyResponse -> {
                     mView.dismissProgressDialog();
-                    if (mStep.getStep() == 2 || mStep.getStep() == 3) {
-                        if (!TextUtils.isEmpty(step2.getMsg())) {
-                            mView.setText(step2.getMsg());
-                        }
-                    } else if (mStep.getStep() == 4) {
-                        if (!TextUtils.isEmpty(step2.getAmount())) {
-                            mView.setText("您的爱车估值" + step2.getAmount());
-                        }
-                    }
-                }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
+                    mView.sendBroadcast();
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void onClickNext() {
-        if (mStep != null) {
-            if (mStep.getStep() == 2) {
-                mView.showToastById(R.string.step2_progress);
-            } else if (mStep.getStep() == 3) {
-                mView.finish();
-            } else if (mStep.getStep() == 4) {
-                Disposable disposable = mDataSource.requestUpdateStep()
-                        .compose(new ViewTransformer<EmptyResponse>() {
-                            @Override
-                            public void accept() {
-                                super.accept();
-                                mView.showProgressDialog();
-                            }
-                        })
-                        .subscribe(emptyResponse -> {
-                            mView.dismissProgressDialog();
-                            mView.sendBroadcast();
-                        }, new ThrowableConsumer(mView));
-                mCompositeDisposable.add(disposable);
-            }
-        }
     }
 }

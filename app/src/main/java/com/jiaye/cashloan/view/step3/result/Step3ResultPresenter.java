@@ -1,21 +1,12 @@
-package com.jiaye.cashloan.view.step1.result;
+package com.jiaye.cashloan.view.step3.result;
 
-import android.text.TextUtils;
-
-import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
-import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.step1.result.source.Step1ResultDataSource;
-
-import org.reactivestreams.Publisher;
+import com.jiaye.cashloan.view.step3.result.source.Step3ResultDataSource;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Step3ResultPresenter
@@ -23,21 +14,21 @@ import io.reactivex.functions.Function;
  * @author 贾博瑄
  */
 
-public class Step1ResultPresenter extends BasePresenterImpl implements Step1ResultContract.Presenter {
+public class Step3ResultPresenter extends BasePresenterImpl implements Step3ResultContract.Presenter {
 
-    private final Step1ResultContract.View mView;
+    private final Step3ResultContract.View mView;
 
-    private final Step1ResultDataSource mDataSource;
+    private final Step3ResultDataSource mDataSource;
 
 
-    public Step1ResultPresenter(Step1ResultContract.View view, Step1ResultDataSource dataSource) {
+    public Step3ResultPresenter(Step3ResultContract.View view, Step3ResultDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
     }
 
     @Override
     public void onClickConfirm() {
-        Disposable disposable = mDataSource.requestUpdateStep()
+        /*Disposable disposable = mDataSource.saveCarPrice()
                 .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
@@ -49,6 +40,6 @@ public class Step1ResultPresenter extends BasePresenterImpl implements Step1Resu
                     mView.dismissProgressDialog();
                     mView.sendBroadcast();
                 }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
+        mCompositeDisposable.add(disposable);*/
     }
 }

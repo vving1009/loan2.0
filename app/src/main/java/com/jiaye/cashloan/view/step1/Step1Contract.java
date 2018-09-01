@@ -33,9 +33,7 @@ public interface Step1Contract {
 
         void onClickNext();
 
-        void setState(Step1InputState step1);
-
-        void requestUpdateStep();
+        void saveCarPrice();
 
         Step1InputState getStep1();
     }

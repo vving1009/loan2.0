@@ -31,8 +31,8 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
         Disposable disposable = mDataSource.requestRecommend()
                 .compose(new ViewTransformer<>())
                 .subscribe(recommend -> {
-                    mView.setCompany(recommend.getCompany());
-                    mView.setName(recommend.getName());
+/*                    mView.setCompany(recommend.getCompany());
+                    mView.setName(recommend.getName());*/
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

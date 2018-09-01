@@ -130,11 +130,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     }
 
     @Override
-    public void showCompanyView() {
-        CompanyActivity.startActivity(getContext(), mTextLocation.getText().toString());
-    }
-
-    @Override
     public void showCertificationView() {
         FunctionActivity.function(getActivity(), "Certification");
     }

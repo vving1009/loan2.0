@@ -23,7 +23,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -34,41 +33,12 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/sub_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="提交信息后给出您的借款额度"
                 android:textColor="#AEAEAE"
                 android:textSize="9sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/result_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout_title"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="74dp"
-                android:src="@drawable/certification_ic_shop" />
-
-            <TextView
-                android:id="@+id/result_text"
-                android:layout_width="227dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="34dp"
-                android:gravity="center"
-                android:lineSpacingExtra="10dp"
-                android:textColor="#425FBB"
-                android:textSize="18sp" />
 
         </LinearLayout>
 

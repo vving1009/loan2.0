@@ -1,10 +1,12 @@
 package com.jiaye.cashloan.view.step4;
 
+import android.support.annotation.DrawableRes;
+
 import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
 
 /**
- * Step4Contract
+ * Step1ResultContract
  *
  * @author 贾博瑄
  */
@@ -13,23 +15,15 @@ public interface Step4Contract {
 
     interface View extends BaseViewContract {
 
-        void setText(String msg);
+        void setWaitLoan();
 
-        void setLayoutVisibility();
-
-        void setBtnTextById(int resId);
+        void setFinishLoan();
 
         void sendBroadcast();
-
-        void showBindBankView();
     }
 
     interface Presenter extends BasePresenter {
 
         void requestStep();
-
-        void onClickConfirm();
-
-        void onClickOpen();
     }
 }

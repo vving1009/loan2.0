@@ -1,10 +1,12 @@
 package com.jiaye.cashloan.view.car;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
@@ -30,6 +32,7 @@ public class MilesFragment extends BaseFunctionFragment {
         rootView.findViewById(R.id.btn_submit).setOnClickListener(v -> {
             Activity activity = getActivity();
             if (activity != null) {
+                hideShowInput(activity);
                 Intent intent = new Intent();
                 intent.putExtra(Step1Fragment.EXTRA_MILES, mEditInput.getText().toString());
                 getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_MILES, intent);
@@ -47,5 +50,10 @@ public class MilesFragment extends BaseFunctionFragment {
     @Override
     protected int getTitleId() {
         return R.string.car_miles_title;
+    }
+
+    private void hideShowInput(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditInput.getWindowToken(), 0);
     }
 }

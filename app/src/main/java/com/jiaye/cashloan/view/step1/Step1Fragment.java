@@ -113,7 +113,6 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                 mAdapter.notifyDataSetChanged();
                 mPresenter.getStep1().setFinishItem0(true);
                 mPresenter.getStep1().setCarId(data.getStringExtra(EXTRA_MODEL_ID));
-                mPresenter.setState(mPresenter.getStep1());
             }
         }
         if (requestCode == REQUEST_CODE_CAR_DATE) {
@@ -125,7 +124,6 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                 mPresenter.getStep1().setFinishItem1(true);
                 mPresenter.getStep1().setCarYear(year);
                 mPresenter.getStep1().setCarMonth(month);
-                mPresenter.setState(mPresenter.getStep1());
             }
         }
         if (requestCode == REQUEST_CODE_CAR_MILES) {
@@ -135,7 +133,6 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                 mAdapter.notifyDataSetChanged();
                 mPresenter.getStep1().setFinishItem2(true);
                 mPresenter.getStep1().setCarMiles(divideTenThousand(miles));
-                mPresenter.setState(mPresenter.getStep1());
             }
         }
         if (requestCode == REQUEST_CODE_CAR_CITY) {
@@ -145,7 +142,6 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
                 mAdapter.notifyDataSetChanged();
                 mPresenter.getStep1().setCarCity(data.getStringExtra(EXTRA_CITY_ID));
                 mPresenter.getStep1().setCarProvince(data.getStringExtra(EXTRA_PROVINCE_ID));
-                mPresenter.setState(mPresenter.getStep1());
             }
         }
     }
@@ -173,7 +169,7 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         mTextSubTitle.setVisibility(View.INVISIBLE);
         mTextResult.setText(getResources().getString(R.string.step1_valuation, min, max));
         mBtnNext.setText("立即预约");
-        mBtnNext.setOnClickListener(v -> mPresenter.requestUpdateStep());
+        mBtnNext.setOnClickListener(v -> mPresenter.saveCarPrice());
     }
 
     @Override

@@ -39,7 +39,6 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     @Override
     public void subscribe() {
         super.subscribe();
-        LoanApplication.getInstance().getPreferencesHelper().setCarPrice("");
     }
 
     @Override
@@ -94,13 +93,11 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     }
 
     @Override
-    public void setState(Step1InputState step1) {
-        mStep1 = step1;
-    }
-
-    @Override
-    public void requestUpdateStep() {
+    public void saveCarPrice() {
         Disposable disposable = mDataSource.saveCarPrice(mStep1.getCarMaxPrice())
+                .flatMap(response -> mDataSource.requestUpdateStep())
+                .filter(response ->
+                        LoanApplication.getInstance().getPreferencesHelper().setCarPrice(mStep1.getCarMaxPrice()))
                 .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
@@ -108,9 +105,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                         mView.showProgressDialog();
                     }
                 })
-                .doOnNext(response -> mDataSource.requestUpdateStep())
                 .subscribe(emptyResponse -> {
-                    LoanApplication.getInstance().getPreferencesHelper().setCarPrice(mStep1.getCarMaxPrice());
                     mView.dismissProgressDialog();
                     mView.sendBroadcast();
                 }, new ThrowableConsumer(mView));
