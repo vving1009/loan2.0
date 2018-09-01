@@ -34,7 +34,7 @@
             android:drawablePadding="12dp"
             android:drawableTop="@drawable/certification_ic_step_2"
             android:gravity="center"
-            android:text="估值确认"
+            android:text="信用评估"
             android:textColor="#989898"
             android:textSize="15sp" />
 
@@ -47,7 +47,7 @@
             android:drawablePadding="12dp"
             android:drawableTop="@drawable/certification_ic_step_3"
             android:gravity="center"
-            android:text="提交信息"
+            android:text="车辆进抵"
             android:textColor="#989898"
             android:textSize="15sp" />
 
@@ -60,7 +60,7 @@
             android:drawablePadding="12dp"
             android:drawableTop="@drawable/certification_ic_step_4"
             android:gravity="center"
-            android:text="到店借款"
+            android:text="等待放款"
             android:textColor="#989898"
             android:textSize="15sp" />
 

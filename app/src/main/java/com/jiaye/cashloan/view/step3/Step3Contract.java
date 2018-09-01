@@ -1,34 +1,35 @@
-package com.jiaye.cashloan.view.step3.input;
+package com.jiaye.cashloan.view.step3;
 
+import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenter;
 import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
- * Step3InputContract
+ * Step3Contract
  *
  * @author 贾博瑄
  */
 
-public interface Step3InputContract {
+public interface Step3Contract {
 
     interface View extends BaseViewContract {
 
-        void showCompanyView();
+        void showWaitView();
 
-        void showSalesmanView();
+        void ShowRejectView();
+
+        void showSuccessView(String value);
 
         void sendBroadcast();
-
-        void showResultView();
     }
 
     interface Presenter extends BasePresenter {
 
         void requestStep();
 
-        void onClickItem(int position);
-
         void onClickNext(Salesman salesman);
+
+        void requestUpdateStep();
     }
 }

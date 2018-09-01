@@ -1,4 +1,4 @@
-package com.jiaye.cashloan.view.step3.input.source;
+package com.jiaye.cashloan.view.step3.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
@@ -14,23 +14,12 @@ import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 import io.reactivex.Flowable;
 
 /**
- * Step3InputRepository
+ * Step3Repository
  *
  * @author 贾博瑄
  */
 
-public class Step3InputRepository implements Step3InputDataSource {
-
-    @Override
-    public Flowable<Step3> requestStep3() {
-        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
-                .map(user -> {
-                    Step3Request request = new Step3Request();
-                    request.setLoanId(user.getLoanId());
-                    return request;
-                })
-                .compose(new SatcatcheResponseTransformer<Step3Request, Step3>("step3"));
-    }
+public class Step3Repository implements Step3DataSource {
 
     @Override
     public Flowable<EmptyResponse> requestUpdateStep() {

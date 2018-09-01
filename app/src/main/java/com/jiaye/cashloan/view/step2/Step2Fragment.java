@@ -120,7 +120,6 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
         mLayoutResult.setVisibility(View.VISIBLE);
         mTextTitle.setText("借款额度");
         mTextSubTitle.setText("请您到店进行后续手续办理");
-        mTextSubTitle.setVisibility(View.INVISIBLE);
         mTextResult.setText(getResources().getString(R.string.step2_loan_limit, price));
         mBtnNext.setText("获取最终额度");
         mBtnNext.setOnClickListener(v -> mPresenter.requestUpdateStep());

@@ -39,6 +39,7 @@
     <!--step3-->
     <string name="step3_error">请填写提交信息</string>
     <string name="step3_confirm">确认借款</string>
+    <string name="step3_call">如有问题请拨打: 400–8780–777</string>
     <string name="step3_approving">你的借款申请正在审核中,\n请耐心等待</string>
     <string name="step3_reject">很抱歉，您的借款申请被拒绝</string>
     <string name="step3_amount">您的最终批核金额为:\n%1$s元</string>

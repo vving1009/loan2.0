@@ -18,8 +18,7 @@ import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.certification.source.CertificationRepository;
 import com.jiaye.cashloan.view.step1.Step1Fragment;
 import com.jiaye.cashloan.view.step2.Step2Fragment;
-import com.jiaye.cashloan.view.step3.input.Step3InputFragment;
-import com.jiaye.cashloan.view.step3.parent.Step3Fragment;
+import com.jiaye.cashloan.view.step3.Step3Fragment;
 import com.jiaye.cashloan.view.step4.Step4Fragment;
 import com.jiaye.cashloan.widget.NoScrollViewPager;
 import com.jiaye.cashloan.widget.ScrollOffsetTransformer;
@@ -148,7 +147,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
         } else if (step == 5 || step == 6 || step == 3 || step == 7) {
             mViewPager.setCurrentItem(2);
             currentFragmentIndex = 3;
-            Step3InputFragment.refresh(getActivity());
+            Step3Fragment.refresh(getActivity());
         } else if (step == 10) {
             mViewPager.setCurrentItem(3);
             currentFragmentIndex = 4;
