@@ -9,6 +9,7 @@ import com.jiaye.cashloan.BuildConfig;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.insurance.InsuranceRequest;
 import com.jiaye.cashloan.http.data.phone.UpdatePhoneRequest;
 import com.jiaye.cashloan.http.data.taobao.UpdateTaoBaoRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
@@ -236,8 +237,20 @@ public enum MoxieHelper {
                                                 }, moxieContext::finish);
                                         break;
                                     case MxParam.PARAM_TASK_INSURANCE:
-                                        // TODO: 2018/8/23 保单成功回调
-
+                                        Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                                                .map(user -> {
+                                                    InsuranceRequest request = new InsuranceRequest();
+                                                    request.setLoanId(user.getLoanId());
+                                                    return request;
+                                                })
+                                                .compose(new SatcatcheResponseTransformer<InsuranceRequest, EmptyResponse>("updateInsurance"))
+                                                .compose(new ViewTransformer<>())
+                                                .subscribe(emptyResponse -> moxieContext.finish(), t -> {
+                                                    if (t != null && !TextUtils.isEmpty(t.getMessage())) {
+                                                        Toast.makeText(moxieContext.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    moxieContext.finish();
+                                                }, moxieContext::finish);
                                         break;
                                     default:
                                         Logger.d(TAG + "导入成功");
