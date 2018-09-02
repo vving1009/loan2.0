@@ -25,6 +25,8 @@ import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.id.IDRequest;
 import com.jiaye.cashloan.http.data.id.IDUploadPictureRequest;
+import com.jiaye.cashloan.http.data.idcard.IdCard;
+import com.jiaye.cashloan.http.data.idcard.IdCardRequest;
 import com.jiaye.cashloan.http.data.insurance.InsuranceRequest;
 import com.jiaye.cashloan.http.data.loan.Contact;
 import com.jiaye.cashloan.http.data.loan.ContactRequest;
@@ -79,6 +81,7 @@ import com.jiaye.cashloan.http.data.my.PhoneRequest;
 import com.jiaye.cashloan.http.data.phone.UpdatePhoneRequest;
 import com.jiaye.cashloan.http.data.plan.Plan;
 import com.jiaye.cashloan.http.data.plan.PlanRequest;
+import com.jiaye.cashloan.http.data.saveauth.SaveAuthRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
 import com.jiaye.cashloan.http.data.search.SaveSalesman;
@@ -453,4 +456,16 @@ public interface SatcatcheService {
      */
     @POST("saveValuation")
     Flowable<SatcatcheResponse<EmptyResponse>> saveCarValuation(@Body SatcatcheRequest<SaveValuationRequest> request);
+
+    /**
+     * 查询身份证
+     */
+    @POST("queryIdCard")
+    Flowable<SatcatcheResponse<IdCard>> queryIdCard(@Body SatcatcheRequest<IdCardRequest> request);
+
+    /**
+     * 信息确认保存信息
+     */
+    @POST("saveAuthInfo")
+    Flowable<SatcatcheResponse<EmptyResponse>> saveAuthInfo(@Body SatcatcheRequest<SaveAuthRequest> request);
 }

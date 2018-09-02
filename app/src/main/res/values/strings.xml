@@ -226,6 +226,8 @@
     <string name="error_step3_info_card_num">请输入信用卡数量</string>
     <string name="error_step3_info_card_limit">请输入信用卡额度</string>
     <string name="error_step3_info_description">请输入借款描述</string>
+    <string name="error_bioassay_no_id_card">不能获取身份证号，请稍后重试</string>
+
 
     <!--error code-->
     <string name="error_0000">成功</string>

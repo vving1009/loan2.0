@@ -1,7 +1,9 @@
 package com.jiaye.cashloan.view.bioassay.source;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.jiaye.cashloan.BuildConfig;
@@ -11,6 +13,8 @@ import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
 import com.jiaye.cashloan.http.data.bioassay.BioassayUploadPictureRequest;
+import com.jiaye.cashloan.http.data.idcard.IdCard;
+import com.jiaye.cashloan.http.data.idcard.IdCardRequest;
 import com.jiaye.cashloan.http.tongdun.TongDunClient;
 import com.jiaye.cashloan.http.tongdun.TongDunFace;
 import com.jiaye.cashloan.http.tongdun.TongDunFaceRequest;
@@ -45,21 +49,20 @@ public class BioassayRepository implements BioassayDataSource {
     @Override
     public Flowable<Bioassay> upload(byte[] data) {
         User user = LoanApplication.getInstance().getDbHelper().queryUser();
-        return Flowable.just(data)
-                .map(bytes -> Base64Util.encode(bytes, Base64.NO_WRAP))
-                .map(base64 -> {
-                    String name = "";
-                    String id = "";
-                    SQLiteDatabase database = LoanApplication.getInstance().getSQLiteDatabase();
-                    Cursor cursor = database.rawQuery("SELECT * FROM user;", null);
-                    if (cursor != null) {
-                        if (cursor.moveToNext()) {
-                            name = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_NAME));
-                            id = cursor.getString(cursor.getColumnIndex(DbContract.User.COLUMN_NAME_OCR_ID));
-                        }
-                        cursor.close();
+        return Flowable.just(new IdCardRequest())
+                .compose(new SatcatcheResponseTransformer<IdCardRequest, IdCard>("queryIdCard"))
+                .map(idCard -> {
+                    String name = idCard.getName();
+                    String id = idCard.getId();
+                    if (TextUtils.isEmpty(name) || TextUtils.isEmpty(id)) {
+                        throw new LocalException(R.string.error_bioassay_no_id_card);
                     }
+                    ContentValues values = new ContentValues();
+                    values.put("ocr_id", id);
+                    values.put("ocr_name", name);
+                    LoanApplication.getInstance().getSQLiteDatabase().update("user", values, null, null);
 
+                    String base64 = Base64Util.encode(data, Base64.NO_WRAP);
                     TongDunFaceRequest request = new TongDunFaceRequest();
                     request.setName(name);
                     request.setId(id);
