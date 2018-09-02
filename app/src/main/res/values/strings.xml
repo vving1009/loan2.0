@@ -58,7 +58,7 @@
         <item>是</item>
         <item>否</item>
     </string-array>
-    <!--step4-->
+    <!--amountMoney-->
     <string name="step4_confirm">确认借款</string>
     <string name="step4_open">去开户</string>
     <string name="step4_wait">您的借款正在投标中,\n请耐心等待。</string>

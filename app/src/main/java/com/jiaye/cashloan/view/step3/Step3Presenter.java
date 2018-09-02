@@ -4,9 +4,8 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.search.SaveSalesman;
+import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
-import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
@@ -15,9 +14,13 @@ import com.jiaye.cashloan.view.step3.source.Step3DataSource;
 
 import org.reactivestreams.Publisher;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Step3Presenter
@@ -37,12 +40,29 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
     }
 
     @Override
+    public void subscribe() {
+        super.subscribe();
+        Disposable disposable = mDataSource.salesman()
+                .compose(new ViewTransformer<com.jiaye.cashloan.http.data.search.Salesman>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .subscribe(list -> {
+                    mView.dismissProgressDialog();
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
     public void onClickNext(Salesman salesman) {
         if (salesman == null || TextUtils.isEmpty(salesman.getName())) {
             mView.showToastById(R.string.search_error);
         } else {
             Disposable disposable = Flowable.just(salesman)
-                    .flatMap((Function<Salesman, Publisher<SaveSalesman>>) bean -> {
+                    .flatMap((Function<Salesman, Publisher<EmptyResponse>>) bean -> {
                         SaveSalesmanRequest request = new SaveSalesmanRequest();
                         request.setCompanyId(bean.getCompanyId());
                         request.setCompanyName(bean.getCompany());
@@ -50,40 +70,86 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                         request.setNumber(bean.getWorkId());
                         return mDataSource.saveSalesman(request);
                     })
-                    .compose(new ViewTransformer<SaveSalesman>() {
+                    .flatMap(response -> mDataSource.requestUpdateStep())
+                    .compose(new ViewTransformer<EmptyResponse>() {
                         @Override
                         public void accept() {
                             super.accept();
                             mView.showProgressDialog();
                         }
                     })
-                    .subscribe(saveSalesman -> {
+                    .subscribe(response -> {
                         mView.dismissProgressDialog();
-                        //mView.exit();
+                        mView.sendBroadcast();
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         }
     }
 
     @Override
-    public void requestUpdateStep() {
-        Disposable disposable = mDataSource.requestUpdateStep()
-                .compose(new ViewTransformer<EmptyResponse>() {
+    public void requestNextStep() {
+        Disposable disposable = mDataSource.requestStep()
+                .compose(new ViewTransformer<Step>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(emptyResponse -> {
+                .doOnNext(step -> {
+                    if (step.getStep() == 7) {
+                        mView.dismissProgressDialog();
+                        mView.showMoreInfoView();
+                    }
+                })
+                .filter(step -> step.getStep() == 10)
+                .flatMap(step -> mDataSource.creditInfo())
+                .subscribe(creditInfo -> {
                     mView.dismissProgressDialog();
-                    mView.sendBroadcast();
+                    if (creditInfo.getBankStatus().equals("01")) {
+                        // 如果没开户显示开户页面
+                        mView.showOpenAccountView();
+                    } else {
+                        mView.sendBroadcast();
+                    }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void requestStep() {
-
+        Disposable disposable = mDataSource.requestStep()
+                .compose(new ViewTransformer<Step>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                })
+                .doOnNext(step -> {
+                    switch (step.getStep()) {
+                        case 5:
+                            mView.dismissProgressDialog();
+                            mView.showInputView();
+                            break;
+                        case 6:
+                            mView.dismissProgressDialog();
+                            mView.showWaitView();
+                            break;
+                        case 3:
+                            mView.dismissProgressDialog();
+                            mView.showRejectView();
+                            break;
+                    }
+                })
+                .filter(step -> step.getStep() == 7)
+                .observeOn(Schedulers.io())
+                .flatMap(step -> mDataSource.requestAmountMoney())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(money -> {
+                    mView.dismissProgressDialog();
+                    mView.showSuccessView(money.getAmount());
+                }, new ThrowableConsumer(mView));
+        mCompositeDisposable.add(disposable);
     }
 }

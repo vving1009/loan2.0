@@ -1,21 +1,12 @@
 package com.jiaye.cashloan.view.step4;
 
-import android.text.TextUtils;
-
-import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
-import com.jiaye.cashloan.http.data.step4.Step4;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step4.source.Step4DataSource;
 
-import org.reactivestreams.Publisher;
-
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Step3ResultPresenter
@@ -29,8 +20,6 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
 
     private final Step4DataSource mDataSource;
 
-    private Step mStep;
-
     public Step4Presenter(Step4Contract.View view, Step4DataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -39,24 +28,16 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.requestStep()
-                .doOnNext(step -> mStep = step)
-                .filter(step -> step.getStep() == 7 || step.getStep() == 10)
-                .flatMap((Function<Step, Publisher<Step4>>) step -> mDataSource.requestStep4())
-                .compose(new ViewTransformer<Step4>() {
+                .compose(new ViewTransformer<Step>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(step4 -> {
+                .subscribe(step -> {
                     mView.dismissProgressDialog();
-                    if (!TextUtils.isEmpty(step4.getAmount())) {
-                        mView.setFinishLoan();
-                    } else {
-                        mView.setWaitLoan();
-                    }
-                }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
+                }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }

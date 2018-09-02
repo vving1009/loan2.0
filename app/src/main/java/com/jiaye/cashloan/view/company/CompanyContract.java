@@ -27,8 +27,6 @@ public interface CompanyContract {
         void setPersonListDataChanged(List<Salesman> list);
 
         void setPersonListBlankContent();
-
-        void showCertificationView();
     }
 
     interface Presenter extends BasePresenter {
@@ -36,9 +34,5 @@ public interface CompanyContract {
         void queryPeopleByCompanyList(String column, String word);
 
         void queryCompany(String city);
-
-        void selectSalesman(Salesman salesman);
-
-        void saveSalesman();
     }
 }

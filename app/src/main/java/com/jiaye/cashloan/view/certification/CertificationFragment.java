@@ -135,7 +135,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     }
 
     @Override
-    public void setStep(int step) {
+    public void setStep(int step, boolean isOpenAccount) {
         if (step == 1) {
             mViewPager.setCurrentItem(0);
             currentFragmentIndex = 1;
@@ -149,28 +149,41 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
             currentFragmentIndex = 3;
             Step3Fragment.refresh(getActivity());
         } else if (step == 10) {
-            mViewPager.setCurrentItem(3);
-            currentFragmentIndex = 4;
-            Step4Fragment.refresh(getActivity());
+            if (isOpenAccount) {
+                mViewPager.setCurrentItem(3);
+                currentFragmentIndex = 4;
+                Step4Fragment.refresh(getActivity());
+            } else {
+                mViewPager.setCurrentItem(2);
+                currentFragmentIndex = 3;
+                Step3Fragment.refresh(getActivity());
+            }
         }
         switch (step) {
             case 10:
+                if (isOpenAccount) {
+                    mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            getResources().getDrawable(R.drawable.certification_ic_step_4_end),
+                            null,
+                            null);
+                } else {
+                    mTextStep3.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            getResources().getDrawable(R.drawable.certification_ic_step_3_end),
+                            null,
+                            null);
+                }
             case 7:
             case 6:
-                mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        getResources().getDrawable(R.drawable.certification_ic_step_4_end),
-                        null,
-                        null);
             case 5:
+            case 3:
                 mTextStep3.setCompoundDrawablesWithIntrinsicBounds(
                         null,
                         getResources().getDrawable(R.drawable.certification_ic_step_3_end),
                         null,
                         null);
             case 4:
-            case 3:
-            case 2:
                 mTextStep2.setCompoundDrawablesWithIntrinsicBounds(
                         null,
                         getResources().getDrawable(R.drawable.certification_ic_step_2_end),

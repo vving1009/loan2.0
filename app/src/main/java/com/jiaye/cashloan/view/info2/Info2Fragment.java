@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.jiaye.cashloan.R;
+import com.jiaye.cashloan.http.data.saveauth.SaveAuthRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
 import com.jiaye.cashloan.view.info2.source.Info2Repository;
 
@@ -57,6 +58,8 @@ public class Info2Fragment extends BaseFunctionFragment implements Info2Contract
 
     private List<String> houseList;
 
+    private SaveAuthRequest request;
+
 
     public static Info2Fragment newInstance() {
         Bundle args = new Bundle();
@@ -81,7 +84,20 @@ public class Info2Fragment extends BaseFunctionFragment implements Info2Contract
         mTextMarried.setOnClickListener(v -> mPickerMarried.show());
         mTextEducation.setOnClickListener(v -> mPickerEducation.show());
         mTextHouse.setOnClickListener(v -> mPickerHouse.show());
-        root.findViewById(R.id.btn_submit).setOnClickListener(v -> mPresenter.submit());
+        request = new SaveAuthRequest();
+        root.findViewById(R.id.btn_submit).setOnClickListener(v -> {
+            request.setMarriageMsg(mTextMarried.getText().toString());
+            request.setEduMsg(mTextEducation.getText().toString());
+            request.setWorkIndustry(mEditIndustry.getText().toString());
+            request.setWorkNumber(mEditYears.getText().toString());
+            request.setWorkPost(mEditJob.getText().toString());
+            request.setMonthlyIncome(mEditSalary.getText().toString());
+            request.setHouseProperty(mTextHouse.getText().toString());
+            request.setCreditCardNum(mEditCreditCardNum.getText().toString());
+            request.setCreditCardQuota(mEditCreditCardLimit.getText().toString());
+            request.setLoanDescribe(mEditDescription.getText().toString());
+            mPresenter.submit(request);
+        });
         initList();
         initPicker();
 
@@ -149,56 +165,6 @@ public class Info2Fragment extends BaseFunctionFragment implements Info2Contract
     @Override
     protected int getTitleId() {
         return R.string.step3_info_confirm_title;
-    }
-
-    @Override
-    public String getMarried() {
-        return mTextMarried.getText().toString();
-    }
-
-    @Override
-    public String getEducation() {
-        return mTextEducation.getText().toString();
-    }
-
-    @Override
-    public String getIndustry() {
-        return mEditIndustry.getText().toString();
-    }
-
-    @Override
-    public String getYears() {
-        return mEditYears.getText().toString();
-    }
-
-    @Override
-    public String getJob() {
-        return mEditJob.getText().toString();
-    }
-
-    @Override
-    public String getSalary() {
-        return mEditSalary.getText().toString();
-    }
-
-    @Override
-    public String getHouse() {
-        return mTextHouse.getText().toString();
-    }
-
-    @Override
-    public String getCreditCardNum() {
-        return mEditCreditCardNum.getText().toString();
-    }
-
-    @Override
-    public String getCreditCardLimit() {
-        return mEditCreditCardLimit.getText().toString();
-    }
-
-    @Override
-    public String getDescription() {
-        return mEditDescription.getText().toString();
     }
 
     @Override

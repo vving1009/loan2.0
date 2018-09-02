@@ -3,6 +3,8 @@ package com.jiaye.cashloan.http;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.base.SatcatcheRequest;
 import com.jiaye.cashloan.http.base.SatcatcheResponse;
+import com.jiaye.cashloan.http.data.amount.AmountMoney;
+import com.jiaye.cashloan.http.data.amount.AmountMoneyRequest;
 import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
@@ -84,15 +86,12 @@ import com.jiaye.cashloan.http.data.plan.PlanRequest;
 import com.jiaye.cashloan.http.data.saveauth.SaveAuthRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
 import com.jiaye.cashloan.http.data.search.SalesmanRequest;
-import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.http.data.sms.UploadSmsRequest;
 import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.http.data.step2.Step2Request;
 import com.jiaye.cashloan.http.data.step3.Step3;
 import com.jiaye.cashloan.http.data.step3.Step3Request;
-import com.jiaye.cashloan.http.data.step4.Step4;
-import com.jiaye.cashloan.http.data.step4.Step4Request;
 import com.jiaye.cashloan.http.data.taobao.UpdateTaoBaoRequest;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersState;
 import com.jiaye.cashloan.http.data.vehcile.CarPapersStateRequest;
@@ -135,7 +134,7 @@ public interface SatcatcheService {
      * 保存销售人员 4
      */
     @POST("saveUserSource")
-    Flowable<SatcatcheResponse<SaveSalesman>> saveSalesman(@Body SatcatcheRequest<SaveSalesmanRequest> request);
+    Flowable<SatcatcheResponse<EmptyResponse>> saveSalesman(@Body SatcatcheRequest<SaveSalesmanRequest> request);
 
     /**
      * 查询销售人员数据 5
@@ -261,7 +260,7 @@ public interface SatcatcheService {
      * 查询批核金额 26
      */
     @POST("queryAmountMoney")
-    Flowable<SatcatcheResponse<Step4>> step4(@Body SatcatcheRequest<Step4Request> request);
+    Flowable<SatcatcheResponse<AmountMoney>> queryAmountMoney(@Body SatcatcheRequest<AmountMoneyRequest> request);
 
     /**
      * 注册 27

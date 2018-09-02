@@ -2,11 +2,7 @@ package com.jiaye.cashloan.view.company;
 
 import android.text.TextUtils;
 
-import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.http.data.search.SaveSalesman;
-import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.DbContract;
-import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -16,7 +12,6 @@ import org.reactivestreams.Publisher;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
@@ -33,8 +28,6 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
 
     private final CompanyDataSource mDataSource;
 
-    private Salesman mSalesman;
-
     public CompanyPresenter(CompanyContract.View view, CompanyDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
@@ -43,8 +36,7 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
     @Override
     public void subscribe() {
         super.subscribe();
-        Disposable disposable = mDataSource.salesman()
-                .concatMap((Function<com.jiaye.cashloan.http.data.search.Salesman, Publisher<List<String>>>) search -> mDataSource.queryCompany())
+        Disposable disposable = mDataSource.queryCompany()
                 .compose(new ViewTransformer<List<String>>() {
                     @Override
                     public void accept() {
@@ -82,40 +74,6 @@ public class CompanyPresenter extends BasePresenterImpl implements CompanyContra
         } else {
             mView.setCompanyListNoneSelected();
             mView.setPersonListBlankContent();
-        }
-    }
-
-    @Override
-    public void selectSalesman(Salesman salesman) {
-        mSalesman = salesman;
-    }
-
-    @Override
-    public void saveSalesman() {
-        if (mSalesman == null) {
-            mView.showToastById(R.string.search_error);
-        } else {
-            Disposable disposable = Flowable.just(mSalesman)
-                    .flatMap((Function<Salesman, Publisher<SaveSalesman>>) salesman -> {
-                        SaveSalesmanRequest request = new SaveSalesmanRequest();
-                        request.setCompanyId(mSalesman.getCompanyId());
-                        request.setCompanyName(mSalesman.getCompany());
-                        request.setName(mSalesman.getName());
-                        request.setNumber(mSalesman.getWorkId());
-                        return mDataSource.saveSalesman(request);
-                    })
-                    .compose(new ViewTransformer<SaveSalesman>() {
-                        @Override
-                        public void accept() {
-                            super.accept();
-                            mView.showProgressDialog();
-                        }
-                    })
-                    .subscribe(saveSalesman -> {
-                        mView.dismissProgressDialog();
-                        mView.showCertificationView();
-                    }, new ThrowableConsumer(mView));
-            mCompositeDisposable.add(disposable);
         }
     }
 }

@@ -15,21 +15,27 @@ public interface Step3Contract {
 
     interface View extends BaseViewContract {
 
+        void showInputView();
+
         void showWaitView();
 
-        void ShowRejectView();
+        void showRejectView();
 
         void showSuccessView(String value);
+
+        void showMoreInfoView();
+
+        void showOpenAccountView();
 
         void sendBroadcast();
     }
 
     interface Presenter extends BasePresenter {
 
+        void requestNextStep();
+
         void requestStep();
 
         void onClickNext(Salesman salesman);
-
-        void requestUpdateStep();
     }
 }

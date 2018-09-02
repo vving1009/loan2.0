@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,9 +24,9 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.company.CompanyActivity;
 import com.jiaye.cashloan.view.search.source.SearchRepository;
+import com.jiaye.cashloan.view.step3.Step3Fragment;
 import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.lang.reflect.Field;
@@ -43,8 +42,6 @@ import java.util.Objects;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View {
 
-    public static final String FINISH_COMPANY_FRAGMENT_ACTION = "com.jiaye.cashloan.FINISH_COMPANY";
-
     private SearchContract.Presenter mPresenter;
 
     private SearchView mSearchView;
@@ -54,6 +51,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private SearchListAdapter mSearchListAdapter;
 
     private SatcatcheDialog mDialog;
+    private Salesman mSalesman;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -71,15 +69,23 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
                 .setTitle("提示")
                 .setMessage("是否选择当前客户经理")
                 .setPositiveButton("是", ((dialog, which) -> {
-                    mPresenter.saveSalesman();
-                    LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(FINISH_COMPANY_FRAGMENT_ACTION));
+                    if (mSalesman != null) {
+                        Intent intent = new Intent();
+                        intent.putExtra(Step3Fragment.EXTRA_SALESMAN, mSalesman);
+                        /*intent.putExtra(Step3Fragment.EXTRA_COMPANY_NAME, mSalesman.getCompany());
+                        intent.putExtra(Step3Fragment.EXTRA_COMPANY_ID, mSalesman.getCompanyId());
+                        intent.putExtra(Step3Fragment.EXTRA_PERSON_NAME, mSalesman.getName());
+                        intent.putExtra(Step3Fragment.EXTRA_PERSON_ID, mSalesman.getWorkId());*/
+                        getActivity().setResult(Step3Fragment.REQUEST_CODE_SALESMAN, intent);
+                    }
+                    getActivity().finish();
                 }))
                 .setNegativeButton("否", null)
                 .build();
         mSearchView = root.findViewById(R.id.search_btn);
         mSearchList = root.findViewById(R.id.company_list);
         root.findViewById(R.id.img_back).setOnClickListener(v ->
-                Objects.requireNonNull((CompanyActivity)getActivity()).showCompanyView());
+                Objects.requireNonNull((CompanyActivity) getActivity()).showCompanyView());
         root.findViewById(R.id.clear_btn).setOnClickListener(v -> {
             mSearchView.setQuery("", false);
             mSearchView.setIconified(false);
@@ -139,7 +145,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         private List<Salesman> salesmen = new ArrayList<>();
 
         private int selectPos = -1;
-        
+
         private Resources resources = getContext().getResources();
 
         SearchListAdapter() {
@@ -167,7 +173,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                mPresenter.selectSalesman(salesmen.get(selectPos));
+                mSalesman = salesmen.get(selectPos);
                 mDialog.show();
             });
         }
@@ -222,13 +228,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public void setListBlankContent() {
         mSearchListAdapter.setBlankContent();
-        mPresenter.selectSalesman(null);
-    }
-
-    @Override
-    public void showCertificationView() {
-        FunctionActivity.function(getActivity(), "Certification");
-        getActivity().finish();
+        mSalesman = null;
     }
 
     @Override

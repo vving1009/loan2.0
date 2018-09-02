@@ -13,7 +13,7 @@ public interface CertificationContract {
 
     interface View extends BaseViewContract {
 
-        void setStep(int step);
+        void setStep(int step, boolean isOpenAccount);
     }
 
     interface Presenter extends BasePresenter {

@@ -1,13 +1,9 @@
 package com.jiaye.cashloan.view.company;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +15,8 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.DbContract;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BaseFragment;
-import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.company.source.CompanyRepository;
-import com.jiaye.cashloan.view.search.SearchFragment;
+import com.jiaye.cashloan.view.step3.Step3Fragment;
 import com.satcatche.library.widget.SatcatcheDialog;
 
 import java.util.ArrayList;
@@ -42,6 +37,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     private CompanyListAdapter mCompanyListAdapter;
     private PersonListAdapter mPersonListAdapter;
     private SatcatcheDialog mDialog;
+    private Salesman mSalesman;
 
     public static CompanyFragment newInstance(String city) {
         Bundle args = new Bundle();
@@ -58,18 +54,28 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
         mDialog = new SatcatcheDialog.Builder(getContext())
                 .setTitle("提示")
                 .setMessage("是否选择当前客户经理")
-                .setPositiveButton("是", ((dialog, which) -> mPresenter.saveSalesman()))
+                .setPositiveButton("是", ((dialog, which) -> {
+                    if (mSalesman != null) {
+                        Intent intent = new Intent();
+                        intent.putExtra(Step3Fragment.EXTRA_SALESMAN, mSalesman);
+                        /*intent.putExtra(Step3Fragment.EXTRA_COMPANY_NAME, mSalesman.getCompany());
+                        intent.putExtra(Step3Fragment.EXTRA_COMPANY_ID, mSalesman.getCompanyId());
+                        intent.putExtra(Step3Fragment.EXTRA_PERSON_NAME, mSalesman.getName());
+                        intent.putExtra(Step3Fragment.EXTRA_PERSON_ID, mSalesman.getWorkId());*/
+                        getActivity().setResult(Step3Fragment.REQUEST_CODE_SALESMAN, intent);
+                    }
+                    getActivity().finish();
+                }))
                 .setNegativeButton("否", null)
                 .build();
         mCompanyList = root.findViewById(R.id.company_list);
         mPersonList = root.findViewById(R.id.person_list);
-        root.findViewById(R.id.search_btn).setOnClickListener(v -> FunctionActivity.function(getActivity(), "Search"));
+        root.findViewById(R.id.search_btn).setOnClickListener(v -> ((CompanyActivity) getActivity()).showSearchView());
         root.findViewById(R.id.img_back).setOnClickListener(v -> Objects.requireNonNull(getActivity()).finish());
         initList();
         mCompanyList.requestFocus();
         mPresenter = new CompanyPresenter(this, new CompanyRepository());
         mPresenter.subscribe();
-        registerLocalBroadcast();
         return root;
     }
 
@@ -77,7 +83,6 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
-        unRegisterLocalBroadcast();
     }
 
     @Override
@@ -103,13 +108,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
     @Override
     public void setPersonListBlankContent() {
         mPersonListAdapter.setBlankContent();
-        mPresenter.selectSalesman(null);
-    }
-
-    @Override
-    public void showCertificationView() {
-        FunctionActivity.function(getActivity(), "Certification");
-        getActivity().finish();
+        mSalesman = null;
     }
 
     @Override
@@ -222,7 +221,7 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
             holder.rootView.setOnClickListener(v -> {
                 selectPos = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                mPresenter.selectSalesman(salesmen.get(selectPos));
+                mSalesman = salesmen.get(selectPos);
                 mDialog.show();
             });
         }
@@ -258,21 +257,5 @@ public class CompanyFragment extends BaseFragment implements CompanyContract.Vie
                 rootView = itemView.findViewById(R.id.root_view);
             }
         }
-    }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            getActivity().finish();
-        }
-    };
-
-    private void registerLocalBroadcast(){
-        IntentFilter intentFilter = new IntentFilter(SearchFragment.FINISH_COMPANY_FRAGMENT_ACTION);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,intentFilter);
-    }
-
-    private void unRegisterLocalBroadcast(){
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 }

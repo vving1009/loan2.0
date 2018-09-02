@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
@@ -40,13 +41,13 @@ import java.util.List;
 
 public class Step3Fragment extends BaseStepFragment implements Step3Contract.View {
 
-    public static final int REQUEST_CODE_COMPANY = 101;
-    public static final int REQUEST_CODE_PERSON = 102;
+    public static final int REQUEST_CODE_SALESMAN = 101;
 
-    public static final String EXTRA_COMPANY_ID = "company_id";
+    public static final String EXTRA_SALESMAN = "salesman";
+ /*public static final String EXTRA_COMPANY_ID = "company_id";
     public static final String EXTRA_COMPANY_NAME = "company_name";
     public static final String EXTRA_PERSON_ID = "person_id";
-    public static final String EXTRA_PERSON_NAME = "person_name";
+    public static final String EXTRA_PERSON_NAME = "person_name";*/
 
     private Step3Contract.Presenter mPresenter;
 
@@ -105,9 +106,6 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        showInputView();
-        mSalesman = new Salesman();
-
         String s = getResources().getString(R.string.step3_call);
         SpannableString string = new SpannableString(getResources().getString(R.string.step3_call));
         string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
@@ -122,6 +120,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         mTextCall.setText(string);
         mTextCall.setMovementMethod(LinkMovementMethod.getInstance());
 
+        mSalesman = new Salesman();
         mPresenter = new Step3Presenter(this, new Step3Repository());
         mPresenter.subscribe();
         return root;
@@ -145,24 +144,24 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
-            if (requestCode == REQUEST_CODE_COMPANY) {
-                String companyName = data.getStringExtra(EXTRA_COMPANY_NAME);
+            if (requestCode == REQUEST_CODE_SALESMAN) {
+                mSalesman = data.getParcelableExtra(EXTRA_SALESMAN);
+                String company = mSalesman.getCompany();
+                String name = mSalesman.getName();
+                /*String companyName = data.getStringExtra(EXTRA_SALESMAN);
                 String companyId = data.getStringExtra(EXTRA_COMPANY_ID);
                 String personName = data.getStringExtra(EXTRA_PERSON_NAME);
-                String personId = data.getStringExtra(EXTRA_PERSON_ID);
-                if (!TextUtils.isEmpty(companyName) && !TextUtils.isEmpty(personName)) {
-                    mList.set(0, companyName);
-                    mList.set(1, personName);
+                String personId = data.getStringExtra(EXTRA_PERSON_ID);*/
+                if (!TextUtils.isEmpty(company) && !TextUtils.isEmpty(name)) {
+                    mList.set(0, company);
+                    mList.set(1, name);
                     mAdapter.notifyDataSetChanged();
-                    mSalesman.setCompany(companyName);
-                    mSalesman.setCompanyId(companyId);
-                    mSalesman.setName(personName);
-                    mSalesman.setWorkId(personId);
                 }
             }
         }
     }
 
+    @Override
     public void showInputView() {
         mRecyclerView.setVisibility(View.VISIBLE);
         mLayoutResult.setVisibility(View.GONE);
@@ -189,7 +188,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     }
 
     @Override
-    public void ShowRejectView() {
+    public void showRejectView() {
         mRecyclerView.setVisibility(View.GONE);
         mLayoutResult.setVisibility(View.VISIBLE);
         mTextCall.setVisibility(View.GONE);
@@ -213,7 +212,13 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         mImgResult.setImageDrawable(getResources().getDrawable(R.drawable.certification_ic_shop));
         mTextResult.setText(getResources().getString(R.string.step3_amount, value));
         mBtnNext.setText("确认借款");
-        mBtnNext.setOnClickListener(v -> mPresenter.requestUpdateStep());
+        mBtnNext.setOnClickListener(v -> {
+            if (mCheckBox.isChecked()) {
+                mPresenter.requestNextStep();
+            } else {
+                showToast("请先勾选下方勾选框");
+            }
+        });
     }
 
     @Override
@@ -224,7 +229,19 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     public void showCompanyView() {
         Intent intent = new Intent(getContext(), FunctionActivity.class);
         intent.putExtra("function", "Company");
-        startActivityForResult(intent, REQUEST_CODE_COMPANY);
+        startActivityForResult(intent, REQUEST_CODE_SALESMAN);
+    }
+
+    @Override
+    public void showMoreInfoView() {
+        FunctionActivity.function(getActivity(),"Info2");
+    }
+
+    @Override
+    public void showOpenAccountView() {
+        Intent intent = new Intent(getActivity(), AccountWebActivity.class);
+        intent.putExtra("type", "accountOpen");
+        startActivity(intent);
     }
 
     @Override

@@ -79,7 +79,8 @@
             android:layout_above="@id/btn_next"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="19dp"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/btn_next"
@@ -92,7 +93,8 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/home_btn_bg"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="invisible"/>
 
         <CheckBox
             android:id="@+id/sign_check_box"
@@ -106,7 +108,8 @@
             android:paddingLeft="10dp"
             android:text="已阅读并同意电子签章确认书"
             android:textColor="@color/color_gray"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="invisible"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -118,7 +121,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="21dp"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 

@@ -5,6 +5,9 @@ import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
+import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
+import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
@@ -37,5 +40,11 @@ public class CertificationRepository implements CertificationDataSource {
                     return request;
                 })
                 .compose(new SatcatcheResponseTransformer<StepRequest, Step>("step"));
+    }
+
+    @Override
+    public Flowable<CreditInfo> creditInfo() {
+        return Flowable.just(new CreditInfoRequest())
+                .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
     }
 }

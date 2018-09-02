@@ -1,14 +1,14 @@
-package com.jiaye.cashloan.http.data.step4;
+package com.jiaye.cashloan.http.data.amount;
 
 import com.google.gson.annotations.SerializedName;
 import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 /**
- * Step4
+ * AmountMoney
  *
  * @author 贾博瑄
  */
-public class Step4 extends SatcatcheChildResponse {
+public class AmountMoney extends SatcatcheChildResponse {
 
     @SerializedName("amount")
     private String amount;

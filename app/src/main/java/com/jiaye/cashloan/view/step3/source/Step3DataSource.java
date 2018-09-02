@@ -1,10 +1,11 @@
 package com.jiaye.cashloan.view.step3.source;
 
 import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.amount.AmountMoney;
+import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.search.Salesman;
-import com.jiaye.cashloan.http.data.search.SaveSalesman;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
-import com.jiaye.cashloan.http.data.step3.Step3;
 
 import io.reactivex.Flowable;
 
@@ -20,5 +21,11 @@ public interface Step3DataSource {
 
     Flowable<Salesman> salesman();
 
-    Flowable<SaveSalesman> saveSalesman(SaveSalesmanRequest request);
+    Flowable<EmptyResponse> saveSalesman(SaveSalesmanRequest request);
+
+    Flowable<Step> requestStep();
+
+    Flowable<AmountMoney> requestAmountMoney();
+
+    Flowable<CreditInfo> creditInfo();
 }

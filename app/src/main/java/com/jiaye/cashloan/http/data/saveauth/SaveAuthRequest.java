@@ -37,7 +37,7 @@ public class SaveAuthRequest extends SatcatcheChildRequest {
     @SerializedName("house_property")
     private String houseProperty;
     @SerializedName("credit_card_num")
-    private int creditCardNum;
+    private String creditCardNum;
     @SerializedName("credit_card_quota")
     private String creditCardQuota;
     @SerializedName("loan_describe")
@@ -107,11 +107,11 @@ public class SaveAuthRequest extends SatcatcheChildRequest {
         this.houseProperty = houseProperty;
     }
 
-    public int getCreditCardNum() {
+    public String getCreditCardNum() {
         return creditCardNum;
     }
 
-    public void setCreditCardNum(int creditCardNum) {
+    public void setCreditCardNum(String creditCardNum) {
         this.creditCardNum = creditCardNum;
     }
 
