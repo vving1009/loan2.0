@@ -1,6 +1,6 @@
 package com.jiaye.cashloan.view.step4.source;
 
-import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.loan.LoanDate;
 
 import io.reactivex.Flowable;
 
@@ -12,5 +12,5 @@ import io.reactivex.Flowable;
 
 public interface Step4DataSource {
 
-    Flowable<Step> requestStep();
+    Flowable<LoanDate> requestLoanStatus();
 }

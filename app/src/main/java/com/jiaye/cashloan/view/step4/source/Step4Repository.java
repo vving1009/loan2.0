@@ -1,8 +1,7 @@
 package com.jiaye.cashloan.view.step4.source;
 
-import com.jiaye.cashloan.LoanApplication;
-import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.certification.StepRequest;
+import com.jiaye.cashloan.http.data.loan.LoanDate;
+import com.jiaye.cashloan.http.data.loan.LoanDateRequest;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
 import io.reactivex.Flowable;
@@ -16,13 +15,8 @@ import io.reactivex.Flowable;
 public class Step4Repository implements Step4DataSource {
 
     @Override
-    public Flowable<Step> requestStep() {
-        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
-                .map(user -> {
-                    StepRequest request = new StepRequest();
-                    request.setLoanId(user.getLoanId());
-                    return request;
-                })
-                .compose(new SatcatcheResponseTransformer<StepRequest, Step>("step"));
+    public Flowable<LoanDate> requestLoanStatus() {
+        return Flowable.just(new LoanDateRequest())
+                .compose(new SatcatcheResponseTransformer<LoanDateRequest, LoanDate>("queryLoanDate"));
     }
 }

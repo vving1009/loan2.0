@@ -11,6 +11,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.data.saveauth.SaveAuthRequest;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.certification.CertificationFragment;
 import com.jiaye.cashloan.view.info2.source.Info2Repository;
 
 import java.util.Arrays;
@@ -170,5 +171,10 @@ public class Info2Fragment extends BaseFunctionFragment implements Info2Contract
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void sendBroadcast() {
+        CertificationFragment.refresh(getActivity());
     }
 }

@@ -43,6 +43,8 @@ import com.jiaye.cashloan.http.data.loan.LoanConfirm;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfo;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmInfoRequest;
 import com.jiaye.cashloan.http.data.loan.LoanConfirmRequest;
+import com.jiaye.cashloan.http.data.loan.LoanDate;
+import com.jiaye.cashloan.http.data.loan.LoanDateRequest;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuth;
 import com.jiaye.cashloan.http.data.loan.LoanInfoAuthRequest;
 import com.jiaye.cashloan.http.data.loan.LoanProgress;
@@ -467,4 +469,10 @@ public interface SatcatcheService {
      */
     @POST("saveAuthInfo")
     Flowable<SatcatcheResponse<EmptyResponse>> saveAuthInfo(@Body SatcatcheRequest<SaveAuthRequest> request);
+
+    /**
+     * 信息确认保存信息
+     */
+    @POST("queryContractDate")
+    Flowable<SatcatcheResponse<LoanDate>> queryLoanDate(@Body SatcatcheRequest<LoanDateRequest> request);
 }

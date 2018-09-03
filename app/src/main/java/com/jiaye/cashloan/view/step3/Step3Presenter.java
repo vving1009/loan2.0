@@ -140,7 +140,7 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                             break;
                     }
                 })
-                .filter(step -> step.getStep() == 7)
+                .filter(step -> step.getStep() == 7 || step.getStep() == 10)
                 .observeOn(Schedulers.io())
                 .flatMap(step -> mDataSource.requestAmountMoney())
                 .observeOn(AndroidSchedulers.mainThread())

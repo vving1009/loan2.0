@@ -1,9 +1,7 @@
 package com.jiaye.cashloan.view.step4;
 
-import android.support.annotation.DrawableRes;
-
-import com.jiaye.cashloan.view.BaseViewContract;
 import com.jiaye.cashloan.view.BasePresenter;
+import com.jiaye.cashloan.view.BaseViewContract;
 
 /**
  * Step1ResultContract
@@ -15,15 +13,13 @@ public interface Step4Contract {
 
     interface View extends BaseViewContract {
 
-        void setWaitLoan();
+        void showWaitLoanView();
 
-        void setFinishLoan();
-
-        void sendBroadcast();
+        void showFinishLoanView();
     }
 
     interface Presenter extends BasePresenter {
 
-        void requestStep();
+        void requestLoanStatus();
     }
 }

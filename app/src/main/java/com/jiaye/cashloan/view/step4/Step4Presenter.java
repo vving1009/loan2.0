@@ -1,6 +1,8 @@
 package com.jiaye.cashloan.view.step4;
 
-import com.jiaye.cashloan.http.data.certification.Step;
+import android.text.TextUtils;
+
+import com.jiaye.cashloan.http.data.loan.LoanDate;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -26,17 +28,22 @@ public class Step4Presenter extends BasePresenterImpl implements Step4Contract.P
     }
 
     @Override
-    public void requestStep() {
-        Disposable disposable = mDataSource.requestStep()
-                .compose(new ViewTransformer<Step>() {
+    public void requestLoanStatus() {
+        Disposable disposable = mDataSource.requestLoanStatus()
+                .compose(new ViewTransformer<LoanDate>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(step -> {
+                .subscribe(response -> {
                     mView.dismissProgressDialog();
+                    if (TextUtils.isEmpty(response.getContractDate())) {
+                        mView.showWaitLoanView();
+                    } else {
+                        mView.showFinishLoanView();
+                    }
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

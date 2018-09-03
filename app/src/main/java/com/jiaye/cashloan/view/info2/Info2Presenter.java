@@ -10,7 +10,6 @@ import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.info2.source.Info2DataSource;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Info2Presenter
@@ -47,6 +46,7 @@ public class Info2Presenter extends BasePresenterImpl implements Info2Contract.P
                     })
                     .subscribe(saveContact -> {
                         mView.dismissProgressDialog();
+                        mView.sendBroadcast();
                         mView.finish();
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);

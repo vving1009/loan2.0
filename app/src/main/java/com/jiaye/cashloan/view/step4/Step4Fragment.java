@@ -51,7 +51,7 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
     public void onResume() {
         super.onResume();
         if (((CertificationFragment) getParentFragment()).getCurrentFragmentIndex() == 4) {
-            mPresenter.requestStep();
+            mPresenter.requestLoanStatus();
         }
     }
 
@@ -63,23 +63,18 @@ public class Step4Fragment extends BaseStepFragment implements Step4Contract.Vie
 
     @Override
     protected void requestStep() {
-        mPresenter.requestStep();
+        mPresenter.requestLoanStatus();
     }
 
     @Override
-    public void setWaitLoan() {
+    public void showWaitLoanView() {
         mImage.setImageDrawable(getResources().getDrawable(R.drawable.certification_ic_wait));
         mText.setText(R.string.step4_wait);
     }
 
     @Override
-    public void setFinishLoan() {
+    public void showFinishLoanView() {
         mImage.setImageDrawable(getResources().getDrawable(R.drawable.certification_ic_money));
         mText.setText(R.string.step4_finish);
-    }
-
-    @Override
-    public void sendBroadcast() {
-        CertificationFragment.refresh(getActivity());
     }
 }
