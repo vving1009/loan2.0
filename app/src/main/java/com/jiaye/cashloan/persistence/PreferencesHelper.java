@@ -13,8 +13,6 @@ public class PreferencesHelper {
 
     private static final String PREF_KEY_NEED_GUIDE = "PREF_KEY_NEED_GUIDE";
 
-    private static final String PREF_KEY_CAR_PRICE = "PREF_KEY_CAR_PRICE";
-
     private final SharedPreferences mPrefs;
 
     public PreferencesHelper(Context context) {
@@ -27,13 +25,5 @@ public class PreferencesHelper {
 
     public boolean isNeedGuide() {
         return mPrefs.getBoolean(PREF_KEY_NEED_GUIDE, true);
-    }
-
-    public boolean setCarPrice(String price) {
-        return mPrefs.edit().putString(PREF_KEY_CAR_PRICE, price).commit();
-    }
-
-    public String getCarPrice() {
-        return mPrefs.getString(PREF_KEY_CAR_PRICE, "");
     }
 }

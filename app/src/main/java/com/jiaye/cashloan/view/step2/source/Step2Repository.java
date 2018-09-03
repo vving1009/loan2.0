@@ -2,6 +2,8 @@ package com.jiaye.cashloan.view.step2.source;
 
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.car.QueryValuationRequest;
+import com.jiaye.cashloan.http.data.car.QueryValuationResponse;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.http.data.step2.Step2Request;
@@ -39,5 +41,16 @@ public class Step2Repository implements Step2DataSource {
                     return request;
                 })
                 .compose(new SatcatcheResponseTransformer<UpdateStepRequest, EmptyResponse>("updateStep"));
+    }
+
+    @Override
+    public Flowable<QueryValuationResponse> queryCarValuation() {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    QueryValuationRequest request = new QueryValuationRequest();
+                    request.setJlaId(user.getLoanId());
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<QueryValuationRequest, QueryValuationResponse>("queryCarValuation"));
     }
 }

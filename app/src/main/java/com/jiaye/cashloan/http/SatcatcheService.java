@@ -9,6 +9,8 @@ import com.jiaye.cashloan.http.data.bindbank.SaveBankCardRequest;
 import com.jiaye.cashloan.http.data.bioassay.Bioassay;
 import com.jiaye.cashloan.http.data.bioassay.BioassayRequest;
 import com.jiaye.cashloan.http.data.bioassay.BioassayUploadPictureRequest;
+import com.jiaye.cashloan.http.data.car.QueryValuationRequest;
+import com.jiaye.cashloan.http.data.car.QueryValuationResponse;
 import com.jiaye.cashloan.http.data.car.SaveValuationRequest;
 import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.RecommendRequest;
@@ -471,8 +473,14 @@ public interface SatcatcheService {
     Flowable<SatcatcheResponse<EmptyResponse>> saveAuthInfo(@Body SatcatcheRequest<SaveAuthRequest> request);
 
     /**
-     * 信息确认保存信息
+     * 查询放款时间
      */
     @POST("queryContractDate")
     Flowable<SatcatcheResponse<LoanDate>> queryLoanDate(@Body SatcatcheRequest<LoanDateRequest> request);
+
+    /**
+     * 查询车辆估值
+     */
+    @POST("queryValuation")
+    Flowable<SatcatcheResponse<QueryValuationResponse>> queryCarValuation(@Body SatcatcheRequest<QueryValuationRequest> request);
 }

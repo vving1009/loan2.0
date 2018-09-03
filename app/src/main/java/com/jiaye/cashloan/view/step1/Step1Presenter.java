@@ -2,17 +2,14 @@ package com.jiaye.cashloan.view.step1;
 
 import android.text.TextUtils;
 
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.car.CarPrice;
-import com.jiaye.cashloan.http.data.loan.Loan;
-import com.jiaye.cashloan.persistence.PreferencesHelper;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
-import com.jiaye.cashloan.view.step1.source.Step1InputState;
 import com.jiaye.cashloan.view.step1.source.Step1DataSource;
+import com.jiaye.cashloan.view.step1.source.Step1InputState;
 
 import io.reactivex.disposables.Disposable;
 
@@ -70,7 +67,7 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     @Override
     public void onClickNext() {
-       if (mStep1.isFinishItem0() && mStep1.isFinishItem1() && mStep1.isFinishItem2() && mStep1.isFinishItem3()) {
+        if (mStep1.isFinishItem0() && mStep1.isFinishItem1() && mStep1.isFinishItem2() && mStep1.isFinishItem3()) {
             Disposable disposable = mDataSource.requestCarPrice(mStep1)
                     .compose(new ViewTransformer<CarPrice>() {
                         @Override
@@ -96,8 +93,6 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
     public void saveCarPrice() {
         Disposable disposable = mDataSource.saveCarPrice(mStep1.getCarMaxPrice())
                 .flatMap(response -> mDataSource.requestUpdateStep())
-                .filter(response ->
-                        LoanApplication.getInstance().getPreferencesHelper().setCarPrice(mStep1.getCarMaxPrice()))
                 .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {

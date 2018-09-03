@@ -2,21 +2,18 @@ package com.jiaye.cashloan.view.step2;
 
 import android.text.TextUtils;
 
-import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.view.BasePresenterImpl;
+import com.jiaye.cashloan.view.LocalException;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step2.source.Step2DataSource;
 
-import org.reactivestreams.Publisher;
+import java.math.BigDecimal;
 
-import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Step2Presenter
@@ -91,12 +88,29 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
     public void onClickNext() {
         if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
                 && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 1) {
-            String price = LoanApplication.getInstance().getPreferencesHelper().getCarPrice();
-            if (!TextUtils.isEmpty(price)) {
-                mView.showResultView(price);
-            } else {
-                mView.showToast("车辆估值错误");
-            }
+            Disposable disposable = mDataSource.queryCarValuation()
+                    .map(response -> {
+                        String s = response.getValuation();
+                        if (!TextUtils.isEmpty(s)) {
+                            BigDecimal a = new BigDecimal(s);
+                            BigDecimal b = new BigDecimal("10000");
+                            return a.multiply(b).toString();
+                        } else {
+                            throw new LocalException(R.string.error_car_valuation);
+                        }
+                    })
+                    .compose(new ViewTransformer<String>() {
+                        @Override
+                        public void accept() {
+                            super.accept();
+                            mView.showProgressDialog();
+                        }
+                    })
+                    .subscribe(value -> {
+                        mView.dismissProgressDialog();
+                        mView.showResultView(value);
+                    }, new ThrowableConsumer(mView));
+            mCompositeDisposable.add(disposable);
         } else {
             mView.showToastById(R.string.step1_error);
         }
