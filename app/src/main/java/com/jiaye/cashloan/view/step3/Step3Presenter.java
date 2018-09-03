@@ -14,8 +14,6 @@ import com.jiaye.cashloan.view.step3.source.Step3DataSource;
 
 import org.reactivestreams.Publisher;
 
-import java.util.List;
-
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

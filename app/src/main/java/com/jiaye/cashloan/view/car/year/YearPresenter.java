@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * YearPresenter
  *
- * @author 贾博�?
+ * @author 贾博瑄
  */
 
 public class YearPresenter extends BasePresenterImpl implements YearContract.Presenter {

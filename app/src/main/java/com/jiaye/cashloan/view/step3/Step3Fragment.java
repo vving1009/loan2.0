@@ -44,10 +44,6 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     public static final int REQUEST_CODE_SALESMAN = 101;
 
     public static final String EXTRA_SALESMAN = "salesman";
- /*public static final String EXTRA_COMPANY_ID = "company_id";
-    public static final String EXTRA_COMPANY_NAME = "company_name";
-    public static final String EXTRA_PERSON_ID = "person_id";
-    public static final String EXTRA_PERSON_NAME = "person_name";*/
 
     private Step3Contract.Presenter mPresenter;
 
@@ -106,19 +102,30 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        String s = getResources().getString(R.string.step3_call);
-        SpannableString string = new SpannableString(getResources().getString(R.string.step3_call));
-        string.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
-                s.length() - 12, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        string.setSpan(new ClickableSpan() {
+        SpannableString str1 = new SpannableString(getResources().getString(R.string.step3_call));
+        str1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
+                str1.length() - 12, str1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str1.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:400–8780–777"));
                 startActivity(intent);
             }
-        }, s.length() - 12, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTextCall.setText(string);
+        }, str1.length() - 12, str1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTextCall.setText(str1);
         mTextCall.setMovementMethod(LinkMovementMethod.getInstance());
+
+        SpannableString str2 = new SpannableString(getResources().getString(R.string.step3_sign));
+        str2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_blue)),
+                str2.length() - 7, str2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str2.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                showSignView();
+            }
+        }, str2.length() - 7, str2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mCheckBox.setText(str2);
+        mCheckBox.setMovementMethod(LinkMovementMethod.getInstance());
 
         mSalesman = new Salesman();
         mPresenter = new Step3Presenter(this, new Step3Repository());
@@ -221,6 +228,10 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         });
     }
 
+    public void showSignView() {
+        FunctionActivity.function(getActivity(), "Sign");
+    }
+
     @Override
     protected void requestStep() {
         mPresenter.requestStep();
@@ -234,7 +245,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
     @Override
     public void showMoreInfoView() {
-        FunctionActivity.function(getActivity(),"Info2");
+        FunctionActivity.function(getActivity(), "Info2");
     }
 
     @Override
