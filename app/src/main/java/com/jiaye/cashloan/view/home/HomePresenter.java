@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.home;
 
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.persistence.User;
 import com.jiaye.cashloan.view.BasePresenterImpl;
@@ -37,21 +36,16 @@ public class HomePresenter extends BasePresenterImpl implements HomeContract.Pre
                 .concatMap((Function<User, Publisher<EmptyResponse>>) user -> mDataSource.checkLoan())
                 .concatMap((Function<EmptyResponse, Publisher<Loan>>) emptyResponse -> mDataSource.requestLoan())
                 .concatMap((Function<Loan, Publisher<EmptyResponse>>) loan -> mDataSource.uploadRiskAppList())
-                .concatMap((Function<EmptyResponse, Publisher<CheckCompany>>) o -> mDataSource.checkCompany())
-                .compose(new ViewTransformer<CheckCompany>() {
+                .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(checkCompany -> {
+                .subscribe(response -> {
                     mView.dismissProgressDialog();
-                    if (checkCompany.isNeed()) {
-                        //mView.showCompanyView();
-                    } else {
-                        mView.showCertificationView();
-                    }
+                    mView.showCertificationView();
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

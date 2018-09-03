@@ -7,8 +7,6 @@ import android.text.TextUtils;
 import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.home.CheckCompany;
-import com.jiaye.cashloan.http.data.home.CheckCompanyRequest;
 import com.jiaye.cashloan.http.data.home.CheckLoanRequest;
 import com.jiaye.cashloan.http.data.home.LoanRequest;
 import com.jiaye.cashloan.http.data.loan.Loan;
@@ -89,17 +87,5 @@ public class HomeRepository implements HomeDataSource {
                     return request;
                 })
                 .compose(new SatcatcheResponseTransformer<UploadRiskAppListRequest, EmptyResponse>("uploadRiskAppList"));
-    }
-
-    @Override
-    public Flowable<CheckCompany> checkCompany() {
-        return queryUser()
-                .map(user -> {
-                    CheckCompanyRequest request = new CheckCompanyRequest();
-                    request.setLoanId(user.getLoanId());
-                    return request;
-                })
-                .compose(new SatcatcheResponseTransformer<CheckCompanyRequest, CheckCompany>("checkCompany"));
-
     }
 }

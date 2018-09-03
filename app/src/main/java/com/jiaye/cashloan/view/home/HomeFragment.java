@@ -22,7 +22,6 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.service.LocationService;
 import com.jiaye.cashloan.view.BaseFragment;
 import com.jiaye.cashloan.view.FunctionActivity;
-import com.jiaye.cashloan.view.company.CompanyActivity;
 import com.jiaye.cashloan.view.home.source.HomeRepository;
 import com.satcatche.library.widget.SatcatcheDialog;
 

@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.certification;
 
 import com.jiaye.cashloan.http.data.certification.Step;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.view.BasePresenterImpl;
 import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
@@ -26,18 +25,6 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
     public CertificationPresenter(CertificationContract.View view, CertificationDataSource dataSource) {
         mView = view;
         mDataSource = dataSource;
-    }
-
-    @Override
-    public void subscribe() {
-        super.subscribe();
-        Disposable disposable = mDataSource.requestRecommend()
-                .compose(new ViewTransformer<>())
-                .subscribe(recommend -> {
-/*                    mView.setCompany(recommend.getCompany());
-                    mView.setName(recommend.getName());*/
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
     }
 
     @Override

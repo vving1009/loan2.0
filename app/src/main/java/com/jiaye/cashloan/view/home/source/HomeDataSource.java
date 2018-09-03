@@ -1,7 +1,6 @@
 package com.jiaye.cashloan.view.home.source;
 
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.loan.Loan;
 import com.jiaye.cashloan.persistence.User;
 
@@ -34,9 +33,4 @@ public interface HomeDataSource {
      * 上传危险应用列表
      */
     Flowable<EmptyResponse> uploadRiskAppList();
-
-    /**
-     * 用户是否需要选择分公司
-     */
-    Flowable<CheckCompany> checkCompany();
 }

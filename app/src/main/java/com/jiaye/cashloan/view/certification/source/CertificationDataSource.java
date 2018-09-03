@@ -1,6 +1,5 @@
 package com.jiaye.cashloan.view.certification.source;
 
-import com.jiaye.cashloan.http.data.certification.Recommend;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 
@@ -13,8 +12,6 @@ import io.reactivex.Flowable;
  */
 
 public interface CertificationDataSource {
-
-    Flowable<Recommend> requestRecommend();
 
     Flowable<Step> requestStep();
 
