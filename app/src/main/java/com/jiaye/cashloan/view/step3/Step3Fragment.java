@@ -310,6 +310,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
                 mList.set(0, "请选择");
                 mList.set(1, "请选择");
                 mAdapter.notifyDataSetChanged();
+                mSalesman = null;
                 showCompanyView();
             });
             mStepView = itemView.findViewById(R.id.step_view);
