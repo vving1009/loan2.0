@@ -76,9 +76,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_fragment, container, false);
-        root.findViewById(R.id.btn_apply).setOnClickListener(v -> {
+        /*root.findViewById(R.id.btn_apply).setOnClickListener(v -> {
             mPresenter.loan();
-        });
+        });*/
         mTextLocation = root.findViewById(R.id.location_text);
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();

@@ -1,325 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_gray_light"
+    android:orientation="vertical"
     tools:ignore="ContentDescription,RtlHardcoded">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="36dp"
+        android:background="@color/color_white">
 
-        <RelativeLayout
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/home_ic_logo_top" />
+
+        <TextView
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:drawablePadding="1dp"
+            android:drawableRight="@drawable/home_ic_location"
+            android:gravity="center_vertical|right"
+            android:includeFontPadding="false"
+            android:textColor="@color/color_blue"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/cal_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@null"
+            android:src="@drawable/home_ic_cal" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="137dp"
-            android:background="@color/color_blue">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/guide_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_pic_guide"
+                android:scaleType="fitCenter" />
+
+            <RelativeLayout
+                android:id="@+id/credit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="161dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="9dp"
+                    android:drawableLeft="@drawable/home_ic_credit_1"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="信用贷"
+                    android:textColor="@color/color_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="66dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/my_btn"
+                    android:text="@string/home_apply_now"
+                    android:textColor="@color/color_white"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="44dp"
+                    android:background="@color/color_gray_hole" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="55dp"
+                    android:text="最高可借"
+                    android:textColor="@color/color_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="92dp"
+                    android:text="100,000"
+                    android:textColor="@color/color_blue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="35dp"
+                    android:drawableLeft="@drawable/home_ic_credit_2"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="最快10分钟到账"
+                    android:textColor="@color/color_gray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="208dp"
+                    android:drawableLeft="@drawable/home_ic_credit_3"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="有信用卡即可贷"
+                    android:textColor="@color/color_gray"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/car_layout"
+                android:layout_width="match_parent"
+                android:layout_height="161dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="9dp"
+                    android:drawableLeft="@drawable/home_ic_car_1"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="车抵贷"
+                    android:textColor="@color/color_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="66dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/my_btn"
+                    android:text="@string/home_apply_now"
+                    android:textColor="@color/color_white"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="44dp"
+                    android:background="@color/color_gray_hole" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="55dp"
+                    android:text="最高可借"
+                    android:textColor="@color/color_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="92dp"
+                    android:text="200,000"
+                    android:textColor="@color/color_blue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="35dp"
+                    android:drawableLeft="@drawable/home_ic_car_2"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="不压爱车，最快当日放款"
+                    android:textColor="@color/color_gray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="208dp"
+                    android:drawableLeft="@drawable/home_ic_car_3"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="有车即可贷"
+                    android:textColor="@color/color_gray"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/home_ic_logo" />
-
-            <TextView
-                android:id="@+id/location_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="28dp"
-                android:layout_marginTop="12dp"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/home_ic_location"
-                android:gravity="bottom|right"
-                android:includeFontPadding="false"
-                android:textColor="@android:color/white"
-                android:textSize="17sp" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="337dp"
-            android:layout_height="234dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="-56dp"
-            android:background="@drawable/home_layout_bg_top"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="23dp"
-                android:includeFontPadding="false"
-                android:text="车贷-最快当日放款"
-                android:textColor="#282828"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:includeFontPadding="false"
-                android:text="200,000"
-                android:textColor="@color/color_blue"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:includeFontPadding="false"
-                android:text="最高可借额度（元）"
-                android:textColor="#656565"
-                android:textSize="10sp" />
-
-            <RelativeLayout
-                android:layout_width="300dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="19dp"
-                android:background="#F2F2F2">
-
-                <LinearLayout
-                    android:id="@+id/layout_1_relation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="9dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="手续简便"
-                        android:textColor="@color/color_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:includeFontPadding="false"
-                        android:text="线上预约 线下办理"
-                        android:textColor="#989898"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_2_relation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_1_relation"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="6dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="快速放款"
-                        android:textColor="@color/color_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:includeFontPadding="false"
-                        android:text="最快当日放款"
-                        android:textColor="#989898"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="164dp"
-                    android:layout_marginTop="9dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:includeFontPadding="false"
-                        android:text="不押爱车"
-                        android:textColor="@color/color_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:includeFontPadding="false"
-                        android:text="车随人走 不押爱车"
-                        android:textColor="#989898"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_3"
-                    android:layout_marginLeft="164dp"
-                    android:layout_marginTop="6dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="还款方便"
-                        android:textColor="@color/color_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:includeFontPadding="false"
-                        android:text="自由灵活 快速解抵"
-                        android:textColor="#989898"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="19dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/home_ic_logo_bottom" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_apply"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="280dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="44dp"
-            android:background="@drawable/home_btn_bg"
-            android:text="立即申请"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp">
-
-            <LinearLayout
-                android:id="@+id/layout_center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="41dp"
-                android:layout_marginRight="41dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/home_ic_safe" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:includeFontPadding="false"
-                    android:text="安全保证"
-                    android:textColor="#181818"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:text="信息加密 放款安全"
-                    android:textColor="#A2A1A1"
-                    android:textSize="9sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_toLeftOf="@id/layout_center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/home_ic_amount" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:includeFontPadding="false"
-                    android:text="额度更优"
-                    android:textColor="#181818"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:text="精准匹配 最高20万"
-                    android:textColor="#A2A1A1"
-                    android:textSize="9sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@id/layout_center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/home_ic_speedy" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="6dp"
-                    android:includeFontPadding="false"
-                    android:text="专业快捷"
-                    android:textColor="#181818"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:text="线上申请 极速放款"
-                    android:textColor="#A2A1A1"
-                    android:textSize="9sp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>
