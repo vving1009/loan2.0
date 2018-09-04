@@ -67,7 +67,15 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
 
     @Override
     public void onClickNext() {
-        if (mStep1.isFinishItem0() && mStep1.isFinishItem1() && mStep1.isFinishItem2() && mStep1.isFinishItem3()) {
+        if (!mStep1.isFinishItem0()) {
+            mView.showToastById(R.string.step1_error_brand);
+        } else if (!mStep1.isFinishItem1()) {
+            mView.showToastById(R.string.step1_error_date);
+        } else if (!mStep1.isFinishItem2()) {
+            mView.showToastById(R.string.step1_error_miles);
+        } else if (!mStep1.isFinishItem3()) {
+            mView.showToastById(R.string.step1_error_city);
+        } else {
             Disposable disposable = mDataSource.requestCarPrice(mStep1)
                     .compose(new ViewTransformer<CarPrice>() {
                         @Override
@@ -84,8 +92,6 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                         mView.showResultView(min, max);
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
-        } else {
-            mView.showToastById(R.string.step1_error);
         }
     }
 

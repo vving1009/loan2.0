@@ -112,7 +112,7 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);
         } else {
-            mView.showToastById(R.string.step1_error);
+            mView.showToastById(R.string.step2_error);
         }
     }
 
