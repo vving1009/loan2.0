@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,10 +130,12 @@ public class Step1Fragment extends BaseStepFragment implements Step1Contract.Vie
         if (requestCode == REQUEST_CODE_CAR_MILES) {
             if (data != null) {
                 String miles = data.getStringExtra(EXTRA_MILES);
-                mList.set(2, miles + "公里");
-                mAdapter.notifyDataSetChanged();
-                mPresenter.getStep1().setFinishItem2(true);
-                mPresenter.getStep1().setCarMiles(divideTenThousand(miles));
+                if (!TextUtils.isEmpty(miles)) {
+                    mList.set(2, miles + "公里");
+                    mAdapter.notifyDataSetChanged();
+                    mPresenter.getStep1().setFinishItem2(true);
+                    mPresenter.getStep1().setCarMiles(divideTenThousand(miles));
+                }
             }
         }
         if (requestCode == REQUEST_CODE_CAR_CITY) {
