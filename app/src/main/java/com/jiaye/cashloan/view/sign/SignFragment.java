@@ -66,6 +66,7 @@ public class SignFragment extends BaseFunctionFragment implements SignContract.V
                 handler.proceed();
             }
         });
+        hideBtn();
         mPresenter = new SignPresenter(this, new SignRepository());
         mPresenter.subscribe();
         return root;

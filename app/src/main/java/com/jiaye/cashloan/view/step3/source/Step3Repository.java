@@ -7,6 +7,10 @@ import com.jiaye.cashloan.http.data.amount.AmountMoneyRequest;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSign;
+import com.jiaye.cashloan.http.data.loan.LoanVisaSignRequest;
+import com.jiaye.cashloan.http.data.loan.Visa;
+import com.jiaye.cashloan.http.data.loan.VisaRequest;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.my.CreditInfoRequest;
 import com.jiaye.cashloan.http.data.search.Salesman;
@@ -15,7 +19,10 @@ import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.http.utils.ResponseTransformer;
 import com.jiaye.cashloan.http.utils.SatcatcheResponseTransformer;
 
+import org.reactivestreams.Publisher;
+
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 
 /**
  * Step3Repository
@@ -90,5 +97,28 @@ public class Step3Repository implements Step3DataSource {
     public Flowable<CreditInfo> creditInfo() {
         return Flowable.just(new CreditInfoRequest())
                 .compose(new ResponseTransformer<CreditInfoRequest, CreditInfo>("creditInfo"));
+    }
+
+    /**
+     * 电子签章
+     * @return
+     */
+    @Override
+    public Flowable<Visa> sign() {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    LoanVisaSignRequest request = new LoanVisaSignRequest();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .compose(new ResponseTransformer<LoanVisaSignRequest, LoanVisaSign>("loanVisaSign"))
+                .map(loanVisaSign -> LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    VisaRequest request = new VisaRequest();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .flatMap((Function<VisaRequest, Publisher<Visa>>) visaRequest -> Flowable.just(visaRequest)
+                        .compose(new SatcatcheResponseTransformer<VisaRequest, Visa>("visa")));
     }
 }
