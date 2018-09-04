@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
+import com.jiaye.cashloan.http.data.amount.AmountMoney;
 import com.jiaye.cashloan.http.data.certification.Step;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.Salesman;
@@ -144,10 +145,12 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                 .observeOn(Schedulers.io())
                 .flatMap(step -> mDataSource.requestAmountMoney())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(money -> {
+                .doOnNext(money -> {
                     mView.dismissProgressDialog();
                     mView.showSuccessView(money.getAmount());
-                }, new ThrowableConsumer(mView));
+                })
+                .defaultIfEmpty(new AmountMoney())
+                .subscribe(money -> mView.dismissProgressDialog(), new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }
 }
