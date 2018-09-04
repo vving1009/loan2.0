@@ -4,6 +4,8 @@ import com.jiaye.cashloan.LoanApplication;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.car.QueryValuationRequest;
 import com.jiaye.cashloan.http.data.car.QueryValuationResponse;
+import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.certification.StepRequest;
 import com.jiaye.cashloan.http.data.certification.UpdateStepRequest;
 import com.jiaye.cashloan.http.data.step2.Step2;
 import com.jiaye.cashloan.http.data.step2.Step2Request;
@@ -19,6 +21,18 @@ import io.reactivex.Flowable;
 
 public class Step2Repository implements Step2DataSource {
 
+
+    @Override
+    public Flowable<Step> requestStep() {
+        return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
+                .map(user -> {
+                    StepRequest request = new StepRequest();
+                    request.setLoanId(user.getLoanId());
+                    return request;
+                })
+                .compose(new SatcatcheResponseTransformer<StepRequest, Step>("step"));
+    }
+
     @Override
     public Flowable<Step2> requestStep2() {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
@@ -31,13 +45,13 @@ public class Step2Repository implements Step2DataSource {
     }
 
     @Override
-    public Flowable<EmptyResponse> requestUpdateStep() {
+    public Flowable<EmptyResponse> requestUpdateStep(int step, String msg) {
         return Flowable.just(LoanApplication.getInstance().getDbHelper().queryUser())
                 .map(user -> {
                     UpdateStepRequest request = new UpdateStepRequest();
                     request.setLoanId(user.getLoanId());
-                    request.setStatus(5);
-                    request.setMsg("提交信息");
+                    request.setStatus(step);
+                    request.setMsg(msg);
                     return request;
                 })
                 .compose(new SatcatcheResponseTransformer<UpdateStepRequest, EmptyResponse>("updateStep"));

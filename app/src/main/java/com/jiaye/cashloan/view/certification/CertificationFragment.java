@@ -140,7 +140,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
             mViewPager.setCurrentItem(0);
             currentFragmentIndex = 1;
             Step1Fragment.refresh(getActivity());
-        } else if (step == 4) {
+        } else if (step == 4 || step == 8) {
             mViewPager.setCurrentItem(1);
             currentFragmentIndex = 2;
             Step2Fragment.refresh(getActivity());
@@ -183,6 +183,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
                         getResources().getDrawable(R.drawable.certification_ic_step_3_end),
                         null,
                         null);
+            case 8:
             case 4:
                 mTextStep2.setCompoundDrawablesWithIntrinsicBounds(
                         null,
