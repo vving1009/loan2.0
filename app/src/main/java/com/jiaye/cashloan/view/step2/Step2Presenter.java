@@ -114,29 +114,6 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
         } else {
             mView.showToastById(R.string.step2_error);
         }
-        Disposable disposable = mDataSource.queryCarValuation()
-                .map(response -> {
-                    String s = response.getValuation();
-                    if (!TextUtils.isEmpty(s)) {
-                        BigDecimal a = new BigDecimal(s);
-                        BigDecimal b = new BigDecimal("10000");
-                        return a.multiply(b).setScale(0).toString();
-                    } else {
-                        throw new LocalException(R.string.error_car_valuation);
-                    }
-                })
-                .compose(new ViewTransformer<String>() {
-                    @Override
-                    public void accept() {
-                        super.accept();
-                        mView.showProgressDialog();
-                    }
-                })
-                .subscribe(value -> {
-                    mView.dismissProgressDialog();
-                    mView.showResultView(value);
-                }, new ThrowableConsumer(mView));
-        mCompositeDisposable.add(disposable);
     }
 
     @Override
