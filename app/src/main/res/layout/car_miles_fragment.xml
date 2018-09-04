@@ -11,6 +11,7 @@
         android:layout_height="44dp">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -32,14 +33,18 @@
             android:id="@+id/edit_input"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/unit"
-            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/name"
+            android:background="@null"
+            android:ellipsize="start"
+            android:gravity="center_vertical|right"
             android:hint="请输入"
-            android:textColor="@color/color_gray"
             android:inputType="number"
-            android:textSize="12sp"
-            android:background="@null"/>
+            android:singleLine="true"
+            android:textColor="@color/color_gray"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <View
