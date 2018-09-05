@@ -118,6 +118,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="请输入"
+                    android:maxLength="10"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -151,6 +152,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -183,6 +185,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="请输入"
+                    android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -216,6 +219,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入"
                     android:inputType="number"
+                    android:maxLength="8"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -278,6 +282,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -311,6 +316,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入"
                     android:inputType="number"
+                    android:maxLength="8"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
@@ -342,8 +348,9 @@
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:inputType="text"
                     android:hint="请输入"
+                    android:inputType="text"
+                    android:maxLength="10"
                     android:singleLine="true"
                     android:textColor="@color/color_gray"
                     android:textSize="12sp" />
