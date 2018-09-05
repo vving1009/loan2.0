@@ -6,9 +6,7 @@ import com.jiaye.cashloan.view.ThrowableConsumer;
 import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.certification.source.CertificationDataSource;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * CertificationPresenter
@@ -37,19 +35,9 @@ public class CertificationPresenter extends BasePresenterImpl implements Certifi
                         mView.showProgressDialog();
                     }
                 })
-                .doOnNext(step -> {
-                    if (step.getStep() != 10) {
-                        mView.dismissProgressDialog();
-                        mView.setStep(step.getStep(), false);
-                    }
-                })
-                .filter(step -> step.getStep() == 10)
-                .observeOn(Schedulers.io())
-                .flatMap(step -> mDataSource.creditInfo())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(creditInfo -> {
+                .subscribe(step -> {
                     mView.dismissProgressDialog();
-                    mView.setStep(10, !creditInfo.getBankStatus().equals("01"));
+                    mView.setStep(step.getStep());
                 }, new ThrowableConsumer(mView));
         mCompositeDisposable.add(disposable);
     }

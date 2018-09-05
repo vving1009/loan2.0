@@ -155,10 +155,6 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
                 mSalesman = data.getParcelableExtra(EXTRA_SALESMAN);
                 String company = mSalesman.getCompany();
                 String name = mSalesman.getName();
-                /*String companyName = data.getStringExtra(EXTRA_SALESMAN);
-                String companyId = data.getStringExtra(EXTRA_COMPANY_ID);
-                String personName = data.getStringExtra(EXTRA_PERSON_NAME);
-                String personId = data.getStringExtra(EXTRA_PERSON_ID);*/
                 if (!TextUtils.isEmpty(company) && !TextUtils.isEmpty(name)) {
                     mList.set(0, company);
                     mList.set(1, name);
@@ -178,7 +174,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
         mTextTitle.setText("到店借款");
         mTextSubTitle.setText("请您到店进行后续手续办理");
         mBtnNext.setText("提交");
-        mBtnNext.setOnClickListener(v -> mPresenter.onClickNext(mSalesman));
+        mBtnNext.setOnClickListener(v -> mPresenter.uploadSelectSalesman(mSalesman));
     }
 
     @Override
@@ -209,6 +205,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
     @Override
     public void showSuccessView(String value) {
+        mPresenter.onSuccessViewShown();
         mRecyclerView.setVisibility(View.GONE);
         mLayoutResult.setVisibility(View.VISIBLE);
         mTextCall.setVisibility(View.GONE);

@@ -36,6 +36,8 @@ public interface Step3Contract {
 
         void requestStep();
 
-        void onClickNext(Salesman salesman);
+        void uploadSelectSalesman(Salesman salesman);
+
+        void onSuccessViewShown();
     }
 }

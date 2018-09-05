@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
-import com.jiaye.cashloan.http.data.certification.Step;
+import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.loan.Visa;
 import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
@@ -57,7 +57,7 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
     }
 
     @Override
-    public void onClickNext(Salesman salesman) {
+    public void uploadSelectSalesman(Salesman salesman) {
         if (salesman == null || TextUtils.isEmpty(salesman.getName())) {
             mView.showToastById(R.string.search_error);
         } else {
@@ -70,7 +70,8 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                         request.setNumber(bean.getWorkId());
                         return mDataSource.saveSalesman(request);
                     })
-                    .flatMap(response -> mDataSource.requestUpdateStep())
+                    .onErrorReturnItem(new EmptyResponse())
+                    .flatMap(response -> mDataSource.requestUpdateStep(6, "到店借款"))
                     .compose(new ViewTransformer<EmptyResponse>() {
                         @Override
                         public void accept() {
@@ -98,39 +99,42 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                 .flatMap(visa -> mDataSource.requestStep())
                 .filter(step -> step.getStep() == 10)
                 .flatMap(step -> mDataSource.creditInfo())
-                .compose(new ViewTransformer<CreditInfo>() {
+                .filter(creditInfo -> creditInfo.getBankStatus().equals("01"))  //如果未开户进入开户界面
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(creditInfo -> mView.showOpenAccountView())
+                .defaultIfEmpty(new CreditInfo())  //如果已开户进入等待放款页面
+                .observeOn(Schedulers.io())
+                .flatMap(creditInfo -> mDataSource.requestUpdateStep(9, "等待放款"))
+                .compose(new ViewTransformer<EmptyResponse>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
-                .subscribe(creditInfo -> {
-                    if (creditInfo.getBankStatus().equals("01")) {
-                        // 如果没开户显示开户页面
-                        mView.showOpenAccountView();
-                    } else {
-                        mView.sendBroadcast();
-                    }
-                }, new ThrowableConsumer(mView), mView::dismissProgressDialog);
+                .subscribe(emptyResponse -> mView.sendBroadcast(), new ThrowableConsumer(mView), mView::dismissProgressDialog);
         mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void requestStep() {
-        Disposable disposable = mDataSource.requestStep()
-                .compose(new ViewTransformer<Step>() {
+        Disposable disposable = mDataSource.checkCompany()
+                .filter(CheckCompany::isNeed)
+                .compose(new ViewTransformer<CheckCompany>() {
                     @Override
                     public void accept() {
                         super.accept();
                         mView.showProgressDialog();
                     }
                 })
+                .doOnNext(checkCompany -> mView.showInputView())
+                .defaultIfEmpty(new CheckCompany())
+                .observeOn(Schedulers.io())
+                .flatMap(checkCompany -> mDataSource.requestStep())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(step -> {
                     switch (step.getStep()) {
                         case 5:
-                            mView.showInputView();
-                            break;
                         case 6:
                             mView.showWaitView();
                             break;
@@ -143,10 +147,26 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                 .observeOn(Schedulers.io())
                 .flatMap(step -> mDataSource.requestAmountMoney())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(money -> {
-                    mView.showSuccessView(money.getAmount());
-                })
-                .subscribe(money -> {}, new ThrowableConsumer(mView), mView::dismissProgressDialog);
+                .subscribe(money -> mView.showSuccessView(money.getAmount()), new ThrowableConsumer(mView), mView::dismissProgressDialog);
+        mCompositeDisposable.add(disposable);
+    }
+
+    /**
+     * 如果已开户直接进入等待放款
+     */
+    @Override
+    public void onSuccessViewShown() {
+        Disposable disposable = Flowable.zip(mDataSource.creditInfo(), mDataSource.requestStep(),
+                (creditInfo, step) -> step.getStep() == 10 && !creditInfo.getBankStatus().equals("01"))
+                .filter(result -> result)
+                .flatMap(result -> mDataSource.requestUpdateStep(9, "等待放款"))
+                .compose(new ViewTransformer<EmptyResponse>() {
+                    @Override
+                    public void accept() {
+                        super.accept();
+                        mView.showProgressDialog();
+                    }
+                }).subscribe(response -> mView.sendBroadcast(), new ThrowableConsumer(mView), mView::dismissProgressDialog);
         mCompositeDisposable.add(disposable);
     }
 }

@@ -135,7 +135,7 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
     }
 
     @Override
-    public void setStep(int step, boolean isOpenAccount) {
+    public void setStep(int step) {
         if (step == 1) {
             mViewPager.setCurrentItem(0);
             currentFragmentIndex = 1;
@@ -144,36 +144,24 @@ public class CertificationFragment extends BaseFunctionFragment implements Certi
             mViewPager.setCurrentItem(1);
             currentFragmentIndex = 2;
             Step2Fragment.refresh(getActivity());
-        } else if (step == 5 || step == 6 || step == 3 || step == 7) {
+        } else if (step == 5 || step == 6 || step == 3 || step == 7 || step == 10) {
             mViewPager.setCurrentItem(2);
             currentFragmentIndex = 3;
             Step3Fragment.refresh(getActivity());
-        } else if (step == 10) {
-            if (isOpenAccount) {
-                mViewPager.setCurrentItem(3);
-                currentFragmentIndex = 4;
-                Step4Fragment.refresh(getActivity());
-            } else {
-                mViewPager.setCurrentItem(2);
-                currentFragmentIndex = 3;
-                Step3Fragment.refresh(getActivity());
-            }
+        } else if (step == 9) {
+            mViewPager.setCurrentItem(3);
+            currentFragmentIndex = 4;
+            Step4Fragment.refresh(getActivity());
         }
         switch (step) {
+            case 9:
+                mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        getResources().getDrawable(R.drawable.certification_ic_step_4_end),
+                        null,
+                        null);
+
             case 10:
-                if (isOpenAccount) {
-                    mTextStep4.setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            getResources().getDrawable(R.drawable.certification_ic_step_4_end),
-                            null,
-                            null);
-                } else {
-                    mTextStep3.setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            getResources().getDrawable(R.drawable.certification_ic_step_3_end),
-                            null,
-                            null);
-                }
             case 7:
             case 6:
             case 5:
