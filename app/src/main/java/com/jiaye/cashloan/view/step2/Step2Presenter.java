@@ -81,30 +81,36 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                 }
                 break;
             case 1:
-                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 0) {
-                    mView.showBioassayView();
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 0) {
+                    mView.showIDView();
                 }
                 break;
             case 2:
-                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 0) {
-                    mView.showInfoView();
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 0) {
+                    mView.showBioassayView();
                 }
                 break;
             case 3:
-                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
-                        && mStep2.getOperatorAuth() == 0) {
-                    mView.showPhoneView();
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 1 &&
+                        mStep2.getUserInfo() == 0) {
+                    mView.showInfoView();
                 }
                 break;
             case 4:
-                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
-                        && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 0) {
-                    mView.showTaobaoView();
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 1 &&
+                        mStep2.getUserInfo() == 1 && mStep2.getOperatorAuth() == 0) {
+                    mView.showPhoneView();
                 }
                 break;
             case 5:
-                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
-                        && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 0) {
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 1 &&
+                        mStep2.getUserInfo() == 1 && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 0) {
+                    mView.showTaobaoView();
+                }
+                break;
+            case 6:
+                if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 1 &&
+                        mStep2.getUserInfo() == 1 && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 0) {
                     mView.showVehicleView();
                 }
                 break;
@@ -113,7 +119,7 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
 
     @Override
     public void onClickNext() {
-        if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
+        if (mStep2.getCarinsuranceAuth() == 1 && mStep2.getId() == 1 && mStep2.getBioassayAuth() == 1 && mStep2.getUserInfo() == 1
                 && mStep2.getOperatorAuth() == 1 && mStep2.getTaobaoAuth() == 1 && mStep2.getCarPapers() == 1) {
             Disposable disposable = mDataSource.requestUpdateStep(8, "提交信息完成")
                     .compose(new ViewTransformer<EmptyResponse>() {

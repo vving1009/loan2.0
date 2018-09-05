@@ -21,6 +21,8 @@ public class Step2 extends SatcatcheChildResponse {
 
     @SerializedName("carinsurance_auth")
     private int carinsuranceAuth;
+    @SerializedName("idcard_auth")
+    private int id;
     @SerializedName("taobao_auth")
     private int taobaoAuth;
     @SerializedName("bioassay_auth")
@@ -78,5 +80,13 @@ public class Step2 extends SatcatcheChildResponse {
 
     public void setCarPapers(int carPapers) {
         this.carPapers = carPapers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

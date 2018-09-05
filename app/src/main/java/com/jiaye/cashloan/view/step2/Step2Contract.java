@@ -22,6 +22,8 @@ public interface Step2Contract {
 
         void showInsuranceView();
 
+        void showIDView();
+
         void showBioassayView();
 
         void showInfoView();

@@ -147,6 +147,11 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
     }
 
     @Override
+    public void showIDView() {
+        FunctionActivity.function(getActivity(), "ID");
+    }
+
+    @Override
     public void showBioassayView() {
         EasyPermissions.requestPermissions(this, CAMERA_PERMS_REQUEST_CODE, permissions);
     }
@@ -193,36 +198,35 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
             }
             switch (position) {
                 case 0:
-                    holder.setType(0);
                     holder.setTextName("保单");
                     holder.setState(mStep2.getCarinsuranceAuth());
                     break;
                 case 1:
-                    holder.setType(1);
-                    holder.setTextName("人像对比");
-                    holder.setState(mStep2.getBioassayAuth());
+                    holder.setTextName("身份认证");
+                    holder.setState(mStep2.getId());
                     holder.setReady(mStep2.getCarinsuranceAuth() == 1);
                     break;
                 case 2:
-                    holder.setType(1);
+                    holder.setTextName("人像对比");
+                    holder.setState(mStep2.getBioassayAuth());
+                    holder.setReady(mStep2.getId() == 1);
+                    break;
+                case 3:
                     holder.setTextName("个人资料 ");
                     holder.setState(mStep2.getUserInfo());
                     holder.setReady(mStep2.getBioassayAuth() == 1);
                     break;
-                case 3:
-                    holder.setType(1);
+                case 4:
                     holder.setTextName("手机运营商");
                     holder.setState(mStep2.getOperatorAuth());
                     holder.setReady(mStep2.getUserInfo() == 1);
                     break;
-                case 4:
-                    holder.setType(1);
+                case 5:
                     holder.setTextName("淘宝/支付宝");
                     holder.setState(mStep2.getTaobaoAuth());
                     holder.setReady(mStep2.getOperatorAuth() == 1);
                     break;
-                case 5:
-                    holder.setType(2);
+                case 6:
                     holder.setTextName("车辆证件");
                     holder.setState(mStep2.getCarPapers());
                     holder.setReady(mStep2.getTaobaoAuth() == 1);
@@ -234,7 +238,7 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
         @Override
         public int getItemCount() {
             if (mStep2 != null) {
-                return 6;
+                return 7;
             } else {
                 return 0;
             }
@@ -254,15 +258,12 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
 
         private TextView mTextState;
 
-        //private ImageView mImageInto;
-
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(v -> mPresenter.onClickItem(getLayoutPosition()));
             mStepView = itemView.findViewById(R.id.step_view);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
-            //mImageInto = itemView.findViewById(R.id.img_into);
         }
 
         public void setType(int type) {
@@ -277,23 +278,19 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
             int position = getLayoutPosition();
             switch (state) {
                 case 0:
-                    //mTextState.setTextColor(Color.parseColor("#989898"));
-                    if (position == 0 || position == 2 || position == 5) {
+                    if (position == 0 || position == 3 || position == 6) {
                         mTextState.setText("待提交");
                     } else {
                         mTextState.setText("待认证");
                     }
-                    //mImageInto.setVisibility(View.VISIBLE);
                     mStepView.setSelect(false);
                     break;
                 case 1:
-                    //mTextState.setTextColor(Color.parseColor("#425FBB"));
-                    if (position == 0 || position == 2 || position == 5) {
+                    if (position == 0 || position == 3 || position == 6) {
                         mTextState.setText("已提交");
                     } else {
                         mTextState.setText("已认证");
                     }
-                    //mImageInto.setVisibility(View.INVISIBLE);
                     mStepView.setSelect(true);
                     break;
             }
