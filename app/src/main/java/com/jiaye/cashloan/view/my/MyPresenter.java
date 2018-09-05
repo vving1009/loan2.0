@@ -37,7 +37,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
                 .compose(new ViewTransformer<>())
                 .subscribe(user -> {
                     if (TextUtils.isEmpty(user.getToken())) {
-                        mView.setBtnText("登录");
+                        mView.setBtnText("登录/注册");
                         mIsLogin = false;
                     } else {
                         mView.setBtnText("注销");
@@ -53,7 +53,7 @@ public class MyPresenter extends BasePresenterImpl implements MyContract.Present
             Disposable disposable = mDataSource.exit()
                     .compose(new ViewTransformer<>())
                     .subscribe(aBoolean -> {
-                        mView.setBtnText("登录");
+                        mView.setBtnText("登录/注册");
                         mIsLogin = false;
                     }, new ThrowableConsumer(mView));
             mCompositeDisposable.add(disposable);

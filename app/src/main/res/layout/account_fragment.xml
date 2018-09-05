@@ -24,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text="@string/my_credit_account"
+                android:text="@string/my_credit_open_account"
                 android:textColor="@color/color_black"
                 android:textSize="13sp" />
 
