@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:id="@+id/result_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_title"
             android:layout_centerHorizontal="true"
@@ -61,12 +61,14 @@
 
             <TextView
                 android:id="@+id/result_text"
-                android:layout_width="227dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="34dp"
                 android:gravity="center"
                 android:lineSpacingExtra="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:textColor="#425FBB"
                 android:textSize="18sp" />
 

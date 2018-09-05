@@ -36,7 +36,7 @@
 
         <LinearLayout
             android:id="@+id/layout_1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_top"
             android:layout_centerHorizontal="true"
@@ -52,12 +52,14 @@
 
             <TextView
                 android:id="@+id/center_text"
-                android:layout_width="227dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="31dp"
                 android:gravity="center"
                 android:lineSpacingExtra="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="您的借款正在投标中,\n请耐心等待。"
                 android:textColor="#425FBB"
                 android:textSize="18sp" />
