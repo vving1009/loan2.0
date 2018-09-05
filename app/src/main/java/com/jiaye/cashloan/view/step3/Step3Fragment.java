@@ -26,6 +26,7 @@ import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.FunctionActivity;
 import com.jiaye.cashloan.view.account.AccountWebActivity;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
+import com.jiaye.cashloan.view.company.CompanyActivity;
 import com.jiaye.cashloan.view.step1.BaseStepFragment;
 import com.jiaye.cashloan.view.step3.source.Step3Repository;
 import com.jiaye.cashloan.widget.StepView;
@@ -166,6 +167,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
 
     @Override
     public void showInputView() {
+        mPresenter.onInputViewShown();
         mRecyclerView.setVisibility(View.VISIBLE);
         mLayoutResult.setVisibility(View.GONE);
         mTextCall.setVisibility(View.VISIBLE);
@@ -235,8 +237,7 @@ public class Step3Fragment extends BaseStepFragment implements Step3Contract.Vie
     }
 
     public void showCompanyView() {
-        Intent intent = new Intent(getContext(), FunctionActivity.class);
-        intent.putExtra("function", "Company");
+        Intent intent = new Intent(getContext(), CompanyActivity.class);
         startActivityForResult(intent, REQUEST_CODE_SALESMAN);
     }
 

@@ -40,8 +40,7 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
     }
 
     @Override
-    public void subscribe() {
-        super.subscribe();
+    public void onInputViewShown() {
         Disposable disposable = mDataSource.salesman()
                 .compose(new ViewTransformer<com.jiaye.cashloan.http.data.search.Salesman>() {
                     @Override

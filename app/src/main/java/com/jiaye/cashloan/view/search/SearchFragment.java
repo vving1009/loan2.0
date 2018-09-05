@@ -1,5 +1,6 @@
 package com.jiaye.cashloan.view.search;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,10 +74,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
                     if (mSalesman != null) {
                         Intent intent = new Intent();
                         intent.putExtra(Step3Fragment.EXTRA_SALESMAN, mSalesman);
-                        /*intent.putExtra(Step3Fragment.EXTRA_COMPANY_NAME, mSalesman.getCompany());
-                        intent.putExtra(Step3Fragment.EXTRA_COMPANY_ID, mSalesman.getCompanyId());
-                        intent.putExtra(Step3Fragment.EXTRA_PERSON_NAME, mSalesman.getName());
-                        intent.putExtra(Step3Fragment.EXTRA_PERSON_ID, mSalesman.getWorkId());*/
                         getActivity().setResult(Step3Fragment.REQUEST_CODE_SALESMAN, intent);
                     }
                     getActivity().finish();
@@ -138,6 +136,24 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(getContext().getResources().getDrawable(R.drawable.search_list_divider));
         mSearchList.addItemDecoration(divider);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSearchView.requestFocus();
+        showSoftInput();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSearchView.setQuery("", false);
+    }
+
+    private void showSoftInput() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
     private class SearchListAdapter extends RecyclerView.Adapter<SearchFragment.SearchListAdapter.ViewHolder> {
@@ -235,5 +251,11 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        ((CompanyActivity) getActivity()).showCompanyView();
+        return true;
     }
 }
