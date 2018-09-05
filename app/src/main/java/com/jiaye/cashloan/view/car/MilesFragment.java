@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -30,13 +31,18 @@ public class MilesFragment extends BaseFunctionFragment {
         View rootView = inflater.inflate(R.layout.car_miles_fragment, frameLayout, true);
         mEditInput = rootView.findViewById(R.id.edit_input);
         rootView.findViewById(R.id.btn_submit).setOnClickListener(v -> {
-            Activity activity = getActivity();
-            if (activity != null) {
-                hideShowInput(activity);
-                Intent intent = new Intent();
-                intent.putExtra(Step1Fragment.EXTRA_MILES, mEditInput.getText().toString());
-                getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_MILES, intent);
-                getActivity().finish();
+            String input = mEditInput.getText().toString();
+            if (!TextUtils.isEmpty(input)) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    hideShowInput(activity);
+                    Intent intent = new Intent();
+                    intent.putExtra(Step1Fragment.EXTRA_MILES, input);
+                    getActivity().setResult(Step1Fragment.REQUEST_CODE_CAR_MILES, intent);
+                    getActivity().finish();
+                }
+            } else {
+                showToast("请输入行驶里程");
             }
         });
         return rootView;
