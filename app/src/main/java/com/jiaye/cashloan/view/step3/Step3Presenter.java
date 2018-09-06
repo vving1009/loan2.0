@@ -6,7 +6,6 @@ import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.http.base.EmptyResponse;
 import com.jiaye.cashloan.http.data.home.CheckCompany;
 import com.jiaye.cashloan.http.data.loan.Visa;
-import com.jiaye.cashloan.http.data.my.CreditInfo;
 import com.jiaye.cashloan.http.data.search.SaveSalesmanRequest;
 import com.jiaye.cashloan.persistence.Salesman;
 import com.jiaye.cashloan.view.BasePresenterImpl;
@@ -119,7 +118,6 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.checkCompany()
-                .filter(checkCompany -> checkCompany.isNeed())
                 .compose(new ViewTransformer<CheckCompany>() {
                     @Override
                     public void accept() {
@@ -127,10 +125,13 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                         mView.showProgressDialog();
                     }
                 })
-                .doOnNext(checkCompany -> mView.showInputView())
-                .observeOn(Schedulers.io())
-                .switchIfEmpty(Flowable::just)
+                .doOnNext(checkCompany -> {
+                    if (checkCompany.isNeed()) {
+                        mView.showInputView();
+                    }
+                })
                 .filter(checkCompany -> !checkCompany.isNeed())
+                .observeOn(Schedulers.io())
                 .flatMap(checkCompany -> mDataSource.requestStep())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(step -> {
