@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.BottomSheetDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -168,10 +169,16 @@ public class IDFragment extends PhotoFunctionFragment implements IDContract.View
 
     @Override
     public void showInfo(String name, String id, String date) {
-        mEditName.setText(name);
-        mEditName.setSelection(name.length());
-        mTextId.setText(id);
-        mTextDate.setText(date);
+        if (!TextUtils.isEmpty(name)) {
+            mEditName.setText(name);
+            mEditName.setSelection(name.length());
+        }
+        if (!TextUtils.isEmpty(id)) {
+            mTextId.setText(id);
+        }
+        if (!TextUtils.isEmpty(date)) {
+            mTextDate.setText(date);
+        }
     }
 
     @Override
