@@ -22,13 +22,19 @@
     <string name="search_error">请先选择业务员</string>
     <!--certification-->
     <string name="certification_title">认证中心</string>
-    <!--car-->
+    <!--car value-->
     <string name="car_brand_title">品牌</string>
     <string name="car_year_title">上牌年份</string>
     <string name="car_month_title">上牌月份</string>
     <string name="car_province_title">所在省份</string>
     <string name="car_city_title">所在城市</string>
     <string name="car_miles_title">行驶里程</string>
+
+    <!--car loan-->
+    <string name="car_loan_titile">车抵贷</string>
+    <!--credit loan-->
+    <string name="credit_loan_titile">信用贷</string>
+
     <!--calculator-->
     <string name="cal_title">计算器</string>
     <string name="cal_loan_type">借款类型</string>

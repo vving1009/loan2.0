@@ -139,8 +139,12 @@ public class FunctionActivity extends AppCompatActivity {
                     mFragment = Info2Fragment.newInstance();
                     break;
                 case "Calculator":
-                    // 信息确认
+                    // 计算器
                     mFragment = CalculatorFragment.newInstance();
+                    break;
+                case "CarLoan":
+                    // 车贷首页
+                    mFragment = CarLoanFirstPageFragment.newInstance();
                     break;
             }
         } else {

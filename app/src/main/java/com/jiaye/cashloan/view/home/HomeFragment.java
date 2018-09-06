@@ -80,6 +80,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
             mPresenter.loan();
         });*/
         root.findViewById(R.id.cal_button).setOnClickListener(v -> FunctionActivity.function(getActivity(), "Calculator"));
+        //root.findViewById(R.id.credit_layout).setOnClickListener(v -> FunctionActivity.function(getActivity(), "Calculator"));
+        root.findViewById(R.id.car_layout).setOnClickListener(v -> FunctionActivity.function(getActivity(), "CarLoan"));
         mTextLocation = root.findViewById(R.id.location_text);
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();
