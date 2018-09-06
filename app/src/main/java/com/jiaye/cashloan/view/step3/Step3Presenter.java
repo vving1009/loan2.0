@@ -101,7 +101,8 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                 .filter(creditInfo -> creditInfo.getBankStatus().equals("01"))  //如果未开户进入开户界面
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(creditInfo -> mView.showOpenAccountView())
-                .defaultIfEmpty(new CreditInfo())  //如果已开户进入等待放款页面
+                .switchIfEmpty(Flowable::just)
+                .filter(creditInfo -> !creditInfo.getBankStatus().equals("01"))  //如果已开户进入等待放款页面
                 .observeOn(Schedulers.io())
                 .flatMap(creditInfo -> mDataSource.requestUpdateStep(9, "等待放款"))
                 .compose(new ViewTransformer<EmptyResponse>() {
@@ -118,7 +119,7 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
     @Override
     public void requestStep() {
         Disposable disposable = mDataSource.checkCompany()
-                .filter(CheckCompany::isNeed)
+                .filter(checkCompany -> checkCompany.isNeed())
                 .compose(new ViewTransformer<CheckCompany>() {
                     @Override
                     public void accept() {
@@ -127,8 +128,9 @@ public class Step3Presenter extends BasePresenterImpl implements Step3Contract.P
                     }
                 })
                 .doOnNext(checkCompany -> mView.showInputView())
-                .defaultIfEmpty(new CheckCompany())
                 .observeOn(Schedulers.io())
+                .switchIfEmpty(Flowable::just)
+                .filter(checkCompany -> !checkCompany.isNeed())
                 .flatMap(checkCompany -> mDataSource.requestStep())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(step -> {
