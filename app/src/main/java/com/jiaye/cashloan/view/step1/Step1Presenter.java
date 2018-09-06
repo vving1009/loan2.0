@@ -11,6 +11,9 @@ import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step1.source.Step1DataSource;
 import com.jiaye.cashloan.view.step1.source.Step1InputState;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -86,8 +89,9 @@ public class Step1Presenter extends BasePresenterImpl implements Step1Contract.P
                     })
                     .subscribe(price -> {
                         mView.dismissProgressDialog();
-                        String min = String.valueOf(price.getEstPriceResult().get(1));
-                        String max = String.valueOf(price.getEstPriceResult().get(2));
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        String min = df.format(new BigDecimal(String.valueOf(price.getEstPriceResult().get(1))));
+                        String max = df.format(new BigDecimal(String.valueOf(price.getEstPriceResult().get(2))));
                         mStep1.setCarMaxPrice(max);
                         mView.showResultView(min, max);
                     }, new ThrowableConsumer(mView));
