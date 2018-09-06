@@ -35,17 +35,11 @@
     <string name="step1_error_date">请选择上牌时间</string>
     <string name="step1_error_miles">请输入行驶里程</string>
     <string name="step1_error_city">请选择所在城市</string>
-    <string name="step1_evaluation">立即评估</string>
-    <string name="step1_appointment">立即预约</string>
     <string name="step1_valuation">您的爱车估值:\n%1$s-%2$s万</string>
     <!--step2-->
     <string name="step2_error">请填写认证资料</string>
-    <string name="step2_progress">车辆正在评估,请耐心等待</string>
     <string name="step2_loan_limit">经初步确定，您的借款额度:\n%1$s元</string>
-    <string name="step2_final_limit">获取最终额度</string>
     <!--step3-->
-    <string name="step3_error">请填写提交信息</string>
-    <string name="step3_confirm">确认借款</string>
     <string name="step3_call">如有问题请拨打: 400–8780–777</string>
     <string name="step3_sign">已阅读并同意电子签章确认书</string>
     <string name="step3_approving">你的借款申请正在审核中,\n请耐心等待</string>
@@ -67,8 +61,6 @@
         <item>无</item>
     </string-array>
     <!--amountMoney-->
-    <string name="step4_confirm">确认借款</string>
-    <string name="step4_open">去开户</string>
     <string name="step4_wait">您的借款正在投标中,\n请耐心等待。</string>
     <string name="step4_finish">您的借款已成功发放，请到个人中心-存管账户管理进行提现</string>
     <!--id-->
@@ -169,7 +161,6 @@
     <string name="my_credit_cash_submit">确认提交</string>
     <string name="my_credit_cash_description">1.快速提现单笔限额5万元，大额提现单笔限额50万元，每日最多可提现10次。\n\n2.提现手续费：1元/笔。\n\n3.提现时间：7×24小时。快速提现2小时左右到账，大额提现T+1工作日到账。节假日可能出现延迟。\n\n4.银行联行号：\n银行联行号就是一个地区银行的唯一识别标志。用于人民银行所组织的大额支付系统等跨区域支付结算业务，由12位组成。\n为了您的资金安全，提现金额大于5万需要填写银行联行号，联行号可以通过第三方网站或对应银行客服进行获取，银行联行号输入错误可能会导致提现失败，但不会影响资金安全。\n首次大额提现，系统会保存银行联行号，第二次大额提现，系统会自动为您填写银行联行号，不需要重新查询和输入(重新绑卡后需要重新输入)</string>
     <string name="my_credit_balance">余额</string>
-    <string name="my_bank_un_bind_complete">解绑成功</string>
     <string name="my_bank_bind_success">开通存管账户成功</string>
     <string name="my_about">关于我们</string>
     <string name="my_about_title">公司简介</string>
@@ -183,7 +174,6 @@
     <string name="input_login_password">请输入6-16位数字和字母</string>
     <string name="send_verification_code">获取验证码</string>
     <string name="send_count_down">%ss</string>
-    <string name="send_again">重新发送</string>
     <!--register-->
     <string name="input_sms_verification">请输入手机验证码</string>
     <!--password-->
@@ -224,16 +214,6 @@
     <string name="error_my_credit_cash_min_limit">提现金额不能小于1元</string>
     <string name="error_my_credit_cash_max_limit">提现金额不能大于可用余额</string>
     <string name="error_my_credit_cash_max_limit_bank">提现金额大于5万元请填写银行联行号</string>
-    <string name="error_step3_info_married">请选择婚姻状况</string>
-    <string name="error_step3_info_education">请选择最高学历</string>
-    <string name="error_step3_info_industry">请输入工作行业</string>
-    <string name="error_step3_info_years">请输入工作年限</string>
-    <string name="error_step3_info_job">请输入工作职务</string>
-    <string name="error_step3_info_salary">请输入月收入</string>
-    <string name="error_step3_info_house">请选择房产信息</string>
-    <string name="error_step3_info_card_num">请输入信用卡数量</string>
-    <string name="error_step3_info_card_limit">请输入信用卡额度</string>
-    <string name="error_step3_info_description">请输入借款描述</string>
     <string name="error_bioassay_no_id_card">不能获取身份证号，请稍后重试</string>
     <string name="error_car_valuation">车辆估值错误</string>
 
@@ -243,6 +223,4 @@
     <string name="error_9990">无有效记录</string>
     <string name="error_9994">您已在另一台设备上登录</string>
     <!--satcatche dialog-->
-    <string name="dialog_confirm">确定</string>
-    <string name="dialog_cancel">取消</string>
 </resources>
