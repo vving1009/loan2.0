@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -258,12 +259,15 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
 
         private TextView mTextState;
 
+        private ImageView mImageInto;
+
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(v -> mPresenter.onClickItem(getLayoutPosition()));
             mStepView = itemView.findViewById(R.id.step_view);
             mTextName = itemView.findViewById(R.id.text_name);
             mTextState = itemView.findViewById(R.id.text_state);
+            mImageInto = itemView.findViewById(R.id.img_into);
         }
 
         public void setType(int type) {
@@ -284,6 +288,7 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
                         mTextState.setText("待认证");
                     }
                     mStepView.setSelect(false);
+                    mImageInto.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     if (position == 0 || position == 3 || position == 6) {
@@ -292,6 +297,7 @@ public class Step2Fragment extends BaseStepFragment implements Step2Contract.Vie
                         mTextState.setText("已认证");
                     }
                     mStepView.setSelect(true);
+                    mImageInto.setVisibility(View.INVISIBLE);
                     break;
             }
         }
