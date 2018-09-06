@@ -79,6 +79,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Eas
         /*root.findViewById(R.id.btn_apply).setOnClickListener(v -> {
             mPresenter.loan();
         });*/
+        root.findViewById(R.id.cal_button).setOnClickListener(v -> FunctionActivity.function(getActivity(), "Calculator"));
         mTextLocation = root.findViewById(R.id.location_text);
         mPresenter = new HomePresenter(this, new HomeRepository());
         mPresenter.subscribe();

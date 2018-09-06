@@ -11,6 +11,7 @@ import com.jiaye.cashloan.view.about.AboutFragment;
 import com.jiaye.cashloan.view.account.AccountFragment;
 import com.jiaye.cashloan.view.bankcard.BankCardFragment;
 import com.jiaye.cashloan.view.bindbank.BindBankFragment;
+import com.jiaye.cashloan.view.calculator.CalculatorFragment;
 import com.jiaye.cashloan.view.car.MilesFragment;
 import com.jiaye.cashloan.view.cash.CashFragment;
 import com.jiaye.cashloan.view.certification.CertificationFragment;
@@ -136,6 +137,10 @@ public class FunctionActivity extends AppCompatActivity {
                 case "Info2":
                     // 信息确认
                     mFragment = Info2Fragment.newInstance();
+                    break;
+                case "Calculator":
+                    // 信息确认
+                    mFragment = CalculatorFragment.newInstance();
                     break;
             }
         } else {

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_light"
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,ContentDescription,RelativeOverlap,SmallSp,UselessParent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="22dp"
+                    android:text="@string/cal_loan_type"
+                    android:textColor="@color/color_black"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:id="@+id/loan_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="24dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/credit_button"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="74dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/calculator_type_btn_bg"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/cal_credit"
+                        android:textColor="@color/color_white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/car_button"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="74dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="24dp"
+                        android:background="@drawable/calculator_type_btn_bg"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="@string/cal_car"
+                        android:textColor="@color/color_white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/layout_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:paddingLeft="22dp"
+                    android:paddingRight="27dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="@string/cal_loan_amount"
+                        android:textColor="@color/color_black"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/edit_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:hint="@string/cal_amount_hint"
+                        android:inputType="numberDecimal"
+                        android:singleLine="true"
+                        android:textColor="@color/color_gray"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="21dp"
+                    android:background="@color/color_gray_hole" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@color/color_white"
+                    android:paddingLeft="22dp"
+                    android:paddingRight="27dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="@string/cal_loan_time"
+                        android:textColor="@color/color_black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/text_loan_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/loan_time_image"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:singleLine="true"
+                        android:text="请选择"
+                        android:textColor="@color/color_gray"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/loan_time_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/my_ic_angle" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/cal_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="47dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/home_btn_bg"
+                android:text="@string/cal_button"
+                android:textColor="@color/color_white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:text="@string/cal_tip"
+                android:textColor="@color/color_gray"
+                android:textSize="12sp" />
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="center_horizontal"
+                android:divider="@drawable/table_layout_divider_h"
+                android:showDividers="beginning|middle|end"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:orientation="horizontal"
+                    android:divider="@drawable/table_layout_divider_v"
+                    android:showDividers="beginning|middle|end">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="@string/cal_rate"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="125dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="0.99%-2.58%"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/table_layout_divider_v"
+                    android:showDividers="beginning|middle|end">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="@string/cal_repayment_monthly"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="125dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="3632.58"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/table_layout_divider_v"
+                    android:showDividers="beginning|middle|end">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="@string/cal_repayment_total"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="125dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="143876.56"
+                        android:textColor="@color/color_gray_dark"
+                        android:textSize="10sp" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
