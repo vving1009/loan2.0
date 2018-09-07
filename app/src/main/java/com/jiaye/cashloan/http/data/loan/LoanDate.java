@@ -5,7 +5,7 @@ import com.jiaye.cashloan.http.base.SatcatcheChildResponse;
 
 public class LoanDate extends SatcatcheChildResponse {
 
-    @SerializedName("contract_date ")
+    @SerializedName("contract_date")
     private String contractDate;
 
     public String getContractDate() {
