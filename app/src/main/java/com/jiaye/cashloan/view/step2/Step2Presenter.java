@@ -12,6 +12,7 @@ import com.jiaye.cashloan.view.ViewTransformer;
 import com.jiaye.cashloan.view.step2.source.Step2DataSource;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -56,7 +57,7 @@ public class Step2Presenter extends BasePresenterImpl implements Step2Contract.P
                     if (!TextUtils.isEmpty(s)) {
                         BigDecimal a = new BigDecimal(s);
                         BigDecimal b = new BigDecimal("10000");
-                        return a.multiply(b).setScale(0).toString();
+                        return a.multiply(b).setScale(0, RoundingMode.DOWN).toString();
                     } else {
                         throw new LocalException(R.string.error_car_valuation);
                     }
