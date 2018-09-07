@@ -87,6 +87,7 @@
                     android:layout_marginRight="25dp"
                     android:layout_marginTop="11dp"
                     android:background="@drawable/my_btn"
+                    android:clickable="false"
                     android:text="@string/home_apply_now"
                     android:textColor="@color/color_white"
                     android:textSize="12sp" />
@@ -175,6 +176,7 @@
                     android:layout_marginRight="25dp"
                     android:layout_marginTop="11dp"
                     android:background="@drawable/my_btn"
+                    android:clickable="false"
                     android:text="@string/home_apply_now"
                     android:textColor="@color/color_white"
                     android:textSize="12sp" />
