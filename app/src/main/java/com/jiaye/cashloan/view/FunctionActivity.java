@@ -146,6 +146,10 @@ public class FunctionActivity extends AppCompatActivity {
                     // 车贷首页
                     mFragment = CarLoanFirstPageFragment.newInstance();
                     break;
+                case "CreditLoan":
+                    // 信贷首页
+                    mFragment = CreditLoanFirstPageFragment.newInstance();
+                    break;
             }
         } else {
             mFragment = (BaseFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
