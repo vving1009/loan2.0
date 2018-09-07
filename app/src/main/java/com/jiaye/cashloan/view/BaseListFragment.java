@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jiaye.cashloan.R;
-import com.jiaye.cashloan.view.car.CarActivity;
+import com.jiaye.cashloan.view.loancar.carprice.CarActivity;
 import com.jiaye.cashloan.widget.LetterIndexView;
 
 public abstract class BaseListFragment extends BaseFunctionFragment {

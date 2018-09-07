@@ -12,22 +12,23 @@ import com.jiaye.cashloan.view.account.AccountFragment;
 import com.jiaye.cashloan.view.bankcard.BankCardFragment;
 import com.jiaye.cashloan.view.bindbank.BindBankFragment;
 import com.jiaye.cashloan.view.calculator.CalculatorFragment;
-import com.jiaye.cashloan.view.car.MilesFragment;
+import com.jiaye.cashloan.view.loancar.carprice.MilesFragment;
 import com.jiaye.cashloan.view.cash.CashFragment;
-import com.jiaye.cashloan.view.certification.CertificationFragment;
-import com.jiaye.cashloan.view.company.CompanyFragment;
+import com.jiaye.cashloan.view.loancar.certification.CertificationFragment;
+import com.jiaye.cashloan.view.loancar.company.CompanyFragment;
 import com.jiaye.cashloan.view.file.FileFragment;
 import com.jiaye.cashloan.view.forgetpassword.ForgetPasswordFragment;
 import com.jiaye.cashloan.view.id.IDFragment;
-import com.jiaye.cashloan.view.info.InfoFragment;
+import com.jiaye.cashloan.view.loancar.info.InfoFragment;
 import com.jiaye.cashloan.view.info2.Info2Fragment;
+import com.jiaye.cashloan.view.loancredit.startpage.StartPageFragment;
 import com.jiaye.cashloan.view.login.LoginFragment;
 import com.jiaye.cashloan.view.plan.PlanFragment;
 import com.jiaye.cashloan.view.register.RegisterFragment;
-import com.jiaye.cashloan.view.search.SearchFragment;
+import com.jiaye.cashloan.view.loancar.search.SearchFragment;
 import com.jiaye.cashloan.view.sign.SignFragment;
 import com.jiaye.cashloan.view.support.SupportFragment;
-import com.jiaye.cashloan.view.vehicle.VehicleFragment;
+import com.jiaye.cashloan.view.loancar.carpaper.VehicleFragment;
 import com.moxie.client.model.MxParam;
 
 /**
@@ -144,11 +145,11 @@ public class FunctionActivity extends AppCompatActivity {
                     break;
                 case "CarLoan":
                     // 车贷首页
-                    mFragment = CarLoanFirstPageFragment.newInstance();
+                    mFragment = com.jiaye.cashloan.view.loancar.startpage.StartPageFragment.newInstance();
                     break;
                 case "CreditLoan":
                     // 信贷首页
-                    mFragment = CreditLoanFirstPageFragment.newInstance();
+                    mFragment = StartPageFragment.newInstance();
                     break;
             }
         } else {
