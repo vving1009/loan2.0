@@ -24,4 +24,6 @@
     <color name="color_white">#FFFFFF</color>
     <!--字体颜色1-->
     <color name="color_gray_dark_2">#686868</color>
+    <!--背景白色-->
+    <color name="color_white_dark">#DFDFDF</color>
 </resources>

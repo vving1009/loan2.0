@@ -7,8 +7,12 @@ import android.widget.FrameLayout;
 
 import com.jiaye.cashloan.R;
 import com.jiaye.cashloan.view.BaseFunctionFragment;
+import com.jiaye.cashloan.view.FunctionActivity;
+import com.jiaye.cashloan.view.loancredit.startpage.source.StartPageRepository;
 
 public class StartPageFragment extends BaseFunctionFragment implements StartPageContract.View {
+
+    private StartPageContract.Presenter mPresenter;
 
     public static StartPageFragment newInstance() {
         Bundle args = new Bundle();
@@ -25,6 +29,20 @@ public class StartPageFragment extends BaseFunctionFragment implements StartPage
     @Override
     protected View onCreateFunctionView(LayoutInflater inflater, FrameLayout frameLayout) {
         View root = inflater.inflate(R.layout.credit_start_page_fragment, frameLayout, true);
+        root.findViewById(R.id.btn_apply).setOnClickListener(v -> mPresenter.loan());
+        mPresenter = new StartPagePresenter(this, new StartPageRepository());
+        mPresenter.subscribe();
         return root;
+    }
+
+    @Override
+    public void showCertificationView() {
+        FunctionActivity.function(getActivity(), "CreditCertification");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unsubscribe();
     }
 }

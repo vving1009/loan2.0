@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_gray_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="19dp"
+            android:text="经过初步评估，您可借额度（元）"
+            android:textColor="@color/color_gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/text_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textColor="@color/color_blue"
+            android:text="@string/credit_step1_money"
+            android:textSize="36sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:text="您需要验证后续信息，获得最终额度"
+        android:textColor="@color/color_gray"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btn_next"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginRight="48dp"
+        android:background="@drawable/home_btn_bg"
+        android:text="下一步"
+        android:textColor="@color/color_white"
+        android:textSize="18sp" />
+
+</LinearLayout>

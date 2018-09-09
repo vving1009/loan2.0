@@ -13,8 +13,10 @@ public interface StartPageContract {
 
     interface View extends BaseViewContract {
 
+        void showCertificationView();
     }
 
     interface Presenter extends BasePresenter {
+        void loan();
     }
 }

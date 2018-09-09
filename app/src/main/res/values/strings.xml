@@ -29,11 +29,14 @@
     <string name="car_province_title">所在省份</string>
     <string name="car_city_title">所在城市</string>
     <string name="car_miles_title">行驶里程</string>
-
-    <!--car loan-->
     <string name="car_loan_titile">车抵贷</string>
+
     <!--credit loan-->
     <string name="credit_loan_titile">信用贷</string>
+    <string name="credit_certification_title_1">额度预估</string>
+    <string name="credit_certification_title_2">额度确认</string>
+    <string name="credit_certification_title_3">借款确认</string>
+    <string name="credit_step1_money">%1$s-%2$s万</string>
 
     <!--calculator-->
     <string name="cal_title">计算器</string>

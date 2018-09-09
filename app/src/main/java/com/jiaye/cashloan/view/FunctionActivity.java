@@ -151,6 +151,10 @@ public class FunctionActivity extends AppCompatActivity {
                     // 信贷首页
                     mFragment = StartPageFragment.newInstance();
                     break;
+                case "CreditCertification":
+                    // 信贷认证中心
+                    mFragment = com.jiaye.cashloan.view.loancredit.certification.CertificationFragment.newInstance();
+                    break;
             }
         } else {
             mFragment = (BaseFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
